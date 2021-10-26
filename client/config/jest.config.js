@@ -17,10 +17,6 @@ module.exports = {
     '^_templates(.*)$': '<rootDir>/client/components/templates/$1',
     '^_pages(.*)$': '<rootDir>/client/components/pages/$1',
     '^_environment(.*)$': '<rootDir>/client/components/environment/$1',
-    '^_store(.*)$': '<rootDir>/client/store/$1',
-    '^_actions(.*)$': '<rootDir>/client/store/actions/$1',
-    '^_reducers(.*)$': '<rootDir>/client/store/reducers/$1',
-    '^_thunks(.*)$': '<rootDir>/client/store/thunks/$1',
   },
   rootDir: path.join(__dirname, '../..'),
   setupFiles: [

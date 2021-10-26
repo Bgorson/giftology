@@ -1,21 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Provider } from 'react-redux';
-import { ConnectedRouter } from 'connected-react-router';
-
+import {Router} from 'react-router-dom'
 import Main from '_environment/Main';
 
-export default function Root({ history, store }) {
+export default function Root({ history }) {
   return (
-    <Provider store={store}>
-      <ConnectedRouter history={history}>
-        <Main />
-      </ConnectedRouter>
-    </Provider>
+    <Router history={history}>
+      <Main />
+    </Router>
   );
 }
 
 Root.propTypes = {
-  store: PropTypes.object.isRequired,
   history: PropTypes.object.isRequired,
 };

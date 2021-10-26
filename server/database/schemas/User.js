@@ -1,21 +1,29 @@
 const mongoose = require('mongoose');
-const { MongooseAutoIncrementID } = require('mongoose-auto-increment-reworked');
 const bcrypt = require('bcryptjs');
 const R = require('ramda');
 
 const { Schema } = mongoose;
 
-const userSchema = new Schema({
-  username: { type: String, lowercase: true, required: true, unique: true, immutable: true },
-  username_case: { type: String, required: true },
-  password: { type: String, required: true },
-  profile_pic: { type: String },
-  first_name: { type: String, maxlength: 20 },
-  last_name: { type: String, maxlength: 20 },
-  bio: { type: String, maxlength: 240 },
-  created_at: { type: Date, default: Date.now, immutable: true },
-  updated_at: { type: Date },
-}, { versionKey: false });
+const userSchema = new Schema(
+  {
+    username: {
+      type: String,
+      lowercase: true,
+      required: true,
+      unique: true,
+      immutable: true,
+    },
+    username_case: { type: String, required: true },
+    password: { type: String, required: true },
+    profile_pic: { type: String },
+    first_name: { type: String, maxlength: 20 },
+    last_name: { type: String, maxlength: 20 },
+    bio: { type: String, maxlength: 240 },
+    created_at: { type: Date, default: Date.now, immutable: true },
+    updated_at: { type: Date },
+  },
+  { versionKey: false },
+);
 
 if (process.env.NODE_ENV !== 'test') {
   MongooseAutoIncrementID.initialise('counters');
@@ -45,7 +53,11 @@ userSchema.virtual('full_name').get(function() {
 });
 
 userSchema.virtual('initials').get(function() {
-  return this.first_name && this.last_name && `${this.first_name[0].concat(this.last_name[0]).toUpperCase()}`;
+  return (
+    this.first_name
+    && this.last_name
+    && `${this.first_name[0].concat(this.last_name[0]).toUpperCase()}`
+  );
 });
 
 userSchema.methods.validPassword = function(password) {
@@ -55,9 +67,13 @@ userSchema.methods.validPassword = function(password) {
 userSchema.methods.hashPassword = function() {
   return new Promise((resolve, reject) => {
     bcrypt.genSalt(10, (err1, salt) => {
-      if (err1) { reject(err1); }
+      if (err1) {
+        reject(err1);
+      }
       bcrypt.hash(this.password, salt, (err2, hash) => {
-        if (err2) { reject(err2); }
+        if (err2) {
+          reject(err2);
+        }
         this.password = hash;
         resolve(hash);
       });
