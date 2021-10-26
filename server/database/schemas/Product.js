@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-const R = require('ramda');
 
 const { Schema } = mongoose;
 
