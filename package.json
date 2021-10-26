@@ -1,5 +1,5 @@
 {
-  "name": "mern-boilerplate",
+  "name": "giftology",
   "version": "0.6.0",
   "description": "A full MERN stack boilerplate",
   "main": "server/index.js",
