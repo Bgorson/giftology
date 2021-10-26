@@ -8,7 +8,7 @@ require('./database');
 const routes          = require('./routes/index');
 const configPassport  = require('./passport/passport-config');
 
-const assetFolder  = path.resolve(__dirname, '../giftology/dist/');
+const assetFolder  = path.resolve(__dirname, '../dist/');
 const port         = process.env.PORT;
 const app          = express();
 
