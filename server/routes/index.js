@@ -21,7 +21,7 @@ router.get('/api/tags', (req, res) => {
 });
 
 router.get('/*', (req, res) => {
-  res.sendFile(path.resolve(__dirname, '../../dist/giftology', 'giftology/index.html'));
+  res.sendFile(path.resolve(__dirname, '../../dist/giftology', 'index.html'));
 });
 
 module.exports = router;
