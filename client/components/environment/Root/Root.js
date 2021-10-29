@@ -1,16 +1,14 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import {Router} from 'react-router-dom'
-import Main from '_environment/Main';
+import React from "react";
+import ReactDOM from "react-dom";
+import Main from "../Main";
+import { BrowserRouter } from "react-router-dom";
 
-export default function Root({ history }) {
+function Root() {
   return (
-    <Router history={history}>
+    <BrowserRouter>
       <Main />
-    </Router>
+    </BrowserRouter>
   );
 }
 
-Root.propTypes = {
-  history: PropTypes.object.isRequired,
-};
+export default Root;

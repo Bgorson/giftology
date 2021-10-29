@@ -8,7 +8,7 @@ describe('Root Component', () => {
   it('renders without crashing', () => {
     const div = document.createElement('div');
 
-    ReactDOM.render(<Root history={history} />, div);
+    ReactDOM.render(<Root/>, div);
     ReactDOM.unmountComponentAtNode(div);
   });
 });
