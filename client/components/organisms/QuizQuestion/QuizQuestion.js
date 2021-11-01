@@ -3,10 +3,10 @@ import React from "react";
 import Section from "react-bulma-companion/lib/Section";
 import Container from "react-bulma-companion/lib/Container";
 import Title from "react-bulma-companion/lib/Title";
+import QuizResult from "../QuizResult/QuizResult";
 
 export default function QuizQuestion(props) {
-  const { title, answers, handleResponse, next, id } = props;
-    console.log(id)
+  const { title, answers, handleResponse, next, id, results } = props;
   const possibleAnswers = answers.map((answers) => (
     <button
       onClick={() => {
@@ -26,8 +26,6 @@ export default function QuizQuestion(props) {
       {possibleAnswers}
     </Container>
   ) : (
-    <Container>
-      <Title>RESULTS</Title>
-    </Container>
+    <QuizResult results={results} />
   );
 }

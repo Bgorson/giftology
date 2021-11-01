@@ -4,13 +4,13 @@ import { Container } from "./styles";
 import QuizQuestion from "../../organisms/QuizQuestion/QuizQuestion";
 
 const Quiz = () => {
-  const [answers, setAnswers] = React.useState([]);
+  const answers = [];
   const [isForSelf, setIsForSelf] = React.useState(false);
-
   const handleResponse = (id, response) => {
     if (id === "who" && response === "Myself") {
       setIsForSelf(true);
     }
+    answers.push({ [id]: response });
   };
 
   const quizQuestions = [
@@ -27,32 +27,32 @@ const Quiz = () => {
     {
       id: "age",
       title: `How old are ${isForSelf ? "you" : "they"}?`,
-      answers: ["1-2", "3-4", "4-5", "6-10", "idk"],
+      answers: ["1-2", "3-4", "4-5", "6-10", "11-13","14-16","17-20","21-30","31-40","41-50",">50"],
     },
     {
       id: "occassion",
       title: `What is the occassion?`,
-      answers: ["Anniversary", "birthday", "Holiday", "Other", "idk"],
+      answers: ["Anniversary", "Birthday", "Holiday", "Graduation", "White Elephant", "Who Need an occasion?"],
     },
     {
       id: "type",
       title: `Are ${isForSelf ? "you" : "they"} more: `,
-      answers: ["practical", "whimsical", "idk"],
+      answers: ["Practical", "Whimsical"],
     },
     {
       id: "hobbies",
       title: `What about hobbies?`,
-      answers: ["camping", "wellness", "idk"],
+      answers: ["Camping", "Health & Wellness", "Home Chef/Cooking", "Mixology/Alcohol", "Music", "Reading", "Technology", "Other:"],
     },
     {
       id: "price",
       title: `Price Range?`,
-      answers: ["<50", "<100", "idk"],
+      answers: ["<$50", "<$100", "<$200", "+$200"],
     },
     {
       id: "createAccount",
       title: `Do you want to create an account?`,
-      answers: ["idk"],
+      answers: ["Yes", "Not at this time"],
     },
     {
       id: "results",
@@ -74,6 +74,7 @@ const Quiz = () => {
                   id={quizData.id}
                   title={quizData.title}
                   answers={quizData.answers}
+                  results={answers}
                 />
               )}
             />

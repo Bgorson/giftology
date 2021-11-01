@@ -15,7 +15,7 @@ export default function WelcomePage() {
           <Title size="1">Welcome to Giftology!</Title>
           <Button
             onClick={() => history.push("/quiz")}
-            label={"I'm a button"}
+            label={"Click to Access Quiz"}
           />
         </Container>
       </Section>
