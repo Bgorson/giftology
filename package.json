@@ -1,7 +1,7 @@
 {
   "name": "giftology",
   "version": "0.6.0",
-  "description": "A full MERN stack boilerplate",
+  "description": "Gifting Site",
   "main": "server/index.js",
   "scripts": {
     "build": "./scripts/build-prd.sh",
@@ -18,32 +18,12 @@
     "test:watch-client": "./scripts/test-watch-client.sh",
     "test:watch-server": "./scripts/test-watch-server.sh"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/djizco/mern-boilerplate.git"
-  },
   "author": {
-    "name": "Federico Rojas",
-    "email": "djizco@yahoo.com",
-    "url": "https://github.com/djizco"
+    "name": "Brandon Gorson",
+    "email": "bgorson32@gmail.com",
+    "url": "https://github.com/bgorson"
   },
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/djizco/mern-boilerplate/issues"
-  },
-  "keywords": [
-    "react",
-    "redux",
-    "webpack",
-    "express",
-    "passport",
-    "bulma",
-    "fontawesome",
-    "ramda",
-    "eslint",
-    "jest"
-  ],
-  "homepage": "https://github.com/djizco/mern-boilerplate#readme",
+  "homepage": "https://giftology.herokuapp.com/",
   "engines": {
     "node": "12.x"
   },
