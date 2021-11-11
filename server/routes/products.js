@@ -6,38 +6,28 @@ const router = express.Router();
 
 module.exports = router;
 
-router.get("/", (req, res) => {
-    // res.send({ message: 'hit route' });
-    console.log(req)
-  Product.find({}, (err, products) => {
-    if (err) {
-      res.status(400).send({ message: "Get product failed", err });
-    } else {
-      res.send({ message: "Product retrieved successfully", products });
-    }
-  });
+// full path is api/product
+router.get("/", async (req, res) => {
+  const products = await Product.find({});
+
+  res.send({ message: "Product retrieved successfully", products });
 });
 
-// router.post("/", requireAuth, (req, res) => {
-//   req.body.user = req.user.id;
+router.get("/category/:name", async (req, res) => {
+  const category = req.params.name;
+  try {
+    const categoryRes = await Product.find({ Category: category });
+    res.send(categoryRes);
+  } catch {
+    res.status(404);
+    res.send({ error: "Category name error" });
+  }
+});
 
-//   const newTodo = Todo(req.body);
+router.post("/add_product", async (request, response) => {
+  const newProduct = new Product(request.body);
 
-//   newTodo.save((err, savedTodo) => {
-//     if (err) {
-//       res.status(400).send({ message: "Create todo failed", err });
-//     } else {
-//       res.send({ message: "Todo created successfully", todo: savedTodo });
-//     }
-//   });
-// });
-
-// router.delete("/", requireAuth, (req, res) => {
-//   Todo.findByIdAndRemove(req.body.id, (err) => {
-//     if (err) {
-//       res.status(400).send({ message: "Delete todo failed", err });
-//     } else {
-//       res.send({ message: "Todo successfully delete" });
-//     }
-//   });
-// });
+  console.log(newProduct);
+  await newProduct.save();
+  response.send({ message: "Product added successfully", newProduct });
+});

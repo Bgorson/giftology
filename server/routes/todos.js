@@ -16,19 +16,19 @@ router.get('/', requireAuth, (req, res) => {
   });
 });
 
-router.post('/', requireAuth, (req, res) => {
-  req.body.user = req.user.id;
+// router.post('/', requireAuth, (req, res) => {
+//   req.body.user = req.user.id;
 
-  const newTodo = Todo(req.body);
+//   const newTodo = Todo(req.body);
 
-  newTodo.save((err, savedTodo) => {
-    if (err) {
-      res.status(400).send({ message: 'Create todo failed', err });
-    } else {
-      res.send({ message: 'Todo created successfully', todo: savedTodo });
-    }
-  });
-});
+//   newTodo.save((err, savedTodo) => {
+//     if (err) {
+//       res.status(400).send({ message: 'Create todo failed', err });
+//     } else {
+//       res.send({ message: 'Todo created successfully', todo: savedTodo });
+//     }
+//   });
+// });
 
 router.put('/complete', requireAuth, (req, res) => {
   Todo.findById(req.body.id, { __v: 0, user: 0 }, (err, todo) => {
