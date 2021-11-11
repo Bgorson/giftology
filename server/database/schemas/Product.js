@@ -6,20 +6,19 @@ const productSchema = new Schema(
   {
     product_name: {
       type: String,
-      required: true,
       unique: true,
       immutable: true,
     },
-    category: { type: String, required: true },
-    website: { type: String, required: true },
-    link: { type: String },
-    flavor_text: { type: String, maxlength: 20 },
+    Category: { type: String },
+    Website: { type: String },
+    Link: { type: String },
+    Flavor_text: { type: String },
     product_base_price: { type: String, maxlength: 20 },
-    gender: { type: String, maxlength: 240 },
+    gender: { type: String },
     indoor_outdoor: { type: String },
-    age_min: { type: String },
-    age_max: { type: String },
-    occassions: { Type: Array },
+    Age_min: { type: String },
+    Age_max: { type: String },
+    Occassions: { Type: Array },
     practical_whimsicial: { Type: String },
     hobbies_interests: { Type: Array },
     created_at: { type: Date, default: Date.now, immutable: true },
@@ -29,6 +28,6 @@ const productSchema = new Schema(
 
 
 
-const Product = mongoose.model('Product', productSchema);
+const Products = mongoose.model('products', productSchema);
 
-module.exports = Product;
+module.exports = Products;
