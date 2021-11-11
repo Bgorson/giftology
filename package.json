@@ -7,7 +7,7 @@
     "build": "./scripts/build-prd.sh",
     "build:prd": "./scripts/build-prd.sh",
     "build:dev": "./scripts/build-dev.sh",
-    "start": "nodemon server/index.js",
+    "start": "node server/index.js",
     "dev": "./scripts/watch-dev.sh",
     "lint": "eslint client server",
     "lint:fix": "eslint client server --fix",
