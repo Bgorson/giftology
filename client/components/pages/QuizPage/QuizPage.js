@@ -5,84 +5,102 @@ import QuizQuestion from '../../organisms/QuizQuestion/QuizQuestion';
 import { getProducts } from '../../../api/products';
 
 const Quiz = () => {
-  const answers = [];
+  const [answers, setAnswers] = React.useState({});
   const [isForSelf, setIsForSelf] = React.useState(false);
 
   const handleResponse = (id, response) => {
     if (id === 'who' && response === 'Myself') {
       setIsForSelf(true);
     }
-    answers.push({ [id]: response });
+    const newInput = `${id}`;
+    answers[newInput] = response.value;
+    setAnswers(answers);
   };
 
   const quizQuestions = [
     {
       id: 'who',
       title: 'Who are you shopping for?',
-      answers: ['Myself', 'A Relative', 'A Friend'],
+      answers: [
+        { message: 'Myself', value: 'myself' },
+        { message: 'A Relative', value: 'relative' },
+        { message: 'A Friend', value: 'friend' },
+      ],
     },
     {
       id: 'prefer',
       title: `Which do ${isForSelf ? 'you' : 'they'} prefer`,
-      answers: ['The Great indoors', 'The Great Outdoors'],
+      answers: [
+        { message: 'The Great indoors', value: 'indoor' },
+        { message: 'The Great Outdoors', value: 'outdoor' },
+      ],
     },
     {
       id: 'age',
       title: `How old are ${isForSelf ? 'you' : 'they'}?`,
       answers: [
-        '1-2',
-        '3-4',
-        '4-5',
-        '6-10',
-        '11-13',
-        '14-16',
-        '17-20',
-        '21-30',
-        '31-40',
-        '41-50',
-        '>50',
+        { message: '1-2', value: '1-2' },
+        { message: '3-4', value: '3-4' },
+        { message: '5-6', value: '5-6' },
+        { message: '7-10', value: '7-10' },
+        { message: '11-15', value: '11-15' },
+        { message: '16-20', value: '16-20' },
+        { message: '21-30', value: '21-30' },
+        { message: '31-40', value: '31-40' },
+        { message: '41-50', value: '41-50' },
+        { message: '>50', value: '51-99999' },
       ],
     },
     {
       id: 'occassion',
       title: 'What is the occassion?',
       answers: [
-        'Anniversary',
-        'Birthday',
-        'Holiday',
-        'Graduation',
-        'White Elephant',
-        'Who Need an occasion?',
+        { message: 'Anniversary', value: 'anniversary' },
+        { message: 'Birthday', value: 'birthday' },
+        { message: 'Holiday', value: 'holiday' },
+        { message: 'White Elephant', value: 'whiteElephant' },
+        { message: 'Who Need an occasion?', value: 'any' },
       ],
     },
     {
       id: 'type',
       title: `Are ${isForSelf ? 'you' : 'they'} more: `,
-      answers: ['Practical', 'Whimsical'],
+      answers: [
+        { message: 'Practical', value: 'practical' },
+        { message: 'Whimsical', value: 'whimsical' },
+      ],
     },
     {
       id: 'hobbies',
       title: 'What about hobbies?',
       answers: [
-        'Camping',
-        'Health & Wellness',
-        'Home Chef/Cooking',
-        'Mixology/Alcohol',
-        'Music',
-        'Reading',
-        'Technology',
-        'Other:',
+        { message: 'Camping', value: 'camping' },
+        { message: 'Health & Wellness', value: 'camping' },
+        { message: 'Home Chef/Cooking', value: 'healthAndWellness' },
+        { message: 'Mixology/Alcohol', value: 'mixologyAlcohol' },
+        { message: 'Music', value: 'music' },
+        { message: 'Reading', value: 'reading' },
+        { message: 'Technology', value: 'technology' },
+        { message: 'Other', value: 'other' },
       ],
     },
     {
       id: 'price',
       title: 'Price Range?',
-      answers: ['<$50', '<$100', '<$200', '+$200'],
+      answers: [
+        { message: '<$50', value: '0-50' },
+        { message: '<$100', value: '0-100' },
+        { message: '<$200', value: '0-200' },
+        { message: '+$200', value: '200-999999' },
+      ],
     },
     {
       id: 'createAccount',
       title: 'Do you want to create an account?',
-      answers: ['Yes', 'Not at this time'],
+      answers: [
+        { message: 'Yes', value: true },
+        { message: 'Not at this time', value: false },
+      ],
     },
     {
       id: 'results',

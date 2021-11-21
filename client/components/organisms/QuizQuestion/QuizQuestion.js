@@ -16,7 +16,7 @@ export default function QuizQuestion(props) {
       type={"submit"}
       key={answers}
     >
-      {answers}
+      {answers.message}
     </button>
   ));
 

@@ -773,6 +773,28 @@ var getProducts = function getProducts() {
 
 /***/ }),
 
+/***/ "./client/api/quiz.js":
+/*!****************************!*\
+  !*** ./client/api/quiz.js ***!
+  \****************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "postQuizResults": () => (/* binding */ postQuizResults)
+/* harmony export */ });
+/* harmony import */ var superagent__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! superagent */ "./node_modules/superagent/lib/client.js");
+/* harmony import */ var superagent__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(superagent__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _utils__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./utils */ "./client/api/utils.js");
+
+
+var postQuizResults = function postQuizResults(answers) {
+  return superagent__WEBPACK_IMPORTED_MODULE_0___default().post('/api/quiz').send(answers).then(_utils__WEBPACK_IMPORTED_MODULE_1__.handleSuccess)["catch"](_utils__WEBPACK_IMPORTED_MODULE_1__.handleError);
+};
+
+/***/ }),
+
 /***/ "./client/api/utils.js":
 /*!*****************************!*\
   !*** ./client/api/utils.js ***!
@@ -1151,6 +1173,83 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./client/components/organisms/ProductResult/ProductResult.js":
+/*!********************************************************************!*\
+  !*** ./client/components/organisms/ProductResult/ProductResult.js ***!
+  \********************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ ProductResult)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react_bulma_companion_lib_Section__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-bulma-companion/lib/Section */ "./node_modules/react-bulma-companion/lib/Section/index.js");
+/* harmony import */ var react_bulma_companion_lib_Container__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-bulma-companion/lib/Container */ "./node_modules/react-bulma-companion/lib/Container/index.js");
+/* harmony import */ var react_bulma_companion_lib_Title__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react-bulma-companion/lib/Title */ "./node_modules/react-bulma-companion/lib/Title/index.js");
+/* harmony import */ var _api_quiz__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../../api/quiz */ "./client/api/quiz.js");
+/* harmony import */ var _styled__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./styled */ "./client/components/organisms/ProductResult/styled.js");
+
+
+
+
+
+
+
+function groupBy(arr, property) {
+  return arr.reduce(function (memo, x) {
+    if (!memo[x[property]]) {
+      memo[x[property]] = [];
+    }
+
+    memo[x[property]].push(x);
+    return memo;
+  }, {});
+}
+
+function ProductResult(props) {
+  var data = props.data;
+  var products = data.products,
+      categoryScores = data.categoryScores;
+  var arrayOfCategories = groupBy(products, "category");
+  console.log(arrayOfCategories); // Should just be able to go through available categories
+  // and display products and names
+
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, categoryScores.map(function (category, index) {
+    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, {
+      key: index
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_styled__WEBPACK_IMPORTED_MODULE_5__.Category, null, category.name), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("h1", null, category.score), arrayOfCategories[category.name].map(function (product, index) {
+      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("p", {
+        key: index
+      }, product.productName);
+    }));
+  }));
+}
+
+/***/ }),
+
+/***/ "./client/components/organisms/ProductResult/styled.js":
+/*!*************************************************************!*\
+  !*** ./client/components/organisms/ProductResult/styled.js ***!
+  \*************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "Category": () => (/* binding */ Category)
+/* harmony export */ });
+/* harmony import */ var styled_components__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! styled-components */ "./node_modules/styled-components/dist/styled-components.browser.esm.js");
+var _templateObject;
+
+function _taggedTemplateLiteral(strings, raw) { if (!raw) { raw = strings.slice(0); } return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
+
+
+var Category = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].h1(_templateObject || (_templateObject = _taggedTemplateLiteral(["\n  font-size: 2em;\n"])));
+
+/***/ }),
+
 /***/ "./client/components/organisms/QuizQuestion/QuizQuestion.js":
 /*!******************************************************************!*\
   !*** ./client/components/organisms/QuizQuestion/QuizQuestion.js ***!
@@ -1187,7 +1286,7 @@ function QuizQuestion(props) {
       },
       type: "submit",
       key: answers
-    }, answers);
+    }, answers.message);
   });
   return id !== "results" ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_bulma_companion_lib_Container__WEBPACK_IMPORTED_MODULE_2__["default"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_bulma_companion_lib_Title__WEBPACK_IMPORTED_MODULE_3__["default"], null, title), possibleAnswers) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_QuizResult_QuizResult__WEBPACK_IMPORTED_MODULE_4__["default"], {
     results: results
@@ -1211,7 +1310,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react_bulma_companion_lib_Section__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-bulma-companion/lib/Section */ "./node_modules/react-bulma-companion/lib/Section/index.js");
 /* harmony import */ var react_bulma_companion_lib_Container__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-bulma-companion/lib/Container */ "./node_modules/react-bulma-companion/lib/Container/index.js");
 /* harmony import */ var react_bulma_companion_lib_Title__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react-bulma-companion/lib/Title */ "./node_modules/react-bulma-companion/lib/Title/index.js");
-/* harmony import */ var _api_products__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../../api/products */ "./client/api/products.js");
+/* harmony import */ var _api_quiz__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../../api/quiz */ "./client/api/quiz.js");
+/* harmony import */ var _organisms_ProductResult_ProductResult__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../organisms/ProductResult/ProductResult */ "./client/components/organisms/ProductResult/ProductResult.js");
 function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
 
 function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
@@ -1229,21 +1329,24 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 
 
+
 function QuizResult(props) {
-  var _React$useState = react__WEBPACK_IMPORTED_MODULE_0__.useState([]),
+  var results = props.results;
+
+  var _React$useState = react__WEBPACK_IMPORTED_MODULE_0__.useState(null),
       _React$useState2 = _slicedToArray(_React$useState, 2),
-      allProducts = _React$useState2[0],
-      setAllProducts = _React$useState2[1];
+      productResults = _React$useState2[0],
+      setProductResults = _React$useState2[1];
 
   react__WEBPACK_IMPORTED_MODULE_0__.useEffect(function () {
-    var productPromise = Promise.resolve((0,_api_products__WEBPACK_IMPORTED_MODULE_4__.getProducts)());
+    var productPromise = Promise.resolve((0,_api_quiz__WEBPACK_IMPORTED_MODULE_4__.postQuizResults)(results));
     productPromise.then(function (products) {
-      setAllProducts(products.products);
+      setProductResults(products);
     });
   }, []);
-  var results = props.results;
-  console.log(allProducts);
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_bulma_companion_lib_Container__WEBPACK_IMPORTED_MODULE_2__["default"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_bulma_companion_lib_Title__WEBPACK_IMPORTED_MODULE_3__["default"], null, "RESULTS"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("p", null, JSON.stringify(results)), allProducts.length > 0 && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("p", null, JSON.stringify(allProducts[0])));
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_bulma_companion_lib_Container__WEBPACK_IMPORTED_MODULE_2__["default"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_bulma_companion_lib_Title__WEBPACK_IMPORTED_MODULE_3__["default"], null, "RESULTS"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("p", null, JSON.stringify(results)), productResults && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_organisms_ProductResult_ProductResult__WEBPACK_IMPORTED_MODULE_5__["default"], {
+    data: productResults
+  }));
 }
 
 /***/ }),
@@ -1350,8 +1453,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _styles__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./styles */ "./client/components/pages/QuizPage/styles.js");
 /* harmony import */ var _organisms_QuizQuestion_QuizQuestion__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../organisms/QuizQuestion/QuizQuestion */ "./client/components/organisms/QuizQuestion/QuizQuestion.js");
 /* harmony import */ var _api_products__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../../api/products */ "./client/api/products.js");
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
 function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
 
 function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
@@ -1371,53 +1472,166 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 
 var Quiz = function Quiz() {
-  var answers = [];
-
-  var _React$useState = react__WEBPACK_IMPORTED_MODULE_0__.useState(false),
+  var _React$useState = react__WEBPACK_IMPORTED_MODULE_0__.useState({}),
       _React$useState2 = _slicedToArray(_React$useState, 2),
-      isForSelf = _React$useState2[0],
-      setIsForSelf = _React$useState2[1];
+      answers = _React$useState2[0],
+      setAnswers = _React$useState2[1];
+
+  var _React$useState3 = react__WEBPACK_IMPORTED_MODULE_0__.useState(false),
+      _React$useState4 = _slicedToArray(_React$useState3, 2),
+      isForSelf = _React$useState4[0],
+      setIsForSelf = _React$useState4[1];
 
   var handleResponse = function handleResponse(id, response) {
     if (id === 'who' && response === 'Myself') {
       setIsForSelf(true);
     }
 
-    answers.push(_defineProperty({}, id, response));
+    var newInput = "".concat(id);
+    answers[newInput] = response.value;
+    setAnswers(answers);
   };
 
   var quizQuestions = [{
     id: 'who',
     title: 'Who are you shopping for?',
-    answers: ['Myself', 'A Relative', 'A Friend']
+    answers: [{
+      message: 'Myself',
+      value: 'myself'
+    }, {
+      message: 'A Relative',
+      value: 'relative'
+    }, {
+      message: 'A Friend',
+      value: 'friend'
+    }]
   }, {
     id: 'prefer',
     title: "Which do ".concat(isForSelf ? 'you' : 'they', " prefer"),
-    answers: ['The Great indoors', 'The Great Outdoors']
+    answers: [{
+      message: 'The Great indoors',
+      value: 'indoor'
+    }, {
+      message: 'The Great Outdoors',
+      value: 'outdoor'
+    }]
   }, {
     id: 'age',
     title: "How old are ".concat(isForSelf ? 'you' : 'they', "?"),
-    answers: ['1-2', '3-4', '4-5', '6-10', '11-13', '14-16', '17-20', '21-30', '31-40', '41-50', '>50']
+    answers: [{
+      message: '1-2',
+      value: '1-2'
+    }, {
+      message: '3-4',
+      value: '3-4'
+    }, {
+      message: '5-6',
+      value: '5-6'
+    }, {
+      message: '7-10',
+      value: '7-10'
+    }, {
+      message: '11-15',
+      value: '11-15'
+    }, {
+      message: '16-20',
+      value: '16-20'
+    }, {
+      message: '21-30',
+      value: '21-30'
+    }, {
+      message: '31-40',
+      value: '31-40'
+    }, {
+      message: '41-50',
+      value: '41-50'
+    }, {
+      message: '>50',
+      value: '51-99999'
+    }]
   }, {
     id: 'occassion',
     title: 'What is the occassion?',
-    answers: ['Anniversary', 'Birthday', 'Holiday', 'Graduation', 'White Elephant', 'Who Need an occasion?']
+    answers: [{
+      message: 'Anniversary',
+      value: 'anniversary'
+    }, {
+      message: 'Birthday',
+      value: 'birthday'
+    }, {
+      message: 'Holiday',
+      value: 'holiday'
+    }, {
+      message: 'White Elephant',
+      value: 'whiteElephant'
+    }, {
+      message: 'Who Need an occasion?',
+      value: 'any'
+    }]
   }, {
     id: 'type',
     title: "Are ".concat(isForSelf ? 'you' : 'they', " more: "),
-    answers: ['Practical', 'Whimsical']
+    answers: [{
+      message: 'Practical',
+      value: 'practical'
+    }, {
+      message: 'Whimsical',
+      value: 'whimsical'
+    }]
   }, {
     id: 'hobbies',
     title: 'What about hobbies?',
-    answers: ['Camping', 'Health & Wellness', 'Home Chef/Cooking', 'Mixology/Alcohol', 'Music', 'Reading', 'Technology', 'Other:']
+    answers: [{
+      message: 'Camping',
+      value: 'camping'
+    }, {
+      message: 'Health & Wellness',
+      value: 'camping'
+    }, {
+      message: 'Home Chef/Cooking',
+      value: 'healthAndWellness'
+    }, {
+      message: 'Mixology/Alcohol',
+      value: 'mixologyAlcohol'
+    }, {
+      message: 'Music',
+      value: 'music'
+    }, {
+      message: 'Reading',
+      value: 'reading'
+    }, {
+      message: 'Technology',
+      value: 'technology'
+    }, {
+      message: 'Other',
+      value: 'other'
+    }]
   }, {
     id: 'price',
     title: 'Price Range?',
-    answers: ['<$50', '<$100', '<$200', '+$200']
+    answers: [{
+      message: '<$50',
+      value: '0-50'
+    }, {
+      message: '<$100',
+      value: '0-100'
+    }, {
+      message: '<$200',
+      value: '0-200'
+    }, {
+      message: '+$200',
+      value: '200-999999'
+    }]
   }, {
     id: 'createAccount',
     title: 'Do you want to create an account?',
-    answers: ['Yes', 'Not at this time']
+    answers: [{
+      message: 'Yes',
+      value: true
+    }, {
+      message: 'Not at this time',
+      value: false
+    }]
   }, {
     id: 'results',
     title: '',
@@ -1498,23 +1712,197 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react_bulma_companion_lib_Section__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-bulma-companion/lib/Section */ "./node_modules/react-bulma-companion/lib/Section/index.js");
 /* harmony import */ var react_bulma_companion_lib_Container__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-bulma-companion/lib/Container */ "./node_modules/react-bulma-companion/lib/Container/index.js");
 /* harmony import */ var react_bulma_companion_lib_Title__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react-bulma-companion/lib/Title */ "./node_modules/react-bulma-companion/lib/Title/index.js");
+/* harmony import */ var react_router__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! react-router */ "./node_modules/react-router/esm/react-router.js");
 /* harmony import */ var _atoms_Button__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../atoms/Button */ "./client/components/atoms/Button/index.js");
-/* harmony import */ var react_router__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! react-router */ "./node_modules/react-router/esm/react-router.js");
+/* harmony import */ var _organisms_ProductResult_ProductResult__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../organisms/ProductResult/ProductResult */ "./client/components/organisms/ProductResult/ProductResult.js");
 
 
 
 
 
 
+
+var data = [{
+  occassions: {
+    Type: []
+  },
+  hobbiesInterests: '{Camping}',
+  _id: '61993690e23f275ea01d746a',
+  productId: '',
+  productName: 'PETZL - TIKKINA Headlamp, 150 Lumens, Standard Lighting',
+  category: 'Camping',
+  website: 'Amazon',
+  link: 'https://www.amazon.com/PETZL-TIKKINA-Headlamp-Standard-Lighting/dp/B01KYTRHLQ?dchild=1&keywords=Petzl%2BTikkina%2BHeadlamp&qid=1626036560&s=sporting-goods&sr=1-5&th=1&linkCode=sl1&tag=giftologyshop-20&linkId=8c570e0d8b3da9654ef3dacbeabf4abe&language=en_US&ref_=as_li_ss_tl',
+  flavorText: 'Who do we like it for?\nCampers who just need a basic headlamp.',
+  productBasePrice: '34.97',
+  gender: 'null',
+  indoorOutdoor: '{outdoor}',
+  ageMin: '12',
+  ageMax: '120',
+  occasion: 'null',
+  practicalWhimsical: 'null'
+}, {
+  occassions: {
+    Type: []
+  },
+  hobbiesInterests: '{Camping}',
+  _id: '61993690e23f275ea01d746b',
+  productId: '',
+  productName: 'Hydro Flask Water Bottle - Stainless Steel, Reusable, Vacuum Insulated- Wide Mouth with Leak Proof Flex Cap',
+  category: 'Camping',
+  website: 'Amazon',
+  link: 'https://www.amazon.com/Hydro-Flask-Water-Bottle-Stainless/dp/B07YXMJZQW?dchild=1&keywords=Hydro%2BFlask%2BWide-Mouth%2BVacuum%2BWater%2BBottle%2B-%2B32%2Bfl.%2Boz.&qid=1626031702&sr=8-2&th=1&psc=1&linkCode=sl1&tag=giftologyshop-20&linkId=2f993aa25a0081fb4edb9bb8e0aaa833&language=en_US&ref_=as_li_ss_tl',
+  flavorText: 'Who do we like this for?\n\nCampers and hikers who want cold, refreshing water, or nullone who needs to sneak wine into a family reunion.',
+  productBasePrice: '33.95',
+  gender: 'null',
+  indoorOutdoor: '{outdoor}',
+  ageMin: '12',
+  ageMax: '120',
+  occasion: 'null',
+  practicalWhimsical: 'null'
+}, {
+  occassions: {
+    Type: []
+  },
+  hobbiesInterests: '{Camping}',
+  _id: '61993690e23f275ea01d746c',
+  productId: '',
+  productName: "Mountain Hardwear Men's Stretch Ozonic Jacket",
+  category: 'Camping',
+  website: 'Amazon',
+  link: 'https://www.amazon.com/gp/product/B082QX7G1K?ie=UTF8&th=1&linkCode=sl1&tag=giftologyshop-20&linkId=00836c10ee4f41920c2b6e3e12647a3d&language=en_US&ref_=as_li_ss_tl&psc=1',
+  flavorText: 'Who do we like this for?\n\nnullone that’s had bad weather mess up a great trip.',
+  productBasePrice: '199.99',
+  gender: 'null',
+  indoorOutdoor: '{outdoor}',
+  ageMin: '12',
+  ageMax: '120',
+  occasion: 'null',
+  practicalWhimsical: 'null'
+}, {
+  occassions: {
+    Type: []
+  },
+  hobbiesInterests: '{Camping}',
+  _id: '61993690e23f275ea01d746d',
+  productId: '',
+  productName: 'REI Co-op Half Dome SL 2+ Tent with Footprint',
+  category: 'Camping',
+  website: 'REI',
+  link: 'https://www.rei.com/product/185632/rei-co-op-half-dome-sl-2-tent-with-footprint',
+  flavorText: 'Who do we like this for?\n\nnullone looking for an all-around, quality tent with a little extra room to sprawl out.',
+  productBasePrice: '279',
+  gender: 'null',
+  indoorOutdoor: '{outdoor}',
+  ageMin: '12',
+  ageMax: '120',
+  occasion: 'null',
+  practicalWhimsical: 'null'
+}, {
+  occassions: {
+    Type: []
+  },
+  hobbiesInterests: '{Home Chef/Cooking}',
+  _id: '61993690e23f275ea01d746e',
+  productId: '',
+  productName: 'Cooking Gift Set Co | Wood Smoked Grill Kit - 8 Piece BBQ Set | Top Grilling Gifts for Dad, Grill Sets for Men, BBQ Gifts for Men',
+  category: 'Home Chef',
+  website: 'Amazon',
+  link: 'https://www.amazon.com/Cooking-Gift-Set-Smoker-Birthday/dp/B01DVJ66H2?dchild=1&keywords=barbecue+smoker+kit&qid=1625525079&sr=8-9&linkCode=sl1&tag=giftologyshop-20&linkId=50b3cdbaddccc78ac3c740cc485ba665&language=en_US&ref_=as_li_ss_tl',
+  flavorText: 'Who do we like this for?\n\nFolks who want to experiment with smoking but have large smoker commitment issues.',
+  productBasePrice: '49.99',
+  gender: 'null',
+  indoorOutdoor: '{indoor}',
+  ageMin: '12',
+  ageMax: '120',
+  occasion: 'null',
+  practicalWhimsical: 'null'
+}, {
+  occassions: {
+    Type: []
+  },
+  hobbiesInterests: '{Camping}',
+  _id: '61993690e23f275ea01d746f',
+  productId: '',
+  productName: 'PETZL, ACTIK CORE Headlamp, 450 Lumens, Rechargeable, with CORE Battery, Black',
+  category: 'Camping',
+  website: 'Amazon',
+  link: 'https://www.amazon.com/gp/product/B07T5RLZTX?ie=UTF8&linkCode=sl1&tag=giftologyshop-20&linkId=8f456fb9b9579537f8f1e9b7c0f9de10&language=en_US&ref_=as_li_ss_tl&th=1',
+  flavorText: 'Who do we like this for?\n\nnullone looking for a reliable, hands-free light source, with some excellent features.',
+  productBasePrice: '69.95',
+  gender: 'null',
+  indoorOutdoor: '{outdoor}',
+  ageMin: '12',
+  ageMax: '120',
+  occasion: 'null',
+  practicalWhimsical: 'null'
+}, {
+  occassions: {
+    Type: []
+  },
+  hobbiesInterests: '{Home Chef/Cooking,Technology,Gardening}',
+  _id: '61993690e23f275ea01d7470',
+  productId: '',
+  productName: 'Click and Grow Smart Garden 3 Indoor Herb Garden (Includes Basil Plant Pods), White',
+  category: 'Home Chef',
+  website: 'Amazon',
+  link: 'https://www.amazon.com/gp/product/B01MRVMKQH?ie=UTF8&linkCode=sl1&tag=giftologyshop-20&linkId=39f8eb6b9cc31718c5e2e96ba4d8d4cf&language=en_US&ref_=as_li_ss_tl&th=1',
+  flavorText: 'Who do we like this for?\n\nPeople who desperately need fresh pesto year-round.',
+  productBasePrice: '99.95',
+  gender: 'null',
+  indoorOutdoor: '{indoor}',
+  ageMin: '12',
+  ageMax: '120',
+  occasion: 'null',
+  practicalWhimsical: 'null'
+}, {
+  occassions: {
+    Type: []
+  },
+  hobbiesInterests: '{Camping}',
+  _id: '61993690e23f275ea01d7471',
+  productId: '',
+  productName: "Mountain Hardwear Women's Stretch Ozonic Jacket",
+  category: 'Camping',
+  website: 'Amazon',
+  link: 'https://www.amazon.com/gp/product/B082QML2Y6?ie=UTF8&th=1&linkCode=sl1&tag=giftologyshop-20&linkId=95564400595012db9ab6c3a9b4c0b733&language=en_US&ref_=as_li_ss_tl&psc=1',
+  flavorText: 'Who do we like this for?\n\nnullone that’s had bad weather mess up a great trip.',
+  productBasePrice: '199.97',
+  gender: 'null',
+  indoorOutdoor: '{outdoor}',
+  ageMin: '12',
+  ageMax: '120',
+  occasion: 'null',
+  practicalWhimsical: 'null'
+}, {
+  occassions: {
+    Type: []
+  },
+  hobbiesInterests: '{Home Chef/Cooking}',
+  _id: '61993690e23f275ea01d7472',
+  productId: '',
+  productName: 'GoWISE USA GW22921-S 8-in-1 Digital Air Fryer with Recipe Book, 5.0-Qt, Black',
+  category: 'Home Chef',
+  website: 'Amazon',
+  link: 'https://www.amazon.com/gp/product/B07JP1GFNW?ie=UTF8&th=1&linkCode=sl1&tag=giftologyshop-20&linkId=2c9f26b7df90970ca71f1148d6c581e4&language=en_US&ref_=as_li_ss_tl',
+  flavorText: 'Who do we like this for?\n\nPeople who hate soggy leftovers and home cooks who want to prepare a meal quickly.',
+  productBasePrice: '69.99',
+  gender: 'null',
+  indoorOutdoor: '{indoor}',
+  ageMin: '12',
+  ageMax: '120',
+  occasion: 'null',
+  practicalWhimsical: 'null'
+}];
 function WelcomePage() {
-  var history = (0,react_router__WEBPACK_IMPORTED_MODULE_5__.useHistory)();
+  var history = (0,react_router__WEBPACK_IMPORTED_MODULE_6__.useHistory)();
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
     className: "welcome-page page"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_bulma_companion_lib_Section__WEBPACK_IMPORTED_MODULE_1__["default"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_bulma_companion_lib_Container__WEBPACK_IMPORTED_MODULE_2__["default"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_bulma_companion_lib_Title__WEBPACK_IMPORTED_MODULE_3__["default"], {
     size: "1"
   }, "Welcome to Giftology!"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_atoms_Button__WEBPACK_IMPORTED_MODULE_4__["default"], {
     onClick: function onClick() {
-      return history.push("/quiz");
+      return history.push('/quiz');
     },
     label: "Click to Access Quiz"
   }))));

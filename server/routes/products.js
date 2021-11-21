@@ -27,7 +27,6 @@ router.get("/category/:name", async (req, res) => {
 router.post("/add_product", async (request, response) => {
   const newProduct = new Product(request.body);
 
-  console.log(newProduct);
   await newProduct.save();
   response.send({ message: "Product added successfully", newProduct });
 });
