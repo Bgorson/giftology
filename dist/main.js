@@ -1186,11 +1186,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react_bulma_companion_lib_Section__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-bulma-companion/lib/Section */ "./node_modules/react-bulma-companion/lib/Section/index.js");
-/* harmony import */ var react_bulma_companion_lib_Container__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-bulma-companion/lib/Container */ "./node_modules/react-bulma-companion/lib/Container/index.js");
-/* harmony import */ var react_bulma_companion_lib_Title__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react-bulma-companion/lib/Title */ "./node_modules/react-bulma-companion/lib/Title/index.js");
-/* harmony import */ var _api_quiz__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../../api/quiz */ "./client/api/quiz.js");
-/* harmony import */ var _styled__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./styled */ "./client/components/organisms/ProductResult/styled.js");
-
+/* harmony import */ var react_bulma_companion_lib_Title__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-bulma-companion/lib/Title */ "./node_modules/react-bulma-companion/lib/Title/index.js");
+/* harmony import */ var _api_quiz__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../api/quiz */ "./client/api/quiz.js");
+/* harmony import */ var _styled__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./styled */ "./client/components/organisms/ProductResult/styled.js");
 
 
 
@@ -1216,16 +1214,25 @@ function ProductResult(props) {
   console.log(arrayOfCategories); // Should just be able to go through available categories
   // and display products and names
 
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, categoryScores.map(function (category, index) {
-    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, {
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_styled__WEBPACK_IMPORTED_MODULE_4__.Container, null, categoryScores.map(function (category, index) {
+    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_styled__WEBPACK_IMPORTED_MODULE_4__.FullContainer, {
       key: index
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_styled__WEBPACK_IMPORTED_MODULE_5__.Category, null, category.name), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("h1", null, category.score), arrayOfCategories[category.name].map(function (product, index) {
-      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("p", {
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_styled__WEBPACK_IMPORTED_MODULE_4__.CategoryContainer, {
+      key: index
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_styled__WEBPACK_IMPORTED_MODULE_4__.Category, null, category.name), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_styled__WEBPACK_IMPORTED_MODULE_4__.CategoryImage, {
+      src: "/images/default-profile.png"
+    }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_styled__WEBPACK_IMPORTED_MODULE_4__.CategoryScore, null, "Score: ", category.score)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_styled__WEBPACK_IMPORTED_MODULE_4__.ProductContainer, null, arrayOfCategories[category.name].map(function (product, index) {
+      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_styled__WEBPACK_IMPORTED_MODULE_4__.SingleProductContainer, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_styled__WEBPACK_IMPORTED_MODULE_4__.ProductImage, {
+        src: "/images/default-profile.png"
+      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_styled__WEBPACK_IMPORTED_MODULE_4__.ProductTitle, {
         key: index
-      }, product.productName);
-    }));
+      }, product.productName));
+    })));
   }));
 }
+/* <p key={index}>{"product"}</p>
+            <p key={index}>{"product"}</p>
+            <p key={index}>{"product"}</p> */
 
 /***/ }),
 
@@ -1238,15 +1245,33 @@ function ProductResult(props) {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "Category": () => (/* binding */ Category)
+/* harmony export */   "Category": () => (/* binding */ Category),
+/* harmony export */   "CategoryContainer": () => (/* binding */ CategoryContainer),
+/* harmony export */   "CategoryImage": () => (/* binding */ CategoryImage),
+/* harmony export */   "CategoryScore": () => (/* binding */ CategoryScore),
+/* harmony export */   "Container": () => (/* binding */ Container),
+/* harmony export */   "FullContainer": () => (/* binding */ FullContainer),
+/* harmony export */   "ProductContainer": () => (/* binding */ ProductContainer),
+/* harmony export */   "ProductTitle": () => (/* binding */ ProductTitle),
+/* harmony export */   "ProductImage": () => (/* binding */ ProductImage),
+/* harmony export */   "SingleProductContainer": () => (/* binding */ SingleProductContainer)
 /* harmony export */ });
 /* harmony import */ var styled_components__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! styled-components */ "./node_modules/styled-components/dist/styled-components.browser.esm.js");
-var _templateObject;
+var _templateObject, _templateObject2, _templateObject3, _templateObject4, _templateObject5, _templateObject6, _templateObject7, _templateObject8, _templateObject9, _templateObject10;
 
 function _taggedTemplateLiteral(strings, raw) { if (!raw) { raw = strings.slice(0); } return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
 
 
-var Category = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].h1(_templateObject || (_templateObject = _taggedTemplateLiteral(["\n  font-size: 2em;\n"])));
+var Category = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].h1(_templateObject || (_templateObject = _taggedTemplateLiteral(["\n  font-size: 2em;\n  /* min-width: 250px; */\n  flex-basis: 33%;\n  margin: auto;\n"])));
+var CategoryContainer = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].div(_templateObject2 || (_templateObject2 = _taggedTemplateLiteral(["\n  display: flex;\n  flex-basis: 50%;\n"])));
+var CategoryImage = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].img(_templateObject3 || (_templateObject3 = _taggedTemplateLiteral(["\n  max-width: 150px;\n  flex-basis: 33%;\n  margin: auto;\n"])));
+var CategoryScore = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].h2(_templateObject4 || (_templateObject4 = _taggedTemplateLiteral(["\n  font-size: 1em;\n  flex-basis: 33%;\n  margin: auto;\n  width: 100px;\n"])));
+var Container = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].div(_templateObject5 || (_templateObject5 = _taggedTemplateLiteral(["\n  margin-top: 5em;\n"])));
+var FullContainer = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].div(_templateObject6 || (_templateObject6 = _taggedTemplateLiteral(["\n  display: flex;\n"])));
+var ProductContainer = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].div(_templateObject7 || (_templateObject7 = _taggedTemplateLiteral(["\n  display: flex;\n  flex-direction: column;\n  flex-basis: 50%;\n  justify-content: center;\n  margin-bottom:2em;\n"])));
+var ProductTitle = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].p(_templateObject8 || (_templateObject8 = _taggedTemplateLiteral(["\n  align-self: center;\n"])));
+var ProductImage = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].img(_templateObject9 || (_templateObject9 = _taggedTemplateLiteral(["\n  max-width: 50px;\n"])));
+var SingleProductContainer = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].div(_templateObject10 || (_templateObject10 = _taggedTemplateLiteral(["\n  display: flex;\n  gap: 10px;\n"])));
 
 /***/ }),
 
@@ -1693,7 +1718,7 @@ var _templateObject;
 function _taggedTemplateLiteral(strings, raw) { if (!raw) { raw = strings.slice(0); } return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
 
 
-var Container = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].div(_templateObject || (_templateObject = _taggedTemplateLiteral(["\n  margin: auto;\n  margin-top: 10em;\n  width: 50%;\n"])));
+var Container = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].div(_templateObject || (_templateObject = _taggedTemplateLiteral(["\n  margin: auto;\n  margin-top: 10em;\n  width: 75%;\n"])));
 
 /***/ }),
 
@@ -1722,178 +1747,159 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-var data = [{
-  occassions: {
-    Type: []
-  },
-  hobbiesInterests: '{Camping}',
-  _id: '61993690e23f275ea01d746a',
-  productId: '',
-  productName: 'PETZL - TIKKINA Headlamp, 150 Lumens, Standard Lighting',
-  category: 'Camping',
-  website: 'Amazon',
-  link: 'https://www.amazon.com/PETZL-TIKKINA-Headlamp-Standard-Lighting/dp/B01KYTRHLQ?dchild=1&keywords=Petzl%2BTikkina%2BHeadlamp&qid=1626036560&s=sporting-goods&sr=1-5&th=1&linkCode=sl1&tag=giftologyshop-20&linkId=8c570e0d8b3da9654ef3dacbeabf4abe&language=en_US&ref_=as_li_ss_tl',
-  flavorText: 'Who do we like it for?\nCampers who just need a basic headlamp.',
-  productBasePrice: '34.97',
-  gender: 'null',
-  indoorOutdoor: '{outdoor}',
-  ageMin: '12',
-  ageMax: '120',
-  occasion: 'null',
-  practicalWhimsical: 'null'
-}, {
-  occassions: {
-    Type: []
-  },
-  hobbiesInterests: '{Camping}',
-  _id: '61993690e23f275ea01d746b',
-  productId: '',
-  productName: 'Hydro Flask Water Bottle - Stainless Steel, Reusable, Vacuum Insulated- Wide Mouth with Leak Proof Flex Cap',
-  category: 'Camping',
-  website: 'Amazon',
-  link: 'https://www.amazon.com/Hydro-Flask-Water-Bottle-Stainless/dp/B07YXMJZQW?dchild=1&keywords=Hydro%2BFlask%2BWide-Mouth%2BVacuum%2BWater%2BBottle%2B-%2B32%2Bfl.%2Boz.&qid=1626031702&sr=8-2&th=1&psc=1&linkCode=sl1&tag=giftologyshop-20&linkId=2f993aa25a0081fb4edb9bb8e0aaa833&language=en_US&ref_=as_li_ss_tl',
-  flavorText: 'Who do we like this for?\n\nCampers and hikers who want cold, refreshing water, or nullone who needs to sneak wine into a family reunion.',
-  productBasePrice: '33.95',
-  gender: 'null',
-  indoorOutdoor: '{outdoor}',
-  ageMin: '12',
-  ageMax: '120',
-  occasion: 'null',
-  practicalWhimsical: 'null'
-}, {
-  occassions: {
-    Type: []
-  },
-  hobbiesInterests: '{Camping}',
-  _id: '61993690e23f275ea01d746c',
-  productId: '',
-  productName: "Mountain Hardwear Men's Stretch Ozonic Jacket",
-  category: 'Camping',
-  website: 'Amazon',
-  link: 'https://www.amazon.com/gp/product/B082QX7G1K?ie=UTF8&th=1&linkCode=sl1&tag=giftologyshop-20&linkId=00836c10ee4f41920c2b6e3e12647a3d&language=en_US&ref_=as_li_ss_tl&psc=1',
-  flavorText: 'Who do we like this for?\n\nnullone that’s had bad weather mess up a great trip.',
-  productBasePrice: '199.99',
-  gender: 'null',
-  indoorOutdoor: '{outdoor}',
-  ageMin: '12',
-  ageMax: '120',
-  occasion: 'null',
-  practicalWhimsical: 'null'
-}, {
-  occassions: {
-    Type: []
-  },
-  hobbiesInterests: '{Camping}',
-  _id: '61993690e23f275ea01d746d',
-  productId: '',
-  productName: 'REI Co-op Half Dome SL 2+ Tent with Footprint',
-  category: 'Camping',
-  website: 'REI',
-  link: 'https://www.rei.com/product/185632/rei-co-op-half-dome-sl-2-tent-with-footprint',
-  flavorText: 'Who do we like this for?\n\nnullone looking for an all-around, quality tent with a little extra room to sprawl out.',
-  productBasePrice: '279',
-  gender: 'null',
-  indoorOutdoor: '{outdoor}',
-  ageMin: '12',
-  ageMax: '120',
-  occasion: 'null',
-  practicalWhimsical: 'null'
-}, {
-  occassions: {
-    Type: []
-  },
-  hobbiesInterests: '{Home Chef/Cooking}',
-  _id: '61993690e23f275ea01d746e',
-  productId: '',
-  productName: 'Cooking Gift Set Co | Wood Smoked Grill Kit - 8 Piece BBQ Set | Top Grilling Gifts for Dad, Grill Sets for Men, BBQ Gifts for Men',
-  category: 'Home Chef',
-  website: 'Amazon',
-  link: 'https://www.amazon.com/Cooking-Gift-Set-Smoker-Birthday/dp/B01DVJ66H2?dchild=1&keywords=barbecue+smoker+kit&qid=1625525079&sr=8-9&linkCode=sl1&tag=giftologyshop-20&linkId=50b3cdbaddccc78ac3c740cc485ba665&language=en_US&ref_=as_li_ss_tl',
-  flavorText: 'Who do we like this for?\n\nFolks who want to experiment with smoking but have large smoker commitment issues.',
-  productBasePrice: '49.99',
-  gender: 'null',
-  indoorOutdoor: '{indoor}',
-  ageMin: '12',
-  ageMax: '120',
-  occasion: 'null',
-  practicalWhimsical: 'null'
-}, {
-  occassions: {
-    Type: []
-  },
-  hobbiesInterests: '{Camping}',
-  _id: '61993690e23f275ea01d746f',
-  productId: '',
-  productName: 'PETZL, ACTIK CORE Headlamp, 450 Lumens, Rechargeable, with CORE Battery, Black',
-  category: 'Camping',
-  website: 'Amazon',
-  link: 'https://www.amazon.com/gp/product/B07T5RLZTX?ie=UTF8&linkCode=sl1&tag=giftologyshop-20&linkId=8f456fb9b9579537f8f1e9b7c0f9de10&language=en_US&ref_=as_li_ss_tl&th=1',
-  flavorText: 'Who do we like this for?\n\nnullone looking for a reliable, hands-free light source, with some excellent features.',
-  productBasePrice: '69.95',
-  gender: 'null',
-  indoorOutdoor: '{outdoor}',
-  ageMin: '12',
-  ageMax: '120',
-  occasion: 'null',
-  practicalWhimsical: 'null'
-}, {
-  occassions: {
-    Type: []
-  },
-  hobbiesInterests: '{Home Chef/Cooking,Technology,Gardening}',
-  _id: '61993690e23f275ea01d7470',
-  productId: '',
-  productName: 'Click and Grow Smart Garden 3 Indoor Herb Garden (Includes Basil Plant Pods), White',
-  category: 'Home Chef',
-  website: 'Amazon',
-  link: 'https://www.amazon.com/gp/product/B01MRVMKQH?ie=UTF8&linkCode=sl1&tag=giftologyshop-20&linkId=39f8eb6b9cc31718c5e2e96ba4d8d4cf&language=en_US&ref_=as_li_ss_tl&th=1',
-  flavorText: 'Who do we like this for?\n\nPeople who desperately need fresh pesto year-round.',
-  productBasePrice: '99.95',
-  gender: 'null',
-  indoorOutdoor: '{indoor}',
-  ageMin: '12',
-  ageMax: '120',
-  occasion: 'null',
-  practicalWhimsical: 'null'
-}, {
-  occassions: {
-    Type: []
-  },
-  hobbiesInterests: '{Camping}',
-  _id: '61993690e23f275ea01d7471',
-  productId: '',
-  productName: "Mountain Hardwear Women's Stretch Ozonic Jacket",
-  category: 'Camping',
-  website: 'Amazon',
-  link: 'https://www.amazon.com/gp/product/B082QML2Y6?ie=UTF8&th=1&linkCode=sl1&tag=giftologyshop-20&linkId=95564400595012db9ab6c3a9b4c0b733&language=en_US&ref_=as_li_ss_tl&psc=1',
-  flavorText: 'Who do we like this for?\n\nnullone that’s had bad weather mess up a great trip.',
-  productBasePrice: '199.97',
-  gender: 'null',
-  indoorOutdoor: '{outdoor}',
-  ageMin: '12',
-  ageMax: '120',
-  occasion: 'null',
-  practicalWhimsical: 'null'
-}, {
-  occassions: {
-    Type: []
-  },
-  hobbiesInterests: '{Home Chef/Cooking}',
-  _id: '61993690e23f275ea01d7472',
-  productId: '',
-  productName: 'GoWISE USA GW22921-S 8-in-1 Digital Air Fryer with Recipe Book, 5.0-Qt, Black',
-  category: 'Home Chef',
-  website: 'Amazon',
-  link: 'https://www.amazon.com/gp/product/B07JP1GFNW?ie=UTF8&th=1&linkCode=sl1&tag=giftologyshop-20&linkId=2c9f26b7df90970ca71f1148d6c581e4&language=en_US&ref_=as_li_ss_tl',
-  flavorText: 'Who do we like this for?\n\nPeople who hate soggy leftovers and home cooks who want to prepare a meal quickly.',
-  productBasePrice: '69.99',
-  gender: 'null',
-  indoorOutdoor: '{indoor}',
-  ageMin: '12',
-  ageMax: '120',
-  occasion: 'null',
-  practicalWhimsical: 'null'
-}];
+var data = {
+  categoryScores: [{
+    name: 'Camping',
+    score: 2
+  }, {
+    name: 'Technology',
+    score: 0
+  }, {
+    name: 'Home Chef',
+    score: 0
+  }, {
+    name: 'Outdoor Games',
+    score: 1
+  }, {
+    name: 'Health And Wellness',
+    score: 1
+  }, {
+    name: 'Reading',
+    score: 0
+  }, {
+    name: 'Gaming',
+    score: 0
+  }, {
+    name: 'Board Games',
+    score: 0
+  }, {
+    name: 'Pets - Dog',
+    score: 0
+  }, {
+    name: 'null',
+    score: 0
+  }],
+  products: [{
+    hobbiesInterests: 'Camping',
+    _id: '6199b4e3c855b94d731cf4b6',
+    productId: '',
+    productName: 'PETZL, ACTIK CORE Headlamp, 450 Lumens, Rechargeable, with CORE Battery, Black',
+    category: 'Camping',
+    website: 'Amazon',
+    link: 'https://www.amazon.com/gp/product/B07T5RLZTX?ie=UTF8&linkCode=sl1&tag=giftologyshop-20&linkId=8f456fb9b9579537f8f1e9b7c0f9de10&language=en_US&ref_=as_li_ss_tl&th=1',
+    flavorText: 'Who do we like this for?\n\nnullone looking for a reliable, hands-free light source, with some excellent features.',
+    productBasePrice: '69.95',
+    gender: 'null',
+    indoorOutdoor: 'outdoor',
+    ageMin: '12',
+    ageMax: '120',
+    occasion: 'null',
+    practicalWhimsical: 'null',
+    score: 2
+  }, {
+    hobbiesInterests: 'Camping',
+    _id: '6199b4e3c855b94d731cf4b7',
+    productId: '',
+    productName: "Mountain Hardwear Men's Stretch Ozonic Jacket",
+    category: 'Camping',
+    website: 'Amazon',
+    link: 'https://www.amazon.com/gp/product/B082QX7G1K?ie=UTF8&th=1&linkCode=sl1&tag=giftologyshop-20&linkId=00836c10ee4f41920c2b6e3e12647a3d&language=en_US&ref_=as_li_ss_tl&psc=1',
+    flavorText: 'Who do we like this for?\n\nnullone that’s had bad weather mess up a great trip.',
+    productBasePrice: '199.99',
+    gender: 'null',
+    indoorOutdoor: 'outdoor',
+    ageMin: '12',
+    ageMax: '120',
+    occasion: 'null',
+    practicalWhimsical: 'null',
+    score: 2
+  }, {
+    hobbiesInterests: 'Music,Technology',
+    _id: '6199b4e3c855b94d731cf4b8',
+    productId: '',
+    productName: 'JBL CLIP 3 - Waterproof Portable Bluetooth Speaker',
+    category: 'Technology',
+    website: 'Amazon',
+    link: 'https://www.amazon.com/JBL-Waterproof-Portable-Bluetooth-Speaker/dp/B07Q6ZWMLR?linkCode=sl1&tag=giftologyshop-20&linkId=cdff2308edba579a986a2367db08d830&language=en_US&ref_=as_li_ss_tl&th=1',
+    flavorText: 'For those of you who either want a budget-friendly version of the JBL FLIP 5 or an even more portable alternative, we recommend the JBL CLIP 3.',
+    productBasePrice: '49.95',
+    gender: 'null',
+    indoorOutdoor: 'null',
+    ageMin: '12',
+    ageMax: '120',
+    occasion: 'null',
+    practicalWhimsical: 'null',
+    score: 0
+  }, {
+    hobbiesInterests: 'Music,Technology',
+    _id: '6199b4e3c855b94d731cf4b9',
+    productId: '',
+    productName: 'JBL FLIP 5, Waterproof Portable Bluetooth Speaker',
+    category: 'Technology',
+    website: 'Amazon',
+    link: 'https://www.amazon.com/JBL-Waterproof-Portable-Bluetooth-Speaker/dp/B07QK2SPP7?th=1&linkCode=sl1&tag=giftologyshop-20&linkId=653808aa96dba7e9eeecefdf450b52e7&language=en_US&ref_=as_li_ss_tl',
+    flavorText: "Who do we like this for?\n\nFor those who consider music an important part of their daily routine, we recommend the JBL family of portable Bluetooth speakers.'",
+    productBasePrice: '129.95',
+    gender: 'null',
+    indoorOutdoor: 'null',
+    ageMin: '12',
+    ageMax: '120',
+    occasion: 'null',
+    practicalWhimsical: 'null',
+    score: 0
+  }, {
+    hobbiesInterests: 'Home Chef',
+    _id: '6199b4e3c855b94d731cf4ba',
+    productId: '',
+    productName: 'Nespresso BEC250BLK Essenza Mini Espresso Machine with Aeroccino Milk Frother by Breville, Piano Black',
+    category: 'Home Chef',
+    website: 'Amazon',
+    link: 'https://www.amazon.com/Nespresso-Essenza-Original-Espresso-Breville/dp/B073ZHT2FM?crid=2RIMDTXACX4B0&dchild=1&keywords=nespresso%2Bessenza%2Bmini&qid=1613014542&sprefix=nespresso%2Be%2Caps%2C179&sr=8-3&th=1&linkCode=sl1&tag=giftologyshop-20&linkId=19686603b2d67c4305c4d0b8900ae59d&language=en_US&ref_=as_li_ss_tl',
+    flavorText: 'Who do we like this for?\n\nCoffee connoisseurs who like their espresso just so… and strong!',
+    productBasePrice: '219.95',
+    gender: 'null',
+    indoorOutdoor: 'indoor',
+    ageMin: '12',
+    ageMax: '120',
+    occasion: 'null',
+    practicalWhimsical: 'null',
+    score: 0
+  }, {
+    hobbiesInterests: 'Home Chef',
+    _id: '6199b4e3c855b94d731cf4bb',
+    productId: '',
+    productName: 'WÜSTHOF CLASSIC IKON 8 Inch Chef’s Knife | Full-Tang Half Bolster 8" Cook’s Knife | Precision Forged High-Carbon Stainless Steel German Made Chef’s Knife – Model ,Black',
+    category: 'Home Chef',
+    website: 'Amazon',
+    link: 'https://www.amazon.com/Wusthof-4596-7-20-4596-7-20-Knife/dp/B000YMURSE?dchild=1&keywords=wusthof+classic+ikon&qid=1624038319&s=industrial&sr=1-8&linkCode=sl1&tag=giftologyshop-20&linkId=f4a8d863046316447f5e36f8735a2d48&language=en_US&ref_=as_li_ss_tl',
+    flavorText: 'Who do we like this for?\n\nnullone who loves to cook, and most people who don’t. This is our #1 gift for null home chef.',
+    productBasePrice: '180',
+    gender: 'null',
+    indoorOutdoor: 'indoor',
+    ageMin: '18',
+    ageMax: '120',
+    occasion: 'null',
+    practicalWhimsical: 'null',
+    score: 0
+  }, {
+    hobbiesInterests: 'Camping',
+    _id: '6199b4e3c855b94d731cf4be',
+    productId: '',
+    productName: 'PETZL - TIKKINA Headlamp, 150 Lumens, Standard Lighting',
+    category: 'Camping',
+    website: 'Amazon',
+    link: 'https://www.amazon.com/PETZL-TIKKINA-Headlamp-Standard-Lighting/dp/B01KYTRHLQ?dchild=1&keywords=Petzl%2BTikkina%2BHeadlamp&qid=1626036560&s=sporting-goods&sr=1-5&th=1&linkCode=sl1&tag=giftologyshop-20&linkId=8c570e0d8b3da9654ef3dacbeabf4abe&language=en_US&ref_=as_li_ss_tl',
+    flavorText: 'Who do we like it for?\nCampers who just need a basic headlamp.',
+    productBasePrice: '34.97',
+    gender: 'null',
+    indoorOutdoor: 'outdoor',
+    ageMin: '12',
+    ageMax: '120',
+    occasion: 'null',
+    practicalWhimsical: 'null',
+    score: 2
+  }]
+};
 function WelcomePage() {
   var history = (0,react_router__WEBPACK_IMPORTED_MODULE_6__.useHistory)();
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
