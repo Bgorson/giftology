@@ -1291,6 +1291,18 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react_bulma_companion_lib_Container__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-bulma-companion/lib/Container */ "./node_modules/react-bulma-companion/lib/Container/index.js");
 /* harmony import */ var react_bulma_companion_lib_Title__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react-bulma-companion/lib/Title */ "./node_modules/react-bulma-companion/lib/Title/index.js");
 /* harmony import */ var _QuizResult_QuizResult__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../QuizResult/QuizResult */ "./client/components/organisms/QuizResult/QuizResult.js");
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
+
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
+function _iterableToArrayLimit(arr, i) { var _i = arr == null ? null : typeof Symbol !== "undefined" && arr[Symbol.iterator] || arr["@@iterator"]; if (_i == null) return; var _arr = []; var _n = true; var _d = false; var _s, _e; try { for (_i = _i.call(arr); !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
+
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
 
 
 
@@ -1302,7 +1314,31 @@ function QuizQuestion(props) {
       handleResponse = props.handleResponse,
       next = props.next,
       id = props.id,
-      results = props.results;
+      results = props.results,
+      isMulti = props.isMulti;
+
+  var _useState = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(new Array(answers.length).fill(false)),
+      _useState2 = _slicedToArray(_useState, 2),
+      checkedState = _useState2[0],
+      setCheckedState = _useState2[1];
+
+  var handleOnChange = function handleOnChange(position) {
+    var updatedCheckedState = checkedState.map(function (item, index) {
+      return index === position ? !item : item;
+    });
+    setCheckedState(updatedCheckedState);
+  };
+
+  var handleMultiResponse = function handleMultiResponse(id, arrayOfPossbleAnswers, arrayofCheckedResponses) {
+    var response = [];
+    arrayofCheckedResponses.forEach(function (checkedBox, index) {
+      if (checkedBox) {
+        response.push(arrayOfPossbleAnswers[index].value);
+      }
+    });
+    handleResponse(id, response, true);
+  };
+
   var possibleAnswers = answers.map(function (answers) {
     return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
       onClick: function onClick() {
@@ -1310,10 +1346,30 @@ function QuizQuestion(props) {
         next();
       },
       type: "submit",
-      key: answers
+      key: answers.value
     }, answers.message);
   });
-  return id !== "results" ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_bulma_companion_lib_Container__WEBPACK_IMPORTED_MODULE_2__["default"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_bulma_companion_lib_Title__WEBPACK_IMPORTED_MODULE_3__["default"], null, title), possibleAnswers) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_QuizResult_QuizResult__WEBPACK_IMPORTED_MODULE_4__["default"], {
+  var multiPossibleAnswers = answers.map(function (answers, index) {
+    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+      key: answers.message
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("input", {
+      type: "checkbox",
+      id: "custom-checkbox-".concat(index),
+      name: answers.message,
+      value: answers.message,
+      checked: checkedState[index],
+      onChange: function onChange() {
+        return handleOnChange(index);
+      }
+    }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("p", null, answers.message));
+  });
+  return id !== "results" ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_bulma_companion_lib_Container__WEBPACK_IMPORTED_MODULE_2__["default"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_bulma_companion_lib_Title__WEBPACK_IMPORTED_MODULE_3__["default"], null, title), isMulti ? multiPossibleAnswers : possibleAnswers, isMulti ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
+    type: "submit",
+    onClick: function onClick() {
+      handleMultiResponse(id, answers, checkedState);
+      next();
+    }
+  }, "Submit") : null) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_QuizResult_QuizResult__WEBPACK_IMPORTED_MODULE_4__["default"], {
     results: results
   });
 }
@@ -1507,163 +1563,176 @@ var Quiz = function Quiz() {
       isForSelf = _React$useState4[0],
       setIsForSelf = _React$useState4[1];
 
-  var handleResponse = function handleResponse(id, response) {
-    if (id === 'who' && response === 'Myself') {
+  var handleResponse = function handleResponse(id, response, isMulti) {
+    console.log(isMulti);
+
+    if (id === "who" && response === "Myself") {
       setIsForSelf(true);
     }
 
     var newInput = "".concat(id);
-    answers[newInput] = response.value;
+
+    if (isMulti) {
+      console.log(newInput);
+      console.log(response);
+      answers[newInput] = response;
+    } else {
+      answers[newInput] = response.value;
+    }
+
     setAnswers(answers);
+    console.log(answers);
   };
 
   var quizQuestions = [{
-    id: 'who',
-    title: 'Who are you shopping for?',
+    id: "who",
+    title: "Who are you shopping for?",
     answers: [{
-      message: 'Myself',
-      value: 'myself'
+      message: "Myself",
+      value: "myself"
     }, {
-      message: 'A Relative',
-      value: 'relative'
+      message: "A Relative",
+      value: "relative"
     }, {
-      message: 'A Friend',
-      value: 'friend'
+      message: "A Friend",
+      value: "friend"
     }]
   }, {
-    id: 'prefer',
-    title: "Which do ".concat(isForSelf ? 'you' : 'they', " prefer"),
+    id: "prefer",
+    title: "Which do ".concat(isForSelf ? "you" : "they", " prefer"),
     answers: [{
-      message: 'The Great indoors',
-      value: 'indoor'
+      message: "The Great indoors",
+      value: "indoor"
     }, {
-      message: 'The Great Outdoors',
-      value: 'outdoor'
+      message: "The Great Outdoors",
+      value: "outdoor"
     }]
   }, {
-    id: 'age',
-    title: "How old are ".concat(isForSelf ? 'you' : 'they', "?"),
+    id: "age",
+    title: "How old are ".concat(isForSelf ? "you" : "they", "?"),
     answers: [{
-      message: '1-2',
-      value: '1-2'
+      message: "1-2",
+      value: "1-2"
     }, {
-      message: '3-4',
-      value: '3-4'
+      message: "3-4",
+      value: "3-4"
     }, {
-      message: '5-6',
-      value: '5-6'
+      message: "5-6",
+      value: "5-6"
     }, {
-      message: '7-10',
-      value: '7-10'
+      message: "7-10",
+      value: "7-10"
     }, {
-      message: '11-15',
-      value: '11-15'
+      message: "11-15",
+      value: "11-15"
     }, {
-      message: '16-20',
-      value: '16-20'
+      message: "16-20",
+      value: "16-20"
     }, {
-      message: '21-30',
-      value: '21-30'
+      message: "21-30",
+      value: "21-30"
     }, {
-      message: '31-40',
-      value: '31-40'
+      message: "31-40",
+      value: "31-40"
     }, {
-      message: '41-50',
-      value: '41-50'
+      message: "41-50",
+      value: "41-50"
     }, {
-      message: '>50',
-      value: '51-99999'
+      message: ">50",
+      value: "51-99999"
     }]
   }, {
-    id: 'occassion',
-    title: 'What is the occassion?',
+    id: "occassion",
+    title: "What is the occassion?",
     answers: [{
-      message: 'Anniversary',
-      value: 'anniversary'
+      message: "Anniversary",
+      value: "anniversary"
     }, {
-      message: 'Birthday',
-      value: 'birthday'
+      message: "Birthday",
+      value: "birthday"
     }, {
-      message: 'Holiday',
-      value: 'holiday'
+      message: "Holiday",
+      value: "holiday"
     }, {
-      message: 'White Elephant',
-      value: 'whiteElephant'
+      message: "White Elephant",
+      value: "whiteElephant"
     }, {
-      message: 'Who Need an occasion?',
-      value: 'any'
+      message: "Who Need an occasion?",
+      value: "any"
     }]
   }, {
-    id: 'type',
-    title: "Are ".concat(isForSelf ? 'you' : 'they', " more: "),
+    id: "type",
+    title: "Are ".concat(isForSelf ? "you" : "they", " more: "),
     answers: [{
-      message: 'Practical',
-      value: 'practical'
+      message: "Practical",
+      value: "practical"
     }, {
-      message: 'Whimsical',
-      value: 'whimsical'
+      message: "Whimsical",
+      value: "whimsical"
     }]
   }, {
-    id: 'hobbies',
-    title: 'What about hobbies?',
+    id: "hobbies",
+    title: "What about hobbies?",
+    isMulti: true,
     answers: [{
-      message: 'Camping',
-      value: 'camping'
+      message: "Camping",
+      value: "camping"
     }, {
-      message: 'Health & Wellness',
-      value: 'camping'
+      message: "Health & Wellness",
+      value: "health"
     }, {
-      message: 'Home Chef/Cooking',
-      value: 'healthAndWellness'
+      message: "Home Chef/Cooking",
+      value: "cooking"
     }, {
-      message: 'Mixology/Alcohol',
-      value: 'mixologyAlcohol'
+      message: "Mixology/Alcohol",
+      value: "mixology"
     }, {
-      message: 'Music',
-      value: 'music'
+      message: "Music",
+      value: "music"
     }, {
-      message: 'Reading',
-      value: 'reading'
+      message: "Reading",
+      value: "reading"
     }, {
-      message: 'Technology',
-      value: 'technology'
+      message: "Technology",
+      value: "technology"
     }, {
-      message: 'Other',
-      value: 'other'
+      message: "Other",
+      value: "other"
     }]
   }, {
-    id: 'price',
-    title: 'Price Range?',
+    id: "price",
+    title: "Price Range?",
     answers: [{
-      message: '<$50',
-      value: '0-50'
+      message: "<$50",
+      value: "0-50"
     }, {
-      message: '<$100',
-      value: '0-100'
+      message: "<$100",
+      value: "0-100"
     }, {
-      message: '<$200',
-      value: '0-200'
+      message: "<$200",
+      value: "0-200"
     }, {
-      message: '+$200',
-      value: '200-999999'
+      message: "+$200",
+      value: "200-999999"
     }]
   }, {
-    id: 'createAccount',
-    title: 'Do you want to create an account?',
+    id: "createAccount",
+    title: "Do you want to create an account?",
     answers: [{
-      message: 'Yes',
+      message: "Yes",
       value: true
     }, {
-      message: 'Not at this time',
+      message: "Not at this time",
       value: false
     }]
   }, {
-    id: 'results',
-    title: '',
-    answers: ['']
+    id: "results",
+    title: "",
+    answers: [""]
   }];
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_styles__WEBPACK_IMPORTED_MODULE_2__.Container, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_albus__WEBPACK_IMPORTED_MODULE_1__.Wizard, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_albus__WEBPACK_IMPORTED_MODULE_1__.Steps, null, quizQuestions.map(function (quizData) {
     return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_albus__WEBPACK_IMPORTED_MODULE_1__.Step, {
+      key: quizData.id,
       id: quizData.id,
       render: function render(_ref) {
         var next = _ref.next;
@@ -1673,6 +1742,7 @@ var Quiz = function Quiz() {
           id: quizData.id,
           title: quizData.title,
           answers: quizData.answers,
+          isMulti: quizData.isMulti || false,
           results: answers
         });
       }
