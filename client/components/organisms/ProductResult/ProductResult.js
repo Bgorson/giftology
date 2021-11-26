@@ -12,7 +12,7 @@ import {
   ProductContainer,
   ProductImage,
   ProductTitle,
-  SingleProductContainer
+  SingleProductContainer,
 } from "./styled";
 
 function groupBy(arr, property) {
@@ -29,7 +29,8 @@ export default function ProductResult(props) {
   const { data } = props;
   const { products, categoryScores } = data;
   const arrayOfCategories = groupBy(products, "category");
-  console.log(arrayOfCategories);
+  console.log("cat scores", categoryScores);
+  categoryScores.sort((a, b) => (b.score > a.score ? 1 : -1));
 
   // Should just be able to go through available categories
   // and display products and names
@@ -45,10 +46,9 @@ export default function ProductResult(props) {
           <ProductContainer>
             {arrayOfCategories[category.name].map((product, index) => (
               <SingleProductContainer>
-              <ProductImage src="/images/default-profile.png"  />
-              <ProductTitle key={index}>{product.productName}</ProductTitle>
+                <ProductImage src="/images/default-profile.png" />
+                <ProductTitle key={index}>{product.productName}</ProductTitle>
               </SingleProductContainer>
-
             ))}
           </ProductContainer>
         </FullContainer>

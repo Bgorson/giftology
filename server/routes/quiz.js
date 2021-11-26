@@ -13,25 +13,34 @@ async function retriveProducts() {
   return await allProducts;
 }
 
-
 //TODO: Do all of the scoring in one function
 // Average the scores after all individual products have been scored
 
-
 async function calculateScore(ageFiltered, quizResults) {
+  const minPrice = parseInt(quizResults.price.split("-")[0]);
+  const maxPrice = parseInt(quizResults.price.split("-")[1]);
   const filteredArray = ageFiltered;
   filteredArray.forEach(function (product) {
     let score = 0;
     if (product.indoorOutdoor == quizResults.prefer) {
       score++;
     }
-    if (product.indoorOutdoor == quizResults.prefer) {
-      score++;
-    }
+    const array = product.hobbiesInterests.toString().split(",");
+    const lowerCase = array.map((array) => array.toLowerCase());
+    quizResults.hobbies.forEach((hobby) => {
+      if (lowerCase.includes(hobby)) {
+        score++;
+      }
+      if (
+        product.productBasePrice >= minPrice &&
+        product.productBasePrice <= maxPrice
+      ) {
+        score++;
+      }
 
-    product.score = score;
+      product.score = score;
+    });
   });
-
   return filteredArray;
 }
 
@@ -66,8 +75,7 @@ router.post("/", async (req, res) => {
   console.log(quizResults);
   const minAge = parseInt(quizResults.age.split("-")[0]);
   const maxAge = parseInt(quizResults.age.split("-")[1]);
-  const minPrice = ParseInt(quizResults.price(split("-")[0]))
-  const maxPrice = ParseInt(quizResults.price(split("-")[1]))
+
 
   retriveProducts().then((allProducts) => {
     const minAgeFilter = allProducts.filter(
@@ -76,7 +84,7 @@ router.post("/", async (req, res) => {
     const ageFiltered = minAgeFilter.filter(
       (product) => parseInt(product.ageMax) >= minAge
     );
-    
+
     calculateScore(ageFiltered, quizResults).then((result) => {
       const arrayOfCategories = groupBy(result, "category");
       const categories = Object.keys(arrayOfCategories);
@@ -84,20 +92,7 @@ router.post("/", async (req, res) => {
       categories.forEach((category) => {
         let averageScore = 0;
         arrayOfCategories[category].forEach((product) => {
-          if (product.indoorOutdoor === quizResults.prefer) {
-            averageScore++;
-          }
-          if (product.hobbiesInterests) {
-            const array = product.hobbiesInterests.toString().split(",");
-            const lowerCase = array.map((array) => array.toLowerCase());
-            quizResults.hobbies.forEach((hobby) => {
-              if (lowerCase.includes(hobby)) {
-
-                averageScore++;
-              }
-            });
-          }
-
+          averageScore += product.score;
         });
         averageScore = Math.floor(
           averageScore / arrayOfCategories[category].length

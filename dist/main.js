@@ -1211,7 +1211,10 @@ function ProductResult(props) {
   var products = data.products,
       categoryScores = data.categoryScores;
   var arrayOfCategories = groupBy(products, "category");
-  console.log(arrayOfCategories); // Should just be able to go through available categories
+  console.log("cat scores", categoryScores);
+  categoryScores.sort(function (a, b) {
+    return b.score > a.score ? 1 : -1;
+  }); // Should just be able to go through available categories
   // and display products and names
 
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_styled__WEBPACK_IMPORTED_MODULE_4__.Container, null, categoryScores.map(function (category, index) {
