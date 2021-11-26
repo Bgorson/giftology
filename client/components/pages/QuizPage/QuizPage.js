@@ -87,7 +87,7 @@ const Quiz = () => {
       answers: [
         { message: "Camping", value: "camping" },
         { message: "Health & Wellness", value: "health" },
-        { message: "Home Chef/Cooking", value: "cooking" },
+        { message: "Home Chef/Cooking", value: "homeChef" },
         { message: "Mixology/Alcohol", value: "mixology" },
         { message: "Music", value: "music" },
         { message: "Reading", value: "reading" },

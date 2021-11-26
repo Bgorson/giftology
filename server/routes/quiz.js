@@ -30,6 +30,7 @@ async function calculateScore(ageFiltered, quizResults) {
     quizResults.hobbies.forEach((hobby) => {
       if (lowerCase.includes(hobby)) {
         score++;
+
       }
       if (
         product.productBasePrice >= minPrice &&

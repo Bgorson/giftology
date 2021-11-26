@@ -5,13 +5,14 @@ import { postQuizResults } from "../../../api/quiz";
 import {
   Category,
   CategoryContainer,
-  CategoryImage,
+  CategoryDescription,
   CategoryScore,
   Container,
   FullContainer,
   ProductContainer,
   ProductImage,
   ProductTitle,
+  ProductScore,
   SingleProductContainer,
 } from "./styled";
 
@@ -29,8 +30,14 @@ export default function ProductResult(props) {
   const { data } = props;
   const { products, categoryScores } = data;
   const arrayOfCategories = groupBy(products, "category");
-  console.log("cat scores", categoryScores);
+console.log('products', products)
   categoryScores.sort((a, b) => (b.score > a.score ? 1 : -1));
+  categoryScores.forEach((category) => {
+
+    if (arrayOfCategories[category.name].score) {
+      arrayOfCategories[category.name].sort((a, b) => b.score - a.score);
+    }
+  });
 
   // Should just be able to go through available categories
   // and display products and names
@@ -40,14 +47,18 @@ export default function ProductResult(props) {
         <FullContainer key={index}>
           <CategoryContainer key={index}>
             <Category>{category.name}</Category>
-            <CategoryImage src="/images/default-profile.png" />
-            <CategoryScore>Score: {category.score}</CategoryScore>
+            <CategoryDescription>{"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec ut nisl mattis, scelerisque arcu eget, auctor orci. In arcu turpis."} </CategoryDescription>
+            {/* <CategoryImage src="/images/default-profile.png" /> */}
+            {/* <CategoryScore>Score: {category.score}</CategoryScore> */}
           </CategoryContainer>
           <ProductContainer>
             {arrayOfCategories[category.name].map((product, index) => (
-              <SingleProductContainer>
-                <ProductImage src="/images/default-profile.png" />
-                <ProductTitle key={index}>{product.productName}</ProductTitle>
+              <SingleProductContainer key={index}>
+                <ProductImage
+                  dangerouslySetInnerHTML={{ __html: product.htmlTag }}
+                />
+                <ProductTitle>{product.productName}</ProductTitle>
+                <ProductScore>Score: {product.score}</ProductScore>
               </SingleProductContainer>
             ))}
           </ProductContainer>

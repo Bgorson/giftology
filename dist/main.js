@@ -1035,8 +1035,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-dom */ "./node_modules/react-dom/index.js");
-/* harmony import */ var _Main__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../Main */ "./client/components/environment/Main/index.js");
 /* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
+/* harmony import */ var _Main__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../Main */ "./client/components/environment/Main/index.js");
 
 
 
@@ -1211,9 +1211,16 @@ function ProductResult(props) {
   var products = data.products,
       categoryScores = data.categoryScores;
   var arrayOfCategories = groupBy(products, "category");
-  console.log("cat scores", categoryScores);
+  console.log('products', products);
   categoryScores.sort(function (a, b) {
     return b.score > a.score ? 1 : -1;
+  });
+  categoryScores.forEach(function (category) {
+    if (arrayOfCategories[category.name].score) {
+      arrayOfCategories[category.name].sort(function (a, b) {
+        return b.score - a.score;
+      });
+    }
   }); // Should just be able to go through available categories
   // and display products and names
 
@@ -1222,14 +1229,14 @@ function ProductResult(props) {
       key: index
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_styled__WEBPACK_IMPORTED_MODULE_4__.CategoryContainer, {
       key: index
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_styled__WEBPACK_IMPORTED_MODULE_4__.Category, null, category.name), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_styled__WEBPACK_IMPORTED_MODULE_4__.CategoryImage, {
-      src: "/images/default-profile.png"
-    }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_styled__WEBPACK_IMPORTED_MODULE_4__.CategoryScore, null, "Score: ", category.score)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_styled__WEBPACK_IMPORTED_MODULE_4__.ProductContainer, null, arrayOfCategories[category.name].map(function (product, index) {
-      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_styled__WEBPACK_IMPORTED_MODULE_4__.SingleProductContainer, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_styled__WEBPACK_IMPORTED_MODULE_4__.ProductImage, {
-        src: "/images/default-profile.png"
-      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_styled__WEBPACK_IMPORTED_MODULE_4__.ProductTitle, {
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_styled__WEBPACK_IMPORTED_MODULE_4__.Category, null, category.name), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_styled__WEBPACK_IMPORTED_MODULE_4__.CategoryDescription, null, "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec ut nisl mattis, scelerisque arcu eget, auctor orci. In arcu turpis.", " ")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_styled__WEBPACK_IMPORTED_MODULE_4__.ProductContainer, null, arrayOfCategories[category.name].map(function (product, index) {
+      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_styled__WEBPACK_IMPORTED_MODULE_4__.SingleProductContainer, {
         key: index
-      }, product.productName));
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_styled__WEBPACK_IMPORTED_MODULE_4__.ProductImage, {
+        dangerouslySetInnerHTML: {
+          __html: product.htmlTag
+        }
+      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_styled__WEBPACK_IMPORTED_MODULE_4__.ProductTitle, null, product.productName), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_styled__WEBPACK_IMPORTED_MODULE_4__.ProductScore, null, "Score: ", product.score));
     })));
   }));
 }
@@ -1257,24 +1264,28 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "ProductContainer": () => (/* binding */ ProductContainer),
 /* harmony export */   "ProductTitle": () => (/* binding */ ProductTitle),
 /* harmony export */   "ProductImage": () => (/* binding */ ProductImage),
-/* harmony export */   "SingleProductContainer": () => (/* binding */ SingleProductContainer)
+/* harmony export */   "ProductScore": () => (/* binding */ ProductScore),
+/* harmony export */   "SingleProductContainer": () => (/* binding */ SingleProductContainer),
+/* harmony export */   "CategoryDescription": () => (/* binding */ CategoryDescription)
 /* harmony export */ });
 /* harmony import */ var styled_components__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! styled-components */ "./node_modules/styled-components/dist/styled-components.browser.esm.js");
-var _templateObject, _templateObject2, _templateObject3, _templateObject4, _templateObject5, _templateObject6, _templateObject7, _templateObject8, _templateObject9, _templateObject10;
+var _templateObject, _templateObject2, _templateObject3, _templateObject4, _templateObject5, _templateObject6, _templateObject7, _templateObject8, _templateObject9, _templateObject10, _templateObject11, _templateObject12;
 
 function _taggedTemplateLiteral(strings, raw) { if (!raw) { raw = strings.slice(0); } return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
 
 
-var Category = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].h1(_templateObject || (_templateObject = _taggedTemplateLiteral(["\n  font-size: 2em;\n  /* min-width: 250px; */\n  flex-basis: 33%;\n  margin: auto;\n"])));
-var CategoryContainer = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].div(_templateObject2 || (_templateObject2 = _taggedTemplateLiteral(["\n  display: flex;\n  flex-basis: 50%;\n"])));
+var Category = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].h1(_templateObject || (_templateObject = _taggedTemplateLiteral(["\n  font-size: 30px;\n  /* min-width: 250px; */\n  text-transform: uppercase;\n"])));
+var CategoryContainer = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].div(_templateObject2 || (_templateObject2 = _taggedTemplateLiteral(["\n  display: flex;\n  flex-basis: 30%;\n  flex-direction: column;\n"])));
 var CategoryImage = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].img(_templateObject3 || (_templateObject3 = _taggedTemplateLiteral(["\n  max-width: 150px;\n  flex-basis: 33%;\n  margin: auto;\n"])));
 var CategoryScore = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].h2(_templateObject4 || (_templateObject4 = _taggedTemplateLiteral(["\n  font-size: 1em;\n  flex-basis: 33%;\n  margin: auto;\n  width: 100px;\n"])));
-var Container = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].div(_templateObject5 || (_templateObject5 = _taggedTemplateLiteral(["\n  margin-top: 5em;\n"])));
-var FullContainer = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].div(_templateObject6 || (_templateObject6 = _taggedTemplateLiteral(["\n  display: flex;\n"])));
-var ProductContainer = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].div(_templateObject7 || (_templateObject7 = _taggedTemplateLiteral(["\n  display: flex;\n  flex-direction: column;\n  flex-basis: 50%;\n  justify-content: center;\n  margin-bottom:2em;\n"])));
+var Container = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].div(_templateObject5 || (_templateObject5 = _taggedTemplateLiteral(["\n  margin-top: 5em;\n  width: 90%;\n"])));
+var FullContainer = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].div(_templateObject6 || (_templateObject6 = _taggedTemplateLiteral(["\n  display: flex;\n  gap: 10em;\n"])));
+var ProductContainer = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].div(_templateObject7 || (_templateObject7 = _taggedTemplateLiteral(["\n  display: flex;\n  flex-basis: 50%;\n  gap: 40px;\n\n  justify-content: center;\n  margin-bottom: 2em;\n"])));
 var ProductTitle = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].p(_templateObject8 || (_templateObject8 = _taggedTemplateLiteral(["\n  align-self: center;\n"])));
-var ProductImage = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].img(_templateObject9 || (_templateObject9 = _taggedTemplateLiteral(["\n  max-width: 50px;\n"])));
-var SingleProductContainer = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].div(_templateObject10 || (_templateObject10 = _taggedTemplateLiteral(["\n  display: flex;\n  gap: 10px;\n"])));
+var ProductImage = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].div(_templateObject9 || (_templateObject9 = _taggedTemplateLiteral(["\n  min-width: 300px;\n  margin-bottom:5em;\n"])));
+var ProductScore = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].p(_templateObject10 || (_templateObject10 = _taggedTemplateLiteral(["\n  color: red;\n  align-self: center;\n"])));
+var SingleProductContainer = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].div(_templateObject11 || (_templateObject11 = _taggedTemplateLiteral(["\n  display: flex;\n  flex-direction: column;\n  align-items: center;\n  border: lightgray 1px solid;\n"])));
+var CategoryDescription = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].p(_templateObject12 || (_templateObject12 = _taggedTemplateLiteral(["\n  font-size: 15px;\n"])));
 
 /***/ }),
 
@@ -1685,7 +1696,7 @@ var Quiz = function Quiz() {
       value: "health"
     }, {
       message: "Home Chef/Cooking",
-      value: "cooking"
+      value: "homeChef"
     }, {
       message: "Mixology/Alcohol",
       value: "mixology"
@@ -1822,157 +1833,137 @@ __webpack_require__.r(__webpack_exports__);
 
 var data = {
   categoryScores: [{
-    name: 'Camping',
+    name: "Camping",
     score: 2
   }, {
-    name: 'Technology',
+    name: "Home Chef",
     score: 0
   }, {
-    name: 'Home Chef',
-    score: 0
-  }, {
-    name: 'Outdoor Games',
+    name: "Technology",
     score: 1
-  }, {
-    name: 'Health And Wellness',
-    score: 1
-  }, {
-    name: 'Reading',
-    score: 0
-  }, {
-    name: 'Gaming',
-    score: 0
-  }, {
-    name: 'Board Games',
-    score: 0
-  }, {
-    name: 'Pets - Dog',
-    score: 0
-  }, {
-    name: 'null',
-    score: 0
   }],
   products: [{
-    hobbiesInterests: 'Camping',
-    _id: '6199b4e3c855b94d731cf4b6',
-    productId: '',
-    productName: 'PETZL, ACTIK CORE Headlamp, 450 Lumens, Rechargeable, with CORE Battery, Black',
-    category: 'Camping',
-    website: 'Amazon',
-    link: 'https://www.amazon.com/gp/product/B07T5RLZTX?ie=UTF8&linkCode=sl1&tag=giftologyshop-20&linkId=8f456fb9b9579537f8f1e9b7c0f9de10&language=en_US&ref_=as_li_ss_tl&th=1',
-    flavorText: 'Who do we like this for?\n\nnullone looking for a reliable, hands-free light source, with some excellent features.',
-    productBasePrice: '69.95',
-    gender: 'null',
-    indoorOutdoor: 'outdoor',
-    ageMin: '12',
-    ageMax: '120',
-    occasion: 'null',
-    practicalWhimsical: 'null',
+    hobbiesInterests: "camping",
+    _id: "6199b4e3c855b94d731cf4b6",
+    productId: "",
+    productName: "PETZL, ACTIK CORE Headlamp, 450 Lumens, Rechargeable, with CORE Battery, Black",
+    category: "Camping",
+    website: "Amazon",
+    htmlTag: "<a href=\"https://www.amazon.com/gp/product/B01LW30I5S?ie=UTF8&linkCode=li3&tag=giftology04-20&linkId=70b29d1bc637fa1d9ac51845b331281b&language=en_US&ref_=as_li_ss_il\" target=\"_blank\"><img border=\"0\" src=\"//ws-na.amazon-adsystem.com/widgets/q?_encoding=UTF8&ASIN=B01LW30I5S&Format=_SL250_&ID=AsinImage&MarketPlace=US&ServiceVersion=20070822&WS=1&tag=giftology04-20&language=en_US\" ></a><img src=\"https://ir-na.amazon-adsystem.com/e/ir?t=giftology04-20&language=en_US&l=li3&o=1&a=B01LW30I5S\" width=\"1\" height=\"1\" border=\"0\" alt=\"\" style=\"border:none !important; margin:0px !important;\" />",
+    flavorText: "Who do we like this for?\n\nnullone looking for a reliable, hands-free light source, with some excellent features.",
+    productBasePrice: "69.95",
+    gender: "null",
+    indoorOutdoor: "outdoor",
+    ageMin: "12",
+    ageMax: "120",
+    occasion: "null",
+    practicalWhimsical: "null",
     score: 2
   }, {
-    hobbiesInterests: 'Camping',
-    _id: '6199b4e3c855b94d731cf4b7',
-    productId: '',
+    hobbiesInterests: "camping",
+    _id: "6199b4e3c855b94d731cf4b7",
+    productId: "",
     productName: "Mountain Hardwear Men's Stretch Ozonic Jacket",
-    category: 'Camping',
-    website: 'Amazon',
-    link: 'https://www.amazon.com/gp/product/B082QX7G1K?ie=UTF8&th=1&linkCode=sl1&tag=giftologyshop-20&linkId=00836c10ee4f41920c2b6e3e12647a3d&language=en_US&ref_=as_li_ss_tl&psc=1',
-    flavorText: 'Who do we like this for?\n\nnullone that’s had bad weather mess up a great trip.',
-    productBasePrice: '199.99',
-    gender: 'null',
-    indoorOutdoor: 'outdoor',
-    ageMin: '12',
-    ageMax: '120',
-    occasion: 'null',
-    practicalWhimsical: 'null',
+    category: "Camping",
+    website: "Amazon",
+    htmlTag: "<a href=\"https://www.amazon.com/gp/product/B01LW30I5S?ie=UTF8&linkCode=li3&tag=giftology04-20&linkId=70b29d1bc637fa1d9ac51845b331281b&language=en_US&ref_=as_li_ss_il\" target=\"_blank\"><img border=\"0\" src=\"//ws-na.amazon-adsystem.com/widgets/q?_encoding=UTF8&ASIN=B01LW30I5S&Format=_SL250_&ID=AsinImage&MarketPlace=US&ServiceVersion=20070822&WS=1&tag=giftology04-20&language=en_US\" ></a><img src=\"https://ir-na.amazon-adsystem.com/e/ir?t=giftology04-20&language=en_US&l=li3&o=1&a=B01LW30I5S\" width=\"1\" height=\"1\" border=\"0\" alt=\"\" style=\"border:none !important; margin:0px !important;\" />",
+    flavorText: "Who do we like this for?\n\nnullone that’s had bad weather mess up a great trip.",
+    productBasePrice: "199.99",
+    gender: "null",
+    indoorOutdoor: "outdoor",
+    ageMin: "12",
+    ageMax: "120",
+    occasion: "null",
+    practicalWhimsical: "null",
     score: 2
   }, {
-    hobbiesInterests: 'Music,Technology',
-    _id: '6199b4e3c855b94d731cf4b8',
-    productId: '',
-    productName: 'JBL CLIP 3 - Waterproof Portable Bluetooth Speaker',
-    category: 'Technology',
-    website: 'Amazon',
-    link: 'https://www.amazon.com/JBL-Waterproof-Portable-Bluetooth-Speaker/dp/B07Q6ZWMLR?linkCode=sl1&tag=giftologyshop-20&linkId=cdff2308edba579a986a2367db08d830&language=en_US&ref_=as_li_ss_tl&th=1',
-    flavorText: 'For those of you who either want a budget-friendly version of the JBL FLIP 5 or an even more portable alternative, we recommend the JBL CLIP 3.',
-    productBasePrice: '49.95',
-    gender: 'null',
-    indoorOutdoor: 'null',
-    ageMin: '12',
-    ageMax: '120',
-    occasion: 'null',
-    practicalWhimsical: 'null',
+    hobbiesInterests: "music,technology",
+    _id: "6199b4e3c855b94d731cf4b8",
+    productId: "",
+    productName: "JBL CLIP 3 - Waterproof Portable Bluetooth Speaker",
+    category: "Technology",
+    website: "Amazon",
+    htmlTag: "<a href=\"https://www.amazon.com/gp/product/B01LW30I5S?ie=UTF8&linkCode=li3&tag=giftology04-20&linkId=70b29d1bc637fa1d9ac51845b331281b&language=en_US&ref_=as_li_ss_il\" target=\"_blank\"><img border=\"0\" src=\"//ws-na.amazon-adsystem.com/widgets/q?_encoding=UTF8&ASIN=B01LW30I5S&Format=_SL250_&ID=AsinImage&MarketPlace=US&ServiceVersion=20070822&WS=1&tag=giftology04-20&language=en_US\" ></a><img src=\"https://ir-na.amazon-adsystem.com/e/ir?t=giftology04-20&language=en_US&l=li3&o=1&a=B01LW30I5S\" width=\"1\" height=\"1\" border=\"0\" alt=\"\" style=\"border:none !important; margin:0px !important;\" />",
+    flavorText: "For those of you who either want a budget-friendly version of the JBL FLIP 5 or an even more portable alternative, we recommend the JBL CLIP 3.",
+    productBasePrice: "49.95",
+    gender: "null",
+    indoorOutdoor: "null",
+    ageMin: "12",
+    ageMax: "120",
+    occasion: "null",
+    practicalWhimsical: "null",
     score: 0
   }, {
-    hobbiesInterests: 'Music,Technology',
-    _id: '6199b4e3c855b94d731cf4b9',
-    productId: '',
-    productName: 'JBL FLIP 5, Waterproof Portable Bluetooth Speaker',
-    category: 'Technology',
-    website: 'Amazon',
-    link: 'https://www.amazon.com/JBL-Waterproof-Portable-Bluetooth-Speaker/dp/B07QK2SPP7?th=1&linkCode=sl1&tag=giftologyshop-20&linkId=653808aa96dba7e9eeecefdf450b52e7&language=en_US&ref_=as_li_ss_tl',
+    hobbiesInterests: "music,technology",
+    _id: "6199b4e3c855b94d731cf4b9",
+    productId: "",
+    productName: "JBL FLIP 5, Waterproof Portable Bluetooth Speaker",
+    category: "Technology",
+    website: "Amazon",
+    htmlTag: "<a href=\"https://www.amazon.com/gp/product/B01LW30I5S?ie=UTF8&linkCode=li3&tag=giftology04-20&linkId=70b29d1bc637fa1d9ac51845b331281b&language=en_US&ref_=as_li_ss_il\" target=\"_blank\"><img border=\"0\" src=\"//ws-na.amazon-adsystem.com/widgets/q?_encoding=UTF8&ASIN=B01LW30I5S&Format=_SL250_&ID=AsinImage&MarketPlace=US&ServiceVersion=20070822&WS=1&tag=giftology04-20&language=en_US\" ></a><img src=\"https://ir-na.amazon-adsystem.com/e/ir?t=giftology04-20&language=en_US&l=li3&o=1&a=B01LW30I5S\" width=\"1\" height=\"1\" border=\"0\" alt=\"\" style=\"border:none !important; margin:0px !important;\" />",
     flavorText: "Who do we like this for?\n\nFor those who consider music an important part of their daily routine, we recommend the JBL family of portable Bluetooth speakers.'",
-    productBasePrice: '129.95',
-    gender: 'null',
-    indoorOutdoor: 'null',
-    ageMin: '12',
-    ageMax: '120',
-    occasion: 'null',
-    practicalWhimsical: 'null',
+    productBasePrice: "129.95",
+    gender: "null",
+    indoorOutdoor: "null",
+    ageMin: "12",
+    ageMax: "120",
+    occasion: "null",
+    practicalWhimsical: "null",
     score: 0
   }, {
-    hobbiesInterests: 'Home Chef',
-    _id: '6199b4e3c855b94d731cf4ba',
-    productId: '',
-    productName: 'Nespresso BEC250BLK Essenza Mini Espresso Machine with Aeroccino Milk Frother by Breville, Piano Black',
-    category: 'Home Chef',
-    website: 'Amazon',
-    link: 'https://www.amazon.com/Nespresso-Essenza-Original-Espresso-Breville/dp/B073ZHT2FM?crid=2RIMDTXACX4B0&dchild=1&keywords=nespresso%2Bessenza%2Bmini&qid=1613014542&sprefix=nespresso%2Be%2Caps%2C179&sr=8-3&th=1&linkCode=sl1&tag=giftologyshop-20&linkId=19686603b2d67c4305c4d0b8900ae59d&language=en_US&ref_=as_li_ss_tl',
-    flavorText: 'Who do we like this for?\n\nCoffee connoisseurs who like their espresso just so… and strong!',
-    productBasePrice: '219.95',
-    gender: 'null',
-    indoorOutdoor: 'indoor',
-    ageMin: '12',
-    ageMax: '120',
-    occasion: 'null',
-    practicalWhimsical: 'null',
+    hobbiesInterests: "homeChef",
+    _id: "6199b4e3c855b94d731cf4ba",
+    productId: "",
+    productName: "Nespresso BEC250BLK Essenza Mini Espresso Machine with Aeroccino Milk Frother by Breville, Piano Black",
+    category: "Home Chef",
+    website: "Amazon",
+    htmlTag: "<a href=\"https://www.amazon.com/gp/product/B01LW30I5S?ie=UTF8&linkCode=li3&tag=giftology04-20&linkId=70b29d1bc637fa1d9ac51845b331281b&language=en_US&ref_=as_li_ss_il\" target=\"_blank\"><img border=\"0\" src=\"//ws-na.amazon-adsystem.com/widgets/q?_encoding=UTF8&ASIN=B01LW30I5S&Format=_SL250_&ID=AsinImage&MarketPlace=US&ServiceVersion=20070822&WS=1&tag=giftology04-20&language=en_US\" ></a><img src=\"https://ir-na.amazon-adsystem.com/e/ir?t=giftology04-20&language=en_US&l=li3&o=1&a=B01LW30I5S\" width=\"1\" height=\"1\" border=\"0\" alt=\"\" style=\"border:none !important; margin:0px !important;\" />",
+    flavorText: "Who do we like this for?\n\nCoffee connoisseurs who like their espresso just so… and strong!",
+    productBasePrice: "219.95",
+    gender: "null",
+    indoorOutdoor: "indoor",
+    ageMin: "12",
+    ageMax: "120",
+    occasion: "null",
+    practicalWhimsical: "null",
     score: 0
   }, {
-    hobbiesInterests: 'Home Chef',
-    _id: '6199b4e3c855b94d731cf4bb',
-    productId: '',
+    hobbiesInterests: "homeChef",
+    _id: "6199b4e3c855b94d731cf4bb",
+    productId: "",
     productName: 'WÜSTHOF CLASSIC IKON 8 Inch Chef’s Knife | Full-Tang Half Bolster 8" Cook’s Knife | Precision Forged High-Carbon Stainless Steel German Made Chef’s Knife – Model ,Black',
-    category: 'Home Chef',
-    website: 'Amazon',
-    link: 'https://www.amazon.com/Wusthof-4596-7-20-4596-7-20-Knife/dp/B000YMURSE?dchild=1&keywords=wusthof+classic+ikon&qid=1624038319&s=industrial&sr=1-8&linkCode=sl1&tag=giftologyshop-20&linkId=f4a8d863046316447f5e36f8735a2d48&language=en_US&ref_=as_li_ss_tl',
-    flavorText: 'Who do we like this for?\n\nnullone who loves to cook, and most people who don’t. This is our #1 gift for null home chef.',
-    productBasePrice: '180',
-    gender: 'null',
-    indoorOutdoor: 'indoor',
-    ageMin: '18',
-    ageMax: '120',
-    occasion: 'null',
-    practicalWhimsical: 'null',
+    category: "Home Chef",
+    website: "Amazon",
+    htmlTag: "<a href=\"https://www.amazon.com/gp/product/B01LW30I5S?ie=UTF8&linkCode=li3&tag=giftology04-20&linkId=70b29d1bc637fa1d9ac51845b331281b&language=en_US&ref_=as_li_ss_il\" target=\"_blank\"><img border=\"0\" src=\"//ws-na.amazon-adsystem.com/widgets/q?_encoding=UTF8&ASIN=B01LW30I5S&Format=_SL250_&ID=AsinImage&MarketPlace=US&ServiceVersion=20070822&WS=1&tag=giftology04-20&language=en_US\" ></a><img src=\"https://ir-na.amazon-adsystem.com/e/ir?t=giftology04-20&language=en_US&l=li3&o=1&a=B01LW30I5S\" width=\"1\" height=\"1\" border=\"0\" alt=\"\" style=\"border:none !important; margin:0px !important;\" />",
+    flavorText: "Who do we like this for?\n\nnullone who loves to cook, and most people who don’t. This is our #1 gift for null home chef.",
+    productBasePrice: "180",
+    gender: "null",
+    indoorOutdoor: "indoor",
+    ageMin: "18",
+    ageMax: "120",
+    occasion: "null",
+    practicalWhimsical: "null",
     score: 0
   }, {
-    hobbiesInterests: 'Camping',
-    _id: '6199b4e3c855b94d731cf4be',
-    productId: '',
-    productName: 'PETZL - TIKKINA Headlamp, 150 Lumens, Standard Lighting',
-    category: 'Camping',
-    website: 'Amazon',
-    link: 'https://www.amazon.com/PETZL-TIKKINA-Headlamp-Standard-Lighting/dp/B01KYTRHLQ?dchild=1&keywords=Petzl%2BTikkina%2BHeadlamp&qid=1626036560&s=sporting-goods&sr=1-5&th=1&linkCode=sl1&tag=giftologyshop-20&linkId=8c570e0d8b3da9654ef3dacbeabf4abe&language=en_US&ref_=as_li_ss_tl',
-    flavorText: 'Who do we like it for?\nCampers who just need a basic headlamp.',
-    productBasePrice: '34.97',
-    gender: 'null',
-    indoorOutdoor: 'outdoor',
-    ageMin: '12',
-    ageMax: '120',
-    occasion: 'null',
-    practicalWhimsical: 'null',
+    hobbiesInterests: "camping",
+    _id: "6199b4e3c855b94d731cf4be",
+    productId: "",
+    productName: "PETZL - TIKKINA Headlamp, 150 Lumens, Standard Lighting",
+    category: "Camping",
+    website: "Amazon",
+    htmlTag: "<a href=\"https://www.amazon.com/gp/product/B01LW30I5S?ie=UTF8&linkCode=li3&tag=giftology04-20&linkId=70b29d1bc637fa1d9ac51845b331281b&language=en_US&ref_=as_li_ss_il\" target=\"_blank\"><img border=\"0\" src=\"//ws-na.amazon-adsystem.com/widgets/q?_encoding=UTF8&ASIN=B01LW30I5S&Format=_SL250_&ID=AsinImage&MarketPlace=US&ServiceVersion=20070822&WS=1&tag=giftology04-20&language=en_US\" ></a><img src=\"https://ir-na.amazon-adsystem.com/e/ir?t=giftology04-20&language=en_US&l=li3&o=1&a=B01LW30I5S\" width=\"1\" height=\"1\" border=\"0\" alt=\"\" style=\"border:none !important; margin:0px !important;\" />",
+    flavorText: "Who do we like it for?\nCampers who just need a basic headlamp.",
+    productBasePrice: "34.97",
+    gender: "null",
+    indoorOutdoor: "outdoor",
+    ageMin: "12",
+    ageMax: "120",
+    occasion: "null",
+    practicalWhimsical: "null",
     score: 2
   }]
-};
+}; // const dataImg = `<a href="https://www.amazon.com/Hydro-Flask-Insulated-Stainless-Pacific/dp/B01MSCXO76?keywords=Hydro+Flask+Water+Bottle+-+Stainless+Steel%2C+Reusable%2C+Vacuum+Insulated-+Wide+Mouth+with+Leak+Proof+Flex+Cap&qid=1637941040&qsid=146-6939056-5844667&sr=8-5&sres=B01MSCXO76%2CB083GBK2HY%2CB083GBTPSY%2CB07YXMJZQW%2CB07YXMFPBM%2CB07MZBR1BL%2CB083GBXKCK%2CB01GW2G92W%2CB083GBQ236%2CB083GBLFN7%2CB01GW2H09S%2CB083GBH38N%2CB01ACARNIO%2CB083G9QV62%2CB07YXLYFZF%2CB07MZ6SD6X%2CB01N34YZD8%2CB08B2BD7S3%2CB08WX17BZN%2CB01ACAXD9C&srpt=BOTTLE&linkCode=li3&tag=giftology04-20&linkId=89622dbea2cfa5daaeb79538b7606750&language=en_US&ref_=as_li_ss_il" target="_blank"><img border="0" src="//ws-na.amazon-adsystem.com/widgets/q?_encoding=UTF8&ASIN=B01MSCXO76&Format=_SL250_&ID=AsinImage&MarketPlace=US&ServiceVersion=20070822&WS=1&tag=giftology04-20&language=en_US" ></a><img src="https://ir-na.amazon-adsystem.com/e/ir?t=giftology04-20&language=en_US&l=li3&o=1&a=B01MSCXO76" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;" />`;
+
 function WelcomePage() {
   var history = (0,react_router__WEBPACK_IMPORTED_MODULE_6__.useHistory)();
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
@@ -1981,7 +1972,7 @@ function WelcomePage() {
     size: "1"
   }, "Welcome to Giftology!"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_atoms_Button__WEBPACK_IMPORTED_MODULE_4__["default"], {
     onClick: function onClick() {
-      return history.push('/quiz');
+      return history.push("/quiz");
     },
     label: "Click to Access Quiz"
   }))));
