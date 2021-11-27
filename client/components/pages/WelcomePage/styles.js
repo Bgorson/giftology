@@ -13,6 +13,9 @@ export const HeroCallToAction = styled.div`
   font-size: 36px;
   text-decoration: underline;
   color: black;
+  &:hover {
+    color: #44a2bb;
+  }
 `;
 export const HeroDescription = styled.p`
   font-size: 18px;

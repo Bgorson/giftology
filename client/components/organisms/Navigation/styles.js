@@ -1,29 +1,30 @@
 import styled from "styled-components";
 
 export const Navbar = styled.nav`
-  background-color: '#f5f5f5';
   margin: 0;
-  max-height:170px;
 `;
 
 export const Container = styled.ul`
   margin: 0;
   padding: 0;
   display: flex;
+  max-height: 200px;
 `;
 
 export const NavItem = styled.li`
   display: inline-block;
+
   &:first-child {
+    /* max-height:170px; */
+
     /* margin-right: auto; */
   }
   list-style-type: none;
 `;
 export const Logo = styled.img`
-  max-width: 400px;
-  margin-right:15em;
+  width: 400px;
+  margin-right: 15em;
   cursor: pointer;
-
 `;
 export const NavLink = styled.a`
   color: black;
@@ -31,13 +32,19 @@ export const NavLink = styled.a`
   line-height: 3em;
   padding: 1em 2em;
   text-decoration: none;
-  font-size:18px;
+  font-size: 18px;
+  &:hover {
+    color: #44a2bb;
+    text-decoration: underline;
+  }
 `;
 export const ActionItems = styled.div`
-  align-self: center;
+  align-self: end;
   flex-wrap: nowrap;
+  flex-basis: 33%;
 
   width: 100%;
 `;
 export const EmptyDiv = styled.div`
+  flex-basis: 33%;
 `;
