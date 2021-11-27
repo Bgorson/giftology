@@ -1821,9 +1821,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react_bulma_companion_lib_Section__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-bulma-companion/lib/Section */ "./node_modules/react-bulma-companion/lib/Section/index.js");
 /* harmony import */ var react_bulma_companion_lib_Container__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-bulma-companion/lib/Container */ "./node_modules/react-bulma-companion/lib/Container/index.js");
 /* harmony import */ var react_bulma_companion_lib_Title__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react-bulma-companion/lib/Title */ "./node_modules/react-bulma-companion/lib/Title/index.js");
-/* harmony import */ var react_router__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! react-router */ "./node_modules/react-router/esm/react-router.js");
+/* harmony import */ var react_router__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! react-router */ "./node_modules/react-router/esm/react-router.js");
 /* harmony import */ var _atoms_Button__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../atoms/Button */ "./client/components/atoms/Button/index.js");
 /* harmony import */ var _organisms_ProductResult_ProductResult__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../organisms/ProductResult/ProductResult */ "./client/components/organisms/ProductResult/ProductResult.js");
+/* harmony import */ var _styles__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./styles */ "./client/components/pages/WelcomePage/styles.js");
+
 
 
 
@@ -1965,17 +1967,16 @@ var data = {
 }; // const dataImg = `<a href="https://www.amazon.com/Hydro-Flask-Insulated-Stainless-Pacific/dp/B01MSCXO76?keywords=Hydro+Flask+Water+Bottle+-+Stainless+Steel%2C+Reusable%2C+Vacuum+Insulated-+Wide+Mouth+with+Leak+Proof+Flex+Cap&qid=1637941040&qsid=146-6939056-5844667&sr=8-5&sres=B01MSCXO76%2CB083GBK2HY%2CB083GBTPSY%2CB07YXMJZQW%2CB07YXMFPBM%2CB07MZBR1BL%2CB083GBXKCK%2CB01GW2G92W%2CB083GBQ236%2CB083GBLFN7%2CB01GW2H09S%2CB083GBH38N%2CB01ACARNIO%2CB083G9QV62%2CB07YXLYFZF%2CB07MZ6SD6X%2CB01N34YZD8%2CB08B2BD7S3%2CB08WX17BZN%2CB01ACAXD9C&srpt=BOTTLE&linkCode=li3&tag=giftology04-20&linkId=89622dbea2cfa5daaeb79538b7606750&language=en_US&ref_=as_li_ss_il" target="_blank"><img border="0" src="//ws-na.amazon-adsystem.com/widgets/q?_encoding=UTF8&ASIN=B01MSCXO76&Format=_SL250_&ID=AsinImage&MarketPlace=US&ServiceVersion=20070822&WS=1&tag=giftology04-20&language=en_US" ></a><img src="https://ir-na.amazon-adsystem.com/e/ir?t=giftology04-20&language=en_US&l=li3&o=1&a=B01MSCXO76" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;" />`;
 
 function WelcomePage() {
-  var history = (0,react_router__WEBPACK_IMPORTED_MODULE_6__.useHistory)();
+  var history = (0,react_router__WEBPACK_IMPORTED_MODULE_7__.useHistory)();
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
     className: "welcome-page page"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_bulma_companion_lib_Section__WEBPACK_IMPORTED_MODULE_1__["default"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_bulma_companion_lib_Container__WEBPACK_IMPORTED_MODULE_2__["default"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_bulma_companion_lib_Title__WEBPACK_IMPORTED_MODULE_3__["default"], {
-    size: "1"
-  }, "Welcome to Giftology!"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_atoms_Button__WEBPACK_IMPORTED_MODULE_4__["default"], {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_bulma_companion_lib_Section__WEBPACK_IMPORTED_MODULE_1__["default"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_styles__WEBPACK_IMPORTED_MODULE_6__.Hero, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_styles__WEBPACK_IMPORTED_MODULE_6__.HeroImage, {
+    src: "/images/backgroundImage.jpeg"
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_styles__WEBPACK_IMPORTED_MODULE_6__.HeroText, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_styles__WEBPACK_IMPORTED_MODULE_6__.HeroTitle, null, "Having Trouble Finding the right gift?"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_styles__WEBPACK_IMPORTED_MODULE_6__.HeroDescription, null, "Check out our quiz and we\u2019ll do the searching for you. All you need to know is who you\u2019re shopping for and what they do for fun. We\u2019ll handle the rest."), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_styles__WEBPACK_IMPORTED_MODULE_6__.HeroCallToAction, {
     onClick: function onClick() {
       return history.push("/quiz");
-    },
-    label: "Click to Access Quiz"
-  }))));
+    }
+  }, "Take The Quiz")))));
 }
 
 /***/ }),
@@ -1994,6 +1995,37 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _WelcomePage__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./WelcomePage */ "./client/components/pages/WelcomePage/WelcomePage.js");
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_WelcomePage__WEBPACK_IMPORTED_MODULE_0__["default"]);
+
+/***/ }),
+
+/***/ "./client/components/pages/WelcomePage/styles.js":
+/*!*******************************************************!*\
+  !*** ./client/components/pages/WelcomePage/styles.js ***!
+  \*******************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "HeroImage": () => (/* binding */ HeroImage),
+/* harmony export */   "Hero": () => (/* binding */ Hero),
+/* harmony export */   "HeroCallToAction": () => (/* binding */ HeroCallToAction),
+/* harmony export */   "HeroDescription": () => (/* binding */ HeroDescription),
+/* harmony export */   "HeroTitle": () => (/* binding */ HeroTitle),
+/* harmony export */   "HeroText": () => (/* binding */ HeroText)
+/* harmony export */ });
+/* harmony import */ var styled_components__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! styled-components */ "./node_modules/styled-components/dist/styled-components.browser.esm.js");
+var _templateObject, _templateObject2, _templateObject3, _templateObject4, _templateObject5, _templateObject6;
+
+function _taggedTemplateLiteral(strings, raw) { if (!raw) { raw = strings.slice(0); } return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
+
+
+var HeroImage = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].img(_templateObject || (_templateObject = _taggedTemplateLiteral(["\n  object-fit: cover;\n  width: 100%;\n  height: 550px;\n"])));
+var Hero = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].div(_templateObject2 || (_templateObject2 = _taggedTemplateLiteral(["\n  position: relative;\n"])));
+var HeroCallToAction = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].button(_templateObject3 || (_templateObject3 = _taggedTemplateLiteral([""])));
+var HeroDescription = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].p(_templateObject4 || (_templateObject4 = _taggedTemplateLiteral(["\n  font-size: 18px;\n  margin-bottom: 100px;\n"])));
+var HeroTitle = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].h1(_templateObject5 || (_templateObject5 = _taggedTemplateLiteral(["\n  font-weight: bold;\n  font-size: 36px;\n  color: white;\n  margin-bottom: 43px;\n"])));
+var HeroText = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].div(_templateObject6 || (_templateObject6 = _taggedTemplateLiteral(["\n  position: absolute;\n  top: 25%;\n  left: 50%;\n"])));
 
 /***/ }),
 
@@ -61942,6 +61974,17 @@ function valueEqual(a, b) {
 
 /***/ }),
 
+/***/ "./client/assets/images/backgroundImage.jpeg":
+/*!***************************************************!*\
+  !*** ./client/assets/images/backgroundImage.jpeg ***!
+  \***************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+module.exports = __webpack_require__.p + "images/backgroundImage.jpeg";
+
+/***/ }),
+
 /***/ "./client/assets/images/default-profile.png":
 /*!**************************************************!*\
   !*** ./client/assets/images/default-profile.png ***!
@@ -62214,7 +62257,9 @@ var __webpack_exports__ = {};
   \********************************/
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _images_default_profile_png__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./images/default-profile.png */ "./client/assets/images/default-profile.png");
+/* harmony import */ var _images_backgroundImage_jpeg__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./images/backgroundImage.jpeg */ "./client/assets/images/backgroundImage.jpeg");
 // Images
+
 
 })();
 

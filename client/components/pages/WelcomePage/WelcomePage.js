@@ -6,6 +6,14 @@ import Title from "react-bulma-companion/lib/Title";
 import { useHistory } from "react-router";
 import Button from "../../atoms/Button";
 import ProductResult from "../../organisms/ProductResult/ProductResult";
+import {
+  Hero,
+  HeroCallToAction,
+  HeroDescription,
+  HeroTitle,
+  HeroImage,
+  HeroText,
+} from "./styles";
 
 const data = {
   categoryScores: [
@@ -20,7 +28,7 @@ const data = {
     {
       name: "Technology",
       score: 1,
-    }
+    },
   ],
   products: [
     {
@@ -168,14 +176,30 @@ export default function WelcomePage() {
   const history = useHistory();
   return (
     <div className="welcome-page page">
+      {/* <CategoryImage src="/images/default-profile.png" /> */}
+
       <Section>
-        <Container>
+        <Hero>
+          <HeroImage src="/images/backgroundImage.jpeg" />
+          <HeroText>
+            <HeroTitle>Having Trouble Finding the right gift?</HeroTitle>
+            <HeroDescription>
+              Check out our quiz and we’ll do the searching for you. All you
+              need to know is who you’re shopping for and what they do for fun.
+              We’ll handle the rest.
+            </HeroDescription>
+            <HeroCallToAction onClick={() => history.push("/quiz")}>
+              Take The Quiz
+            </HeroCallToAction>
+          </HeroText>
+        </Hero>
+        {/* <Container>
           <Title size="1">Welcome to Giftology!</Title>
           <Button
             onClick={() => history.push("/quiz")}
             label="Click to Access Quiz"
           />
-        </Container>
+        </Container> */}
         {/* <ProductResult data={data} /> */}
       </Section>
     </div>
