@@ -9,7 +9,11 @@ export const Hero = styled.div`
   position: relative;
 `;
 
-export const HeroCallToAction = styled.button``;
+export const HeroCallToAction = styled.div`
+  font-size: 36px;
+  text-decoration: underline;
+  color: black;
+`;
 export const HeroDescription = styled.p`
   font-size: 18px;
   margin-bottom: 100px;

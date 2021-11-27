@@ -4,6 +4,8 @@ import Section from "react-bulma-companion/lib/Section";
 import Container from "react-bulma-companion/lib/Container";
 import Title from "react-bulma-companion/lib/Title";
 import { useHistory } from "react-router";
+import { Link } from "react-router-dom";
+
 import Button from "../../atoms/Button";
 import ProductResult from "../../organisms/ProductResult/ProductResult";
 import {
@@ -173,7 +175,6 @@ const data = {
 // const dataImg = `<a href="https://www.amazon.com/Hydro-Flask-Insulated-Stainless-Pacific/dp/B01MSCXO76?keywords=Hydro+Flask+Water+Bottle+-+Stainless+Steel%2C+Reusable%2C+Vacuum+Insulated-+Wide+Mouth+with+Leak+Proof+Flex+Cap&qid=1637941040&qsid=146-6939056-5844667&sr=8-5&sres=B01MSCXO76%2CB083GBK2HY%2CB083GBTPSY%2CB07YXMJZQW%2CB07YXMFPBM%2CB07MZBR1BL%2CB083GBXKCK%2CB01GW2G92W%2CB083GBQ236%2CB083GBLFN7%2CB01GW2H09S%2CB083GBH38N%2CB01ACARNIO%2CB083G9QV62%2CB07YXLYFZF%2CB07MZ6SD6X%2CB01N34YZD8%2CB08B2BD7S3%2CB08WX17BZN%2CB01ACAXD9C&srpt=BOTTLE&linkCode=li3&tag=giftology04-20&linkId=89622dbea2cfa5daaeb79538b7606750&language=en_US&ref_=as_li_ss_il" target="_blank"><img border="0" src="//ws-na.amazon-adsystem.com/widgets/q?_encoding=UTF8&ASIN=B01MSCXO76&Format=_SL250_&ID=AsinImage&MarketPlace=US&ServiceVersion=20070822&WS=1&tag=giftology04-20&language=en_US" ></a><img src="https://ir-na.amazon-adsystem.com/e/ir?t=giftology04-20&language=en_US&l=li3&o=1&a=B01MSCXO76" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;" />`;
 
 export default function WelcomePage() {
-  const history = useHistory();
   return (
     <div className="welcome-page page">
       {/* <CategoryImage src="/images/default-profile.png" /> */}
@@ -188,7 +189,7 @@ export default function WelcomePage() {
               need to know is who you’re shopping for and what they do for fun.
               We’ll handle the rest.
             </HeroDescription>
-            <HeroCallToAction onClick={() => history.push("/quiz")}>
+            <HeroCallToAction as={Link} to="/quiz">
               Take The Quiz
             </HeroCallToAction>
           </HeroText>

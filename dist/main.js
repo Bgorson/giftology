@@ -1126,29 +1126,31 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! prop-types */ "./node_modules/prop-types/index.js");
 /* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(prop_types__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
-/* harmony import */ var react_bulma_companion_lib_Navbar__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-bulma-companion/lib/Navbar */ "./node_modules/react-bulma-companion/lib/Navbar/index.js");
-/* harmony import */ var react_bulma_companion_lib_Container__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react-bulma-companion/lib/Container */ "./node_modules/react-bulma-companion/lib/Container/index.js");
-/* harmony import */ var react_bulma_companion_lib_Title__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! react-bulma-companion/lib/Title */ "./node_modules/react-bulma-companion/lib/Title/index.js");
+/* harmony import */ var react_router__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react-router */ "./node_modules/react-router/esm/react-router.js");
+/* harmony import */ var _styles_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./styles.js */ "./client/components/organisms/Navigation/styles.js");
 
 
 
-
+ // import Navbar from 'react-bulma-companion/lib/Navbar';
+// import Container from 'react-bulma-companion/lib/Container';
+// import Title from 'react-bulma-companion/lib/Title';
 
 
 function Navigation(_ref) {
   var pathname = _ref.pathname;
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_bulma_companion_lib_Navbar__WEBPACK_IMPORTED_MODULE_2__["default"], {
-    fixed: "top",
-    shadow: true
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_bulma_companion_lib_Container__WEBPACK_IMPORTED_MODULE_3__["default"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_bulma_companion_lib_Navbar__WEBPACK_IMPORTED_MODULE_2__["default"].Brand, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_bulma_companion_lib_Navbar__WEBPACK_IMPORTED_MODULE_2__["default"].Item, {
-    to: "/",
-    "aria-label": "main navigation",
-    component: react_router_dom__WEBPACK_IMPORTED_MODULE_5__.Link
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_bulma_companion_lib_Title__WEBPACK_IMPORTED_MODULE_4__["default"], {
-    className: "logo",
-    size: "3"
-  }, "Giftology")))));
+  var history = (0,react_router__WEBPACK_IMPORTED_MODULE_3__.useHistory)();
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_styles_js__WEBPACK_IMPORTED_MODULE_2__.Navbar, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_styles_js__WEBPACK_IMPORTED_MODULE_2__.Container, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_styles_js__WEBPACK_IMPORTED_MODULE_2__.NavItem, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_styles_js__WEBPACK_IMPORTED_MODULE_2__.Logo, {
+    onClick: function onClick() {
+      return history.push("/");
+    },
+    src: "./images/logo.png"
+  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_styles_js__WEBPACK_IMPORTED_MODULE_2__.ActionItems, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_styles_js__WEBPACK_IMPORTED_MODULE_2__.NavItem, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_styles_js__WEBPACK_IMPORTED_MODULE_2__.NavLink, {
+    href: "/"
+  }, "Home")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_styles_js__WEBPACK_IMPORTED_MODULE_2__.NavItem, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_styles_js__WEBPACK_IMPORTED_MODULE_2__.NavLink, {
+    href: "/quiz"
+  }, "Take the quiz")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_styles_js__WEBPACK_IMPORTED_MODULE_2__.NavItem, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_styles_js__WEBPACK_IMPORTED_MODULE_2__.NavLink, {
+    href: "#"
+  }, "About Us"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_styles_js__WEBPACK_IMPORTED_MODULE_2__.EmptyDiv, null)));
 }
 Navigation.propTypes = {
   pathname: (prop_types__WEBPACK_IMPORTED_MODULE_1___default().string.isRequired)
@@ -1170,6 +1172,39 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Navigation__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Navigation */ "./client/components/organisms/Navigation/Navigation.js");
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_Navigation__WEBPACK_IMPORTED_MODULE_0__["default"]);
+
+/***/ }),
+
+/***/ "./client/components/organisms/Navigation/styles.js":
+/*!**********************************************************!*\
+  !*** ./client/components/organisms/Navigation/styles.js ***!
+  \**********************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "Navbar": () => (/* binding */ Navbar),
+/* harmony export */   "Container": () => (/* binding */ Container),
+/* harmony export */   "NavItem": () => (/* binding */ NavItem),
+/* harmony export */   "Logo": () => (/* binding */ Logo),
+/* harmony export */   "NavLink": () => (/* binding */ NavLink),
+/* harmony export */   "ActionItems": () => (/* binding */ ActionItems),
+/* harmony export */   "EmptyDiv": () => (/* binding */ EmptyDiv)
+/* harmony export */ });
+/* harmony import */ var styled_components__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! styled-components */ "./node_modules/styled-components/dist/styled-components.browser.esm.js");
+var _templateObject, _templateObject2, _templateObject3, _templateObject4, _templateObject5, _templateObject6, _templateObject7;
+
+function _taggedTemplateLiteral(strings, raw) { if (!raw) { raw = strings.slice(0); } return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
+
+
+var Navbar = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].nav(_templateObject || (_templateObject = _taggedTemplateLiteral(["\n  background-color: '#f5f5f5';\n  margin: 0;\n  max-height:170px;\n"])));
+var Container = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].ul(_templateObject2 || (_templateObject2 = _taggedTemplateLiteral(["\n  margin: 0;\n  padding: 0;\n  display: flex;\n"])));
+var NavItem = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].li(_templateObject3 || (_templateObject3 = _taggedTemplateLiteral(["\n  display: inline-block;\n  &:first-child {\n    /* margin-right: auto; */\n  }\n  list-style-type: none;\n"])));
+var Logo = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].img(_templateObject4 || (_templateObject4 = _taggedTemplateLiteral(["\n  max-width: 400px;\n  margin-right:15em;\n  cursor: pointer;\n\n"])));
+var NavLink = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].a(_templateObject5 || (_templateObject5 = _taggedTemplateLiteral(["\n  color: black;\n  display: block;\n  line-height: 3em;\n  padding: 1em 2em;\n  text-decoration: none;\n  font-size:18px;\n"])));
+var ActionItems = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].div(_templateObject6 || (_templateObject6 = _taggedTemplateLiteral(["\n  align-self: center;\n  flex-wrap: nowrap;\n\n  width: 100%;\n"])));
+var EmptyDiv = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].div(_templateObject7 || (_templateObject7 = _taggedTemplateLiteral(["\n"])));
 
 /***/ }),
 
@@ -1821,10 +1856,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react_bulma_companion_lib_Section__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-bulma-companion/lib/Section */ "./node_modules/react-bulma-companion/lib/Section/index.js");
 /* harmony import */ var react_bulma_companion_lib_Container__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-bulma-companion/lib/Container */ "./node_modules/react-bulma-companion/lib/Container/index.js");
 /* harmony import */ var react_bulma_companion_lib_Title__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react-bulma-companion/lib/Title */ "./node_modules/react-bulma-companion/lib/Title/index.js");
-/* harmony import */ var react_router__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! react-router */ "./node_modules/react-router/esm/react-router.js");
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
 /* harmony import */ var _atoms_Button__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../atoms/Button */ "./client/components/atoms/Button/index.js");
 /* harmony import */ var _organisms_ProductResult_ProductResult__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../organisms/ProductResult/ProductResult */ "./client/components/organisms/ProductResult/ProductResult.js");
 /* harmony import */ var _styles__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./styles */ "./client/components/pages/WelcomePage/styles.js");
+
 
 
 
@@ -1967,15 +2003,13 @@ var data = {
 }; // const dataImg = `<a href="https://www.amazon.com/Hydro-Flask-Insulated-Stainless-Pacific/dp/B01MSCXO76?keywords=Hydro+Flask+Water+Bottle+-+Stainless+Steel%2C+Reusable%2C+Vacuum+Insulated-+Wide+Mouth+with+Leak+Proof+Flex+Cap&qid=1637941040&qsid=146-6939056-5844667&sr=8-5&sres=B01MSCXO76%2CB083GBK2HY%2CB083GBTPSY%2CB07YXMJZQW%2CB07YXMFPBM%2CB07MZBR1BL%2CB083GBXKCK%2CB01GW2G92W%2CB083GBQ236%2CB083GBLFN7%2CB01GW2H09S%2CB083GBH38N%2CB01ACARNIO%2CB083G9QV62%2CB07YXLYFZF%2CB07MZ6SD6X%2CB01N34YZD8%2CB08B2BD7S3%2CB08WX17BZN%2CB01ACAXD9C&srpt=BOTTLE&linkCode=li3&tag=giftology04-20&linkId=89622dbea2cfa5daaeb79538b7606750&language=en_US&ref_=as_li_ss_il" target="_blank"><img border="0" src="//ws-na.amazon-adsystem.com/widgets/q?_encoding=UTF8&ASIN=B01MSCXO76&Format=_SL250_&ID=AsinImage&MarketPlace=US&ServiceVersion=20070822&WS=1&tag=giftology04-20&language=en_US" ></a><img src="https://ir-na.amazon-adsystem.com/e/ir?t=giftology04-20&language=en_US&l=li3&o=1&a=B01MSCXO76" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;" />`;
 
 function WelcomePage() {
-  var history = (0,react_router__WEBPACK_IMPORTED_MODULE_7__.useHistory)();
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
     className: "welcome-page page"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_bulma_companion_lib_Section__WEBPACK_IMPORTED_MODULE_1__["default"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_styles__WEBPACK_IMPORTED_MODULE_6__.Hero, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_styles__WEBPACK_IMPORTED_MODULE_6__.HeroImage, {
     src: "/images/backgroundImage.jpeg"
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_styles__WEBPACK_IMPORTED_MODULE_6__.HeroText, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_styles__WEBPACK_IMPORTED_MODULE_6__.HeroTitle, null, "Having Trouble Finding the right gift?"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_styles__WEBPACK_IMPORTED_MODULE_6__.HeroDescription, null, "Check out our quiz and we\u2019ll do the searching for you. All you need to know is who you\u2019re shopping for and what they do for fun. We\u2019ll handle the rest."), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_styles__WEBPACK_IMPORTED_MODULE_6__.HeroCallToAction, {
-    onClick: function onClick() {
-      return history.push("/quiz");
-    }
+    as: react_router_dom__WEBPACK_IMPORTED_MODULE_7__.Link,
+    to: "/quiz"
   }, "Take The Quiz")))));
 }
 
@@ -2022,7 +2056,7 @@ function _taggedTemplateLiteral(strings, raw) { if (!raw) { raw = strings.slice(
 
 var HeroImage = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].img(_templateObject || (_templateObject = _taggedTemplateLiteral(["\n  object-fit: cover;\n  width: 100%;\n  height: 550px;\n"])));
 var Hero = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].div(_templateObject2 || (_templateObject2 = _taggedTemplateLiteral(["\n  position: relative;\n"])));
-var HeroCallToAction = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].button(_templateObject3 || (_templateObject3 = _taggedTemplateLiteral([""])));
+var HeroCallToAction = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].div(_templateObject3 || (_templateObject3 = _taggedTemplateLiteral(["\n  font-size: 36px;\n  text-decoration: underline;\n  color: black;\n"])));
 var HeroDescription = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].p(_templateObject4 || (_templateObject4 = _taggedTemplateLiteral(["\n  font-size: 18px;\n  margin-bottom: 100px;\n"])));
 var HeroTitle = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].h1(_templateObject5 || (_templateObject5 = _taggedTemplateLiteral(["\n  font-weight: bold;\n  font-size: 36px;\n  color: white;\n  margin-bottom: 43px;\n"])));
 var HeroText = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].div(_templateObject6 || (_templateObject6 = _taggedTemplateLiteral(["\n  position: absolute;\n  top: 25%;\n  left: 50%;\n"])));
@@ -23398,949 +23432,6 @@ Object.defineProperty(exports, "default", ({
 }));
 
 var _Footer = _interopRequireDefault(__webpack_require__(/*! ./Footer */ "./node_modules/react-bulma-companion/lib/Footer/Footer.js"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
-
-/***/ }),
-
-/***/ "./node_modules/react-bulma-companion/lib/Navbar/Navbar.js":
-/*!*****************************************************************!*\
-  !*** ./node_modules/react-bulma-companion/lib/Navbar/Navbar.js ***!
-  \*****************************************************************/
-/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = Navbar;
-
-var _react = _interopRequireDefault(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
-
-var _propTypes = _interopRequireDefault(__webpack_require__(/*! prop-types */ "./node_modules/prop-types/index.js"));
-
-var _classnames = _interopRequireDefault(__webpack_require__(/*! classnames */ "./node_modules/classnames/index.js"));
-
-var _NavbarBrand = _interopRequireDefault(__webpack_require__(/*! ./NavbarBrand */ "./node_modules/react-bulma-companion/lib/Navbar/NavbarBrand/index.js"));
-
-var _NavbarBurger = _interopRequireDefault(__webpack_require__(/*! ./NavbarBurger */ "./node_modules/react-bulma-companion/lib/Navbar/NavbarBurger/index.js"));
-
-var _NavbarDivider = _interopRequireDefault(__webpack_require__(/*! ./NavbarDivider */ "./node_modules/react-bulma-companion/lib/Navbar/NavbarDivider/index.js"));
-
-var _NavbarDropdown = _interopRequireDefault(__webpack_require__(/*! ./NavbarDropdown */ "./node_modules/react-bulma-companion/lib/Navbar/NavbarDropdown/index.js"));
-
-var _NavbarEnd = _interopRequireDefault(__webpack_require__(/*! ./NavbarEnd */ "./node_modules/react-bulma-companion/lib/Navbar/NavbarEnd/index.js"));
-
-var _NavbarItem = _interopRequireDefault(__webpack_require__(/*! ./NavbarItem */ "./node_modules/react-bulma-companion/lib/Navbar/NavbarItem/index.js"));
-
-var _NavbarLink = _interopRequireDefault(__webpack_require__(/*! ./NavbarLink */ "./node_modules/react-bulma-companion/lib/Navbar/NavbarLink/index.js"));
-
-var _NavbarMenu = _interopRequireDefault(__webpack_require__(/*! ./NavbarMenu */ "./node_modules/react-bulma-companion/lib/Navbar/NavbarMenu/index.js"));
-
-var _NavbarStart = _interopRequireDefault(__webpack_require__(/*! ./NavbarStart */ "./node_modules/react-bulma-companion/lib/Navbar/NavbarStart/index.js"));
-
-var _excluded = ["children", "className", "color", "component", "fixed", "shadow", "spaced", "transparent"];
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
-
-function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
-
-function _objectWithoutProperties(source, excluded) { if (source == null) return {}; var target = _objectWithoutPropertiesLoose(source, excluded); var key, i; if (Object.getOwnPropertySymbols) { var sourceSymbolKeys = Object.getOwnPropertySymbols(source); for (i = 0; i < sourceSymbolKeys.length; i++) { key = sourceSymbolKeys[i]; if (excluded.indexOf(key) >= 0) continue; if (!Object.prototype.propertyIsEnumerable.call(source, key)) continue; target[key] = source[key]; } } return target; }
-
-function _objectWithoutPropertiesLoose(source, excluded) { if (source == null) return {}; var target = {}; var sourceKeys = Object.keys(source); var key, i; for (i = 0; i < sourceKeys.length; i++) { key = sourceKeys[i]; if (excluded.indexOf(key) >= 0) continue; target[key] = source[key]; } return target; }
-
-function Navbar(_ref) {
-  var children = _ref.children,
-      className = _ref.className,
-      color = _ref.color,
-      component = _ref.component,
-      fixed = _ref.fixed,
-      shadow = _ref.shadow,
-      spaced = _ref.spaced,
-      transparent = _ref.transparent,
-      props = _objectWithoutProperties(_ref, _excluded);
-
-  var Element = component; // Colors
-
-  var colorMap = {
-    primary: 'is-primary',
-    link: 'is-link',
-    info: 'is-info',
-    success: 'is-success',
-    warning: 'is-warning',
-    danger: 'is-danger',
-    white: 'is-white',
-    black: 'is-black',
-    light: 'is-light',
-    dark: 'is-dark'
-  };
-  var isColor = color && colorMap[color]; // Fixed
-
-  var fixedMap = {
-    top: 'is-fixed-top',
-    bottom: 'is-fixed-bottom',
-    'top-desktop': 'is-fixed-top-desktop',
-    'bottom-desktop': 'is-fixed-bottom-desktop',
-    'top-touch': 'is-fixed-top-touch',
-    'bottom-touch': 'is-fixed-bottom-touch'
-  };
-  var isFixed = fixed && fixedMap[fixed];
-  var classes = (0, _classnames["default"])('navbar', className, isColor, isFixed, {
-    'is-transparent': transparent,
-    'is-spaced': spaced,
-    'has-shadow': shadow
-  });
-  return /*#__PURE__*/_react["default"].createElement(Element, _extends({
-    role: "navigation",
-    className: classes
-  }, props), children);
-}
-
-Navbar.Brand = _NavbarBrand["default"];
-Navbar.Burger = _NavbarBurger["default"];
-Navbar.Divider = _NavbarDivider["default"];
-Navbar.Dropdown = _NavbarDropdown["default"];
-Navbar.End = _NavbarEnd["default"];
-Navbar.Item = _NavbarItem["default"];
-Navbar.Link = _NavbarLink["default"];
-Navbar.Menu = _NavbarMenu["default"];
-Navbar.Start = _NavbarStart["default"];
-Navbar.propTypes = {
-  className: _propTypes["default"].string,
-  children: _propTypes["default"].node,
-  component: _propTypes["default"].elementType,
-  color: _propTypes["default"].oneOf(['primary', 'link', 'info', 'success', 'warning', 'danger', 'white', 'black', 'light', 'dark']),
-  fixed: _propTypes["default"].oneOf(['top', 'bottom', 'top-desktop', 'bottom-desktop', 'top-touch', 'bottom-touch']),
-  shadow: _propTypes["default"].bool,
-  transparent: _propTypes["default"].bool,
-  spaced: _propTypes["default"].bool
-};
-Navbar.defaultProps = {
-  className: undefined,
-  children: null,
-  component: 'nav',
-  color: undefined,
-  fixed: undefined,
-  shadow: false,
-  transparent: false,
-  spaced: false
-};
-
-/***/ }),
-
-/***/ "./node_modules/react-bulma-companion/lib/Navbar/NavbarBrand/NavbarBrand.js":
-/*!**********************************************************************************!*\
-  !*** ./node_modules/react-bulma-companion/lib/Navbar/NavbarBrand/NavbarBrand.js ***!
-  \**********************************************************************************/
-/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = NavbarBrand;
-
-var _react = _interopRequireDefault(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
-
-var _propTypes = _interopRequireDefault(__webpack_require__(/*! prop-types */ "./node_modules/prop-types/index.js"));
-
-var _classnames = _interopRequireDefault(__webpack_require__(/*! classnames */ "./node_modules/classnames/index.js"));
-
-var _excluded = ["children", "className", "component"];
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
-
-function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
-
-function _objectWithoutProperties(source, excluded) { if (source == null) return {}; var target = _objectWithoutPropertiesLoose(source, excluded); var key, i; if (Object.getOwnPropertySymbols) { var sourceSymbolKeys = Object.getOwnPropertySymbols(source); for (i = 0; i < sourceSymbolKeys.length; i++) { key = sourceSymbolKeys[i]; if (excluded.indexOf(key) >= 0) continue; if (!Object.prototype.propertyIsEnumerable.call(source, key)) continue; target[key] = source[key]; } } return target; }
-
-function _objectWithoutPropertiesLoose(source, excluded) { if (source == null) return {}; var target = {}; var sourceKeys = Object.keys(source); var key, i; for (i = 0; i < sourceKeys.length; i++) { key = sourceKeys[i]; if (excluded.indexOf(key) >= 0) continue; target[key] = source[key]; } return target; }
-
-function NavbarBrand(_ref) {
-  var children = _ref.children,
-      className = _ref.className,
-      component = _ref.component,
-      props = _objectWithoutProperties(_ref, _excluded);
-
-  var Element = component;
-  var classes = (0, _classnames["default"])('navbar-brand', className);
-  return /*#__PURE__*/_react["default"].createElement(Element, _extends({
-    className: classes
-  }, props), children);
-}
-
-NavbarBrand.propTypes = {
-  className: _propTypes["default"].string,
-  children: _propTypes["default"].node,
-  component: _propTypes["default"].elementType
-};
-NavbarBrand.defaultProps = {
-  className: undefined,
-  children: null,
-  component: 'div'
-};
-
-/***/ }),
-
-/***/ "./node_modules/react-bulma-companion/lib/Navbar/NavbarBrand/index.js":
-/*!****************************************************************************!*\
-  !*** ./node_modules/react-bulma-companion/lib/Navbar/NavbarBrand/index.js ***!
-  \****************************************************************************/
-/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-Object.defineProperty(exports, "default", ({
-  enumerable: true,
-  get: function get() {
-    return _NavbarBrand["default"];
-  }
-}));
-
-var _NavbarBrand = _interopRequireDefault(__webpack_require__(/*! ./NavbarBrand */ "./node_modules/react-bulma-companion/lib/Navbar/NavbarBrand/NavbarBrand.js"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
-
-/***/ }),
-
-/***/ "./node_modules/react-bulma-companion/lib/Navbar/NavbarBurger/NavbarBurger.js":
-/*!************************************************************************************!*\
-  !*** ./node_modules/react-bulma-companion/lib/Navbar/NavbarBurger/NavbarBurger.js ***!
-  \************************************************************************************/
-/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = NavbarBurger;
-
-var _react = _interopRequireDefault(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
-
-var _propTypes = _interopRequireDefault(__webpack_require__(/*! prop-types */ "./node_modules/prop-types/index.js"));
-
-var _classnames = _interopRequireDefault(__webpack_require__(/*! classnames */ "./node_modules/classnames/index.js"));
-
-var _excluded = ["active", "className", "component"];
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
-
-function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
-
-function _objectWithoutProperties(source, excluded) { if (source == null) return {}; var target = _objectWithoutPropertiesLoose(source, excluded); var key, i; if (Object.getOwnPropertySymbols) { var sourceSymbolKeys = Object.getOwnPropertySymbols(source); for (i = 0; i < sourceSymbolKeys.length; i++) { key = sourceSymbolKeys[i]; if (excluded.indexOf(key) >= 0) continue; if (!Object.prototype.propertyIsEnumerable.call(source, key)) continue; target[key] = source[key]; } } return target; }
-
-function _objectWithoutPropertiesLoose(source, excluded) { if (source == null) return {}; var target = {}; var sourceKeys = Object.keys(source); var key, i; for (i = 0; i < sourceKeys.length; i++) { key = sourceKeys[i]; if (excluded.indexOf(key) >= 0) continue; target[key] = source[key]; } return target; }
-
-function NavbarBurger(_ref) {
-  var active = _ref.active,
-      className = _ref.className,
-      component = _ref.component,
-      props = _objectWithoutProperties(_ref, _excluded);
-
-  var Element = component;
-  var classes = (0, _classnames["default"])('navbar-burger', className, {
-    'is-active': active
-  });
-  return /*#__PURE__*/_react["default"].createElement(Element, _extends({
-    role: "button",
-    className: classes
-  }, props), /*#__PURE__*/_react["default"].createElement("span", {
-    "aria-hidden": "true"
-  }), /*#__PURE__*/_react["default"].createElement("span", {
-    "aria-hidden": "true"
-  }), /*#__PURE__*/_react["default"].createElement("span", {
-    "aria-hidden": "true"
-  }));
-}
-
-NavbarBurger.propTypes = {
-  className: _propTypes["default"].string,
-  component: _propTypes["default"].elementType,
-  active: _propTypes["default"].bool
-};
-NavbarBurger.defaultProps = {
-  className: undefined,
-  component: 'a',
-  active: false
-};
-
-/***/ }),
-
-/***/ "./node_modules/react-bulma-companion/lib/Navbar/NavbarBurger/index.js":
-/*!*****************************************************************************!*\
-  !*** ./node_modules/react-bulma-companion/lib/Navbar/NavbarBurger/index.js ***!
-  \*****************************************************************************/
-/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-Object.defineProperty(exports, "default", ({
-  enumerable: true,
-  get: function get() {
-    return _NavbarBurger["default"];
-  }
-}));
-
-var _NavbarBurger = _interopRequireDefault(__webpack_require__(/*! ./NavbarBurger */ "./node_modules/react-bulma-companion/lib/Navbar/NavbarBurger/NavbarBurger.js"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
-
-/***/ }),
-
-/***/ "./node_modules/react-bulma-companion/lib/Navbar/NavbarDivider/NavbarDivider.js":
-/*!**************************************************************************************!*\
-  !*** ./node_modules/react-bulma-companion/lib/Navbar/NavbarDivider/NavbarDivider.js ***!
-  \**************************************************************************************/
-/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = NavbarDivider;
-
-var _react = _interopRequireDefault(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
-
-var _propTypes = _interopRequireDefault(__webpack_require__(/*! prop-types */ "./node_modules/prop-types/index.js"));
-
-var _classnames = _interopRequireDefault(__webpack_require__(/*! classnames */ "./node_modules/classnames/index.js"));
-
-var _excluded = ["className", "component"];
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
-
-function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
-
-function _objectWithoutProperties(source, excluded) { if (source == null) return {}; var target = _objectWithoutPropertiesLoose(source, excluded); var key, i; if (Object.getOwnPropertySymbols) { var sourceSymbolKeys = Object.getOwnPropertySymbols(source); for (i = 0; i < sourceSymbolKeys.length; i++) { key = sourceSymbolKeys[i]; if (excluded.indexOf(key) >= 0) continue; if (!Object.prototype.propertyIsEnumerable.call(source, key)) continue; target[key] = source[key]; } } return target; }
-
-function _objectWithoutPropertiesLoose(source, excluded) { if (source == null) return {}; var target = {}; var sourceKeys = Object.keys(source); var key, i; for (i = 0; i < sourceKeys.length; i++) { key = sourceKeys[i]; if (excluded.indexOf(key) >= 0) continue; target[key] = source[key]; } return target; }
-
-function NavbarDivider(_ref) {
-  var className = _ref.className,
-      component = _ref.component,
-      props = _objectWithoutProperties(_ref, _excluded);
-
-  var Element = component;
-  var classes = (0, _classnames["default"])('navbar-divider', className);
-  return /*#__PURE__*/_react["default"].createElement(Element, _extends({
-    className: classes
-  }, props));
-}
-
-NavbarDivider.propTypes = {
-  className: _propTypes["default"].string,
-  component: _propTypes["default"].elementType
-};
-NavbarDivider.defaultProps = {
-  className: undefined,
-  component: 'hr'
-};
-
-/***/ }),
-
-/***/ "./node_modules/react-bulma-companion/lib/Navbar/NavbarDivider/index.js":
-/*!******************************************************************************!*\
-  !*** ./node_modules/react-bulma-companion/lib/Navbar/NavbarDivider/index.js ***!
-  \******************************************************************************/
-/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-Object.defineProperty(exports, "default", ({
-  enumerable: true,
-  get: function get() {
-    return _NavbarDivider["default"];
-  }
-}));
-
-var _NavbarDivider = _interopRequireDefault(__webpack_require__(/*! ./NavbarDivider */ "./node_modules/react-bulma-companion/lib/Navbar/NavbarDivider/NavbarDivider.js"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
-
-/***/ }),
-
-/***/ "./node_modules/react-bulma-companion/lib/Navbar/NavbarDropdown/NavbarDropdown.js":
-/*!****************************************************************************************!*\
-  !*** ./node_modules/react-bulma-companion/lib/Navbar/NavbarDropdown/NavbarDropdown.js ***!
-  \****************************************************************************************/
-/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = NavbarDropdown;
-
-var _react = _interopRequireDefault(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
-
-var _propTypes = _interopRequireDefault(__webpack_require__(/*! prop-types */ "./node_modules/prop-types/index.js"));
-
-var _classnames = _interopRequireDefault(__webpack_require__(/*! classnames */ "./node_modules/classnames/index.js"));
-
-var _excluded = ["boxed", "children", "className", "component", "right"];
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
-
-function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
-
-function _objectWithoutProperties(source, excluded) { if (source == null) return {}; var target = _objectWithoutPropertiesLoose(source, excluded); var key, i; if (Object.getOwnPropertySymbols) { var sourceSymbolKeys = Object.getOwnPropertySymbols(source); for (i = 0; i < sourceSymbolKeys.length; i++) { key = sourceSymbolKeys[i]; if (excluded.indexOf(key) >= 0) continue; if (!Object.prototype.propertyIsEnumerable.call(source, key)) continue; target[key] = source[key]; } } return target; }
-
-function _objectWithoutPropertiesLoose(source, excluded) { if (source == null) return {}; var target = {}; var sourceKeys = Object.keys(source); var key, i; for (i = 0; i < sourceKeys.length; i++) { key = sourceKeys[i]; if (excluded.indexOf(key) >= 0) continue; target[key] = source[key]; } return target; }
-
-function NavbarDropdown(_ref) {
-  var boxed = _ref.boxed,
-      children = _ref.children,
-      className = _ref.className,
-      component = _ref.component,
-      right = _ref.right,
-      props = _objectWithoutProperties(_ref, _excluded);
-
-  var Element = component;
-  var classes = (0, _classnames["default"])('navbar-dropdown', className, {
-    'is-right': right,
-    'is-boxed': boxed
-  });
-  return /*#__PURE__*/_react["default"].createElement(Element, _extends({
-    className: classes
-  }, props), children);
-}
-
-NavbarDropdown.propTypes = {
-  className: _propTypes["default"].string,
-  children: _propTypes["default"].node,
-  component: _propTypes["default"].elementType,
-  right: _propTypes["default"].bool,
-  boxed: _propTypes["default"].bool
-};
-NavbarDropdown.defaultProps = {
-  className: undefined,
-  children: null,
-  component: 'div',
-  right: undefined,
-  boxed: false
-};
-
-/***/ }),
-
-/***/ "./node_modules/react-bulma-companion/lib/Navbar/NavbarDropdown/index.js":
-/*!*******************************************************************************!*\
-  !*** ./node_modules/react-bulma-companion/lib/Navbar/NavbarDropdown/index.js ***!
-  \*******************************************************************************/
-/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-Object.defineProperty(exports, "default", ({
-  enumerable: true,
-  get: function get() {
-    return _NavbarDropdown["default"];
-  }
-}));
-
-var _NavbarDropdown = _interopRequireDefault(__webpack_require__(/*! ./NavbarDropdown */ "./node_modules/react-bulma-companion/lib/Navbar/NavbarDropdown/NavbarDropdown.js"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
-
-/***/ }),
-
-/***/ "./node_modules/react-bulma-companion/lib/Navbar/NavbarEnd/NavbarEnd.js":
-/*!******************************************************************************!*\
-  !*** ./node_modules/react-bulma-companion/lib/Navbar/NavbarEnd/NavbarEnd.js ***!
-  \******************************************************************************/
-/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = NavbarEnd;
-
-var _react = _interopRequireDefault(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
-
-var _propTypes = _interopRequireDefault(__webpack_require__(/*! prop-types */ "./node_modules/prop-types/index.js"));
-
-var _classnames = _interopRequireDefault(__webpack_require__(/*! classnames */ "./node_modules/classnames/index.js"));
-
-var _excluded = ["children", "className", "component"];
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
-
-function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
-
-function _objectWithoutProperties(source, excluded) { if (source == null) return {}; var target = _objectWithoutPropertiesLoose(source, excluded); var key, i; if (Object.getOwnPropertySymbols) { var sourceSymbolKeys = Object.getOwnPropertySymbols(source); for (i = 0; i < sourceSymbolKeys.length; i++) { key = sourceSymbolKeys[i]; if (excluded.indexOf(key) >= 0) continue; if (!Object.prototype.propertyIsEnumerable.call(source, key)) continue; target[key] = source[key]; } } return target; }
-
-function _objectWithoutPropertiesLoose(source, excluded) { if (source == null) return {}; var target = {}; var sourceKeys = Object.keys(source); var key, i; for (i = 0; i < sourceKeys.length; i++) { key = sourceKeys[i]; if (excluded.indexOf(key) >= 0) continue; target[key] = source[key]; } return target; }
-
-function NavbarEnd(_ref) {
-  var children = _ref.children,
-      className = _ref.className,
-      component = _ref.component,
-      props = _objectWithoutProperties(_ref, _excluded);
-
-  var Element = component;
-  var classes = (0, _classnames["default"])('navbar-end', className);
-  return /*#__PURE__*/_react["default"].createElement(Element, _extends({
-    className: classes
-  }, props), children);
-}
-
-NavbarEnd.propTypes = {
-  className: _propTypes["default"].string,
-  children: _propTypes["default"].node,
-  component: _propTypes["default"].elementType
-};
-NavbarEnd.defaultProps = {
-  className: undefined,
-  children: null,
-  component: 'div'
-};
-
-/***/ }),
-
-/***/ "./node_modules/react-bulma-companion/lib/Navbar/NavbarEnd/index.js":
-/*!**************************************************************************!*\
-  !*** ./node_modules/react-bulma-companion/lib/Navbar/NavbarEnd/index.js ***!
-  \**************************************************************************/
-/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-Object.defineProperty(exports, "default", ({
-  enumerable: true,
-  get: function get() {
-    return _NavbarEnd["default"];
-  }
-}));
-
-var _NavbarEnd = _interopRequireDefault(__webpack_require__(/*! ./NavbarEnd */ "./node_modules/react-bulma-companion/lib/Navbar/NavbarEnd/NavbarEnd.js"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
-
-/***/ }),
-
-/***/ "./node_modules/react-bulma-companion/lib/Navbar/NavbarItem/NavbarItem.js":
-/*!********************************************************************************!*\
-  !*** ./node_modules/react-bulma-companion/lib/Navbar/NavbarItem/NavbarItem.js ***!
-  \********************************************************************************/
-/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = NavbarItem;
-
-var _react = _interopRequireDefault(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
-
-var _propTypes = _interopRequireDefault(__webpack_require__(/*! prop-types */ "./node_modules/prop-types/index.js"));
-
-var _classnames = _interopRequireDefault(__webpack_require__(/*! classnames */ "./node_modules/classnames/index.js"));
-
-var _excluded = ["active", "children", "className", "component", "expanded", "hasDropdown", "hasDropup", "hoverable", "link", "tab"];
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
-
-function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
-
-function _objectWithoutProperties(source, excluded) { if (source == null) return {}; var target = _objectWithoutPropertiesLoose(source, excluded); var key, i; if (Object.getOwnPropertySymbols) { var sourceSymbolKeys = Object.getOwnPropertySymbols(source); for (i = 0; i < sourceSymbolKeys.length; i++) { key = sourceSymbolKeys[i]; if (excluded.indexOf(key) >= 0) continue; if (!Object.prototype.propertyIsEnumerable.call(source, key)) continue; target[key] = source[key]; } } return target; }
-
-function _objectWithoutPropertiesLoose(source, excluded) { if (source == null) return {}; var target = {}; var sourceKeys = Object.keys(source); var key, i; for (i = 0; i < sourceKeys.length; i++) { key = sourceKeys[i]; if (excluded.indexOf(key) >= 0) continue; target[key] = source[key]; } return target; }
-
-function NavbarItem(_ref) {
-  var active = _ref.active,
-      children = _ref.children,
-      className = _ref.className,
-      component = _ref.component,
-      expanded = _ref.expanded,
-      hasDropdown = _ref.hasDropdown,
-      hasDropup = _ref.hasDropup,
-      hoverable = _ref.hoverable,
-      link = _ref.link,
-      tab = _ref.tab,
-      props = _objectWithoutProperties(_ref, _excluded);
-
-  if ( true && link) {
-    // eslint-disable-next-line
-    console.warn('Using the `link` prop is deprecated. Use `component="a"` instead.');
-  }
-
-  var Element = link ? 'a' : component;
-  var classes = (0, _classnames["default"])('navbar-item', className, {
-    'is-active': active,
-    'has-dropdown': hasDropdown || hasDropup,
-    'has-dropdown-up': hasDropup,
-    'is-hoverable': hoverable,
-    'is-expanded': expanded,
-    'is-tab': tab
-  });
-  return /*#__PURE__*/_react["default"].createElement(Element, _extends({
-    className: classes
-  }, props), children);
-}
-
-NavbarItem.propTypes = {
-  className: _propTypes["default"].string,
-  children: _propTypes["default"].node,
-  component: _propTypes["default"].elementType,
-  link: _propTypes["default"].bool,
-  active: _propTypes["default"].bool,
-  hasDropdown: _propTypes["default"].bool,
-  hasDropup: _propTypes["default"].bool,
-  hoverable: _propTypes["default"].bool,
-  expanded: _propTypes["default"].bool,
-  tab: _propTypes["default"].bool
-};
-NavbarItem.defaultProps = {
-  className: undefined,
-  children: null,
-  component: 'div',
-
-  /**
-    Deprecation Warning: Use `component="a"`.
-  */
-  link: false,
-  active: false,
-  hasDropdown: false,
-  hasDropup: false,
-  hoverable: false,
-  expanded: false,
-  tab: false
-};
-
-/***/ }),
-
-/***/ "./node_modules/react-bulma-companion/lib/Navbar/NavbarItem/index.js":
-/*!***************************************************************************!*\
-  !*** ./node_modules/react-bulma-companion/lib/Navbar/NavbarItem/index.js ***!
-  \***************************************************************************/
-/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-Object.defineProperty(exports, "default", ({
-  enumerable: true,
-  get: function get() {
-    return _NavbarItem["default"];
-  }
-}));
-
-var _NavbarItem = _interopRequireDefault(__webpack_require__(/*! ./NavbarItem */ "./node_modules/react-bulma-companion/lib/Navbar/NavbarItem/NavbarItem.js"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
-
-/***/ }),
-
-/***/ "./node_modules/react-bulma-companion/lib/Navbar/NavbarLink/NavbarLink.js":
-/*!********************************************************************************!*\
-  !*** ./node_modules/react-bulma-companion/lib/Navbar/NavbarLink/NavbarLink.js ***!
-  \********************************************************************************/
-/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = NavbarLink;
-
-var _react = _interopRequireDefault(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
-
-var _propTypes = _interopRequireDefault(__webpack_require__(/*! prop-types */ "./node_modules/prop-types/index.js"));
-
-var _classnames = _interopRequireDefault(__webpack_require__(/*! classnames */ "./node_modules/classnames/index.js"));
-
-var _excluded = ["arrowless", "children", "className", "component"];
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
-
-function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
-
-function _objectWithoutProperties(source, excluded) { if (source == null) return {}; var target = _objectWithoutPropertiesLoose(source, excluded); var key, i; if (Object.getOwnPropertySymbols) { var sourceSymbolKeys = Object.getOwnPropertySymbols(source); for (i = 0; i < sourceSymbolKeys.length; i++) { key = sourceSymbolKeys[i]; if (excluded.indexOf(key) >= 0) continue; if (!Object.prototype.propertyIsEnumerable.call(source, key)) continue; target[key] = source[key]; } } return target; }
-
-function _objectWithoutPropertiesLoose(source, excluded) { if (source == null) return {}; var target = {}; var sourceKeys = Object.keys(source); var key, i; for (i = 0; i < sourceKeys.length; i++) { key = sourceKeys[i]; if (excluded.indexOf(key) >= 0) continue; target[key] = source[key]; } return target; }
-
-function NavbarLink(_ref) {
-  var arrowless = _ref.arrowless,
-      children = _ref.children,
-      className = _ref.className,
-      component = _ref.component,
-      props = _objectWithoutProperties(_ref, _excluded);
-
-  var Element = component;
-  var classes = (0, _classnames["default"])('navbar-link', className, {
-    'is-arrowless': arrowless
-  });
-  return /*#__PURE__*/_react["default"].createElement(Element, _extends({
-    className: classes
-  }, props), children);
-}
-
-NavbarLink.propTypes = {
-  className: _propTypes["default"].string,
-  children: _propTypes["default"].node,
-  component: _propTypes["default"].elementType,
-  arrowless: _propTypes["default"].bool
-};
-NavbarLink.defaultProps = {
-  className: undefined,
-  children: null,
-  component: 'a',
-  arrowless: false
-};
-
-/***/ }),
-
-/***/ "./node_modules/react-bulma-companion/lib/Navbar/NavbarLink/index.js":
-/*!***************************************************************************!*\
-  !*** ./node_modules/react-bulma-companion/lib/Navbar/NavbarLink/index.js ***!
-  \***************************************************************************/
-/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-Object.defineProperty(exports, "default", ({
-  enumerable: true,
-  get: function get() {
-    return _NavbarLink["default"];
-  }
-}));
-
-var _NavbarLink = _interopRequireDefault(__webpack_require__(/*! ./NavbarLink */ "./node_modules/react-bulma-companion/lib/Navbar/NavbarLink/NavbarLink.js"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
-
-/***/ }),
-
-/***/ "./node_modules/react-bulma-companion/lib/Navbar/NavbarMenu/NavbarMenu.js":
-/*!********************************************************************************!*\
-  !*** ./node_modules/react-bulma-companion/lib/Navbar/NavbarMenu/NavbarMenu.js ***!
-  \********************************************************************************/
-/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = NavbarMenu;
-
-var _react = _interopRequireDefault(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
-
-var _propTypes = _interopRequireDefault(__webpack_require__(/*! prop-types */ "./node_modules/prop-types/index.js"));
-
-var _classnames = _interopRequireDefault(__webpack_require__(/*! classnames */ "./node_modules/classnames/index.js"));
-
-var _excluded = ["active", "children", "className", "component"];
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
-
-function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
-
-function _objectWithoutProperties(source, excluded) { if (source == null) return {}; var target = _objectWithoutPropertiesLoose(source, excluded); var key, i; if (Object.getOwnPropertySymbols) { var sourceSymbolKeys = Object.getOwnPropertySymbols(source); for (i = 0; i < sourceSymbolKeys.length; i++) { key = sourceSymbolKeys[i]; if (excluded.indexOf(key) >= 0) continue; if (!Object.prototype.propertyIsEnumerable.call(source, key)) continue; target[key] = source[key]; } } return target; }
-
-function _objectWithoutPropertiesLoose(source, excluded) { if (source == null) return {}; var target = {}; var sourceKeys = Object.keys(source); var key, i; for (i = 0; i < sourceKeys.length; i++) { key = sourceKeys[i]; if (excluded.indexOf(key) >= 0) continue; target[key] = source[key]; } return target; }
-
-function NavbarMenu(_ref) {
-  var active = _ref.active,
-      children = _ref.children,
-      className = _ref.className,
-      component = _ref.component,
-      props = _objectWithoutProperties(_ref, _excluded);
-
-  var Element = component;
-  var classes = (0, _classnames["default"])('navbar-menu', className, {
-    'is-active': active
-  });
-  return /*#__PURE__*/_react["default"].createElement(Element, _extends({
-    className: classes
-  }, props), children);
-}
-
-NavbarMenu.propTypes = {
-  className: _propTypes["default"].string,
-  children: _propTypes["default"].node,
-  component: _propTypes["default"].elementType,
-  active: _propTypes["default"].bool
-};
-NavbarMenu.defaultProps = {
-  className: undefined,
-  children: null,
-  component: 'div',
-  active: false
-};
-
-/***/ }),
-
-/***/ "./node_modules/react-bulma-companion/lib/Navbar/NavbarMenu/index.js":
-/*!***************************************************************************!*\
-  !*** ./node_modules/react-bulma-companion/lib/Navbar/NavbarMenu/index.js ***!
-  \***************************************************************************/
-/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-Object.defineProperty(exports, "default", ({
-  enumerable: true,
-  get: function get() {
-    return _NavbarMenu["default"];
-  }
-}));
-
-var _NavbarMenu = _interopRequireDefault(__webpack_require__(/*! ./NavbarMenu */ "./node_modules/react-bulma-companion/lib/Navbar/NavbarMenu/NavbarMenu.js"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
-
-/***/ }),
-
-/***/ "./node_modules/react-bulma-companion/lib/Navbar/NavbarStart/NavbarStart.js":
-/*!**********************************************************************************!*\
-  !*** ./node_modules/react-bulma-companion/lib/Navbar/NavbarStart/NavbarStart.js ***!
-  \**********************************************************************************/
-/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = NavbarStart;
-
-var _react = _interopRequireDefault(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
-
-var _propTypes = _interopRequireDefault(__webpack_require__(/*! prop-types */ "./node_modules/prop-types/index.js"));
-
-var _classnames = _interopRequireDefault(__webpack_require__(/*! classnames */ "./node_modules/classnames/index.js"));
-
-var _excluded = ["children", "className", "component"];
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
-
-function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
-
-function _objectWithoutProperties(source, excluded) { if (source == null) return {}; var target = _objectWithoutPropertiesLoose(source, excluded); var key, i; if (Object.getOwnPropertySymbols) { var sourceSymbolKeys = Object.getOwnPropertySymbols(source); for (i = 0; i < sourceSymbolKeys.length; i++) { key = sourceSymbolKeys[i]; if (excluded.indexOf(key) >= 0) continue; if (!Object.prototype.propertyIsEnumerable.call(source, key)) continue; target[key] = source[key]; } } return target; }
-
-function _objectWithoutPropertiesLoose(source, excluded) { if (source == null) return {}; var target = {}; var sourceKeys = Object.keys(source); var key, i; for (i = 0; i < sourceKeys.length; i++) { key = sourceKeys[i]; if (excluded.indexOf(key) >= 0) continue; target[key] = source[key]; } return target; }
-
-function NavbarStart(_ref) {
-  var children = _ref.children,
-      className = _ref.className,
-      component = _ref.component,
-      props = _objectWithoutProperties(_ref, _excluded);
-
-  var Element = component;
-  var classes = (0, _classnames["default"])('navbar-start', className);
-  return /*#__PURE__*/_react["default"].createElement(Element, _extends({
-    className: classes
-  }, props), children);
-}
-
-NavbarStart.propTypes = {
-  className: _propTypes["default"].string,
-  children: _propTypes["default"].node,
-  component: _propTypes["default"].elementType
-};
-NavbarStart.defaultProps = {
-  className: undefined,
-  children: null,
-  component: 'div'
-};
-
-/***/ }),
-
-/***/ "./node_modules/react-bulma-companion/lib/Navbar/NavbarStart/index.js":
-/*!****************************************************************************!*\
-  !*** ./node_modules/react-bulma-companion/lib/Navbar/NavbarStart/index.js ***!
-  \****************************************************************************/
-/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-Object.defineProperty(exports, "default", ({
-  enumerable: true,
-  get: function get() {
-    return _NavbarStart["default"];
-  }
-}));
-
-var _NavbarStart = _interopRequireDefault(__webpack_require__(/*! ./NavbarStart */ "./node_modules/react-bulma-companion/lib/Navbar/NavbarStart/NavbarStart.js"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
-
-/***/ }),
-
-/***/ "./node_modules/react-bulma-companion/lib/Navbar/index.js":
-/*!****************************************************************!*\
-  !*** ./node_modules/react-bulma-companion/lib/Navbar/index.js ***!
-  \****************************************************************/
-/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-Object.defineProperty(exports, "default", ({
-  enumerable: true,
-  get: function get() {
-    return _Navbar["default"];
-  }
-}));
-
-var _Navbar = _interopRequireDefault(__webpack_require__(/*! ./Navbar */ "./node_modules/react-bulma-companion/lib/Navbar/Navbar.js"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
@@ -61996,6 +61087,17 @@ module.exports = __webpack_require__.p + "images/default-profile.png";
 
 /***/ }),
 
+/***/ "./client/assets/images/logo.png":
+/*!***************************************!*\
+  !*** ./client/assets/images/logo.png ***!
+  \***************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+module.exports = __webpack_require__.p + "images/logo.png";
+
+/***/ }),
+
 /***/ "?4f7e":
 /*!********************************!*\
   !*** ./util.inspect (ignored) ***!
@@ -62258,7 +61360,9 @@ var __webpack_exports__ = {};
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _images_default_profile_png__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./images/default-profile.png */ "./client/assets/images/default-profile.png");
 /* harmony import */ var _images_backgroundImage_jpeg__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./images/backgroundImage.jpeg */ "./client/assets/images/backgroundImage.jpeg");
+/* harmony import */ var _images_logo_png__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./images/logo.png */ "./client/assets/images/logo.png");
 // Images
+
 
 
 })();
