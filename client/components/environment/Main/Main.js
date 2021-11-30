@@ -1,14 +1,16 @@
-import React, { useEffect } from 'react';
-import PropTypes from 'prop-types';
-import { useLocation, Switch, Route } from 'react-router-dom';
-import ReactNotification from 'react-notifications-component';
-import WelcomePage from '_pages/WelcomePage';
-import HomePage from '_pages/HomePage';
-import LostPage from '_pages/LostPage';
-import QuizPage from '_pages/QuizPage';
+import React, { useEffect } from "react";
+import PropTypes from "prop-types";
+import { useLocation, Switch, Route } from "react-router-dom";
+import ReactNotification from "react-notifications-component";
+import WelcomePage from "_pages/WelcomePage";
+import HomePage from "_pages/HomePage";
+import LostPage from "_pages/LostPage";
+import QuizPage from "_pages/QuizPage";
 
-import Navigation from '_organisms/Navigation';
-import Footer from '_organisms/Footer';
+import Navigation from "_organisms/Navigation";
+import Footer from "_organisms/Footer";
+
+import { MainContainer } from "./styles";
 
 export default function Main() {
   const location = useLocation();
@@ -21,14 +23,14 @@ export default function Main() {
     <div>
       <ReactNotification />
       <Navigation pathname={location.pathname} />
-      <div className="main">
+      <MainContainer>
         <Switch>
           <Route exact path="/" component={WelcomePage} />
           <Route path="/home" component={HomePage} />
           <Route path="/quiz" component={QuizPage} />
           <Route path="*" component={LostPage} />
         </Switch>
-      </div>
+      </MainContainer>
       <Footer />
     </div>
   );

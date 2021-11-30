@@ -956,7 +956,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! prop-types */ "./node_modules/prop-types/index.js");
 /* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(prop_types__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router/esm/react-router.js");
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router/esm/react-router.js");
 /* harmony import */ var react_notifications_component__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-notifications-component */ "./node_modules/react-notifications-component/dist/index.js");
 /* harmony import */ var react_notifications_component__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(react_notifications_component__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var _pages_WelcomePage__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! _pages/WelcomePage */ "./client/components/pages/WelcomePage/index.js");
@@ -965,6 +965,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _pages_QuizPage__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! _pages/QuizPage */ "./client/components/pages/QuizPage/index.js");
 /* harmony import */ var _organisms_Navigation__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! _organisms/Navigation */ "./client/components/organisms/Navigation/index.js");
 /* harmony import */ var _organisms_Footer__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! _organisms/Footer */ "./client/components/organisms/Footer/index.js");
+/* harmony import */ var _styles__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./styles */ "./client/components/environment/Main/styles.js");
+
 
 
 
@@ -976,7 +978,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 function Main() {
-  var location = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_9__.useLocation)();
+  var location = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_10__.useLocation)();
   console.log(location); // const [loading] = useState(false);
 
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
@@ -984,19 +986,17 @@ function Main() {
   }, [location.pathname]);
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement((react_notifications_component__WEBPACK_IMPORTED_MODULE_2___default()), null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_organisms_Navigation__WEBPACK_IMPORTED_MODULE_7__["default"], {
     pathname: location.pathname
-  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
-    className: "main"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_9__.Switch, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_9__.Route, {
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_styles__WEBPACK_IMPORTED_MODULE_9__.MainContainer, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_10__.Switch, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_10__.Route, {
     exact: true,
     path: "/",
     component: _pages_WelcomePage__WEBPACK_IMPORTED_MODULE_3__["default"]
-  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_9__.Route, {
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_10__.Route, {
     path: "/home",
     component: _pages_HomePage__WEBPACK_IMPORTED_MODULE_4__["default"]
-  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_9__.Route, {
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_10__.Route, {
     path: "/quiz",
     component: _pages_QuizPage__WEBPACK_IMPORTED_MODULE_6__["default"]
-  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_9__.Route, {
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_10__.Route, {
     path: "*",
     component: _pages_LostPage__WEBPACK_IMPORTED_MODULE_5__["default"]
   }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_organisms_Footer__WEBPACK_IMPORTED_MODULE_8__["default"], null));
@@ -1019,6 +1019,27 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Main__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Main */ "./client/components/environment/Main/Main.js");
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_Main__WEBPACK_IMPORTED_MODULE_0__["default"]);
+
+/***/ }),
+
+/***/ "./client/components/environment/Main/styles.js":
+/*!******************************************************!*\
+  !*** ./client/components/environment/Main/styles.js ***!
+  \******************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "MainContainer": () => (/* binding */ MainContainer)
+/* harmony export */ });
+/* harmony import */ var styled_components__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! styled-components */ "./node_modules/styled-components/dist/styled-components.browser.esm.js");
+var _templateObject;
+
+function _taggedTemplateLiteral(strings, raw) { if (!raw) { raw = strings.slice(0); } return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
+
+
+var MainContainer = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].div(_templateObject || (_templateObject = _taggedTemplateLiteral(["\n  display: flex;\n  justify-content: center;\n  align-content: center;\n  margin-bottom:10em;\n"])));
 
 /***/ }),
 
@@ -1150,7 +1171,7 @@ function Navigation(_ref) {
     href: "/quiz"
   }, "Take the quiz")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_styles_js__WEBPACK_IMPORTED_MODULE_2__.NavItem, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_styles_js__WEBPACK_IMPORTED_MODULE_2__.NavLink, {
     href: "#"
-  }, "About Us"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_styles_js__WEBPACK_IMPORTED_MODULE_2__.EmptyDiv, null)));
+  }, "About Us")))));
 }
 Navigation.propTypes = {
   pathname: (prop_types__WEBPACK_IMPORTED_MODULE_1___default().string.isRequired)
@@ -1189,22 +1210,20 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "NavItem": () => (/* binding */ NavItem),
 /* harmony export */   "Logo": () => (/* binding */ Logo),
 /* harmony export */   "NavLink": () => (/* binding */ NavLink),
-/* harmony export */   "ActionItems": () => (/* binding */ ActionItems),
-/* harmony export */   "EmptyDiv": () => (/* binding */ EmptyDiv)
+/* harmony export */   "ActionItems": () => (/* binding */ ActionItems)
 /* harmony export */ });
 /* harmony import */ var styled_components__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! styled-components */ "./node_modules/styled-components/dist/styled-components.browser.esm.js");
-var _templateObject, _templateObject2, _templateObject3, _templateObject4, _templateObject5, _templateObject6, _templateObject7;
+var _templateObject, _templateObject2, _templateObject3, _templateObject4, _templateObject5, _templateObject6;
 
 function _taggedTemplateLiteral(strings, raw) { if (!raw) { raw = strings.slice(0); } return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
 
 
 var Navbar = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].nav(_templateObject || (_templateObject = _taggedTemplateLiteral(["\n  margin: 0;\n"])));
-var Container = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].ul(_templateObject2 || (_templateObject2 = _taggedTemplateLiteral(["\n  margin: 0;\n  padding: 0;\n  display: flex;\n  max-height: 200px;\n"])));
-var NavItem = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].li(_templateObject3 || (_templateObject3 = _taggedTemplateLiteral(["\n  display: inline-block;\n\n  &:first-child {\n    /* max-height:170px; */\n\n    /* margin-right: auto; */\n  }\n  list-style-type: none;\n"])));
-var Logo = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].img(_templateObject4 || (_templateObject4 = _taggedTemplateLiteral(["\n  width: 400px;\n  margin-right: 15em;\n  cursor: pointer;\n"])));
-var NavLink = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].a(_templateObject5 || (_templateObject5 = _taggedTemplateLiteral(["\n  color: black;\n  display: block;\n  line-height: 3em;\n  padding: 1em 2em;\n  text-decoration: none;\n  font-size: 18px;\n  &:hover {\n    color: #44a2bb;\n    text-decoration: underline;\n  }\n"])));
-var ActionItems = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].div(_templateObject6 || (_templateObject6 = _taggedTemplateLiteral(["\n  align-self: end;\n  flex-wrap: nowrap;\n  flex-basis: 33%;\n\n  width: 100%;\n"])));
-var EmptyDiv = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].div(_templateObject7 || (_templateObject7 = _taggedTemplateLiteral(["\n  flex-basis: 33%;\n"])));
+var Container = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].ul(_templateObject2 || (_templateObject2 = _taggedTemplateLiteral(["\n  margin: 0;\n  padding: 0;\n  display: flex;\n  @media (max-width: 768px) {\n    flex-direction: column;\n  }\n"])));
+var NavItem = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].li(_templateObject3 || (_templateObject3 = _taggedTemplateLiteral(["\n  &:first-child {\n    /* max-height:170px; */\n\n    /* margin-right: auto; */\n  }\n  list-style-type: none;\n"])));
+var Logo = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].img(_templateObject4 || (_templateObject4 = _taggedTemplateLiteral(["\n  width: 400px;\n  cursor: pointer;\n"])));
+var NavLink = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].a(_templateObject5 || (_templateObject5 = _taggedTemplateLiteral(["\n  color: black;\n  display: block;\n  line-height: 3em;\n  padding: 1em 2em;\n  text-decoration: none;\n  font-size: 18px;\n  &:hover {\n    color: #44a2bb;\n    text-decoration: underline;\n  }\n  @media (max-width: 768px) {\n    white-space:nowrap;\n    padding-top: 0;\n    padding-bottom: 0;\n\n  }\n"])));
+var ActionItems = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].div(_templateObject6 || (_templateObject6 = _taggedTemplateLiteral(["\n  display: flex;\n  align-self: center;\n  justify-content: center;\n  flex-basis: 50%;\n  margin-top: 2em;\n  width: 100%;\n  @media (max-width: 768px) {\n    /* flex-direction: column; */\n    margin: 0;\n  }\n"])));
 
 /***/ }),
 
@@ -1264,7 +1283,7 @@ function ProductResult(props) {
       key: index
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_styled__WEBPACK_IMPORTED_MODULE_4__.CategoryContainer, {
       key: index
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_styled__WEBPACK_IMPORTED_MODULE_4__.Category, null, category.name), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_styled__WEBPACK_IMPORTED_MODULE_4__.CategoryDescription, null, "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec ut nisl mattis, scelerisque arcu eget, auctor orci. In arcu turpis.", " ")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_styled__WEBPACK_IMPORTED_MODULE_4__.ProductContainer, null, arrayOfCategories[category.name].map(function (product, index) {
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_styled__WEBPACK_IMPORTED_MODULE_4__.Category, null, category.name), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_styled__WEBPACK_IMPORTED_MODULE_4__.CategoryDescription, null, "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec ut nisl mattis, scelerisque arcu eget, auctor orci. In arcu turpis.", " "), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_styled__WEBPACK_IMPORTED_MODULE_4__.CategoryScore, null, "Score: ", category.score)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_styled__WEBPACK_IMPORTED_MODULE_4__.ProductContainer, null, arrayOfCategories[category.name].map(function (product, index) {
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_styled__WEBPACK_IMPORTED_MODULE_4__.SingleProductContainer, {
         key: index
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_styled__WEBPACK_IMPORTED_MODULE_4__.ProductImage, {
@@ -1313,11 +1332,11 @@ var Category = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].h1(_tem
 var CategoryContainer = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].div(_templateObject2 || (_templateObject2 = _taggedTemplateLiteral(["\n  display: flex;\n  flex-basis: 30%;\n  flex-direction: column;\n"])));
 var CategoryImage = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].img(_templateObject3 || (_templateObject3 = _taggedTemplateLiteral(["\n  max-width: 150px;\n  flex-basis: 33%;\n  margin: auto;\n"])));
 var CategoryScore = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].h2(_templateObject4 || (_templateObject4 = _taggedTemplateLiteral(["\n  font-size: 1em;\n  flex-basis: 33%;\n  margin: auto;\n  width: 100px;\n"])));
-var Container = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].div(_templateObject5 || (_templateObject5 = _taggedTemplateLiteral(["\n  margin-top: 5em;\n  width: 90%;\n"])));
-var FullContainer = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].div(_templateObject6 || (_templateObject6 = _taggedTemplateLiteral(["\n  display: flex;\n  gap: 10em;\n"])));
-var ProductContainer = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].div(_templateObject7 || (_templateObject7 = _taggedTemplateLiteral(["\n  display: flex;\n  flex-basis: 50%;\n  gap: 40px;\n\n  justify-content: center;\n  margin-bottom: 2em;\n"])));
+var Container = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].div(_templateObject5 || (_templateObject5 = _taggedTemplateLiteral(["\n  margin-top: 10em;\n"])));
+var FullContainer = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].div(_templateObject6 || (_templateObject6 = _taggedTemplateLiteral(["\n  width: 90%;\n  margin: auto;\n  display: flex;\n  gap: 5em;\n"])));
+var ProductContainer = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].div(_templateObject7 || (_templateObject7 = _taggedTemplateLiteral(["\n  display: grid;\n  grid-template-columns: repeat(3, 1fr);\n  gap: 10px;\n  width: 100%;\n"])));
 var ProductTitle = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].p(_templateObject8 || (_templateObject8 = _taggedTemplateLiteral(["\n  align-self: center;\n"])));
-var ProductImage = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].div(_templateObject9 || (_templateObject9 = _taggedTemplateLiteral(["\n  min-width: 300px;\n  margin-bottom:5em;\n"])));
+var ProductImage = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].div(_templateObject9 || (_templateObject9 = _taggedTemplateLiteral(["\n  max-width: 300px;\n  margin-bottom: 5em;\n"])));
 var ProductScore = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].p(_templateObject10 || (_templateObject10 = _taggedTemplateLiteral(["\n  color: red;\n  align-self: center;\n"])));
 var SingleProductContainer = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].div(_templateObject11 || (_templateObject11 = _taggedTemplateLiteral(["\n  display: flex;\n  flex-direction: column;\n  align-items: center;\n  border: lightgray 1px solid;\n"])));
 var CategoryDescription = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].p(_templateObject12 || (_templateObject12 = _taggedTemplateLiteral(["\n  font-size: 15px;\n"])));
@@ -1340,6 +1359,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react_bulma_companion_lib_Container__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-bulma-companion/lib/Container */ "./node_modules/react-bulma-companion/lib/Container/index.js");
 /* harmony import */ var react_bulma_companion_lib_Title__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react-bulma-companion/lib/Title */ "./node_modules/react-bulma-companion/lib/Title/index.js");
 /* harmony import */ var _QuizResult_QuizResult__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../QuizResult/QuizResult */ "./client/components/organisms/QuizResult/QuizResult.js");
+/* harmony import */ var _styles_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./styles.js */ "./client/components/organisms/QuizQuestion/styles.js");
 function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
 
 function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
@@ -1351,6 +1371,7 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
 function _iterableToArrayLimit(arr, i) { var _i = arr == null ? null : typeof Symbol !== "undefined" && arr[Symbol.iterator] || arr["@@iterator"]; if (_i == null) return; var _arr = []; var _n = true; var _d = false; var _s, _e; try { for (_i = _i.call(arr); !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
 
 function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
 
 
 
@@ -1372,6 +1393,7 @@ function QuizQuestion(props) {
       setCheckedState = _useState2[1];
 
   var handleOnChange = function handleOnChange(position) {
+    console.log(position);
     var updatedCheckedState = checkedState.map(function (item, index) {
       return index === position ? !item : item;
     });
@@ -1389,7 +1411,7 @@ function QuizQuestion(props) {
   };
 
   var possibleAnswers = answers.map(function (answers) {
-    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
+    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_styles_js__WEBPACK_IMPORTED_MODULE_5__.FancyButton, {
       onClick: function onClick() {
         handleResponse(id, answers);
         next();
@@ -1401,7 +1423,7 @@ function QuizQuestion(props) {
   var multiPossibleAnswers = answers.map(function (answers, index) {
     return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
       key: answers.message
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("input", {
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_styles_js__WEBPACK_IMPORTED_MODULE_5__.FancyLabel, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_styles_js__WEBPACK_IMPORTED_MODULE_5__.FancyRadioButton, {
       type: "checkbox",
       id: "custom-checkbox-".concat(index),
       name: answers.message,
@@ -1410,9 +1432,11 @@ function QuizQuestion(props) {
       onChange: function onChange() {
         return handleOnChange(index);
       }
-    }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("p", null, answers.message));
+    }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_styles_js__WEBPACK_IMPORTED_MODULE_5__.FancyDesign, {
+      checked: checkedState[index]
+    }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_styles_js__WEBPACK_IMPORTED_MODULE_5__.FancyText, null, " ", answers.message)));
   });
-  return id !== "results" ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_bulma_companion_lib_Container__WEBPACK_IMPORTED_MODULE_2__["default"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_bulma_companion_lib_Title__WEBPACK_IMPORTED_MODULE_3__["default"], null, title), isMulti ? multiPossibleAnswers : possibleAnswers, isMulti ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
+  return id !== "results" ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_bulma_companion_lib_Container__WEBPACK_IMPORTED_MODULE_2__["default"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_bulma_companion_lib_Title__WEBPACK_IMPORTED_MODULE_3__["default"], null, title), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_styles_js__WEBPACK_IMPORTED_MODULE_5__.ButtonContainer, null, isMulti ? multiPossibleAnswers : possibleAnswers), isMulti ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_styles_js__WEBPACK_IMPORTED_MODULE_5__.FancyButton, {
     type: "submit",
     onClick: function onClick() {
       handleMultiResponse(id, answers, checkedState);
@@ -1422,6 +1446,43 @@ function QuizQuestion(props) {
     results: results
   });
 }
+
+/***/ }),
+
+/***/ "./client/components/organisms/QuizQuestion/styles.js":
+/*!************************************************************!*\
+  !*** ./client/components/organisms/QuizQuestion/styles.js ***!
+  \************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "ButtonContainer": () => (/* binding */ ButtonContainer),
+/* harmony export */   "FancyButton": () => (/* binding */ FancyButton),
+/* harmony export */   "FancyText": () => (/* binding */ FancyText),
+/* harmony export */   "FancyLabel": () => (/* binding */ FancyLabel),
+/* harmony export */   "FancyDesign": () => (/* binding */ FancyDesign),
+/* harmony export */   "FancyRadioButton": () => (/* binding */ FancyRadioButton)
+/* harmony export */ });
+/* harmony import */ var styled_components__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! styled-components */ "./node_modules/styled-components/dist/styled-components.browser.esm.js");
+var _templateObject, _templateObject2, _templateObject3, _templateObject4, _templateObject5, _templateObject6, _templateObject7, _templateObject8;
+
+function _taggedTemplateLiteral(strings, raw) { if (!raw) { raw = strings.slice(0); } return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
+
+
+var ButtonContainer = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].div(_templateObject || (_templateObject = _taggedTemplateLiteral(["\n  display: flex;\n  flex-direction: column;\n  gap: 1em;\n"])));
+/* CSS */
+
+var FancyButton = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].button(_templateObject2 || (_templateObject2 = _taggedTemplateLiteral(["\n  background-color: #3dd1e7;\n  border: 0 solid #e5e7eb;\n  border-radius: 1em;\n  box-sizing: border-box;\n  color: #000000;\n  display: flex;\n  font-size: 1rem;\n  justify-content: center;\n  line-height: 1.75rem;\n  padding: 0.75rem 1.65rem;\n  position: relative;\n  text-align: center;\n  text-decoration: none #000000 solid;\n  text-decoration-thickness: auto;\n  width: 100%;\n  max-width: 460px;\n  position: relative;\n  cursor: pointer;\n  /* transform: rotate(-2deg); */\n  user-select: none;\n  -webkit-user-select: none;\n  touch-action: manipulation;\n\n  &:focus {\n    outline: 0;\n  }\n\n  &:after {\n    content: \"\";\n    position: absolute;\n    border: 1px solid #000000;\n    border-radius: 1em;\n    bottom: 4px;\n    left: 4px;\n    width: calc(100% - 1px);\n    height: calc(100% - 1px);\n  }\n\n  &:hover:after {\n    bottom: 2px;\n    left: 2px;\n  }\n\n  @media (min-width: 768px) {\n    padding: 0.75rem 3rem;\n    font-size: 1.25rem;\n  }\n"])));
+var FancyText = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].div(_templateObject3 || (_templateObject3 = _taggedTemplateLiteral(["\n  color: hsl(0, 0%, 60%);\n  margin-left: 14px;\n  letter-spacing: 3px;\n  text-transform: uppercase;\n  font-size: 15px;\n\n  transition: 0.3s;\n  ", "\n"])), function (props) {
+  return props.checked && (0,styled_components__WEBPACK_IMPORTED_MODULE_0__.css)(_templateObject4 || (_templateObject4 = _taggedTemplateLiteral(["\n      color: hsl(0, 0%, 40%);\n    "])));
+});
+var FancyLabel = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].label(_templateObject5 || (_templateObject5 = _taggedTemplateLiteral(["\n  display: flex;\n  align-items: center;\n\n  border-radius: 100px;\n  padding: 14px 16px;\n  margin: 0;\n\n  cursor: pointer;\n  transition: 0.3s;\n  &:hover {\n    background: hsla(0, 0%, 80%, 0.14);\n  }\n"])));
+var FancyDesign = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].div(_templateObject6 || (_templateObject6 = _taggedTemplateLiteral(["\n  width: 22px;\n  height: 22px;\n  border-radius: 100px;\n\n  background: linear-gradient(\n    to right bottom,\n    hsl(154, 97%, 62%),\n    hsl(225, 97%, 62%)\n  );\n  position: relative;\n  &:before {\n    content: \"\";\n\n    display: inline-block;\n    width: inherit;\n    height: inherit;\n    border-radius: inherit;\n\n    background: hsl(0, 0%, 90%);\n    transform: scale(1.1);\n    transition: 0.3s;\n    ", "\n  }\n"])), function (props) {
+  return props.checked && (0,styled_components__WEBPACK_IMPORTED_MODULE_0__.css)(_templateObject7 || (_templateObject7 = _taggedTemplateLiteral(["\n        transform: scale(0);\n        background: none;\n      "])));
+});
+var FancyRadioButton = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].input(_templateObject8 || (_templateObject8 = _taggedTemplateLiteral(["\n  position: absolute;\n  left: 0;\n  top: 0;\n  width: 1px;\n  height: 1px;\n  opacity: 0;\n  z-index: -1;\n  &:checked {\n    transform: scale(0);\n    color: hsl(0, 0%, 40%);\n  }\n"])));
 
 /***/ }),
 
@@ -1837,7 +1898,7 @@ var _templateObject;
 function _taggedTemplateLiteral(strings, raw) { if (!raw) { raw = strings.slice(0); } return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
 
 
-var Container = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].div(_templateObject || (_templateObject = _taggedTemplateLiteral(["\n  margin: auto;\n  margin-top: 10em;\n  width: 75%;\n"])));
+var Container = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].div(_templateObject || (_templateObject = _taggedTemplateLiteral(["\n\n"])));
 
 /***/ }),
 
@@ -1999,18 +2060,52 @@ var data = {
     occasion: "null",
     practicalWhimsical: "null",
     score: 2
+  }, {
+    hobbiesInterests: "camping",
+    _id: "6199b4e3c855b94d731cf4be",
+    productId: "",
+    productName: "PETZL - TIKKINA Headlamp, 150 Lumens, Standard Lighting",
+    category: "Camping",
+    website: "Amazon",
+    htmlTag: "<a href=\"https://www.amazon.com/gp/product/B01LW30I5S?ie=UTF8&linkCode=li3&tag=giftology04-20&linkId=70b29d1bc637fa1d9ac51845b331281b&language=en_US&ref_=as_li_ss_il\" target=\"_blank\"><img border=\"0\" src=\"//ws-na.amazon-adsystem.com/widgets/q?_encoding=UTF8&ASIN=B01LW30I5S&Format=_SL250_&ID=AsinImage&MarketPlace=US&ServiceVersion=20070822&WS=1&tag=giftology04-20&language=en_US\" ></a><img src=\"https://ir-na.amazon-adsystem.com/e/ir?t=giftology04-20&language=en_US&l=li3&o=1&a=B01LW30I5S\" width=\"1\" height=\"1\" border=\"0\" alt=\"\" style=\"border:none !important; margin:0px !important;\" />",
+    flavorText: "Who do we like it for?\nCampers who just need a basic headlamp.",
+    productBasePrice: "34.97",
+    gender: "null",
+    indoorOutdoor: "outdoor",
+    ageMin: "12",
+    ageMax: "120",
+    occasion: "null",
+    practicalWhimsical: "null",
+    score: 2
+  }, {
+    hobbiesInterests: "camping",
+    _id: "6199b4e3c855b94d731cf4be",
+    productId: "",
+    productName: "PETZL - TIKKINA Headlamp, 150 Lumens, Standard Lighting",
+    category: "Camping",
+    website: "Amazon",
+    htmlTag: "<a href=\"https://www.amazon.com/gp/product/B01LW30I5S?ie=UTF8&linkCode=li3&tag=giftology04-20&linkId=70b29d1bc637fa1d9ac51845b331281b&language=en_US&ref_=as_li_ss_il\" target=\"_blank\"><img border=\"0\" src=\"//ws-na.amazon-adsystem.com/widgets/q?_encoding=UTF8&ASIN=B01LW30I5S&Format=_SL250_&ID=AsinImage&MarketPlace=US&ServiceVersion=20070822&WS=1&tag=giftology04-20&language=en_US\" ></a><img src=\"https://ir-na.amazon-adsystem.com/e/ir?t=giftology04-20&language=en_US&l=li3&o=1&a=B01LW30I5S\" width=\"1\" height=\"1\" border=\"0\" alt=\"\" style=\"border:none !important; margin:0px !important;\" />",
+    flavorText: "Who do we like it for?\nCampers who just need a basic headlamp.",
+    productBasePrice: "34.97",
+    gender: "null",
+    indoorOutdoor: "outdoor",
+    ageMin: "12",
+    ageMax: "120",
+    occasion: "null",
+    practicalWhimsical: "null",
+    score: 2
   }]
 }; // const dataImg = `<a href="https://www.amazon.com/Hydro-Flask-Insulated-Stainless-Pacific/dp/B01MSCXO76?keywords=Hydro+Flask+Water+Bottle+-+Stainless+Steel%2C+Reusable%2C+Vacuum+Insulated-+Wide+Mouth+with+Leak+Proof+Flex+Cap&qid=1637941040&qsid=146-6939056-5844667&sr=8-5&sres=B01MSCXO76%2CB083GBK2HY%2CB083GBTPSY%2CB07YXMJZQW%2CB07YXMFPBM%2CB07MZBR1BL%2CB083GBXKCK%2CB01GW2G92W%2CB083GBQ236%2CB083GBLFN7%2CB01GW2H09S%2CB083GBH38N%2CB01ACARNIO%2CB083G9QV62%2CB07YXLYFZF%2CB07MZ6SD6X%2CB01N34YZD8%2CB08B2BD7S3%2CB08WX17BZN%2CB01ACAXD9C&srpt=BOTTLE&linkCode=li3&tag=giftology04-20&linkId=89622dbea2cfa5daaeb79538b7606750&language=en_US&ref_=as_li_ss_il" target="_blank"><img border="0" src="//ws-na.amazon-adsystem.com/widgets/q?_encoding=UTF8&ASIN=B01MSCXO76&Format=_SL250_&ID=AsinImage&MarketPlace=US&ServiceVersion=20070822&WS=1&tag=giftology04-20&language=en_US" ></a><img src="https://ir-na.amazon-adsystem.com/e/ir?t=giftology04-20&language=en_US&l=li3&o=1&a=B01MSCXO76" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;" />`;
 
 function WelcomePage() {
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
     className: "welcome-page page"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_bulma_companion_lib_Section__WEBPACK_IMPORTED_MODULE_1__["default"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_styles__WEBPACK_IMPORTED_MODULE_6__.Hero, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_styles__WEBPACK_IMPORTED_MODULE_6__.HeroImage, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_styles__WEBPACK_IMPORTED_MODULE_6__.Hero, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_styles__WEBPACK_IMPORTED_MODULE_6__.HeroImage, {
     src: "/images/backgroundImage.jpeg"
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_styles__WEBPACK_IMPORTED_MODULE_6__.HeroText, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_styles__WEBPACK_IMPORTED_MODULE_6__.HeroTitle, null, "Having Trouble Finding the right gift?"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_styles__WEBPACK_IMPORTED_MODULE_6__.HeroDescription, null, "Check out our quiz and we\u2019ll do the searching for you. All you need to know is who you\u2019re shopping for and what they do for fun. We\u2019ll handle the rest."), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_styles__WEBPACK_IMPORTED_MODULE_6__.HeroCallToAction, {
     as: react_router_dom__WEBPACK_IMPORTED_MODULE_7__.Link,
     to: "/quiz"
-  }, "Take The Quiz")))));
+  }, "Take The Quiz"))));
 }
 
 /***/ }),
@@ -2054,12 +2149,12 @@ var _templateObject, _templateObject2, _templateObject3, _templateObject4, _temp
 function _taggedTemplateLiteral(strings, raw) { if (!raw) { raw = strings.slice(0); } return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
 
 
-var HeroImage = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].img(_templateObject || (_templateObject = _taggedTemplateLiteral(["\n  object-fit: cover;\n  width: 100%;\n  height: 550px;\n"])));
+var HeroImage = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].img(_templateObject || (_templateObject = _taggedTemplateLiteral(["\n  object-fit: cover;\n  width: 100%;\n  height: 550px;\n  \n"])));
 var Hero = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].div(_templateObject2 || (_templateObject2 = _taggedTemplateLiteral(["\n  position: relative;\n"])));
 var HeroCallToAction = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].div(_templateObject3 || (_templateObject3 = _taggedTemplateLiteral(["\n  font-size: 36px;\n  text-decoration: underline;\n  color: black;\n  &:hover {\n    color: #44a2bb;\n  }\n"])));
-var HeroDescription = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].p(_templateObject4 || (_templateObject4 = _taggedTemplateLiteral(["\n  font-size: 18px;\n  margin-bottom: 100px;\n"])));
-var HeroTitle = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].h1(_templateObject5 || (_templateObject5 = _taggedTemplateLiteral(["\n  font-weight: bold;\n  font-size: 36px;\n  color: white;\n  margin-bottom: 43px;\n"])));
-var HeroText = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].div(_templateObject6 || (_templateObject6 = _taggedTemplateLiteral(["\n  position: absolute;\n  top: 25%;\n  left: 50%;\n"])));
+var HeroDescription = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].p(_templateObject4 || (_templateObject4 = _taggedTemplateLiteral(["\n  font-size: 18px;\n  margin-bottom: 100px;\n  @media (max-width: 768px) {\n    margin-bottom: 0;\n  }\n  \n"])));
+var HeroTitle = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].h1(_templateObject5 || (_templateObject5 = _taggedTemplateLiteral(["\n  font-weight: bold;\n  font-size: 36px;\n  color: white;\n  margin-bottom: 43px;\n  @media (max-width: 768px) {\n    margin-bottom: 0;\n  }\n"])));
+var HeroText = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].div(_templateObject6 || (_templateObject6 = _taggedTemplateLiteral(["\n  position: absolute;\n  top: 25%;\n  left: 50%;\n  @media (max-width: 768px) {\n    top: 0;\n  }\n"])));
 
 /***/ }),
 

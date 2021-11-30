@@ -5,6 +5,15 @@ import Container from "react-bulma-companion/lib/Container";
 import Title from "react-bulma-companion/lib/Title";
 import QuizResult from "../QuizResult/QuizResult";
 
+import {
+  ButtonContainer,
+  FancyButton,
+  FancyText,
+  FancyLabel,
+  FancyDesign,
+  FancyRadioButton,
+} from "./styles.js";
+
 export default function QuizQuestion(props) {
   const { title, answers, handleResponse, next, id, results, isMulti } = props;
   const [checkedState, setCheckedState] = useState(
@@ -12,6 +21,7 @@ export default function QuizQuestion(props) {
   );
 
   const handleOnChange = (position) => {
+    console.log(position);
     const updatedCheckedState = checkedState.map((item, index) =>
       index === position ? !item : item
     );
@@ -32,7 +42,7 @@ export default function QuizQuestion(props) {
   };
 
   const possibleAnswers = answers.map((answers) => (
-    <button
+    <FancyButton
       onClick={() => {
         handleResponse(id, answers);
         next();
@@ -41,29 +51,34 @@ export default function QuizQuestion(props) {
       key={answers.value}
     >
       {answers.message}
-    </button>
+    </FancyButton>
   ));
 
   const multiPossibleAnswers = answers.map((answers, index) => (
     <div key={answers.message}>
-      <input
-        type="checkbox"
-        id={`custom-checkbox-${index}`}
-        name={answers.message}
-        value={answers.message}
-        checked={checkedState[index]}
-        onChange={() => handleOnChange(index)}
-      />
-      <p>{answers.message}</p>
+      <FancyLabel>
+        <FancyRadioButton
+          type="checkbox"
+          id={`custom-checkbox-${index}`}
+          name={answers.message}
+          value={answers.message}
+          checked={checkedState[index]}
+          onChange={() => handleOnChange(index)}
+        />
+        <FancyDesign checked={checkedState[index]} />
+        <FancyText> {answers.message}</FancyText>
+      </FancyLabel>
     </div>
   ));
 
   return id !== "results" ? (
     <Container>
       <Title>{title}</Title>
-      {isMulti ? multiPossibleAnswers : possibleAnswers}
+      <ButtonContainer>
+        {isMulti ? multiPossibleAnswers : possibleAnswers}
+      </ButtonContainer>
       {isMulti ? (
-        <button
+        <FancyButton
           type="submit"
           onClick={() => {
             handleMultiResponse(id, answers, checkedState);
@@ -71,7 +86,7 @@ export default function QuizQuestion(props) {
           }}
         >
           Submit
-        </button>
+        </FancyButton>
       ) : null}
     </Container>
   ) : (

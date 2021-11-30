@@ -8,12 +8,12 @@ export const Container = styled.ul`
   margin: 0;
   padding: 0;
   display: flex;
-  max-height: 200px;
+  @media (max-width: 768px) {
+    flex-direction: column;
+  }
 `;
 
 export const NavItem = styled.li`
-  display: inline-block;
-
   &:first-child {
     /* max-height:170px; */
 
@@ -23,7 +23,6 @@ export const NavItem = styled.li`
 `;
 export const Logo = styled.img`
   width: 400px;
-  margin-right: 15em;
   cursor: pointer;
 `;
 export const NavLink = styled.a`
@@ -37,14 +36,22 @@ export const NavLink = styled.a`
     color: #44a2bb;
     text-decoration: underline;
   }
+  @media (max-width: 768px) {
+    white-space:nowrap;
+    padding-top: 0;
+    padding-bottom: 0;
+
+  }
 `;
 export const ActionItems = styled.div`
-  align-self: end;
-  flex-wrap: nowrap;
-  flex-basis: 33%;
-
+  display: flex;
+  align-self: center;
+  justify-content: center;
+  flex-basis: 50%;
+  margin-top: 2em;
   width: 100%;
-`;
-export const EmptyDiv = styled.div`
-  flex-basis: 33%;
+  @media (max-width: 768px) {
+    /* flex-direction: column; */
+    margin: 0;
+  }
 `;

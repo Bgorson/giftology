@@ -22,29 +22,28 @@ export const CategoryScore = styled.h2`
   width: 100px;
 `;
 export const Container = styled.div`
-  margin-top: 5em;
-  width: 90%;
+  margin-top: 10em;
 `;
 export const FullContainer = styled.div`
+  width: 90%;
+  margin: auto;
   display: flex;
-  gap: 10em;
+  gap: 5em;
 `;
 
 export const ProductContainer = styled.div`
-  display: flex;
-  flex-basis: 50%;
-  gap: 40px;
-
-  justify-content: center;
-  margin-bottom: 2em;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  width: 100%;
 `;
 export const ProductTitle = styled.p`
   align-self: center;
 `;
 
 export const ProductImage = styled.div`
-  min-width: 300px;
-  margin-bottom:5em;
+  max-width: 300px;
+  margin-bottom: 5em;
 `;
 
 export const ProductScore = styled.p`

@@ -49,7 +49,7 @@ console.log('products', products)
             <Category>{category.name}</Category>
             <CategoryDescription>{"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec ut nisl mattis, scelerisque arcu eget, auctor orci. In arcu turpis."} </CategoryDescription>
             {/* <CategoryImage src="/images/default-profile.png" /> */}
-            {/* <CategoryScore>Score: {category.score}</CategoryScore> */}
+            <CategoryScore>Score: {category.score}</CategoryScore>
           </CategoryContainer>
           <ProductContainer>
             {arrayOfCategories[category.name].map((product, index) => (

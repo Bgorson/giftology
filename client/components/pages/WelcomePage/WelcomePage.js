@@ -169,6 +169,44 @@ const data = {
       practicalWhimsical: "null",
       score: 2,
     },
+    {
+      hobbiesInterests: "camping",
+      _id: "6199b4e3c855b94d731cf4be",
+      productId: "",
+      productName: "PETZL - TIKKINA Headlamp, 150 Lumens, Standard Lighting",
+      category: "Camping",
+      website: "Amazon",
+      htmlTag: `<a href="https://www.amazon.com/gp/product/B01LW30I5S?ie=UTF8&linkCode=li3&tag=giftology04-20&linkId=70b29d1bc637fa1d9ac51845b331281b&language=en_US&ref_=as_li_ss_il" target="_blank"><img border="0" src="//ws-na.amazon-adsystem.com/widgets/q?_encoding=UTF8&ASIN=B01LW30I5S&Format=_SL250_&ID=AsinImage&MarketPlace=US&ServiceVersion=20070822&WS=1&tag=giftology04-20&language=en_US" ></a><img src="https://ir-na.amazon-adsystem.com/e/ir?t=giftology04-20&language=en_US&l=li3&o=1&a=B01LW30I5S" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;" />`,
+      flavorText:
+        "Who do we like it for?\nCampers who just need a basic headlamp.",
+      productBasePrice: "34.97",
+      gender: "null",
+      indoorOutdoor: "outdoor",
+      ageMin: "12",
+      ageMax: "120",
+      occasion: "null",
+      practicalWhimsical: "null",
+      score: 2,
+    },
+    {
+      hobbiesInterests: "camping",
+      _id: "6199b4e3c855b94d731cf4be",
+      productId: "",
+      productName: "PETZL - TIKKINA Headlamp, 150 Lumens, Standard Lighting",
+      category: "Camping",
+      website: "Amazon",
+      htmlTag: `<a href="https://www.amazon.com/gp/product/B01LW30I5S?ie=UTF8&linkCode=li3&tag=giftology04-20&linkId=70b29d1bc637fa1d9ac51845b331281b&language=en_US&ref_=as_li_ss_il" target="_blank"><img border="0" src="//ws-na.amazon-adsystem.com/widgets/q?_encoding=UTF8&ASIN=B01LW30I5S&Format=_SL250_&ID=AsinImage&MarketPlace=US&ServiceVersion=20070822&WS=1&tag=giftology04-20&language=en_US" ></a><img src="https://ir-na.amazon-adsystem.com/e/ir?t=giftology04-20&language=en_US&l=li3&o=1&a=B01LW30I5S" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;" />`,
+      flavorText:
+        "Who do we like it for?\nCampers who just need a basic headlamp.",
+      productBasePrice: "34.97",
+      gender: "null",
+      indoorOutdoor: "outdoor",
+      ageMin: "12",
+      ageMax: "120",
+      occasion: "null",
+      practicalWhimsical: "null",
+      score: 2,
+    },
   ],
 };
 
@@ -179,30 +217,28 @@ export default function WelcomePage() {
     <div className="welcome-page page">
       {/* <CategoryImage src="/images/default-profile.png" /> */}
 
-      <Section>
-        <Hero>
-          <HeroImage src="/images/backgroundImage.jpeg" />
-          <HeroText>
-            <HeroTitle>Having Trouble Finding the right gift?</HeroTitle>
-            <HeroDescription>
-              Check out our quiz and we’ll do the searching for you. All you
-              need to know is who you’re shopping for and what they do for fun.
-              We’ll handle the rest.
-            </HeroDescription>
-            <HeroCallToAction as={Link} to="/quiz">
-              Take The Quiz
-            </HeroCallToAction>
-          </HeroText>
-        </Hero>
-        {/* <Container>
+      <Hero>
+        <HeroImage src="/images/backgroundImage.jpeg" />
+        <HeroText>
+          <HeroTitle>Having Trouble Finding the right gift?</HeroTitle>
+          <HeroDescription>
+            Check out our quiz and we’ll do the searching for you. All you need
+            to know is who you’re shopping for and what they do for fun. We’ll
+            handle the rest.
+          </HeroDescription>
+          <HeroCallToAction as={Link} to="/quiz">
+            Take The Quiz
+          </HeroCallToAction>
+        </HeroText>
+      </Hero>
+      {/* <Container>
           <Title size="1">Welcome to Giftology!</Title>
           <Button
             onClick={() => history.push("/quiz")}
             label="Click to Access Quiz"
           />
         </Container> */}
-        {/* <ProductResult data={data} /> */}
-      </Section>
+      {/* <ProductResult data={data} /> */}
     </div>
   );
 }

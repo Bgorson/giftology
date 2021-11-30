@@ -9,7 +9,6 @@ import { useHistory } from "react-router";
 
 import {
   ActionItems,
-  EmptyDiv,
   Navbar,
   Container,
   NavItem,
@@ -38,7 +37,6 @@ export default function Navigation({ pathname }) {
             <NavLink href="#">About Us</NavLink>
           </NavItem>
         </ActionItems>
-        <EmptyDiv />
       </Container>
     </Navbar>
   );
