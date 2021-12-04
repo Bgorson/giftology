@@ -1,59 +1,54 @@
 import styled, { css } from "styled-components";
 
 export const ButtonContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 1em;
+  display: grid;
+  grid-gap: 1em;
+  grid-template-columns: 2fr 2fr;
+
 `;
 
+export const Container = styled.div`
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+`;
+
+export const Title = styled.h1`
+  font-size: 20px;
+`;
 /* CSS */
 export const FancyButton = styled.button`
-  background-color: #3dd1e7;
-  border: 0 solid #e5e7eb;
-  border-radius: 1em;
-  box-sizing: border-box;
-  color: #000000;
-  display: flex;
-  font-size: 1rem;
-  justify-content: center;
-  line-height: 1.75rem;
-  padding: 0.75rem 1.65rem;
-  position: relative;
-  text-align: center;
-  text-decoration: none #000000 solid;
-  text-decoration-thickness: auto;
   width: 100%;
-  max-width: 460px;
-  position: relative;
+  background-color: #44a2bb;
+  color: white;
   cursor: pointer;
-  /* transform: rotate(-2deg); */
-  user-select: none;
-  -webkit-user-select: none;
-  touch-action: manipulation;
+  border-radius: 1000px;
+  padding: 0.5em;
+  ${(props) =>
+      props.checked &&
+      css`
+    background-color: grey;
+
+      `}
+      ${(props) =>
+      props.isMulti &&
+      css`
+      width:fit-content;
+    background-color: green;
+
+      `}
 
   &:focus {
-    outline: 0;
   }
 
   &:after {
-    content: "";
-    position: absolute;
-    border: 1px solid #000000;
-    border-radius: 1em;
-    bottom: 4px;
-    left: 4px;
-    width: calc(100% - 1px);
-    height: calc(100% - 1px);
   }
 
-  &:hover:after {
-    bottom: 2px;
-    left: 2px;
+  &:hover {
+    background-color: grey;
   }
 
   @media (min-width: 768px) {
-    padding: 0.75rem 3rem;
-    font-size: 1.25rem;
   }
 `;
 

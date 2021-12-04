@@ -218,7 +218,9 @@ export default function WelcomePage() {
       {/* <CategoryImage src="/images/default-profile.png" /> */}
 
       <Hero>
-        <HeroImage src="/images/backgroundImage.jpeg" />
+        <HeroImage
+          src="/images/backgroundImage.jpeg"
+        />
         <HeroText>
           <HeroTitle>Having Trouble Finding the right gift?</HeroTitle>
           <HeroDescription>

@@ -20,6 +20,7 @@ const productSchema = new Schema(
     ageMin: { type: String },
     ageMax: { type: String },
     occassions: { Type: Array },
+    // tags: { Type: String },
     practicalWhimsicial: { Type: String },
     hobbiesInterests: { Type: Array },
     // created_at: { type: Date, default: Date.now, immutable: true },

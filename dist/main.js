@@ -1039,7 +1039,7 @@ var _templateObject;
 function _taggedTemplateLiteral(strings, raw) { if (!raw) { raw = strings.slice(0); } return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
 
 
-var MainContainer = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].div(_templateObject || (_templateObject = _taggedTemplateLiteral(["\n  display: flex;\n  justify-content: center;\n  align-content: center;\n  margin-bottom:10em;\n"])));
+var MainContainer = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].div(_templateObject || (_templateObject = _taggedTemplateLiteral(["\n  /* display: flex; */\n  justify-content: center;\n  align-content: center;\n  margin-bottom:10em;\n"])));
 
 /***/ }),
 
@@ -1100,18 +1100,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (/* binding */ FooterComponent)
 /* harmony export */ });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var react_bulma_companion_lib_Footer__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-bulma-companion/lib/Footer */ "./node_modules/react-bulma-companion/lib/Footer/index.js");
-/* harmony import */ var react_bulma_companion_lib_Container__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-bulma-companion/lib/Container */ "./node_modules/react-bulma-companion/lib/Container/index.js");
-/* harmony import */ var react_bulma_companion_lib_Content__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react-bulma-companion/lib/Content */ "./node_modules/react-bulma-companion/lib/Content/index.js");
-
-
+/* harmony import */ var _styles__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./styles */ "./client/components/organisms/Footer/styles.js");
 
 
 function FooterComponent() {
   var year = new Date().getFullYear();
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_bulma_companion_lib_Footer__WEBPACK_IMPORTED_MODULE_1__["default"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_bulma_companion_lib_Container__WEBPACK_IMPORTED_MODULE_2__["default"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_bulma_companion_lib_Content__WEBPACK_IMPORTED_MODULE_3__["default"], {
-    className: "has-text-centered"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("p", null, "Copyright \u24B8 ".concat(year, ".")))));
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_styles__WEBPACK_IMPORTED_MODULE_1__.Footer, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("p", null, "Copyright \u24B8 ".concat(year, ". All Rights Reserved")));
 }
 
 /***/ }),
@@ -1130,6 +1124,27 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Footer__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Footer */ "./client/components/organisms/Footer/Footer.js");
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_Footer__WEBPACK_IMPORTED_MODULE_0__["default"]);
+
+/***/ }),
+
+/***/ "./client/components/organisms/Footer/styles.js":
+/*!******************************************************!*\
+  !*** ./client/components/organisms/Footer/styles.js ***!
+  \******************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "Footer": () => (/* binding */ Footer)
+/* harmony export */ });
+/* harmony import */ var styled_components__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! styled-components */ "./node_modules/styled-components/dist/styled-components.browser.esm.js");
+var _templateObject;
+
+function _taggedTemplateLiteral(strings, raw) { if (!raw) { raw = strings.slice(0); } return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
+
+
+var Footer = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].footer(_templateObject || (_templateObject = _taggedTemplateLiteral(["\n  padding: 2em;\n"])));
 
 /***/ }),
 
@@ -1356,10 +1371,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react_bulma_companion_lib_Section__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-bulma-companion/lib/Section */ "./node_modules/react-bulma-companion/lib/Section/index.js");
-/* harmony import */ var react_bulma_companion_lib_Container__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-bulma-companion/lib/Container */ "./node_modules/react-bulma-companion/lib/Container/index.js");
-/* harmony import */ var react_bulma_companion_lib_Title__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react-bulma-companion/lib/Title */ "./node_modules/react-bulma-companion/lib/Title/index.js");
-/* harmony import */ var _QuizResult_QuizResult__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../QuizResult/QuizResult */ "./client/components/organisms/QuizResult/QuizResult.js");
-/* harmony import */ var _styles_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./styles.js */ "./client/components/organisms/QuizQuestion/styles.js");
+/* harmony import */ var _QuizResult_QuizResult__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../QuizResult/QuizResult */ "./client/components/organisms/QuizResult/QuizResult.js");
+/* harmony import */ var _styles_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./styles.js */ "./client/components/organisms/QuizQuestion/styles.js");
 function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
 
 function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
@@ -1371,8 +1384,6 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
 function _iterableToArrayLimit(arr, i) { var _i = arr == null ? null : typeof Symbol !== "undefined" && arr[Symbol.iterator] || arr["@@iterator"]; if (_i == null) return; var _arr = []; var _n = true; var _d = false; var _s, _e; try { for (_i = _i.call(arr); !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
 
 function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
-
-
 
 
 
@@ -1392,7 +1403,10 @@ function QuizQuestion(props) {
       checkedState = _useState2[0],
       setCheckedState = _useState2[1];
 
-  var handleOnChange = function handleOnChange(position) {
+  console.log(answers);
+
+  var handleOnChange = function handleOnChange(position, e) {
+    console.log(e.target.value);
     console.log(position);
     var updatedCheckedState = checkedState.map(function (item, index) {
       return index === position ? !item : item;
@@ -1411,7 +1425,7 @@ function QuizQuestion(props) {
   };
 
   var possibleAnswers = answers.map(function (answers) {
-    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_styles_js__WEBPACK_IMPORTED_MODULE_5__.FancyButton, {
+    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_styles_js__WEBPACK_IMPORTED_MODULE_3__.FancyButton, {
       onClick: function onClick() {
         handleResponse(id, answers);
         next();
@@ -1423,26 +1437,24 @@ function QuizQuestion(props) {
   var multiPossibleAnswers = answers.map(function (answers, index) {
     return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
       key: answers.message
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_styles_js__WEBPACK_IMPORTED_MODULE_5__.FancyLabel, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_styles_js__WEBPACK_IMPORTED_MODULE_5__.FancyRadioButton, {
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_styles_js__WEBPACK_IMPORTED_MODULE_3__.FancyButton, {
       type: "checkbox",
       id: "custom-checkbox-".concat(index),
-      name: answers.message,
       value: answers.message,
       checked: checkedState[index],
-      onChange: function onChange() {
-        return handleOnChange(index);
+      onClick: function onClick(e) {
+        return handleOnChange(index, e);
       }
-    }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_styles_js__WEBPACK_IMPORTED_MODULE_5__.FancyDesign, {
-      checked: checkedState[index]
-    }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_styles_js__WEBPACK_IMPORTED_MODULE_5__.FancyText, null, " ", answers.message)));
+    }, answers.message));
   });
-  return id !== "results" ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_bulma_companion_lib_Container__WEBPACK_IMPORTED_MODULE_2__["default"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_bulma_companion_lib_Title__WEBPACK_IMPORTED_MODULE_3__["default"], null, title), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_styles_js__WEBPACK_IMPORTED_MODULE_5__.ButtonContainer, null, isMulti ? multiPossibleAnswers : possibleAnswers), isMulti ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_styles_js__WEBPACK_IMPORTED_MODULE_5__.FancyButton, {
+  return id !== 'results' ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_styles_js__WEBPACK_IMPORTED_MODULE_3__.Container, null, title && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_styles_js__WEBPACK_IMPORTED_MODULE_3__.Title, null, title), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_styles_js__WEBPACK_IMPORTED_MODULE_3__.ButtonContainer, null, isMulti ? multiPossibleAnswers : possibleAnswers), isMulti ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_styles_js__WEBPACK_IMPORTED_MODULE_3__.FancyButton, {
+    isMulti: isMulti,
     type: "submit",
     onClick: function onClick() {
       handleMultiResponse(id, answers, checkedState);
       next();
     }
-  }, "Submit") : null) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_QuizResult_QuizResult__WEBPACK_IMPORTED_MODULE_4__["default"], {
+  }, "Submit") : null) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_QuizResult_QuizResult__WEBPACK_IMPORTED_MODULE_2__["default"], {
     results: results
   });
 }
@@ -1459,6 +1471,8 @@ function QuizQuestion(props) {
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "ButtonContainer": () => (/* binding */ ButtonContainer),
+/* harmony export */   "Container": () => (/* binding */ Container),
+/* harmony export */   "Title": () => (/* binding */ Title),
 /* harmony export */   "FancyButton": () => (/* binding */ FancyButton),
 /* harmony export */   "FancyText": () => (/* binding */ FancyText),
 /* harmony export */   "FancyLabel": () => (/* binding */ FancyLabel),
@@ -1466,23 +1480,29 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "FancyRadioButton": () => (/* binding */ FancyRadioButton)
 /* harmony export */ });
 /* harmony import */ var styled_components__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! styled-components */ "./node_modules/styled-components/dist/styled-components.browser.esm.js");
-var _templateObject, _templateObject2, _templateObject3, _templateObject4, _templateObject5, _templateObject6, _templateObject7, _templateObject8;
+var _templateObject, _templateObject2, _templateObject3, _templateObject4, _templateObject5, _templateObject6, _templateObject7, _templateObject8, _templateObject9, _templateObject10, _templateObject11, _templateObject12;
 
 function _taggedTemplateLiteral(strings, raw) { if (!raw) { raw = strings.slice(0); } return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
 
 
-var ButtonContainer = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].div(_templateObject || (_templateObject = _taggedTemplateLiteral(["\n  display: flex;\n  flex-direction: column;\n  gap: 1em;\n"])));
+var ButtonContainer = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].div(_templateObject || (_templateObject = _taggedTemplateLiteral(["\n  display: grid;\n  grid-gap: 1em;\n  grid-template-columns: 2fr 2fr;\n\n"])));
+var Container = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].div(_templateObject2 || (_templateObject2 = _taggedTemplateLiteral(["\n  display: flex;\n  align-items: center;\n  flex-direction: column;\n"])));
+var Title = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].h1(_templateObject3 || (_templateObject3 = _taggedTemplateLiteral(["\n  font-size: 20px;\n"])));
 /* CSS */
 
-var FancyButton = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].button(_templateObject2 || (_templateObject2 = _taggedTemplateLiteral(["\n  background-color: #3dd1e7;\n  border: 0 solid #e5e7eb;\n  border-radius: 1em;\n  box-sizing: border-box;\n  color: #000000;\n  display: flex;\n  font-size: 1rem;\n  justify-content: center;\n  line-height: 1.75rem;\n  padding: 0.75rem 1.65rem;\n  position: relative;\n  text-align: center;\n  text-decoration: none #000000 solid;\n  text-decoration-thickness: auto;\n  width: 100%;\n  max-width: 460px;\n  position: relative;\n  cursor: pointer;\n  /* transform: rotate(-2deg); */\n  user-select: none;\n  -webkit-user-select: none;\n  touch-action: manipulation;\n\n  &:focus {\n    outline: 0;\n  }\n\n  &:after {\n    content: \"\";\n    position: absolute;\n    border: 1px solid #000000;\n    border-radius: 1em;\n    bottom: 4px;\n    left: 4px;\n    width: calc(100% - 1px);\n    height: calc(100% - 1px);\n  }\n\n  &:hover:after {\n    bottom: 2px;\n    left: 2px;\n  }\n\n  @media (min-width: 768px) {\n    padding: 0.75rem 3rem;\n    font-size: 1.25rem;\n  }\n"])));
-var FancyText = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].div(_templateObject3 || (_templateObject3 = _taggedTemplateLiteral(["\n  color: hsl(0, 0%, 60%);\n  margin-left: 14px;\n  letter-spacing: 3px;\n  text-transform: uppercase;\n  font-size: 15px;\n\n  transition: 0.3s;\n  ", "\n"])), function (props) {
-  return props.checked && (0,styled_components__WEBPACK_IMPORTED_MODULE_0__.css)(_templateObject4 || (_templateObject4 = _taggedTemplateLiteral(["\n      color: hsl(0, 0%, 40%);\n    "])));
+var FancyButton = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].button(_templateObject4 || (_templateObject4 = _taggedTemplateLiteral(["\n  width: 100%;\n  background-color: #44a2bb;\n  color: white;\n  cursor: pointer;\n  border-radius: 1000px;\n  padding: 0.5em;\n  ", "\n      ", "\n\n  &:focus {\n  }\n\n  &:after {\n  }\n\n  &:hover {\n    background-color: grey;\n  }\n\n  @media (min-width: 768px) {\n  }\n"])), function (props) {
+  return props.checked && (0,styled_components__WEBPACK_IMPORTED_MODULE_0__.css)(_templateObject5 || (_templateObject5 = _taggedTemplateLiteral(["\n    background-color: grey;\n\n      "])));
+}, function (props) {
+  return props.isMulti && (0,styled_components__WEBPACK_IMPORTED_MODULE_0__.css)(_templateObject6 || (_templateObject6 = _taggedTemplateLiteral(["\n      width:fit-content;\n    background-color: green;\n\n      "])));
 });
-var FancyLabel = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].label(_templateObject5 || (_templateObject5 = _taggedTemplateLiteral(["\n  display: flex;\n  align-items: center;\n\n  border-radius: 100px;\n  padding: 14px 16px;\n  margin: 0;\n\n  cursor: pointer;\n  transition: 0.3s;\n  &:hover {\n    background: hsla(0, 0%, 80%, 0.14);\n  }\n"])));
-var FancyDesign = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].div(_templateObject6 || (_templateObject6 = _taggedTemplateLiteral(["\n  width: 22px;\n  height: 22px;\n  border-radius: 100px;\n\n  background: linear-gradient(\n    to right bottom,\n    hsl(154, 97%, 62%),\n    hsl(225, 97%, 62%)\n  );\n  position: relative;\n  &:before {\n    content: \"\";\n\n    display: inline-block;\n    width: inherit;\n    height: inherit;\n    border-radius: inherit;\n\n    background: hsl(0, 0%, 90%);\n    transform: scale(1.1);\n    transition: 0.3s;\n    ", "\n  }\n"])), function (props) {
-  return props.checked && (0,styled_components__WEBPACK_IMPORTED_MODULE_0__.css)(_templateObject7 || (_templateObject7 = _taggedTemplateLiteral(["\n        transform: scale(0);\n        background: none;\n      "])));
+var FancyText = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].div(_templateObject7 || (_templateObject7 = _taggedTemplateLiteral(["\n  color: hsl(0, 0%, 60%);\n  margin-left: 14px;\n  letter-spacing: 3px;\n  text-transform: uppercase;\n  font-size: 15px;\n\n  transition: 0.3s;\n  ", "\n"])), function (props) {
+  return props.checked && (0,styled_components__WEBPACK_IMPORTED_MODULE_0__.css)(_templateObject8 || (_templateObject8 = _taggedTemplateLiteral(["\n      color: hsl(0, 0%, 40%);\n    "])));
 });
-var FancyRadioButton = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].input(_templateObject8 || (_templateObject8 = _taggedTemplateLiteral(["\n  position: absolute;\n  left: 0;\n  top: 0;\n  width: 1px;\n  height: 1px;\n  opacity: 0;\n  z-index: -1;\n  &:checked {\n    transform: scale(0);\n    color: hsl(0, 0%, 40%);\n  }\n"])));
+var FancyLabel = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].label(_templateObject9 || (_templateObject9 = _taggedTemplateLiteral(["\n  display: flex;\n  align-items: center;\n\n  border-radius: 100px;\n  padding: 14px 16px;\n  margin: 0;\n\n  cursor: pointer;\n  transition: 0.3s;\n  &:hover {\n    background: hsla(0, 0%, 80%, 0.14);\n  }\n"])));
+var FancyDesign = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].div(_templateObject10 || (_templateObject10 = _taggedTemplateLiteral(["\n  width: 22px;\n  height: 22px;\n  border-radius: 100px;\n\n  background: linear-gradient(\n    to right bottom,\n    hsl(154, 97%, 62%),\n    hsl(225, 97%, 62%)\n  );\n  position: relative;\n  &:before {\n    content: \"\";\n\n    display: inline-block;\n    width: inherit;\n    height: inherit;\n    border-radius: inherit;\n\n    background: hsl(0, 0%, 90%);\n    transform: scale(1.1);\n    transition: 0.3s;\n    ", "\n  }\n"])), function (props) {
+  return props.checked && (0,styled_components__WEBPACK_IMPORTED_MODULE_0__.css)(_templateObject11 || (_templateObject11 = _taggedTemplateLiteral(["\n        transform: scale(0);\n        background: none;\n      "])));
+});
+var FancyRadioButton = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].input(_templateObject12 || (_templateObject12 = _taggedTemplateLiteral(["\n  position: absolute;\n  left: 0;\n  top: 0;\n  width: 1px;\n  height: 1px;\n  opacity: 0;\n  z-index: -1;\n  &:checked {\n    transform: scale(0);\n    color: hsl(0, 0%, 40%);\n  }\n"])));
 
 /***/ }),
 
@@ -2149,7 +2169,7 @@ var _templateObject, _templateObject2, _templateObject3, _templateObject4, _temp
 function _taggedTemplateLiteral(strings, raw) { if (!raw) { raw = strings.slice(0); } return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
 
 
-var HeroImage = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].img(_templateObject || (_templateObject = _taggedTemplateLiteral(["\n  object-fit: cover;\n  width: 100%;\n  height: 550px;\n  \n"])));
+var HeroImage = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].img(_templateObject || (_templateObject = _taggedTemplateLiteral(["\n  object-fit: cover;\n  width: 100%;\n  \n"])));
 var Hero = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].div(_templateObject2 || (_templateObject2 = _taggedTemplateLiteral(["\n  position: relative;\n"])));
 var HeroCallToAction = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].div(_templateObject3 || (_templateObject3 = _taggedTemplateLiteral(["\n  font-size: 36px;\n  text-decoration: underline;\n  color: black;\n  &:hover {\n    color: #44a2bb;\n  }\n"])));
 var HeroDescription = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].p(_templateObject4 || (_templateObject4 = _taggedTemplateLiteral(["\n  font-size: 18px;\n  margin-bottom: 100px;\n  @media (max-width: 768px) {\n    margin-bottom: 0;\n  }\n  \n"])));
@@ -23355,178 +23375,6 @@ Object.defineProperty(exports, "default", ({
 }));
 
 var _Container = _interopRequireDefault(__webpack_require__(/*! ./Container */ "./node_modules/react-bulma-companion/lib/Container/Container.js"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
-
-/***/ }),
-
-/***/ "./node_modules/react-bulma-companion/lib/Content/Content.js":
-/*!*******************************************************************!*\
-  !*** ./node_modules/react-bulma-companion/lib/Content/Content.js ***!
-  \*******************************************************************/
-/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = Content;
-
-var _react = _interopRequireDefault(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
-
-var _propTypes = _interopRequireDefault(__webpack_require__(/*! prop-types */ "./node_modules/prop-types/index.js"));
-
-var _classnames = _interopRequireDefault(__webpack_require__(/*! classnames */ "./node_modules/classnames/index.js"));
-
-var _excluded = ["children", "className", "component", "size"];
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
-
-function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
-
-function _objectWithoutProperties(source, excluded) { if (source == null) return {}; var target = _objectWithoutPropertiesLoose(source, excluded); var key, i; if (Object.getOwnPropertySymbols) { var sourceSymbolKeys = Object.getOwnPropertySymbols(source); for (i = 0; i < sourceSymbolKeys.length; i++) { key = sourceSymbolKeys[i]; if (excluded.indexOf(key) >= 0) continue; if (!Object.prototype.propertyIsEnumerable.call(source, key)) continue; target[key] = source[key]; } } return target; }
-
-function _objectWithoutPropertiesLoose(source, excluded) { if (source == null) return {}; var target = {}; var sourceKeys = Object.keys(source); var key, i; for (i = 0; i < sourceKeys.length; i++) { key = sourceKeys[i]; if (excluded.indexOf(key) >= 0) continue; target[key] = source[key]; } return target; }
-
-function Content(_ref) {
-  var children = _ref.children,
-      className = _ref.className,
-      component = _ref.component,
-      size = _ref.size,
-      props = _objectWithoutProperties(_ref, _excluded);
-
-  var Element = component;
-  var sizeMap = {
-    small: 'is-small',
-    normal: 'is-normal',
-    medium: 'is-medium',
-    large: 'is-large'
-  };
-  var isSize = size && sizeMap[size];
-  var classes = (0, _classnames["default"])('content', className, isSize);
-  return /*#__PURE__*/_react["default"].createElement(Element, _extends({
-    className: classes
-  }, props), children);
-}
-
-Content.propTypes = {
-  className: _propTypes["default"].string,
-  children: _propTypes["default"].node,
-  component: _propTypes["default"].elementType,
-  size: _propTypes["default"].oneOf(['small', 'normal', 'medium', 'large'])
-};
-Content.defaultProps = {
-  className: undefined,
-  children: null,
-  component: 'div',
-  size: undefined
-};
-
-/***/ }),
-
-/***/ "./node_modules/react-bulma-companion/lib/Content/index.js":
-/*!*****************************************************************!*\
-  !*** ./node_modules/react-bulma-companion/lib/Content/index.js ***!
-  \*****************************************************************/
-/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-Object.defineProperty(exports, "default", ({
-  enumerable: true,
-  get: function get() {
-    return _Content["default"];
-  }
-}));
-
-var _Content = _interopRequireDefault(__webpack_require__(/*! ./Content */ "./node_modules/react-bulma-companion/lib/Content/Content.js"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
-
-/***/ }),
-
-/***/ "./node_modules/react-bulma-companion/lib/Footer/Footer.js":
-/*!*****************************************************************!*\
-  !*** ./node_modules/react-bulma-companion/lib/Footer/Footer.js ***!
-  \*****************************************************************/
-/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = Footer;
-
-var _react = _interopRequireDefault(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
-
-var _propTypes = _interopRequireDefault(__webpack_require__(/*! prop-types */ "./node_modules/prop-types/index.js"));
-
-var _classnames = _interopRequireDefault(__webpack_require__(/*! classnames */ "./node_modules/classnames/index.js"));
-
-var _excluded = ["children", "className", "component"];
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
-
-function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
-
-function _objectWithoutProperties(source, excluded) { if (source == null) return {}; var target = _objectWithoutPropertiesLoose(source, excluded); var key, i; if (Object.getOwnPropertySymbols) { var sourceSymbolKeys = Object.getOwnPropertySymbols(source); for (i = 0; i < sourceSymbolKeys.length; i++) { key = sourceSymbolKeys[i]; if (excluded.indexOf(key) >= 0) continue; if (!Object.prototype.propertyIsEnumerable.call(source, key)) continue; target[key] = source[key]; } } return target; }
-
-function _objectWithoutPropertiesLoose(source, excluded) { if (source == null) return {}; var target = {}; var sourceKeys = Object.keys(source); var key, i; for (i = 0; i < sourceKeys.length; i++) { key = sourceKeys[i]; if (excluded.indexOf(key) >= 0) continue; target[key] = source[key]; } return target; }
-
-function Footer(_ref) {
-  var children = _ref.children,
-      className = _ref.className,
-      component = _ref.component,
-      props = _objectWithoutProperties(_ref, _excluded);
-
-  var Element = component;
-  var classes = (0, _classnames["default"])('footer', className);
-  return /*#__PURE__*/_react["default"].createElement(Element, _extends({
-    className: classes
-  }, props), children);
-}
-
-Footer.propTypes = {
-  className: _propTypes["default"].string,
-  children: _propTypes["default"].node,
-  component: _propTypes["default"].elementType
-};
-Footer.defaultProps = {
-  className: undefined,
-  children: null,
-  component: 'footer'
-};
-
-/***/ }),
-
-/***/ "./node_modules/react-bulma-companion/lib/Footer/index.js":
-/*!****************************************************************!*\
-  !*** ./node_modules/react-bulma-companion/lib/Footer/index.js ***!
-  \****************************************************************/
-/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-Object.defineProperty(exports, "default", ({
-  enumerable: true,
-  get: function get() {
-    return _Footer["default"];
-  }
-}));
-
-var _Footer = _interopRequireDefault(__webpack_require__(/*! ./Footer */ "./node_modules/react-bulma-companion/lib/Footer/Footer.js"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 

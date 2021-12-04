@@ -3,7 +3,6 @@ import styled from "styled-components";
 export const HeroImage = styled.img`
   object-fit: cover;
   width: 100%;
-  height: 550px;
   
 `;
 export const Hero = styled.div`

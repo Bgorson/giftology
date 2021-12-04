@@ -9,14 +9,14 @@ const Quiz = () => {
   const [isForSelf, setIsForSelf] = React.useState(false);
 
   const handleResponse = (id, response, isMulti) => {
-    console.log(isMulti)
+    console.log(isMulti);
     if (id === "who" && response === "Myself") {
       setIsForSelf(true);
     }
     const newInput = `${id}`;
     if (isMulti) {
-      console.log(newInput)
-      console.log(response)
+      console.log(newInput);
+      console.log(response);
 
       answers[newInput] = response;
     } else {
