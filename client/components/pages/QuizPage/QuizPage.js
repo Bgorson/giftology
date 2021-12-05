@@ -9,15 +9,11 @@ const Quiz = () => {
   const [isForSelf, setIsForSelf] = React.useState(false);
 
   const handleResponse = (id, response, isMulti) => {
-    console.log(isMulti);
     if (id === "who" && response === "Myself") {
       setIsForSelf(true);
     }
     const newInput = `${id}`;
     if (isMulti) {
-      console.log(newInput);
-      console.log(response);
-
       answers[newInput] = response;
     } else {
       answers[newInput] = response.value;
@@ -48,18 +44,8 @@ const Quiz = () => {
     {
       id: "age",
       title: `How old are ${isForSelf ? "you" : "they"}?`,
-      answers: [
-        { message: "1-2", value: "1-2" },
-        { message: "3-4", value: "3-4" },
-        { message: "5-6", value: "5-6" },
-        { message: "7-10", value: "7-10" },
-        { message: "11-15", value: "11-15" },
-        { message: "16-20", value: "16-20" },
-        { message: "21-30", value: "21-30" },
-        { message: "31-40", value: "31-40" },
-        { message: "41-50", value: "41-50" },
-        { message: ">50", value: "51-99999" },
-      ],
+      answers: [],
+      isSlider: true,
     },
     {
       id: "occassion",
@@ -135,6 +121,7 @@ const Quiz = () => {
                   id={quizData.id}
                   title={quizData.title}
                   answers={quizData.answers}
+                  isSlider={quizData.isSlider || false}
                   isMulti={quizData.isMulti || false}
                   results={answers}
                 />

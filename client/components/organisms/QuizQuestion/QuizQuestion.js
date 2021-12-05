@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 
-import Section from 'react-bulma-companion/lib/Section';
-import QuizResult from '../QuizResult/QuizResult';
+import AgeSlider from "../../atoms/Slider/AgeSlider";
+import QuizResult from "../QuizResult/QuizResult";
 
 import {
   Container,
@@ -12,27 +12,40 @@ import {
   FancyDesign,
   FancyRadioButton,
   Title,
-} from './styles.js';
+} from "./styles.js";
 
 export default function QuizQuestion(props) {
-  const { title, answers, handleResponse, next, id, results, isMulti } = props;
+  const {
+    title,
+    answers,
+    isSlider,
+    handleResponse,
+    next,
+    id,
+    results,
+    isMulti,
+  } = props;
   const [checkedState, setCheckedState] = useState(
-    new Array(answers.length).fill(false),
+    new Array(answers.length).fill(false)
   );
+  const [age, setAge] = useState(12);
+  const handleAgeValue = (e) => {
+    setAge(e);
+  };
+  const handleSliderResponse = (id, age) => {
+    handleResponse(id, { value: `${age}-${age}` });
+  };
 
-  console.log(answers);
   const handleOnChange = (position, e) => {
-    console.log(e.target.value);
-    console.log(position);
     const updatedCheckedState = checkedState.map((item, index) =>
-      index === position ? !item : item,
+      index === position ? !item : item
     );
     setCheckedState(updatedCheckedState);
   };
   const handleMultiResponse = (
     id,
     arrayOfPossbleAnswers,
-    arrayofCheckedResponses,
+    arrayofCheckedResponses
   ) => {
     const response = [];
     arrayofCheckedResponses.forEach((checkedBox, index) => {
@@ -66,15 +79,15 @@ export default function QuizQuestion(props) {
         onClick={(e) => handleOnChange(index, e)}
       >
         {answers.message}
-
       </FancyButton>
-
     </div>
   ));
 
-  return id !== 'results' ? (
+  return id !== "results" ? (
     <Container>
       {title && <Title>{title}</Title>}
+      {isSlider && <AgeSlider handleAgeValue={handleAgeValue} />}
+
       <ButtonContainer>
         {isMulti ? multiPossibleAnswers : possibleAnswers}
       </ButtonContainer>
@@ -84,6 +97,19 @@ export default function QuizQuestion(props) {
           type="submit"
           onClick={() => {
             handleMultiResponse(id, answers, checkedState);
+            next();
+          }}
+        >
+          Submit
+        </FancyButton>
+      ) : null}
+      {isSlider ? (
+        <FancyButton
+          isSlider={isSlider}
+          isMulti={isMulti}
+          type="submit"
+          onClick={() => {
+            handleSliderResponse(id, age);
             next();
           }}
         >

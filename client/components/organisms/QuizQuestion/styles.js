@@ -37,6 +37,11 @@ export const FancyButton = styled.button`
     background-color: green;
 
       `}
+      ${(props) =>
+      props.isSlider &&
+      css`
+      width:fit-content;
+      `}
 
   &:focus {
   }
