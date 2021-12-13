@@ -36,6 +36,9 @@ export default function Navigation({ pathname }) {
           <NavItem>
             <NavLink href="#">About Us</NavLink>
           </NavItem>
+          <NavItem>
+            <a href="/auth/google">Sign In with Google</a>
+          </NavItem>
         </ActionItems>
       </Container>
     </Navbar>

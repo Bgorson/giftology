@@ -1,18 +1,11 @@
 const express = require('express');
 const path = require('path');
+const router = express.Router();
 
-const auth         = require('./auth');
-const user         = require('./user');
-const users        = require('./users');
 const products        = require('./products');
 const quiz        = require('./quiz');
 
 
-const router = express.Router();
-
-router.use('/api/auth', auth);
-router.use('/api/user', user);
-router.use('/api/users', users);
 router.use('/api/products', products);
 router.use('/api/quiz', quiz);
 

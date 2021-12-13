@@ -12512,7 +12512,9 @@ function Navigation(_ref) {
     href: "/quiz"
   }, "Take the quiz")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_styles_js__WEBPACK_IMPORTED_MODULE_2__.NavItem, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_styles_js__WEBPACK_IMPORTED_MODULE_2__.NavLink, {
     href: "#"
-  }, "About Us")))));
+  }, "About Us")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_styles_js__WEBPACK_IMPORTED_MODULE_2__.NavItem, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("a", {
+    href: "/auth/google"
+  }, "Sign In with Google")))));
 }
 Navigation.propTypes = {
   pathname: (prop_types__WEBPACK_IMPORTED_MODULE_1___default().string.isRequired)
