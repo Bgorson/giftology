@@ -12740,13 +12740,18 @@ function QuizQuestion(props) {
 
   var _useState5 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(""),
       _useState6 = _slicedToArray(_useState5, 2),
-      additionalMainAnswer = _useState6[0],
-      setAdditionalMainAnswer = _useState6[1];
+      date = _useState6[0],
+      setDate = _useState6[1];
 
-  var _useState7 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
+  var _useState7 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(""),
       _useState8 = _slicedToArray(_useState7, 2),
-      showAdditionalField = _useState8[0],
-      setShowAdditionalField = _useState8[1];
+      additionalMainAnswer = _useState8[0],
+      setAdditionalMainAnswer = _useState8[1];
+
+  var _useState9 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
+      _useState10 = _slicedToArray(_useState9, 2),
+      showAdditionalField = _useState10[0],
+      setShowAdditionalField = _useState10[1];
 
   var handleAgeValue = function handleAgeValue(e) {
     setAge(e);
@@ -12822,11 +12827,15 @@ function QuizQuestion(props) {
       next();
     }
   }, "Submit") : null, showAdditionalField && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("input", {
+    onChange: function onChange(e) {
+      return setDate(e.target.value);
+    },
     type: "date"
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_styles_js__WEBPACK_IMPORTED_MODULE_3__.ButtonContainer, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_styles_js__WEBPACK_IMPORTED_MODULE_3__.FancyButton, {
     type: "submit",
     onClick: function onClick() {
       handleResponse(id, additionalMainAnswer);
+      handleResponse("date", date, true);
       next();
     }
   }, "Submit"))), isSlider ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_styles_js__WEBPACK_IMPORTED_MODULE_3__.FancyButton, {
@@ -13095,30 +13104,35 @@ var Quiz = function Quiz() {
     console.log("res", answers);
   };
 
-  var quizQuestions = [// {
-  //   id: "who",
-  //   title: "Who are you shopping for?",
-  //   answers: [
-  //     { message: "Myself", value: "myself" },
-  //     { message: "A Relative", value: "relative" },
-  //     { message: "A Friend", value: "friend" },
-  //   ],
-  // },
-  // {
-  //   id: "prefer",
-  //   title: `Which do ${isForSelf ? "you" : "they"} prefer`,
-  //   answers: [
-  //     { message: "The Great indoors", value: "indoor" },
-  //     { message: "The Great Outdoors", value: "outdoor" },
-  //   ],
-  // },
-  // {
-  //   id: "age",
-  //   title: `How old are ${isForSelf ? "you" : "they"}?`,
-  //   answers: [],
-  //   isSlider: true,
-  // },
-  {
+  var quizQuestions = [{
+    id: "who",
+    title: "Who are you shopping for?",
+    answers: [{
+      message: "Myself",
+      value: "myself"
+    }, {
+      message: "A Relative",
+      value: "relative"
+    }, {
+      message: "A Friend",
+      value: "friend"
+    }]
+  }, {
+    id: "prefer",
+    title: "Which do ".concat(isForSelf ? "you" : "they", " prefer"),
+    answers: [{
+      message: "The Great indoors",
+      value: "indoor"
+    }, {
+      message: "The Great Outdoors",
+      value: "outdoor"
+    }]
+  }, {
+    id: "age",
+    title: "How old are ".concat(isForSelf ? "you" : "they", "?"),
+    answers: [],
+    isSlider: true
+  }, {
     id: "occassion",
     title: "What is the occassion?",
     answers: [{
@@ -13138,16 +13152,6 @@ var Quiz = function Quiz() {
       value: "any"
     }],
     hasAdditionalField: "date"
-  }, {
-    id: "type",
-    title: "Are ".concat(isForSelf ? "you" : "they", " more: "),
-    answers: [{
-      message: "Practical",
-      value: "practical"
-    }, {
-      message: "Whimsical",
-      value: "whimsical"
-    }]
   }, {
     id: "hobbies",
     title: "What about hobbies?",
@@ -13176,6 +13180,16 @@ var Quiz = function Quiz() {
     }, {
       message: "Other",
       value: "other"
+    }]
+  }, {
+    id: "type",
+    title: "\"You're looking for items that are:\": ",
+    answers: [{
+      message: "Essential",
+      value: "essentials"
+    }, {
+      message: "Interesting and Fun",
+      value: "interestingAndFun"
     }]
   }, {
     id: "price",

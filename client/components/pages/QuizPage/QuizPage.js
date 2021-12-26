@@ -24,29 +24,29 @@ const Quiz = () => {
   };
 
   const quizQuestions = [
-    // {
-    //   id: "who",
-    //   title: "Who are you shopping for?",
-    //   answers: [
-    //     { message: "Myself", value: "myself" },
-    //     { message: "A Relative", value: "relative" },
-    //     { message: "A Friend", value: "friend" },
-    //   ],
-    // },
-    // {
-    //   id: "prefer",
-    //   title: `Which do ${isForSelf ? "you" : "they"} prefer`,
-    //   answers: [
-    //     { message: "The Great indoors", value: "indoor" },
-    //     { message: "The Great Outdoors", value: "outdoor" },
-    //   ],
-    // },
-    // {
-    //   id: "age",
-    //   title: `How old are ${isForSelf ? "you" : "they"}?`,
-    //   answers: [],
-    //   isSlider: true,
-    // },
+    {
+      id: "who",
+      title: "Who are you shopping for?",
+      answers: [
+        { message: "Myself", value: "myself" },
+        { message: "A Relative", value: "relative" },
+        { message: "A Friend", value: "friend" },
+      ],
+    },
+    {
+      id: "prefer",
+      title: `Which do ${isForSelf ? "you" : "they"} prefer`,
+      answers: [
+        { message: "The Great indoors", value: "indoor" },
+        { message: "The Great Outdoors", value: "outdoor" },
+      ],
+    },
+    {
+      id: "age",
+      title: `How old are ${isForSelf ? "you" : "they"}?`,
+      answers: [],
+      isSlider: true,
+    },
     {
       id: "occassion",
       title: "What is the occassion?",
@@ -58,14 +58,6 @@ const Quiz = () => {
         { message: "Who Need an occasion?", value: "any" },
       ],
       hasAdditionalField: "date",
-    },
-    {
-      id: "type",
-      title: `Are ${isForSelf ? "you" : "they"} more: `,
-      answers: [
-        { message: "Practical", value: "practical" },
-        { message: "Whimsical", value: "whimsical" },
-      ],
     },
     {
       id: "hobbies",
@@ -80,6 +72,14 @@ const Quiz = () => {
         { message: "Reading", value: "reading" },
         { message: "Technology", value: "technology" },
         { message: "Other", value: "other" },
+      ],
+    },
+    {
+      id: "type",
+      title: `"You're looking for items that are:": `,
+      answers: [
+        { message: "Essential", value: "essentials" },
+        { message: "Interesting and Fun", value: "interestingAndFun" },
       ],
     },
     {

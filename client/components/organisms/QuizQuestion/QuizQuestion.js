@@ -30,6 +30,7 @@ export default function QuizQuestion(props) {
     new Array(answers.length).fill(false)
   );
   const [age, setAge] = useState(12);
+  const [date, setDate] = useState("");
   const [additionalMainAnswer, setAdditionalMainAnswer] = useState("");
   const [showAdditionalField, setShowAdditionalField] = useState(false);
 
@@ -128,12 +129,13 @@ export default function QuizQuestion(props) {
       ) : null}
       {showAdditionalField && (
         <Fragment>
-          <input type="date" />
+          <input onChange={(e) => setDate(e.target.value)} type="date" />
           <ButtonContainer>
             <FancyButton
               type="submit"
               onClick={() => {
                 handleResponse(id, additionalMainAnswer);
+                handleResponse("date", date, true);
                 next();
               }}
             >
