@@ -1,7 +1,7 @@
-import React, { useState, Fragment } from "react";
+import React, { useState, Fragment } from 'react';
 
-import AgeSlider from "../../atoms/Slider/AgeSlider";
-import QuizResult from "../QuizResult/QuizResult";
+import AgeSlider from '../../atoms/Slider/AgeSlider';
+import QuizResult from '../QuizResult/QuizResult';
 
 import {
   Container,
@@ -12,7 +12,7 @@ import {
   FancyDesign,
   FancyRadioButton,
   Title,
-} from "./styles.js";
+} from './styles.js';
 
 export default function QuizQuestion(props) {
   const {
@@ -30,8 +30,8 @@ export default function QuizQuestion(props) {
     new Array(answers.length).fill(false)
   );
   const [age, setAge] = useState(12);
-  const [date, setDate] = useState("");
-  const [additionalMainAnswer, setAdditionalMainAnswer] = useState("");
+  const [date, setDate] = useState('');
+  const [additionalMainAnswer, setAdditionalMainAnswer] = useState('');
   const [showAdditionalField, setShowAdditionalField] = useState(false);
 
   const handleAgeValue = (e) => {
@@ -68,7 +68,7 @@ export default function QuizQuestion(props) {
 
   const possibleAnswers = answers.map((answers, index) => (
     <FancyButton
-      type={showAdditionalField ? "checkbox" : "submit"}
+      type={showAdditionalField ? 'checkbox' : 'submit'}
       onClick={(e) => handleOnChange(index, e)}
       checked={
         showAdditionalField
@@ -78,7 +78,7 @@ export default function QuizQuestion(props) {
       onClick={() => {
         if (
           hasAdditionalField &&
-          (answers.value === "anniversary" || answers.value === "birthday")
+          (answers.value === 'anniversary' || answers.value === 'birthday')
         ) {
           handleAdditionalData(answers);
         } else {
@@ -107,7 +107,7 @@ export default function QuizQuestion(props) {
     </div>
   ));
 
-  return id !== "results" ? (
+  return id !== 'results' ? (
     <Container>
       {title && <Title>{title}</Title>}
       {isSlider && <AgeSlider handleAgeValue={handleAgeValue} />}
@@ -135,7 +135,7 @@ export default function QuizQuestion(props) {
               type="submit"
               onClick={() => {
                 handleResponse(id, additionalMainAnswer);
-                handleResponse("date", date, true);
+                handleResponse('date', date, true);
                 next();
               }}
             >

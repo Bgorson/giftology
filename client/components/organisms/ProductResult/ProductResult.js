@@ -1,7 +1,7 @@
-import React from "react";
-import Section from "react-bulma-companion/lib/Section";
-import Title from "react-bulma-companion/lib/Title";
-import { postQuizResults } from "../../../api/quiz";
+import React from 'react';
+import Section from 'react-bulma-companion/lib/Section';
+import Title from 'react-bulma-companion/lib/Title';
+import { postQuizResults } from '../../../api/quiz';
 import {
   Category,
   CategoryContainer,
@@ -14,7 +14,7 @@ import {
   ProductTitle,
   ProductScore,
   SingleProductContainer,
-} from "./styled";
+} from './styled';
 
 function groupBy(arr, property) {
   return arr.reduce((memo, x) => {
@@ -29,16 +29,15 @@ function groupBy(arr, property) {
 export default function ProductResult(props) {
   const { data } = props;
   const { products, categoryScores } = data;
-  const arrayOfCategories = groupBy(products, "category");
-console.log('products', products)
+  const arrayOfCategories = groupBy(products, 'category');
   categoryScores.sort((a, b) => (b.score > a.score ? 1 : -1));
   categoryScores.forEach((category) => {
-
-    if (arrayOfCategories[category.name].score) {
-      arrayOfCategories[category.name].sort((a, b) => b.score - a.score);
+    for (let i = 0; i < arrayOfCategories[category.name].length; i++) {
+      if (arrayOfCategories[category.name][i].score) {
+        arrayOfCategories[category.name].sort((a, b) => b.score - a.score);
+      }
     }
   });
-
   // Should just be able to go through available categories
   // and display products and names
   return (
@@ -47,7 +46,11 @@ console.log('products', products)
         <FullContainer key={index}>
           <CategoryContainer key={index}>
             <Category>{category.name}</Category>
-            <CategoryDescription>{"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec ut nisl mattis, scelerisque arcu eget, auctor orci. In arcu turpis."} </CategoryDescription>
+            <CategoryDescription>
+              {
+                'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec ut nisl mattis, scelerisque arcu eget, auctor orci. In arcu turpis.'
+              }{' '}
+            </CategoryDescription>
             {/* <CategoryImage src="/images/default-profile.png" /> */}
             <CategoryScore>Score: {category.score}</CategoryScore>
           </CategoryContainer>
