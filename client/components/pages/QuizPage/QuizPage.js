@@ -20,33 +20,33 @@ const Quiz = () => {
     }
 
     setAnswers(answers);
-    console.log(answers);
+    console.log("res", answers);
   };
 
   const quizQuestions = [
-    {
-      id: "who",
-      title: "Who are you shopping for?",
-      answers: [
-        { message: "Myself", value: "myself" },
-        { message: "A Relative", value: "relative" },
-        { message: "A Friend", value: "friend" },
-      ],
-    },
-    {
-      id: "prefer",
-      title: `Which do ${isForSelf ? "you" : "they"} prefer`,
-      answers: [
-        { message: "The Great indoors", value: "indoor" },
-        { message: "The Great Outdoors", value: "outdoor" },
-      ],
-    },
-    {
-      id: "age",
-      title: `How old are ${isForSelf ? "you" : "they"}?`,
-      answers: [],
-      isSlider: true,
-    },
+    // {
+    //   id: "who",
+    //   title: "Who are you shopping for?",
+    //   answers: [
+    //     { message: "Myself", value: "myself" },
+    //     { message: "A Relative", value: "relative" },
+    //     { message: "A Friend", value: "friend" },
+    //   ],
+    // },
+    // {
+    //   id: "prefer",
+    //   title: `Which do ${isForSelf ? "you" : "they"} prefer`,
+    //   answers: [
+    //     { message: "The Great indoors", value: "indoor" },
+    //     { message: "The Great Outdoors", value: "outdoor" },
+    //   ],
+    // },
+    // {
+    //   id: "age",
+    //   title: `How old are ${isForSelf ? "you" : "they"}?`,
+    //   answers: [],
+    //   isSlider: true,
+    // },
     {
       id: "occassion",
       title: "What is the occassion?",
@@ -57,6 +57,7 @@ const Quiz = () => {
         { message: "White Elephant", value: "whiteElephant" },
         { message: "Who Need an occasion?", value: "any" },
       ],
+      hasAdditionalField: "date",
     },
     {
       id: "type",
@@ -124,6 +125,7 @@ const Quiz = () => {
                   isSlider={quizData.isSlider || false}
                   isMulti={quizData.isMulti || false}
                   results={answers}
+                  hasAdditionalField={quizData.hasAdditionalField}
                 />
               )}
             />

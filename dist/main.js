@@ -12512,9 +12512,7 @@ function Navigation(_ref) {
     href: "/quiz"
   }, "Take the quiz")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_styles_js__WEBPACK_IMPORTED_MODULE_2__.NavItem, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_styles_js__WEBPACK_IMPORTED_MODULE_2__.NavLink, {
     href: "#"
-  }, "About Us")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_styles_js__WEBPACK_IMPORTED_MODULE_2__.NavItem, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("a", {
-    href: "/auth/google"
-  }, "Sign In with Google")))));
+  }, "About Us")))));
 }
 Navigation.propTypes = {
   pathname: (prop_types__WEBPACK_IMPORTED_MODULE_1___default().string.isRequired)
@@ -12701,6 +12699,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _atoms_Slider_AgeSlider__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../atoms/Slider/AgeSlider */ "./client/components/atoms/Slider/AgeSlider.js");
 /* harmony import */ var _QuizResult_QuizResult__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../QuizResult/QuizResult */ "./client/components/organisms/QuizResult/QuizResult.js");
 /* harmony import */ var _styles_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./styles.js */ "./client/components/organisms/QuizQuestion/styles.js");
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
 
 function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
@@ -12725,7 +12725,8 @@ function QuizQuestion(props) {
       next = props.next,
       id = props.id,
       results = props.results,
-      isMulti = props.isMulti;
+      isMulti = props.isMulti,
+      hasAdditionalField = props.hasAdditionalField;
 
   var _useState = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(new Array(answers.length).fill(false)),
       _useState2 = _slicedToArray(_useState, 2),
@@ -12736,6 +12737,16 @@ function QuizQuestion(props) {
       _useState4 = _slicedToArray(_useState3, 2),
       age = _useState4[0],
       setAge = _useState4[1];
+
+  var _useState5 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(""),
+      _useState6 = _slicedToArray(_useState5, 2),
+      additionalMainAnswer = _useState6[0],
+      setAdditionalMainAnswer = _useState6[1];
+
+  var _useState7 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
+      _useState8 = _slicedToArray(_useState7, 2),
+      showAdditionalField = _useState8[0],
+      setShowAdditionalField = _useState8[1];
 
   var handleAgeValue = function handleAgeValue(e) {
     setAge(e);
@@ -12754,6 +12765,12 @@ function QuizQuestion(props) {
     setCheckedState(updatedCheckedState);
   };
 
+  var handleAdditionalData = function handleAdditionalData(answers) {
+    setAdditionalMainAnswer(answers); // turn selected answer grey
+
+    setShowAdditionalField(true);
+  };
+
   var handleMultiResponse = function handleMultiResponse(id, arrayOfPossbleAnswers, arrayofCheckedResponses) {
     var response = [];
     arrayofCheckedResponses.forEach(function (checkedBox, index) {
@@ -12764,15 +12781,23 @@ function QuizQuestion(props) {
     handleResponse(id, response, true);
   };
 
-  var possibleAnswers = answers.map(function (answers) {
-    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_styles_js__WEBPACK_IMPORTED_MODULE_3__.FancyButton, {
-      onClick: function onClick() {
+  var possibleAnswers = answers.map(function (answers, index) {
+    var _React$createElement;
+
+    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_styles_js__WEBPACK_IMPORTED_MODULE_3__.FancyButton, (_React$createElement = {
+      type: showAdditionalField ? "checkbox" : "submit",
+      onClick: function onClick(e) {
+        return handleOnChange(index, e);
+      },
+      checked: showAdditionalField ? additionalMainAnswer.value === answers.value : checkedState[index]
+    }, _defineProperty(_React$createElement, "onClick", function onClick() {
+      if (hasAdditionalField && (answers.value === "anniversary" || answers.value === "birthday")) {
+        handleAdditionalData(answers);
+      } else {
         handleResponse(id, answers);
         next();
-      },
-      type: "submit",
-      key: answers.value
-    }, answers.message);
+      }
+    }), _defineProperty(_React$createElement, "key", answers.value), _React$createElement), answers.message);
   });
   var multiPossibleAnswers = answers.map(function (answers, index) {
     return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
@@ -12796,7 +12821,15 @@ function QuizQuestion(props) {
       handleMultiResponse(id, answers, checkedState);
       next();
     }
-  }, "Submit") : null, isSlider ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_styles_js__WEBPACK_IMPORTED_MODULE_3__.FancyButton, {
+  }, "Submit") : null, showAdditionalField && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("input", {
+    type: "date"
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_styles_js__WEBPACK_IMPORTED_MODULE_3__.ButtonContainer, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_styles_js__WEBPACK_IMPORTED_MODULE_3__.FancyButton, {
+    type: "submit",
+    onClick: function onClick() {
+      handleResponse(id, additionalMainAnswer);
+      next();
+    }
+  }, "Submit"))), isSlider ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_styles_js__WEBPACK_IMPORTED_MODULE_3__.FancyButton, {
     isSlider: isSlider,
     isMulti: isMulti,
     type: "submit",
@@ -13059,38 +13092,33 @@ var Quiz = function Quiz() {
     }
 
     setAnswers(answers);
-    console.log(answers);
+    console.log("res", answers);
   };
 
-  var quizQuestions = [{
-    id: "who",
-    title: "Who are you shopping for?",
-    answers: [{
-      message: "Myself",
-      value: "myself"
-    }, {
-      message: "A Relative",
-      value: "relative"
-    }, {
-      message: "A Friend",
-      value: "friend"
-    }]
-  }, {
-    id: "prefer",
-    title: "Which do ".concat(isForSelf ? "you" : "they", " prefer"),
-    answers: [{
-      message: "The Great indoors",
-      value: "indoor"
-    }, {
-      message: "The Great Outdoors",
-      value: "outdoor"
-    }]
-  }, {
-    id: "age",
-    title: "How old are ".concat(isForSelf ? "you" : "they", "?"),
-    answers: [],
-    isSlider: true
-  }, {
+  var quizQuestions = [// {
+  //   id: "who",
+  //   title: "Who are you shopping for?",
+  //   answers: [
+  //     { message: "Myself", value: "myself" },
+  //     { message: "A Relative", value: "relative" },
+  //     { message: "A Friend", value: "friend" },
+  //   ],
+  // },
+  // {
+  //   id: "prefer",
+  //   title: `Which do ${isForSelf ? "you" : "they"} prefer`,
+  //   answers: [
+  //     { message: "The Great indoors", value: "indoor" },
+  //     { message: "The Great Outdoors", value: "outdoor" },
+  //   ],
+  // },
+  // {
+  //   id: "age",
+  //   title: `How old are ${isForSelf ? "you" : "they"}?`,
+  //   answers: [],
+  //   isSlider: true,
+  // },
+  {
     id: "occassion",
     title: "What is the occassion?",
     answers: [{
@@ -13108,7 +13136,8 @@ var Quiz = function Quiz() {
     }, {
       message: "Who Need an occasion?",
       value: "any"
-    }]
+    }],
+    hasAdditionalField: "date"
   }, {
     id: "type",
     title: "Are ".concat(isForSelf ? "you" : "they", " more: "),
@@ -13193,7 +13222,8 @@ var Quiz = function Quiz() {
           answers: quizData.answers,
           isSlider: quizData.isSlider || false,
           isMulti: quizData.isMulti || false,
-          results: answers
+          results: answers,
+          hasAdditionalField: quizData.hasAdditionalField
         });
       }
     });

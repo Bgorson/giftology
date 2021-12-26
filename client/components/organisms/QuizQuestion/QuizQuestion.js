@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, Fragment } from "react";
 
 import AgeSlider from "../../atoms/Slider/AgeSlider";
 import QuizResult from "../QuizResult/QuizResult";
@@ -24,11 +24,15 @@ export default function QuizQuestion(props) {
     id,
     results,
     isMulti,
+    hasAdditionalField,
   } = props;
   const [checkedState, setCheckedState] = useState(
     new Array(answers.length).fill(false)
   );
   const [age, setAge] = useState(12);
+  const [additionalMainAnswer, setAdditionalMainAnswer] = useState("");
+  const [showAdditionalField, setShowAdditionalField] = useState(false);
+
   const handleAgeValue = (e) => {
     setAge(e);
   };
@@ -41,6 +45,11 @@ export default function QuizQuestion(props) {
       index === position ? !item : item
     );
     setCheckedState(updatedCheckedState);
+  };
+  const handleAdditionalData = (answers) => {
+    setAdditionalMainAnswer(answers);
+    // turn selected answer grey
+    setShowAdditionalField(true);
   };
   const handleMultiResponse = (
     id,
@@ -56,13 +65,27 @@ export default function QuizQuestion(props) {
     handleResponse(id, response, true);
   };
 
-  const possibleAnswers = answers.map((answers) => (
+  const possibleAnswers = answers.map((answers, index) => (
     <FancyButton
+      type={showAdditionalField ? "checkbox" : "submit"}
+      onClick={(e) => handleOnChange(index, e)}
+      checked={
+        showAdditionalField
+          ? additionalMainAnswer.value === answers.value
+          : checkedState[index]
+      }
       onClick={() => {
-        handleResponse(id, answers);
-        next();
+        if (
+          hasAdditionalField &&
+          (answers.value === "anniversary" || answers.value === "birthday")
+        ) {
+          handleAdditionalData(answers);
+        } else {
+          handleResponse(id, answers);
+
+          next();
+        }
       }}
-      type="submit"
       key={answers.value}
     >
       {answers.message}
@@ -103,6 +126,22 @@ export default function QuizQuestion(props) {
           Submit
         </FancyButton>
       ) : null}
+      {showAdditionalField && (
+        <Fragment>
+          <input type="date" />
+          <ButtonContainer>
+            <FancyButton
+              type="submit"
+              onClick={() => {
+                handleResponse(id, additionalMainAnswer);
+                next();
+              }}
+            >
+              Submit
+            </FancyButton>
+          </ButtonContainer>
+        </Fragment>
+      )}
       {isSlider ? (
         <FancyButton
           isSlider={isSlider}
