@@ -23,13 +23,15 @@ async function calculateScore(ageFiltered, quizResults) {
   filteredArray.forEach(function (product) {
     let score = 0;
     if (product.indoorOutdoor == quizResults.prefer) {
+      console.log('product name', product.productName);
       // console.log('matching indoor', product.productName);
       score++;
     }
     const array = product.hobbiesInterests.toString().split(',');
     const lowerCase = array.map((array) => array.toLowerCase());
     quizResults.hobbies.forEach((hobby) => {
-      if (lowerCase.includes(hobby)) {
+      if (lowerCase.includes(hobby.toLowerCase())) {
+        console.log('product name', product.productName);
         // console.log('matching hobby', product.productName);
 
         score++;
