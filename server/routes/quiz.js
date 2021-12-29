@@ -3,6 +3,27 @@ const express = require('express');
 const { Product } = require('../database/schemas');
 const amazonScraper = require('amazon-buddy');
 
+function decimalAdjust(type, value, exp) {
+  // If the exp is undefined or zero...
+  if (typeof exp === 'undefined' || +exp === 0) {
+    return Math[type](value);
+  }
+  value = +value;
+  exp = +exp;
+  // If the value is not a number or the exp is not an integer...
+  if (isNaN(value) || !(typeof exp === 'number' && exp % 1 === 0)) {
+    return NaN;
+  }
+  // Shift
+  value = value.toString().split('e');
+  value = Math[type](+(value[0] + 'e' + (value[1] ? +value[1] - exp : -exp)));
+  // Shift back
+  value = value.toString().split('e');
+  return +(value[0] + 'e' + (value[1] ? +value[1] + exp : exp));
+}
+
+const round10 = (value, exp) => decimalAdjust('round', value, exp);
+
 const router = express.Router();
 
 module.exports = router;
@@ -31,7 +52,7 @@ async function calculateScore(ageFiltered, quizResults) {
     const lowerCase = array.map((array) => array.toLowerCase());
     quizResults.hobbies.forEach((hobby) => {
       if (lowerCase.includes(hobby.toLowerCase())) {
-        console.log('product name', product.productName);
+        // console.log('product name', product.productName);
         // console.log('matching hobby', product.productName);
 
         score++;
@@ -46,8 +67,8 @@ async function calculateScore(ageFiltered, quizResults) {
       score++;
     }
     product.score = score;
-    console.log('product Price', product.score);
-    console.log('product name', product.productName);
+    // console.log('product Price', product.score);
+    // console.log('product name', product.productName);
   });
   return filteredArray;
 }
@@ -106,9 +127,11 @@ router.post('/', async (req, res) => {
         // console.log('categories', category);
         // console.log('amount', arrayOfCategories[category].length);
 
-        averageScore = Math.floor(
-          averageScore / arrayOfCategories[category].length
+        averageScore = round10(
+          averageScore / arrayOfCategories[category].length,
+          -1
         );
+
         scores.push({ name: category, score: averageScore });
       });
       res.send({ categoryScores: scores, products: result });
