@@ -12588,8 +12588,6 @@ function ProductResult(props) {
     return b.score > a.score ? 1 : -1;
   });
   categoryScores.forEach(function (category) {
-    console.log('thing', arrayOfCategories[category.name]);
-
     for (var i = 0; i < arrayOfCategories[category.name].length; i++) {
       if (arrayOfCategories[category.name][i].score) {
         arrayOfCategories[category.name].sort(function (a, b) {
@@ -12597,8 +12595,7 @@ function ProductResult(props) {
         });
       }
     }
-  });
-  console.log('this', arrayOfCategories); // Should just be able to go through available categories
+  }); // Should just be able to go through available categories
   // and display products and names
 
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_styled__WEBPACK_IMPORTED_MODULE_4__.Container, null, categoryScores.map(function (category, index) {
@@ -12859,23 +12856,23 @@ var _templateObject, _templateObject2, _templateObject3, _templateObject4, _temp
 function _taggedTemplateLiteral(strings, raw) { if (!raw) { raw = strings.slice(0); } return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
 
 
-var ButtonContainer = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].div(_templateObject || (_templateObject = _taggedTemplateLiteral(["\n  display: grid;\n  grid-gap: 1em;\n  grid-template-columns: 2fr 2fr;\n\n"])));
+var ButtonContainer = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].div(_templateObject || (_templateObject = _taggedTemplateLiteral(["\n  display: grid;\n  grid-gap: 1em;\n  grid-template-columns: 2fr 2fr;\n"])));
 var Container = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].div(_templateObject2 || (_templateObject2 = _taggedTemplateLiteral(["\n  display: flex;\n  align-items: center;\n  flex-direction: column;\n"])));
 var Title = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].h1(_templateObject3 || (_templateObject3 = _taggedTemplateLiteral(["\n  font-size: 20px;\n"])));
 /* CSS */
 
-var FancyButton = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].button(_templateObject4 || (_templateObject4 = _taggedTemplateLiteral(["\n  width: 100%;\n  background-color: #44a2bb;\n  color: white;\n  cursor: pointer;\n  border-radius: 1000px;\n  padding: 0.5em;\n  ", "\n      ", "\n      ", "\n\n  &:focus {\n  }\n\n  &:after {\n  }\n\n  &:hover {\n    background-color: grey;\n  }\n\n  @media (min-width: 768px) {\n  }\n"])), function (props) {
-  return props.checked && (0,styled_components__WEBPACK_IMPORTED_MODULE_0__.css)(_templateObject5 || (_templateObject5 = _taggedTemplateLiteral(["\n    background-color: grey;\n\n      "])));
+var FancyButton = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].button(_templateObject4 || (_templateObject4 = _taggedTemplateLiteral(["\n  width: 100%;\n  /* background-color: #44a2bb; */\n  background-color: inherit;\n\n  color: black;\n  cursor: pointer;\n  border-radius: 1000px;\n  padding: 0.5em;\n  ", "\n  ", "\n\n  &:focus {\n  }\n\n  &:after {\n  }\n  &:active {\n  }\n\n  &:hover {\n    background-color: #44a2bb;\n    color: white;\n  }\n  ", "\n  @media (min-width: 768px) {\n  }\n"])), function (props) {
+  return props.checked && (0,styled_components__WEBPACK_IMPORTED_MODULE_0__.css)(_templateObject5 || (_templateObject5 = _taggedTemplateLiteral(["\n      background-color: #44a2bb;\n      color: white;\n    "])));
 }, function (props) {
-  return props.isMulti && (0,styled_components__WEBPACK_IMPORTED_MODULE_0__.css)(_templateObject6 || (_templateObject6 = _taggedTemplateLiteral(["\n      width:fit-content;\n    background-color: green;\n\n      "])));
+  return props.isSlider && (0,styled_components__WEBPACK_IMPORTED_MODULE_0__.css)(_templateObject6 || (_templateObject6 = _taggedTemplateLiteral(["\n      width: fit-content;\n    "])));
 }, function (props) {
-  return props.isSlider && (0,styled_components__WEBPACK_IMPORTED_MODULE_0__.css)(_templateObject7 || (_templateObject7 = _taggedTemplateLiteral(["\n      width:fit-content;\n      "])));
+  return props.isMulti && (0,styled_components__WEBPACK_IMPORTED_MODULE_0__.css)(_templateObject7 || (_templateObject7 = _taggedTemplateLiteral(["\n      margin-top: 1em;\n      width: fit-content;\n\n      background-color: black;\n      color: white;\n    "])));
 });
 var FancyText = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].div(_templateObject8 || (_templateObject8 = _taggedTemplateLiteral(["\n  color: hsl(0, 0%, 60%);\n  margin-left: 14px;\n  letter-spacing: 3px;\n  text-transform: uppercase;\n  font-size: 15px;\n\n  transition: 0.3s;\n  ", "\n"])), function (props) {
   return props.checked && (0,styled_components__WEBPACK_IMPORTED_MODULE_0__.css)(_templateObject9 || (_templateObject9 = _taggedTemplateLiteral(["\n      color: hsl(0, 0%, 40%);\n    "])));
 });
 var FancyLabel = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].label(_templateObject10 || (_templateObject10 = _taggedTemplateLiteral(["\n  display: flex;\n  align-items: center;\n\n  border-radius: 100px;\n  padding: 14px 16px;\n  margin: 0;\n\n  cursor: pointer;\n  transition: 0.3s;\n  &:hover {\n    background: hsla(0, 0%, 80%, 0.14);\n  }\n"])));
-var FancyDesign = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].div(_templateObject11 || (_templateObject11 = _taggedTemplateLiteral(["\n  width: 22px;\n  height: 22px;\n  border-radius: 100px;\n\n  background: linear-gradient(\n    to right bottom,\n    hsl(154, 97%, 62%),\n    hsl(225, 97%, 62%)\n  );\n  position: relative;\n  &:before {\n    content: \"\";\n\n    display: inline-block;\n    width: inherit;\n    height: inherit;\n    border-radius: inherit;\n\n    background: hsl(0, 0%, 90%);\n    transform: scale(1.1);\n    transition: 0.3s;\n    ", "\n  }\n"])), function (props) {
+var FancyDesign = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].div(_templateObject11 || (_templateObject11 = _taggedTemplateLiteral(["\n  width: 22px;\n  height: 22px;\n  border-radius: 100px;\n\n  background: linear-gradient(\n    to right bottom,\n    hsl(154, 97%, 62%),\n    hsl(225, 97%, 62%)\n  );\n  position: relative;\n  &:before {\n    content: '';\n\n    display: inline-block;\n    width: inherit;\n    height: inherit;\n    border-radius: inherit;\n\n    background: hsl(0, 0%, 90%);\n    transform: scale(1.1);\n    transition: 0.3s;\n    ", "\n  }\n"])), function (props) {
   return props.checked && (0,styled_components__WEBPACK_IMPORTED_MODULE_0__.css)(_templateObject12 || (_templateObject12 = _taggedTemplateLiteral(["\n        transform: scale(0);\n        background: none;\n      "])));
 });
 var FancyRadioButton = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].input(_templateObject13 || (_templateObject13 = _taggedTemplateLiteral(["\n  position: absolute;\n  left: 0;\n  top: 0;\n  width: 1px;\n  height: 1px;\n  opacity: 0;\n  z-index: -1;\n  &:checked {\n    transform: scale(0);\n    color: hsl(0, 0%, 40%);\n  }\n"])));
@@ -13469,7 +13466,9 @@ function WelcomePage() {
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_styles__WEBPACK_IMPORTED_MODULE_6__.HeroText, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_styles__WEBPACK_IMPORTED_MODULE_6__.HeroTitle, null, "Having Trouble Finding the right gift?"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_styles__WEBPACK_IMPORTED_MODULE_6__.HeroDescription, null, "Check out our quiz and we\u2019ll do the searching for you. All you need to know is who you\u2019re shopping for and what they do for fun. We\u2019ll handle the rest."), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_styles__WEBPACK_IMPORTED_MODULE_6__.HeroCallToAction, {
     as: react_router_dom__WEBPACK_IMPORTED_MODULE_7__.Link,
     to: "/quiz"
-  }, "Take The Quiz"))));
+  }, "Take The Quiz"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_organisms_ProductResult_ProductResult__WEBPACK_IMPORTED_MODULE_5__["default"], {
+    data: data
+  }));
 }
 
 /***/ }),
@@ -13513,12 +13512,12 @@ var _templateObject, _templateObject2, _templateObject3, _templateObject4, _temp
 function _taggedTemplateLiteral(strings, raw) { if (!raw) { raw = strings.slice(0); } return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
 
 
-var HeroImage = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].img(_templateObject || (_templateObject = _taggedTemplateLiteral(["\n  object-fit: cover;\n  width: 100%;\n  \n"])));
+var HeroImage = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].img(_templateObject || (_templateObject = _taggedTemplateLiteral(["\n  object-fit: cover;\n  width: 100%;\n"])));
 var Hero = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].div(_templateObject2 || (_templateObject2 = _taggedTemplateLiteral(["\n  position: relative;\n"])));
 var HeroCallToAction = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].div(_templateObject3 || (_templateObject3 = _taggedTemplateLiteral(["\n  font-size: 36px;\n  text-decoration: underline;\n  color: black;\n  &:hover {\n    color: #44a2bb;\n  }\n"])));
-var HeroDescription = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].p(_templateObject4 || (_templateObject4 = _taggedTemplateLiteral(["\n  font-size: 18px;\n  margin-bottom: 100px;\n  @media (max-width: 768px) {\n    margin-bottom: 0;\n  }\n  \n"])));
+var HeroDescription = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].p(_templateObject4 || (_templateObject4 = _taggedTemplateLiteral(["\n  font-size: 18px;\n  @media (max-width: 768px) {\n    margin-bottom: 0;\n  }\n"])));
 var HeroTitle = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].h1(_templateObject5 || (_templateObject5 = _taggedTemplateLiteral(["\n  font-weight: bold;\n  font-size: 36px;\n  color: white;\n  margin-bottom: 43px;\n  @media (max-width: 768px) {\n    margin-bottom: 0;\n  }\n"])));
-var HeroText = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].div(_templateObject6 || (_templateObject6 = _taggedTemplateLiteral(["\n  position: absolute;\n  top: 25%;\n  left: 50%;\n  @media (max-width: 768px) {\n    top: 0;\n  }\n"])));
+var HeroText = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].div(_templateObject6 || (_templateObject6 = _taggedTemplateLiteral(["\n  position: absolute;\n  top: 35%;\n  left: 50%;\n  @media (max-width: 768px) {\n    top: 0;\n  }\n"])));
 
 /***/ }),
 

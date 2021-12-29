@@ -1,10 +1,9 @@
-import styled, { css } from "styled-components";
+import styled, { css } from 'styled-components';
 
 export const ButtonContainer = styled.div`
   display: grid;
   grid-gap: 1em;
   grid-template-columns: 2fr 2fr;
-
 `;
 
 export const Container = styled.div`
@@ -19,40 +18,46 @@ export const Title = styled.h1`
 /* CSS */
 export const FancyButton = styled.button`
   width: 100%;
-  background-color: #44a2bb;
-  color: white;
+  /* background-color: #44a2bb; */
+  background-color: inherit;
+
+  color: black;
   cursor: pointer;
   border-radius: 1000px;
   padding: 0.5em;
   ${(props) =>
-      props.checked &&
-      css`
-    background-color: grey;
-
-      `}
-      ${(props) =>
-      props.isMulti &&
-      css`
-      width:fit-content;
-    background-color: green;
-
-      `}
-      ${(props) =>
-      props.isSlider &&
-      css`
-      width:fit-content;
-      `}
+    props.checked &&
+    css`
+      background-color: #44a2bb;
+      color: white;
+    `}
+  ${(props) =>
+    props.isSlider &&
+    css`
+      width: fit-content;
+    `}
 
   &:focus {
   }
 
   &:after {
   }
-
-  &:hover {
-    background-color: grey;
+  &:active {
   }
 
+  &:hover {
+    background-color: #44a2bb;
+    color: white;
+  }
+  ${(props) =>
+    props.isMulti &&
+    css`
+      margin-top: 1em;
+      width: fit-content;
+
+      background-color: black;
+      color: white;
+    `}
   @media (min-width: 768px) {
   }
 `;
@@ -99,7 +104,7 @@ export const FancyDesign = styled.div`
   );
   position: relative;
   &:before {
-    content: "";
+    content: '';
 
     display: inline-block;
     width: inherit;
