@@ -29,7 +29,7 @@ export default function QuizQuestion(props) {
   const [checkedState, setCheckedState] = useState(
     new Array(answers.length).fill(false)
   );
-  const [age, setAge] = useState(12);
+  const [age, setAge] = useState(30);
   const [date, setDate] = useState('');
   const [additionalMainAnswer, setAdditionalMainAnswer] = useState('');
   const [showAdditionalField, setShowAdditionalField] = useState(false);

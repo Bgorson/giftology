@@ -44,6 +44,8 @@ async function calculateScore(ageFiltered, quizResults) {
       score++;
     }
     product.score = score;
+    console.log('product Price', product.score);
+    console.log('product name', product.productName);
   });
   return filteredArray;
 }

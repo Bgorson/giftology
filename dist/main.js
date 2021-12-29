@@ -12712,7 +12712,7 @@ function QuizQuestion(props) {
       checkedState = _useState2[0],
       setCheckedState = _useState2[1];
 
-  var _useState3 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(12),
+  var _useState3 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(30),
       _useState4 = _slicedToArray(_useState3, 2),
       age = _useState4[0],
       setAge = _useState4[1];
