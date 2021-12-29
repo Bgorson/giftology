@@ -13466,9 +13466,7 @@ function WelcomePage() {
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_styles__WEBPACK_IMPORTED_MODULE_6__.HeroText, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_styles__WEBPACK_IMPORTED_MODULE_6__.HeroTitle, null, "Having Trouble Finding the right gift?"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_styles__WEBPACK_IMPORTED_MODULE_6__.HeroDescription, null, "Check out our quiz and we\u2019ll do the searching for you. All you need to know is who you\u2019re shopping for and what they do for fun. We\u2019ll handle the rest."), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_styles__WEBPACK_IMPORTED_MODULE_6__.HeroCallToAction, {
     as: react_router_dom__WEBPACK_IMPORTED_MODULE_7__.Link,
     to: "/quiz"
-  }, "Take The Quiz"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_organisms_ProductResult_ProductResult__WEBPACK_IMPORTED_MODULE_5__["default"], {
-    data: data
-  }));
+  }, "Take The Quiz"))));
 }
 
 /***/ }),

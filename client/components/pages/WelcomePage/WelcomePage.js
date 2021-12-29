@@ -238,7 +238,7 @@ export default function WelcomePage() {
             label="Click to Access Quiz"
           />
         </Container> */}
-      <ProductResult data={data} />
+      {/* <ProductResult data={data} /> */}
     </div>
   );
 }
