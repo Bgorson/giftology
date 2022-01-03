@@ -1,15 +1,17 @@
 import styled, { css } from 'styled-components';
 
 export const ButtonContainer = styled.div`
-  display: grid;
-  grid-gap: 1em;
-  grid-template-columns: 2fr 2fr;
+  display: flex;
+  gap: 1.5em;
+  flex-wrap: wrap;
+  max-width: 500px;
 `;
 
 export const Container = styled.div`
   display: flex;
   align-items: center;
   flex-direction: column;
+  gap: 3em;
 `;
 
 export const Title = styled.h1`
@@ -17,10 +19,10 @@ export const Title = styled.h1`
 `;
 /* CSS */
 export const FancyButton = styled.button`
-  width: 100%;
   /* background-color: #44a2bb; */
   background-color: inherit;
-
+  white-space: nowrap;
+  min-width: 150px;
   color: black;
   cursor: pointer;
   border-radius: 1000px;

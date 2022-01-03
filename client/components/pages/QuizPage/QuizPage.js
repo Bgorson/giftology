@@ -75,10 +75,34 @@ const Quiz = () => {
     },
     {
       id: 'type',
-      title: '"You\'re looking for items that are:": ',
+      title: "You're looking for items that are: ",
+      isMulti: true,
       answers: [
         { message: 'Essential', value: 'essentials' },
         { message: 'Interesting and Fun', value: 'interestingAndFun' },
+        { message: 'Thoughtful', value: 'thoughtful' },
+      ],
+    },
+    {
+      id: 'tags',
+      title: `Describe ${
+        isForSelf ? 'your' : 'their'
+      } personality and interests`,
+      isMulti: true,
+      answers: [
+        { message: 'Artsy', value: 'artsy' },
+        { message: 'Classy', value: 'classy' },
+        { message: 'Coffee', value: 'coffee' },
+        { message: 'Competitive', value: 'competitive' },
+        { message: 'Creative', value: 'creative' },
+        { message: 'DIY', value: 'diy' },
+        { message: 'Efficient', value: 'efficient' },
+        { message: 'Health Nut', value: 'healthNut' },
+        { message: 'Nerdy', value: 'nerdy' },
+        { message: 'Practical', value: 'practical' },
+        { message: 'Quirky', value: 'quirky' },
+        { message: 'Science', value: 'science' },
+        { message: 'Trendy', value: 'trendy' },
       ],
     },
     {
