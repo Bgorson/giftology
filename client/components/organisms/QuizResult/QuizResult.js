@@ -1,6 +1,6 @@
 import React from 'react';
 import Section from 'react-bulma-companion/lib/Section';
-import Container from 'react-bulma-companion/lib/Container';
+// import Container from 'react-bulma-companion/lib/Container';
 import Title from 'react-bulma-companion/lib/Title';
 import { postQuizResults } from '../../../api/quiz';
 import ProductResult from '../../organisms/ProductResult/ProductResult';
@@ -17,10 +17,10 @@ export default function QuizResult(props) {
   }, []);
   return (
     <React.Fragment>
-      <Container>
+      <div>
         <Title>RESULTS</Title>
         <p>{JSON.stringify(results)}</p>
-      </Container>
+      </div>
       {productResults && <ProductResult data={productResults} />}
     </React.Fragment>
   );

@@ -31,6 +31,9 @@ export const FullContainer = styled.div`
   margin: auto;
   display: flex;
   gap: 5em;
+  @media (max-width: 768px) {
+    flex-direction: column;
+  }
 `;
 
 export const ProductContainer = styled.div`

@@ -15,6 +15,9 @@
 
 .swiper {
 }
+.container {
+  width: 300px;
+}
 
 .swiper-slide {
   text-align: center;
@@ -44,6 +47,18 @@
   object-fit: cover;
   margin: auto;
 }
+
+.swiper-button-prev {
+  left: 0px;
+  display: none;
+}
+.swiper-button-next {
+  right: 0px;
+  display: none;
+}
+.swiper-slide-active {
+  margin-left: 0px;
+}
 .swiper-wrapper {
   height: 80%;
   padding-bottom: 30px;
@@ -53,4 +68,26 @@
 .swiper-pagination-custom,
 .swiper-pagination-fraction {
   bottom: 0px !important;
+}
+@media screen and (min-width: 640px) {
+  .container {
+    width: 640px;
+  }
+  .swiper-button-prev {
+    left: 0px;
+    display: block;
+  }
+  .swiper-button-next {
+    right: 0px;
+    display: block;
+  }
+  .swiper-slide-active {
+    margin-left: 30px;
+  }
+}
+
+@media screen and (min-width: 768px) {
+  .container {
+    width: 768px;
+  }
 }

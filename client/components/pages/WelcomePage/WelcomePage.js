@@ -1,7 +1,6 @@
 import React from 'react';
 
 import Section from 'react-bulma-companion/lib/Section';
-import Container from 'react-bulma-companion/lib/Container';
 import Title from 'react-bulma-companion/lib/Title';
 import { useHistory } from 'react-router';
 import { Link } from 'react-router-dom';
