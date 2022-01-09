@@ -64,7 +64,7 @@ const Quiz = () => {
       isMulti: true,
       answers: [
         { message: 'Camping', value: 'camping' },
-        { message: 'Health & Wellness', value: 'health' },
+        { message: 'Health & Wellness', value: 'healthAndWellness' },
         { message: 'Home Chef/Cooking', value: 'homeChef' },
         { message: 'Mixology/Alcohol', value: 'mixology' },
         { message: 'Music', value: 'music' },
