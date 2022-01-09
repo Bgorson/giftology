@@ -48,13 +48,24 @@ async function calculateScore(ageFiltered, quizResults) {
       // console.log('matching indoor', product.productName);
       score++;
     }
-    const array = product.hobbiesInterests.toString().split(',');
-    const lowerCase = array.map((array) => array.toLowerCase());
+    const hArray = product.hobbiesInterests.toString().split(',');
+    const tagArray = product.tags.toString().split(',');
+    const lowerCase = hArray.map((array) => array.toLowerCase());
+    const lowerCaseTagArray = tagArray.map((array) => array.toLowerCase());
+
+    // SCORING HOBBIES
     quizResults.hobbies.forEach((hobby) => {
       if (lowerCase.includes(hobby.toLowerCase())) {
         // console.log('product name', product.productName);
         // console.log('matching hobby', product.productName);
 
+        score = score + 5;
+      }
+    });
+    // SCORING TAGS
+
+    quizResults.tags.forEach((tag) => {
+      if (lowerCaseTagArray.includes(tag.toLowerCase())) {
         score++;
       }
     });
@@ -104,17 +115,23 @@ router.post('/', async (req, res) => {
   console.log(quizResults);
   const minAge = parseInt(quizResults.age.split('-')[0]);
   const maxAge = parseInt(quizResults.age.split('-')[1]);
+  const giftTypeArray = quizResults.type;
 
   retriveProducts().then((allProducts) => {
     // console.log('everything', allProducts);
+    // FILTER OUT AGES
     const minAgeFilter = allProducts.filter(
       (product) => parseInt(product.ageMin) <= maxAge
     );
     const ageFiltered = minAgeFilter.filter(
       (product) => parseInt(product.ageMax) >= minAge
     );
+    // FILTER OUT GIFT TYPES
+    const typeAndAgeFiltered = ageFiltered.filter((product) =>
+      giftTypeArray.includes(product.giftType.toString())
+    );
 
-    calculateScore(ageFiltered, quizResults).then((result) => {
+    calculateScore(typeAndAgeFiltered, quizResults).then((result) => {
       const arrayOfCategories = groupBy(result, 'category');
       const categories = Object.keys(arrayOfCategories);
       const scores = [];
