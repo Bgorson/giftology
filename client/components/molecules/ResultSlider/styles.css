@@ -60,7 +60,6 @@
   margin-left: 0px;
 }
 .swiper-wrapper {
-  height: 80%;
   padding-bottom: 30px;
 }
 
@@ -72,6 +71,7 @@
 @media screen and (min-width: 640px) {
   .container {
     width: 640px;
+    margin-right: 3.5em;
   }
   .swiper-button-prev {
     left: 0px;

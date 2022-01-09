@@ -29,6 +29,7 @@ export const HeroTitle = styled.h1`
   margin-bottom: 43px;
   @media (max-width: 768px) {
     margin-bottom: 0;
+    color: black;
   }
 `;
 export const HeroText = styled.div`
@@ -36,6 +37,8 @@ export const HeroText = styled.div`
   top: 35%;
   left: 50%;
   @media (max-width: 768px) {
+    position: relative;
+    left: 0;
     top: 0;
   }
 `;

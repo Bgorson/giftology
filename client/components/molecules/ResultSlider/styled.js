@@ -7,9 +7,12 @@ export const Category = styled.h1`
 `;
 export const CategoryContainer = styled.div`
   display: flex;
-  flex-basis: 30%;
   flex-direction: column;
-  max-width: 302px;
+  max-width: 20%;
+  @media (max-width: 768px) {
+    margin: auto;
+    max-width: 100%;
+  }
 `;
 export const CategoryImage = styled.img`
   max-width: 150px;
