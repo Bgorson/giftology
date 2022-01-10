@@ -4,7 +4,7 @@ import Section from 'react-bulma-companion/lib/Section';
 import Title from 'react-bulma-companion/lib/Title';
 import { useHistory } from 'react-router';
 import { Link } from 'react-router-dom';
-
+import Card from '../../atoms/Card';
 import Button from '../../atoms/Button';
 import ProductResult from '../../organisms/ProductResult/ProductResult';
 import {
@@ -1702,6 +1702,7 @@ export default function WelcomePage() {
             label="Click to Access Quiz"
           />
         </Container> */}
+      {/* <Card product={data.products[0]} /> */}
       {/* <ProductResult data={data} /> */}
     </div>
   );

@@ -2,13 +2,13 @@ import styled from 'styled-components';
 
 export const Category = styled.h1`
   font-size: 30px;
-  /* min-width: 250px; */
   text-transform: uppercase;
 `;
 export const CategoryContainer = styled.div`
   display: flex;
   flex-direction: column;
   max-width: 20%;
+
   @media (max-width: 768px) {
     margin: auto;
     max-width: 100%;
@@ -29,24 +29,11 @@ export const Container = styled.div`
   display: flex;
   flex-direction: column;
 `;
-export const FullContainer = styled.div`
-  width: 100%;
-  margin: auto;
-  display: flex;
-  gap: 5em;
-  @media (max-width: 768px) {
-    flex-direction: column;
-  }
-`;
 
-export const ProductContainer = styled.div`
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 10px;
-  width: 100%;
-`;
 export const ProductTitle = styled.p`
   align-self: center;
+  margin: 0.5em 0 1em 0;
+  font-weight: bold;
 `;
 
 export const ProductImage = styled.div``;

@@ -17,6 +17,7 @@ import {
 } from './styled';
 
 import ResultSlider from '../../molecules/ResultSlider/ResultSlider';
+import ResultSliderV2 from '../../molecules/ResultSliderV2';
 
 function groupBy(arr, property) {
   return arr.reduce((memo, x) => {
@@ -43,7 +44,7 @@ export default function ProductResult(props) {
   // Should just be able to go through available categories
   // and display products and names
   return (
-    <ResultSlider
+    <ResultSliderV2
       categoryScores={categoryScores}
       arrayOfCategories={arrayOfCategories}
     />

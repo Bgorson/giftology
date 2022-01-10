@@ -1,10 +1,9 @@
 import React from 'react';
 
 import Section from 'react-bulma-companion/lib/Section';
-import Container from 'react-bulma-companion/lib/Container';
 import Title from 'react-bulma-companion/lib/Title';
 
-import { TextDescription } from './styles';
+import { Container, TextDescription } from './styles';
 
 export default function AboutPage() {
   return (

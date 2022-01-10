@@ -36,7 +36,7 @@ const Quiz = () => {
       id: 'prefer',
       title: `Which do ${isForSelf ? 'you' : 'they'} prefer`,
       answers: [
-        { message: 'The Great indoors', value: 'indoor' },
+        { message: 'The Great Indoors', value: 'indoor' },
         { message: 'The Great Outdoors', value: 'outdoor' },
       ],
     },
@@ -48,13 +48,13 @@ const Quiz = () => {
     },
     {
       id: 'occassion',
-      title: 'What is the occassion?',
+      title: 'What is the Occasion?',
       answers: [
         { message: 'Anniversary', value: 'anniversary' },
         { message: 'Birthday', value: 'birthday' },
         { message: 'Holiday', value: 'holiday' },
         { message: 'White Elephant', value: 'whiteElephant' },
-        { message: 'Who Need an occasion?', value: 'any' },
+        { message: 'Who Need An Occasion?', value: 'any' },
       ],
       hasAdditionalField: 'date',
     },

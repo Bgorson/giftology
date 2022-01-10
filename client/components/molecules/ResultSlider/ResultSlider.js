@@ -45,42 +45,42 @@ export default function ResultSlider({ categoryScores, arrayOfCategories }) {
             {/* <CategoryImage src="/images/default-profile.png" /> */}
             <CategoryScore>Score: {category.score}</CategoryScore>
           </CategoryContainer>
-          <div className="container">
-            <div className="wrapper">
-              <Swiper
-                breakpoints={{
-                  // when window width is >= 640px
-                  640: {
-                    width: 640,
-                    slidesPerView: 1,
-                  },
-                  // when window width is >= 768px
-                  768: {
-                    width: 768,
-                    slidesPerView: 3,
-                  },
-                }}
-                modules={[Navigation, Pagination]}
-                navigation={true}
-                spaceBetween={30}
-                pagination={pagination}
-                className="mySwiper"
-              >
-                {arrayOfCategories[category.name].map((product, index) => (
-                  <SwiperSlide key={index}>
-                    <SingleProductContainer>
-                      <ProductImage
-                        dangerouslySetInnerHTML={{ __html: product.htmlTag }}
-                      />
-                      <ProductTitle>{product.productName}</ProductTitle>
-                      <ProductText>{product.flavorText},</ProductText>
-                      <ProductScore>Score: {product.score}</ProductScore>
-                    </SingleProductContainer>
-                  </SwiperSlide>
-                ))}
-              </Swiper>
-            </div>
-          </div>
+          {/* <div className="container"> */}
+          {/* <div className="wrapper"> */}
+          <Swiper
+            breakpoints={{
+              // when window width is >= 640px
+              640: {
+                width: 640,
+                slidesPerView: 1,
+              },
+              // when window width is >= 1080
+              1080: {
+                width: 1080,
+                slidesPerView: 3,
+              },
+            }}
+            modules={[Navigation, Pagination]}
+            navigation={true}
+            spaceBetween={30}
+            pagination={pagination}
+            className="swiper-container"
+          >
+            {arrayOfCategories[category.name].map((product, index) => (
+              <SwiperSlide key={index}>
+                <SingleProductContainer>
+                  <ProductImage
+                    dangerouslySetInnerHTML={{ __html: product.htmlTag }}
+                  />
+                  <ProductTitle>{product.productName}</ProductTitle>
+                  <ProductText>{product.flavorText},</ProductText>
+                  <ProductScore>Score: {product.score}</ProductScore>
+                </SingleProductContainer>
+              </SwiperSlide>
+            ))}
+          </Swiper>
+          {/* </div> */}
+          {/* </div> */}
         </FullContainer>
       ))}
     </Container>
