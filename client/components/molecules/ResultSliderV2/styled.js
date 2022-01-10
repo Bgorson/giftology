@@ -60,6 +60,7 @@ export const CategoryDiv = styled.div`
 `;
 export const SlickContainer = styled.div`
   img {
+    height: 200px;
     width: auto;
     margin: auto;
   }
