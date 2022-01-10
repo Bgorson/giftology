@@ -4,29 +4,36 @@ export const ButtonContainer = styled.div`
   display: flex;
   gap: 1.5em;
   flex-wrap: wrap;
-  max-width: 500px;
+  max-width: 750px;
+  justify-content: center;
 `;
 
 export const Container = styled.div`
   display: flex;
   align-items: center;
   flex-direction: column;
-  gap: 3em;
+  background-color: lightgray;
+  justify-content: space-evenly;
+  border-radius: 40px;
+  padding: 5em 0;
+  text-align: center;
 `;
 
 export const Title = styled.h1`
-  font-size: 20px;
+  font-size: 32px;
+  margin-bottom: 1em;
 `;
 /* CSS */
 export const FancyButton = styled.button`
   /* background-color: #44a2bb; */
   background-color: inherit;
-  white-space: nowrap;
-  min-width: 150px;
+  /* white-space: nowrap; */
+  width: 230px;
   color: black;
   cursor: pointer;
   border-radius: 1000px;
   padding: 0.5em;
+  font-size: 20px;
   ${(props) =>
     props.checked &&
     css`
@@ -136,4 +143,8 @@ export const FancyRadioButton = styled.input`
     transform: scale(0);
     color: hsl(0, 0%, 40%);
   }
+`;
+export const DateInput = styled.input`
+  margin: 1em 0;
+  font-size: 20px;
 `;

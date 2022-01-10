@@ -11,7 +11,7 @@ import AboutPage from '_pages/AboutPage';
 import Navigation from '_organisms/Navigation';
 import Footer from '_organisms/Footer';
 
-import { MainContainer } from './styles';
+import { Container, MainContainer } from './styles';
 
 export default function Main() {
   const location = useLocation();
@@ -21,7 +21,7 @@ export default function Main() {
     window.scrollTo(0, 0);
   }, [location.pathname]);
   return (
-    <div>
+    <Container>
       <ReactNotification />
       <Navigation pathname={location.pathname} />
       <MainContainer>
@@ -34,7 +34,7 @@ export default function Main() {
         </Switch>
       </MainContainer>
       <Footer />
-    </div>
+    </Container>
   );
 }
 

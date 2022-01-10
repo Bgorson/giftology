@@ -11,6 +11,7 @@ import {
   FancyLabel,
   FancyDesign,
   FancyRadioButton,
+  DateInput,
   Title,
 } from './styles.js';
 
@@ -129,7 +130,7 @@ export default function QuizQuestion(props) {
       ) : null}
       {showAdditionalField && (
         <Fragment>
-          <input onChange={(e) => setDate(e.target.value)} type="date" />
+          <DateInput onChange={(e) => setDate(e.target.value)} type="date" />
           <ButtonContainer>
             <FancyButton
               type="submit"

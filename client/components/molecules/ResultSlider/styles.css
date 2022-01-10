@@ -8,15 +8,15 @@
   font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
   font-size: 14px;
   color: #000;
-  margin: auto auto 5em auto;
-  padding: 1em;
+  flex-grow: 0;
+  /* margin: auto auto 5em auto; */
+  /* padding: 1em;
   border: 1px solid black;
-}
-
-.swiper {
+} */
 }
 .container {
   width: 300px;
+  /* remove flexgrow, margin, padding, border */
 }
 
 .swiper-slide {

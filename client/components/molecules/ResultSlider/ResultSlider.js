@@ -40,7 +40,7 @@ export default function ResultSlider({ categoryScores, arrayOfCategories }) {
             <CategoryDescription>
               {
                 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec ut nisl mattis, scelerisque arcu eget, auctor orci. In arcu turpis.'
-              }{' '}
+              }
             </CategoryDescription>
             {/* <CategoryImage src="/images/default-profile.png" /> */}
             <CategoryScore>Score: {category.score}</CategoryScore>
@@ -57,7 +57,7 @@ export default function ResultSlider({ categoryScores, arrayOfCategories }) {
                   // when window width is >= 768px
                   768: {
                     width: 768,
-                    slidesPerView: 2,
+                    slidesPerView: 3,
                   },
                 }}
                 modules={[Navigation, Pagination]}
