@@ -1,7 +1,9 @@
 import styled from 'styled-components';
 
 export const Category = styled.h1`
-  font-size: 30px;
+  font-size: 50px;
+  margin-bottom: 0.5em;
+  text-align: center;
   text-transform: uppercase;
 `;
 export const CategoryContainer = styled.div``;
@@ -51,7 +53,8 @@ export const ProductScore = styled.p`
 `;
 export const SingleProductContainer = styled.div``;
 export const CategoryDescription = styled.p`
-  font-size: 15px;
+  font-size: 18px;
+  margin-bottom: 0.5em;
 `;
 
 export const CategoryDiv = styled.div`
@@ -64,11 +67,16 @@ export const SlickContainer = styled.div`
     width: auto;
     margin: auto;
   }
+  .slick-prev {
+    left: -35px;
+  }
   .slick-prev:before {
     color: black;
+    font-size: 35px;
   }
   .slick-next:before {
     color: black;
+    font-size: 35px;
   } /* the slides */
   .slick-list {
     margin: 0 -5px;

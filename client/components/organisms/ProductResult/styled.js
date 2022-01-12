@@ -59,3 +59,7 @@ export const SingleProductContainer = styled.div`
 export const CategoryDescription = styled.p`
   font-size: 15px;
 `;
+export const EmptyText = styled.p`
+  font-size: 50px;
+  text-align: center;
+`;
