@@ -1,7 +1,7 @@
 const express = require('express');
 // const { requireAuth } = require('./middleware');
 const { Product } = require('../database/schemas');
-const amazonScraper = require('amazon-buddy');
+// const amazonScraper = require('amazon-buddy');
 
 function decimalAdjust(type, value, exp) {
   // If the exp is undefined or zero...
@@ -44,7 +44,6 @@ async function calculateScore(ageFiltered, quizResults) {
   filteredArray.forEach(function (product) {
     let score = 0;
     if (product.indoorOutdoor == quizResults.prefer) {
-      console.log('product name', product.productName);
       // console.log('matching indoor', product.productName);
       score++;
     }
@@ -116,7 +115,7 @@ router.post('/', async (req, res) => {
   const minAge = parseInt(quizResults.age.split('-')[0]);
   const maxAge = parseInt(quizResults.age.split('-')[1]);
   const giftTypeArray = quizResults.type;
-
+  let typeAndAgeFiltered = [];
   retriveProducts().then((allProducts) => {
     // console.log('everything', allProducts);
     // FILTER OUT AGES
@@ -127,9 +126,13 @@ router.post('/', async (req, res) => {
       (product) => parseInt(product.ageMax) >= minAge
     );
     // FILTER OUT GIFT TYPES
-    const typeAndAgeFiltered = ageFiltered.filter((product) =>
-      giftTypeArray.includes(product.giftType.toString())
-    );
+    if (giftTypeArray.length > 0) {
+      typeAndAgeFiltered = ageFiltered.filter((product) =>
+        giftTypeArray.includes(product.giftType.toString())
+      );
+    } else {
+      typeAndAgeFiltered = ageFiltered;
+    }
 
     calculateScore(typeAndAgeFiltered, quizResults).then((result) => {
       const arrayOfCategories = groupBy(result, 'category');
