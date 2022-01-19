@@ -58,7 +58,7 @@ const Quiz = () => {
         { message: 'Birthday', value: 'birthday' },
         { message: 'Holiday', value: 'holiday' },
         { message: 'White Elephant', value: 'whiteElephant' },
-        { message: 'Who Need An Occasion?', value: 'any' },
+        { message: 'Who Needs An Occasion?', value: 'any' },
       ],
       hasAdditionalField: 'date',
     },
