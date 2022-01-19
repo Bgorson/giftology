@@ -6,10 +6,14 @@ import QuizQuestion from '../../organisms/QuizQuestion/QuizQuestion';
 const Quiz = () => {
   const [answers, setAnswers] = React.useState({});
   const [isForSelf, setIsForSelf] = React.useState(false);
+  const [quizAge, setQuizAge] = React.useState(0);
 
   const handleResponse = (id, response, isMulti) => {
     if (id === 'who' && response === 'Myself') {
       setIsForSelf(true);
+    }
+    if (id === 'age') {
+      setQuizAge(response);
     }
     const newInput = `${id}`;
     if (isMulti) {
@@ -140,6 +144,7 @@ const Quiz = () => {
               id={quizData.id}
               render={({ next }) => (
                 <QuizQuestion
+                  quizAge={quizAge}
                   handleResponse={handleResponse}
                   next={next}
                   id={quizData.id}

@@ -17,8 +17,8 @@ import {
 
 export default function QuizQuestion(props) {
   const {
+    quizAge,
     title,
-    answers,
     isSlider,
     handleResponse,
     next,
@@ -27,9 +27,11 @@ export default function QuizQuestion(props) {
     isMulti,
     hasAdditionalField,
   } = props;
+  let { answers } = props;
   const [checkedState, setCheckedState] = useState(
     new Array(answers.length).fill(false)
   );
+
   const [age, setAge] = useState(30);
   const [date, setDate] = useState('');
   const [additionalMainAnswer, setAdditionalMainAnswer] = useState('');
@@ -66,7 +68,12 @@ export default function QuizQuestion(props) {
     });
     handleResponse(id, response, true);
   };
-
+  if (parseInt(quizAge?.value?.split('-')[0]) < 21 && id === 'hobbies') {
+    console.log('underage');
+    answers = answers.filter(function (el) {
+      return el.value != 'mixology';
+    });
+  }
   const possibleAnswers = answers.map((answers, index) => (
     <FancyButton
       type={showAdditionalField ? 'checkbox' : 'submit'}
