@@ -4,7 +4,7 @@ export const ButtonContainer = styled.div`
   display: flex;
   gap: 1.5em;
   flex-wrap: wrap;
-  max-width: 750px;
+  max-width: 900px;
   justify-content: center;
 `;
 
@@ -27,8 +27,8 @@ export const Title = styled.h1`
 export const FancyButton = styled.button`
   /* background-color: #44a2bb; */
   background-color: inherit;
-  /* white-space: nowrap; */
-  width: 230px;
+  white-space: nowrap;
+  min-width: 280px;
   color: black;
   cursor: pointer;
   border-radius: 1000px;
