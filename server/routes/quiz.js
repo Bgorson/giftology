@@ -1,7 +1,7 @@
 const express = require('express');
 // const { requireAuth } = require('./middleware');
 const { Product } = require('../database/schemas');
-// const amazonScraper = require('amazon-buddy');
+const getImage = require('../api/getEtsy');
 
 function decimalAdjust(type, value, exp) {
   // If the exp is undefined or zero...
@@ -37,11 +37,23 @@ async function retriveProducts() {
 //TODO: Do all of the scoring in one function
 // Average the scores after all individual products have been scored
 
+//turn this into a get function that works
+//To test, get this activated on a route
+// The logic being if the  website is Etsy- run it through the etst fetcher and add it as a property of the products
+
 async function calculateScore(ageFiltered, quizResults) {
   const minPrice = parseInt(quizResults.price.split('-')[0]);
   const maxPrice = parseInt(quizResults.price.split('-')[1]);
   const filteredArray = ageFiltered;
-  filteredArray.forEach(function (product) {
+  for (const product of filteredArray) {
+    // filteredArray.forEach(async function (product) {
+    // FETCH ETSY IMAGE IF NEEDED
+    if (product.website == 'Etsy') {
+      console.log('ETSY HERE');
+      const imageURL = await getImage(product.listingId);
+      product.directImageSrc = imageURL;
+    }
+
     let score = 0;
     if (product.indoorOutdoor == quizResults.prefer) {
       // console.log('matching indoor', product.productName);
@@ -79,7 +91,8 @@ async function calculateScore(ageFiltered, quizResults) {
     product.score = score;
     // console.log('product Price', product.score);
     // console.log('product name', product.productName);
-  });
+  }
+  console.log('THE END', filteredArray);
   return filteredArray;
 }
 
@@ -158,22 +171,3 @@ router.post('/', async (req, res) => {
     });
   });
 });
-
-// router.get("/category/:name", async (req, res) => {
-//   const category = req.params.name;
-//   try {
-//     const categoryRes = await Product.find({ Category: category });
-//     res.send(categoryRes);
-//   } catch {
-//     res.status(404);
-//     res.send({ error: "Category name error" });
-//   }
-// });
-
-// router.post("/add_product", async (request, response) => {
-//   const newProduct = new Product(request.body);
-
-//   console.log(newProduct);
-//   await newProduct.save();
-//   response.send({ message: "Product added successfully", newProduct });
-// });

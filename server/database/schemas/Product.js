@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+const mongoose = require('mongoose');
 
 const { Schema } = mongoose;
 
@@ -26,10 +26,12 @@ const productSchema = new Schema(
     // created_at: { type: Date, default: Date.now, immutable: true },
     updated_at: { type: Date },
     score: { type: Number },
+    directImageSrc: { type: String },
+    listingId: { type: Number },
   },
   { versionKey: false }
 );
 
-const Products = mongoose.model("products", productSchema);
+const Products = mongoose.model('products', productSchema);
 
 module.exports = Products;

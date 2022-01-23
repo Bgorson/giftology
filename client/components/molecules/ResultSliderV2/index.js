@@ -73,11 +73,11 @@ export default function ResultSlider({ categoryScores, arrayOfCategories }) {
           <CategoryDiv key={category.name}>
             <CategoryContainer key={0}>
               <Category>{category.name}</Category>
-              <CategoryDescription>
+              {/* <CategoryDescription>
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec
                 ut nisl mattis, scelerisque arcu eget, auctor orci. In arcu
                 turpis.
-              </CategoryDescription>
+              </CategoryDescription> */}
               <CategoryScore>Score: {category.score}</CategoryScore>
             </CategoryContainer>
             <SlickContainer>
