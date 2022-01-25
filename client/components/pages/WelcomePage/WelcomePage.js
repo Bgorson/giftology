@@ -65,7 +65,7 @@ const data = {
   ],
   products: [
     {
-      occassions: {
+      occasion: {
         Type: [],
       },
       tags: 'trendy',
@@ -92,7 +92,7 @@ const data = {
       score: 2,
     },
     {
-      occassions: {
+      occasion: {
         Type: [],
       },
       tags: '',
@@ -118,7 +118,7 @@ const data = {
       score: 2,
     },
     {
-      occassions: {
+      occasion: {
         Type: [],
       },
       tags: '',
@@ -143,7 +143,7 @@ const data = {
       score: 1,
     },
     {
-      occassions: {
+      occasion: {
         Type: [],
       },
       tags: '',
@@ -170,7 +170,7 @@ const data = {
       score: 2,
     },
     {
-      occassions: {
+      occasion: {
         Type: [],
       },
       tags: '',
@@ -196,7 +196,7 @@ const data = {
       score: 2,
     },
     {
-      occassions: {
+      occasion: {
         Type: [],
       },
       tags: '',
@@ -222,7 +222,7 @@ const data = {
       score: 2,
     },
     {
-      occassions: {
+      occasion: {
         Type: [],
       },
       tags: 'creative,science',
@@ -249,7 +249,7 @@ const data = {
       score: 3,
     },
     {
-      occassions: {
+      occasion: {
         Type: [],
       },
       tags: '',
@@ -276,7 +276,7 @@ const data = {
       score: 3,
     },
     {
-      occassions: {
+      occasion: {
         Type: [],
       },
       tags: '',
@@ -302,7 +302,7 @@ const data = {
       score: 2,
     },
     {
-      occassions: {
+      occasion: {
         Type: [],
       },
       tags: 'efficient',
@@ -329,7 +329,7 @@ const data = {
       score: 3,
     },
     {
-      occassions: {
+      occasion: {
         Type: [],
       },
       tags: '',
@@ -356,7 +356,7 @@ const data = {
       score: 3,
     },
     {
-      occassions: {
+      occasion: {
         Type: [],
       },
       tags: '',
@@ -383,7 +383,7 @@ const data = {
       score: 3,
     },
     {
-      occassions: {
+      occasion: {
         Type: [],
       },
       tags: 'practical',
@@ -409,7 +409,7 @@ const data = {
       score: 3,
     },
     {
-      occassions: {
+      occasion: {
         Type: [],
       },
       tags: '',
@@ -435,7 +435,7 @@ const data = {
       score: 2,
     },
     {
-      occassions: {
+      occasion: {
         Type: [],
       },
       tags: '',
@@ -461,7 +461,7 @@ const data = {
       score: 2,
     },
     {
-      occassions: {
+      occasion: {
         Type: [],
       },
       tags: 'coffee',
@@ -488,7 +488,7 @@ const data = {
       score: 2,
     },
     {
-      occassions: {
+      occasion: {
         Type: [],
       },
       tags: 'practical',
@@ -515,7 +515,7 @@ const data = {
       score: 3,
     },
     {
-      occassions: {
+      occasion: {
         Type: [],
       },
       tags: 'athletic,competitive',
@@ -542,7 +542,7 @@ const data = {
       score: 1,
     },
     {
-      occassions: {
+      occasion: {
         Type: [],
       },
       tags: 'athletic,competitive',
@@ -569,7 +569,7 @@ const data = {
       score: 1,
     },
     {
-      occassions: {
+      occasion: {
         Type: [],
       },
       tags: 'athletic,competitive',
@@ -596,7 +596,7 @@ const data = {
       score: 1,
     },
     {
-      occassions: {
+      occasion: {
         Type: [],
       },
       tags: 'athletic,competitive',
@@ -623,7 +623,7 @@ const data = {
       score: 1,
     },
     {
-      occassions: {
+      occasion: {
         Type: [],
       },
       tags: 'athletic,competitive',
@@ -650,7 +650,7 @@ const data = {
       score: 1,
     },
     {
-      occassions: {
+      occasion: {
         Type: [],
       },
       tags: 'athletic,healthNut',
@@ -677,7 +677,7 @@ const data = {
       score: 0,
     },
     {
-      occassions: {
+      occasion: {
         Type: [],
       },
       tags: 'athletic,healthNut',
@@ -704,7 +704,7 @@ const data = {
       score: 1,
     },
     {
-      occassions: {
+      occasion: {
         Type: [],
       },
       tags: 'nerdy',
@@ -730,7 +730,7 @@ const data = {
       score: 2,
     },
     {
-      occassions: {
+      occasion: {
         Type: [],
       },
       tags: 'nerdy',
@@ -756,7 +756,7 @@ const data = {
       score: 2,
     },
     {
-      occassions: {
+      occasion: {
         Type: [],
       },
       tags: 'nerdy',
@@ -782,7 +782,7 @@ const data = {
       score: 2,
     },
     {
-      occassions: {
+      occasion: {
         Type: [],
       },
       tags: 'nerdy',
@@ -809,7 +809,7 @@ const data = {
       score: 2,
     },
     {
-      occassions: {
+      occasion: {
         Type: [],
       },
       tags: 'nerdy',
@@ -835,7 +835,7 @@ const data = {
       score: 2,
     },
     {
-      occassions: {
+      occasion: {
         Type: [],
       },
       tags: '',
@@ -862,7 +862,7 @@ const data = {
       score: 2,
     },
     {
-      occassions: {
+      occasion: {
         Type: [],
       },
       tags: '',
@@ -886,7 +886,7 @@ const data = {
       score: 1,
     },
     {
-      occassions: {
+      occasion: {
         Type: [],
       },
       tags: '',
@@ -912,7 +912,7 @@ const data = {
       score: 2,
     },
     {
-      occassions: {
+      occasion: {
         Type: [],
       },
       tags: 'DIY',
@@ -938,7 +938,7 @@ const data = {
       score: 2,
     },
     {
-      occassions: {
+      occasion: {
         Type: [],
       },
       tags: 'DIY',
@@ -964,7 +964,7 @@ const data = {
       score: 2,
     },
     {
-      occassions: {
+      occasion: {
         Type: [],
       },
       tags: '',
@@ -991,7 +991,7 @@ const data = {
       score: 2,
     },
     {
-      occassions: {
+      occasion: {
         Type: [],
       },
       tags: 'classy',
@@ -1018,7 +1018,7 @@ const data = {
       score: 2,
     },
     {
-      occassions: {
+      occasion: {
         Type: [],
       },
       tags: '',
@@ -1043,7 +1043,7 @@ const data = {
       score: 2,
     },
     {
-      occassions: {
+      occasion: {
         Type: [],
       },
       tags: '',
@@ -1068,7 +1068,7 @@ const data = {
       score: 2,
     },
     {
-      occassions: {
+      occasion: {
         Type: [],
       },
       tags: '',
@@ -1093,7 +1093,7 @@ const data = {
       score: 2,
     },
     {
-      occassions: {
+      occasion: {
         Type: [],
       },
       tags: '',
@@ -1119,7 +1119,7 @@ const data = {
       score: 2,
     },
     {
-      occassions: {
+      occasion: {
         Type: [],
       },
       tags: '',
@@ -1144,7 +1144,7 @@ const data = {
       score: 1,
     },
     {
-      occassions: {
+      occasion: {
         Type: [],
       },
       tags: '',
@@ -1169,7 +1169,7 @@ const data = {
       score: 3,
     },
     {
-      occassions: {
+      occasion: {
         Type: [],
       },
       tags: '',
@@ -1194,7 +1194,7 @@ const data = {
       score: 3,
     },
     {
-      occassions: {
+      occasion: {
         Type: [],
       },
       tags: 'quirky',
@@ -1219,7 +1219,7 @@ const data = {
       score: 3,
     },
     {
-      occassions: {
+      occasion: {
         Type: [],
       },
       tags: '',
@@ -1244,7 +1244,7 @@ const data = {
       score: 3,
     },
     {
-      occassions: {
+      occasion: {
         Type: [],
       },
       tags: '',
@@ -1269,7 +1269,7 @@ const data = {
       score: 3,
     },
     {
-      occassions: {
+      occasion: {
         Type: [],
       },
       tags: '',
@@ -1294,7 +1294,7 @@ const data = {
       score: 2,
     },
     {
-      occassions: {
+      occasion: {
         Type: [],
       },
       tags: '',
@@ -1320,7 +1320,7 @@ const data = {
       score: 3,
     },
     {
-      occassions: {
+      occasion: {
         Type: [],
       },
       tags: 'competitive',
@@ -1345,7 +1345,7 @@ const data = {
       score: 1,
     },
     {
-      occassions: {
+      occasion: {
         Type: [],
       },
       tags: '',
@@ -1370,7 +1370,7 @@ const data = {
       score: 1,
     },
     {
-      occassions: {
+      occasion: {
         Type: [],
       },
       tags: '',
@@ -1395,7 +1395,7 @@ const data = {
       score: 1,
     },
     {
-      occassions: {
+      occasion: {
         Type: [],
       },
       tags: '',
@@ -1420,7 +1420,7 @@ const data = {
       score: 1,
     },
     {
-      occassions: {
+      occasion: {
         Type: [],
       },
       tags: '',
@@ -1446,7 +1446,7 @@ const data = {
       score: 1,
     },
     {
-      occassions: {
+      occasion: {
         Type: [],
       },
       tags: 'coffee',
@@ -1471,7 +1471,7 @@ const data = {
       score: 2,
     },
     {
-      occassions: {
+      occasion: {
         Type: [],
       },
       tags: '',
@@ -1496,7 +1496,7 @@ const data = {
       score: 1,
     },
     {
-      occassions: {
+      occasion: {
         Type: [],
       },
       tags: 'coffee',
@@ -1521,7 +1521,7 @@ const data = {
       score: 2,
     },
     {
-      occassions: {
+      occasion: {
         Type: [],
       },
       tags: '',
@@ -1546,7 +1546,7 @@ const data = {
       score: 2,
     },
     {
-      occassions: {
+      occasion: {
         Type: [],
       },
       tags: '',
@@ -1570,7 +1570,7 @@ const data = {
       score: 1,
     },
     {
-      occassions: {
+      occasion: {
         Type: [],
       },
       tags: '',
@@ -1596,7 +1596,7 @@ const data = {
       score: 1,
     },
     {
-      occassions: {
+      occasion: {
         Type: [],
       },
       tags: '',
@@ -1622,7 +1622,7 @@ const data = {
       score: 1,
     },
     {
-      occassions: {
+      occasion: {
         Type: [],
       },
       tags: 'quirky',
@@ -1647,7 +1647,7 @@ const data = {
       score: 1,
     },
     {
-      occassions: {
+      occasion: {
         Type: [],
       },
       tags: 'quirky',

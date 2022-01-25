@@ -19,7 +19,7 @@ const productSchema = new Schema(
     indoorOutdoor: { type: String },
     ageMin: { type: String },
     ageMax: { type: String },
-    occassions: { Type: Array },
+    occasion: { Type: String },
     tags: { Type: String },
     giftType: { Type: String },
     hobbiesInterests: { Type: Array },
