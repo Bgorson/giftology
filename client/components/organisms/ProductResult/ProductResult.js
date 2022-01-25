@@ -39,6 +39,7 @@ export default function ProductResult(props) {
     categoryScores.forEach((category) => {
       for (let i = 0; i < arrayOfCategories[category.name].length; i++) {
         if (arrayOfCategories[category.name][i].score) {
+          //TODO: Add a sort for breaking tie to be price. Highest wins.
           arrayOfCategories[category.name].sort((a, b) => b.score - a.score);
         }
       }

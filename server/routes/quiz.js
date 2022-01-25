@@ -49,7 +49,6 @@ async function calculateScore(ageFiltered, quizResults) {
     // filteredArray.forEach(async function (product) {
     // FETCH ETSY IMAGE IF NEEDED
     if (product.website == 'Etsy') {
-      console.log('ETSY HERE');
       const imageURL = await getImage(product.listingId);
       product.directImageSrc = imageURL;
     }
@@ -92,7 +91,6 @@ async function calculateScore(ageFiltered, quizResults) {
     // console.log('product Price', product.score);
     // console.log('product name', product.productName);
   }
-  console.log('THE END', filteredArray);
   return filteredArray;
 }
 
