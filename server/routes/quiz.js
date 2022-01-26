@@ -59,9 +59,12 @@ async function calculateScore(ageFiltered, quizResults) {
       score++;
     }
     const hArray = product.hobbiesInterests.toString().split(',');
+    const oArray = product.occasion.toString().split(',');
+
     const tagArray = product.tags.toString().split(',');
     const lowerCase = hArray.map((array) => array.toLowerCase());
     const lowerCaseTagArray = tagArray.map((array) => array.toLowerCase());
+    const lowerCaseOc = oArray.map((array) => array.toLowerCase());
 
     // SCORING HOBBIES
     quizResults.hobbies.forEach((hobby) => {
@@ -72,8 +75,18 @@ async function calculateScore(ageFiltered, quizResults) {
         score = score + 5;
       }
     });
-    // SCORING TAGS
+    // SCORING OCCASIONS
+    if (lowerCaseOc.includes(quizResults.occasion.toLowerCase())) {
+      console.log('MATCH');
+      console.log('product name', product.productName);
 
+      // console.log('product name', product.productName);
+      // console.log('matching hobby', product.productName);
+
+      score = score + 1;
+    }
+
+    // SCORING TAGS
     quizResults.tags.forEach((tag) => {
       if (lowerCaseTagArray.includes(tag.toLowerCase())) {
         score++;
@@ -110,7 +123,7 @@ router.post('/', async (req, res) => {
     who: 'relative',
     prefer: 'indoor',
     age: '5-6',
-    occassion: 'birthday',
+    occasion: 'birthday',
     type: 'whimsical',
     hobbies: 'camping',
     price: '0-100',

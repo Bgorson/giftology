@@ -51,7 +51,7 @@ const Quiz = () => {
       isSlider: true,
     },
     {
-      id: 'occassion',
+      id: 'occasion',
       title: 'What is the Occasion?',
       answers: [
         { message: 'Anniversary', value: 'anniversary' },
