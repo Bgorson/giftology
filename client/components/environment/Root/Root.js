@@ -4,7 +4,7 @@ import ReactGA from 'react-ga';
 
 import { BrowserRouter } from 'react-router-dom';
 import Main from '../Main';
-ReactGA.initialize('300818648');
+ReactGA.initialize('UA-218196758-1');
 console.log('visit');
 ReactGA.pageview(window.location.pathname + window.location.search);
 
