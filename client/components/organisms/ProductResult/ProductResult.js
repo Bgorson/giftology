@@ -40,7 +40,11 @@ export default function ProductResult(props) {
       for (let i = 0; i < arrayOfCategories[category.name].length; i++) {
         if (arrayOfCategories[category.name][i].score) {
           //TODO: Add a sort for breaking tie to be price. Highest wins.
+          console.log('Checking', arrayOfCategories[category.name]);
           arrayOfCategories[category.name].sort((a, b) => b.score - a.score);
+          arrayOfCategories[category.name].sort((a, b) =>
+            b.score === a.score ? b.productBasePrice - a.productBasePrice : 0
+          );
         }
       }
     });
