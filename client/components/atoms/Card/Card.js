@@ -23,7 +23,7 @@ export default function ProductCard({ product }) {
   console.log(product.link);
 
   return (
-    <Card style={{ height: '390px' }}>
+    <Card style={{ minHeight: '450px' }}>
       <CardActionArea href={product.link} target="_blank">
         <CardMedia
           component="img"
@@ -33,7 +33,7 @@ export default function ProductCard({ product }) {
             product.website === 'Etsy' ? product.directImageSrc : parsedImage
           }
         />
-        <CardContent>
+        <CardContent style={{ display: 'flex', flexDirection: 'column' }}>
           <Typography gutterBottom variant="h5" component="div">
             {product.productName}
           </Typography>
