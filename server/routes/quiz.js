@@ -138,6 +138,7 @@ router.post('/', async (req, res) => {
   console.log(quizResults);
   const minAge = parseInt(quizResults.age.split('-')[0]);
   const maxAge = parseInt(quizResults.age.split('-')[1]);
+  // This is the types we want to show
   const giftTypeArray = quizResults.type;
   let typeAndAgeFiltered = [];
   retriveProducts().then((allProducts) => {
@@ -151,9 +152,10 @@ router.post('/', async (req, res) => {
     );
     // FILTER OUT GIFT TYPES
     if (giftTypeArray.length > 0) {
-      typeAndAgeFiltered = ageFiltered.filter((product) =>
-        giftTypeArray.includes(product.giftType.toString())
-      );
+      typeAndAgeFiltered = ageFiltered.filter((product) => {
+        const productTypes = product.giftType.toString().split(',');
+        return giftTypeArray.some((r) => productTypes.includes(r));
+      });
     } else {
       typeAndAgeFiltered = ageFiltered;
     }
