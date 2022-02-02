@@ -23,6 +23,10 @@ export default function QuizResult(props) {
   return (
     <React.Fragment>
       <div>
+        <p>
+          Affiliate Disclosure: We may receive a commission on purchases made
+          through the links on this page.
+        </p>
         <Title>RESULTS</Title>
         <p>{JSON.stringify(results)}</p>
       </div>
