@@ -82,7 +82,7 @@ const Quiz = () => {
         { message: 'Reading', value: 'reading' },
         { message: 'Technology', value: 'technology' },
         { message: 'Travel', value: 'travel' },
-        { message: 'Work from Home', value: 'homeOffice' },
+        { message: 'Home Office', value: 'homeOffice' },
       ],
     },
     {
