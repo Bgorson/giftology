@@ -161,7 +161,11 @@ export default function QuizQuestion(props) {
       ) : null}
       {showAdditionalField && (
         <Fragment>
-          <DateInput onChange={(e) => setDate(e.target.value)} type="date" />
+          <DateInput
+            placeholder="dd/mm/yyyy"
+            onChange={(e) => setDate(e.target.value)}
+            type="date"
+          />
           <ButtonContainer>
             <FancyButton
               type="submit"

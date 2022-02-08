@@ -145,6 +145,10 @@ export const FancyRadioButton = styled.input`
   }
 `;
 export const DateInput = styled.input`
+  -webkit-appearance: textfield;
+  -moz-appearance: textfield;
   margin: 1em 0;
   font-size: 20px;
+  display: block;
+  min-height: 1.2em;
 `;
