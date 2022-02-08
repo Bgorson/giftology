@@ -2,6 +2,7 @@ import React, { useState, Fragment } from 'react';
 
 import AgeSlider from '../../atoms/Slider/AgeSlider';
 import QuizResult from '../QuizResult/QuizResult';
+import ReactGA from 'react-ga';
 
 import {
   Container,
@@ -78,13 +79,18 @@ export default function QuizQuestion(props) {
   const possibleAnswers = answers.map((answers, index) => (
     <FancyButton
       type={showAdditionalField ? 'checkbox' : 'submit'}
-      onClick={(e) => handleOnChange(index, e)}
       checked={
         showAdditionalField
           ? additionalMainAnswer.value === answers.value
           : checkedState[index]
       }
       onClick={() => {
+        (e) => handleOnChange(index, e);
+        ReactGA.event({
+          category: 'Quiz',
+          action: `Clicked ${answers.message}`,
+          label: 'QuizButton',
+        });
         if (
           hasAdditionalField &&
           (answers.value === 'anniversary' || answers.value === 'birthday')
@@ -107,14 +113,21 @@ export default function QuizQuestion(props) {
       <FancyButton
         style={
           checkedState[index]
-            ? { 'background-color': '#44a2bb' }
-            : { 'background-color': 'initial', color: 'initial' }
+            ? { backgroundColor: '#44a2bb' }
+            : { backgroundColor: 'initial', color: 'initial' }
         }
         type="checkbox"
         id={`custom-checkbox-${index}`}
         value={answers.message}
         checked={checkedState[index]}
-        onClick={(e) => handleOnChange(index, e)}
+        onClick={(e) => {
+          ReactGA.event({
+            category: 'Quiz',
+            action: `Clicked ${answers.message}`,
+            label: 'QuizButton',
+          });
+          handleOnChange(index, e);
+        }}
       >
         {answers.message}
       </FancyButton>
@@ -134,6 +147,11 @@ export default function QuizQuestion(props) {
           isMulti={isMulti}
           type="submit"
           onClick={() => {
+            ReactGA.event({
+              category: 'Quiz',
+              action: `Clicked Multi Submit ${id}`,
+              label: 'QuizButton',
+            });
             handleMultiResponse(id, answers, checkedState);
             next();
           }}
@@ -148,6 +166,11 @@ export default function QuizQuestion(props) {
             <FancyButton
               type="submit"
               onClick={() => {
+                ReactGA.event({
+                  category: 'Quiz',
+                  action: `Clicked Multi Submit ${id}`,
+                  label: 'QuizButton',
+                });
                 handleResponse(id, additionalMainAnswer);
                 handleResponse('date', date, true);
                 next();
@@ -164,6 +187,11 @@ export default function QuizQuestion(props) {
           isMulti={isMulti}
           type="submit"
           onClick={() => {
+            ReactGA.event({
+              category: 'Quiz',
+              action: `Clicked Age ${age}`,
+              label: 'QuizButton',
+            });
             handleSliderResponse(id, age);
             next();
           }}

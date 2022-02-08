@@ -7,18 +7,29 @@ import Title from 'react-bulma-companion/lib/Title';
 import { postQuizResults } from '../../../api/quiz';
 import { Disclosure, TopContainer, Link } from './styles';
 import ProductResult from '../../organisms/ProductResult/ProductResult';
+import ReactGA from 'react-ga';
 
 export default function QuizResult(props) {
   const { results } = props;
   const [isLoading, setIsLoading] = useState(true);
   console.log('is loading', isLoading);
 
+  ReactGA.event({
+    category: 'Quiz Results',
+    action: 'Finished Quiz',
+  });
   const [productResults, setProductResults] = React.useState(null);
   React.useEffect(() => {
     const productPromise = Promise.resolve(postQuizResults(results));
     productPromise.then((products) => {
       setIsLoading(false);
       setProductResults(products);
+      if (!products) {
+        ReactGA.event({
+          category: 'Quiz Results',
+          action: 'No Results Found',
+        });
+      }
     });
   }, []);
   return (
