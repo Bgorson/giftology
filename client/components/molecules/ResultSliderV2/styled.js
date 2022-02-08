@@ -84,4 +84,13 @@ export const SlickContainer = styled.div`
   .slick-slide > div {
     padding: 0 5px;
   }
+  .slick-next {
+    width: 40px;
+    height: 40px;
+    right: -30px;
+  }
+  .slick-prev {
+    width: 40px;
+    height: 40px;
+  }
 `;
