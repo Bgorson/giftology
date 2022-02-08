@@ -1703,7 +1703,7 @@ export default function WelcomePage() {
           />
         </Container> */}
       {/* <Card product={data.products[0]} /> */}
-      <ProductResult data={data} />
+      {/* <ProductResult data={data} /> */}
     </div>
   );
 }

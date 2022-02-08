@@ -44,9 +44,9 @@ export default function ProductCard({ product }) {
           <FlavorText variant="body2" color="text.secondary">
             ${product.productBasePrice}
           </FlavorText>
-          <Typography variant="body2" color="text.secondary">
+          {/* <Typography variant="body2" color="text.secondary">
             {product.score}
-          </Typography>
+          </Typography> */}
         </CardContent>
       </CardActionArea>
     </Card>

@@ -5,6 +5,7 @@ import { Audio } from 'react-loader-spinner';
 // import Container from 'react-bulma-companion/lib/Container';
 import Title from 'react-bulma-companion/lib/Title';
 import { postQuizResults } from '../../../api/quiz';
+import { Disclosure, TopContainer, Link } from './styles';
 import ProductResult from '../../organisms/ProductResult/ProductResult';
 
 export default function QuizResult(props) {
@@ -22,14 +23,18 @@ export default function QuizResult(props) {
   }, []);
   return (
     <React.Fragment>
-      <div>
-        <p>
+      <TopContainer>
+        <Disclosure>
           Affiliate Disclosure: We may receive a commission on purchases made
           through the links on this page.
-        </p>
+        </Disclosure>
+        <Link href={'https://forms.gle/sxP2CcBVmMaukWt68'} target={'_blank'}>
+          Please complete this survey and give us some feedback!
+        </Link>
         <Title>RESULTS</Title>
-        <p>{JSON.stringify(results)}</p>
-      </div>
+
+        {/* <p>{JSON.stringify(results)}</p> */}
+      </TopContainer>
       {isLoading && (
         <Audio heigth="100" width="100" color="grey" ariaLabel="loading" />
       )}

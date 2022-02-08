@@ -69,43 +69,46 @@ export default function ResultSlider({ categoryScores, arrayOfCategories }) {
   return (
     arrayOfCategories && (
       <Container>
-        {categoryScores.map((category, index) => (
-          <CategoryDiv key={category.name}>
-            <CategoryContainer key={0}>
-              <Category>{category.name}</Category>
-              {/* <CategoryDescription>
+        {categoryScores.map(
+          (category, index) =>
+            category.score >= 2 && (
+              <CategoryDiv key={category.name}>
+                <CategoryContainer key={0}>
+                  <Category>{category.name}</Category>
+                  {/* <CategoryDescription>
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec
                 ut nisl mattis, scelerisque arcu eget, auctor orci. In arcu
                 turpis.
               </CategoryDescription> */}
-              <CategoryScore>Score: {category.score}</CategoryScore>
-            </CategoryContainer>
-            <SlickContainer>
-              <Slider
-                swipe={isMobile}
-                {...settings}
-                slidesToShow={
-                  arrayOfCategories[category.name].length >= 3
-                    ? 3
-                    : arrayOfCategories[category.name].length
-                }
-              >
-                {arrayOfCategories[category.name].map((product, index) => (
-                  <a
-                    key={product.productName}
-                    href={product.htmlTag
-                      .match(/(?:"[^"]*"|^[^"]*$)/)[0]
-                      .replace(/"/g, '')}
-                    target="_blank"
-                    rel="noreferrer"
+                  {/* <CategoryScore>Score: {category.score}</CategoryScore> */}
+                </CategoryContainer>
+                <SlickContainer>
+                  <Slider
+                    swipe={isMobile}
+                    {...settings}
+                    slidesToShow={
+                      arrayOfCategories[category.name].length >= 3
+                        ? 3
+                        : arrayOfCategories[category.name].length
+                    }
                   >
-                    <ProductCard product={product} />
-                  </a>
-                ))}
-              </Slider>
-            </SlickContainer>
-          </CategoryDiv>
-        ))}
+                    {arrayOfCategories[category.name].map((product, index) => (
+                      <a
+                        key={product.productName}
+                        href={product.htmlTag
+                          .match(/(?:"[^"]*"|^[^"]*$)/)[0]
+                          .replace(/"/g, '')}
+                        target="_blank"
+                        rel="noreferrer"
+                      >
+                        <ProductCard product={product} />
+                      </a>
+                    ))}
+                  </Slider>
+                </SlickContainer>
+              </CategoryDiv>
+            )
+        )}
       </Container>
     )
   );
