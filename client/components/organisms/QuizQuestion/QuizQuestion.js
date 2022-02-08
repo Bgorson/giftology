@@ -45,6 +45,7 @@ export default function QuizQuestion(props) {
   };
 
   const handleOnChange = (position, e) => {
+    e.preventDefault();
     const updatedCheckedState = checkedState.map((item, index) =>
       index === position ? !item : item
     );
@@ -104,6 +105,11 @@ export default function QuizQuestion(props) {
   const multiPossibleAnswers = answers.map((answers, index) => (
     <div key={answers.message}>
       <FancyButton
+        style={
+          checkedState[index]
+            ? { 'background-color': '#44a2bb' }
+            : { 'background-color': 'initial', color: 'initial' }
+        }
         type="checkbox"
         id={`custom-checkbox-${index}`}
         value={answers.message}
