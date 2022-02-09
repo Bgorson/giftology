@@ -35,6 +35,8 @@ export default function QuizQuestion(props) {
 
   const [age, setAge] = useState(30);
   const [date, setDate] = useState('');
+  const [placeholder, setPlaceholder] = useState('MM/DD/YYYY');
+
   const [additionalMainAnswer, setAdditionalMainAnswer] = useState('');
   const [showAdditionalField, setShowAdditionalField] = useState(false);
 
@@ -162,8 +164,11 @@ export default function QuizQuestion(props) {
       {showAdditionalField && (
         <Fragment>
           <DateInput
-            placeholder="dd/mm/yyyy"
-            onChange={(e) => setDate(e.target.value)}
+            placeholder={placeholder}
+            onChange={(e) => {
+              setPlaceholder(e.target.value);
+              setDate(e.target.value);
+            }}
             type="date"
           />
           <ButtonContainer>

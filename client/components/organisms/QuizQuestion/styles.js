@@ -151,4 +151,12 @@ export const DateInput = styled.input`
   font-size: 20px;
   display: block;
   min-height: 1.2em;
+  ${(props) =>
+    props.placeholder === 'MM/DD/YYYY' &&
+    css`
+      :before {
+        width: 100%;
+        content: attr(placeholder);
+      }
+    `}
 `;
