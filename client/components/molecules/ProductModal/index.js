@@ -25,6 +25,7 @@ export default function ScrollDialog(props) {
       }
     }
   }, [open]);
+
   let parsedImage =
     product.htmlTag.split('src')[1]?.substring(2)?.slice(0, -12) || '';
   if (!parsedImage.includes('//ws-na.amazon')) {
@@ -35,7 +36,7 @@ export default function ScrollDialog(props) {
     parsedImage =
       product.htmlTag.split('src')[3]?.substring(2)?.slice(0, -12) || '';
   }
-  console.log('PRODUCT', product);
+  console.log('PRODUCT', product.htmlTag);
   return (
     <Dialog
       maxWidth={'lg'}
@@ -47,12 +48,8 @@ export default function ScrollDialog(props) {
     >
       <DialogTitle id="scroll-dialog-title">{product.productName}</DialogTitle>
       <DialogContent style={{ display: 'flex' }} dividers={scroll === 'paper'}>
-        <Image
-          alt={product.productName}
-          src={
-            product.website === 'Etsy' ? product.directImageSrc : parsedImage
-          }
-        />
+        <div dangerouslySetInnerHTML={{ __html: product.htmlTag }}></div>
+
         <TextContainer>
           <ProductTitle>{product.productName}</ProductTitle>
           <ProductDescription>{product.flavorText}</ProductDescription>
