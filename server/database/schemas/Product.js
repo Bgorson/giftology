@@ -20,10 +20,9 @@ const productSchema = new Schema(
     ageMin: { type: String },
     ageMax: { type: String },
     occasion: { Type: String },
-    tags: { Type: String },
+    tags: { Type: Array },
     giftType: { Type: String },
     hobbiesInterests: { Type: Array },
-    // created_at: { type: Date, default: Date.now, immutable: true },
     updated_at: { type: Date },
     score: { type: Number },
     directImageSrc: { type: String },
@@ -32,6 +31,6 @@ const productSchema = new Schema(
   { versionKey: false }
 );
 
-const Products = mongoose.model('products', productSchema);
+const Product = mongoose.model('products', productSchema);
 
-module.exports = Products;
+module.exports = Product;

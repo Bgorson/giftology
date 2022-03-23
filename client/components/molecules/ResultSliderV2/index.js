@@ -18,7 +18,11 @@ import {
 } from './styled';
 import ProductCard from '../../atoms/Card';
 
-export default function ResultSlider({ categoryScores, arrayOfCategories }) {
+export default function ResultSlider({
+  handleCardClick,
+  categoryScores,
+  arrayOfCategories,
+}) {
   const [width, setWidth] = useState(window.innerWidth);
 
   function handleWindowSizeChange() {
@@ -95,13 +99,16 @@ export default function ResultSlider({ categoryScores, arrayOfCategories }) {
                     {arrayOfCategories[category.name].map((product, index) => (
                       <a
                         key={product.productName}
-                        href={product.htmlTag
-                          .match(/(?:"[^"]*"|^[^"]*$)/)[0]
-                          .replace(/"/g, '')}
+                        // href={product.htmlTag
+                        //   .match(/(?:"[^"]*"|^[^"]*$)/)[0]
+                        //   .replace(/"/g, '')}
                         target="_blank"
                         rel="noreferrer"
                       >
-                        <ProductCard product={product} />
+                        <ProductCard
+                          handleCardClick={handleCardClick}
+                          product={product}
+                        />
                       </a>
                     ))}
                   </Slider>

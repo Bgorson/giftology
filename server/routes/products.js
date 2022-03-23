@@ -13,6 +13,14 @@ router.get('/', async (req, res) => {
   res.send({ message: 'Product retrieved successfully', products });
 });
 
+router.get('/product/:product', async (req, res) => {
+  const productID = req.params.product;
+  // used _ID component
+  const product = await Product.findOne({ _id: productID });
+
+  res.send({ message: 'Specific Product retrieved successfully', product });
+});
+
 router.get('/category/:name', async (req, res) => {
   const category = req.params.name;
   try {
@@ -32,8 +40,6 @@ router.post('/add_product', async (request, response) => {
 });
 
 router.get('/etsy/:id', async (req, res) => {
-  console.log('hit');
-
   const listingId = req.params.id;
   try {
     const product = await getImage(listingId);

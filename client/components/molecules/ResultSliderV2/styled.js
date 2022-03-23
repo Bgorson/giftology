@@ -63,7 +63,7 @@ export const CategoryDiv = styled.div`
 `;
 export const SlickContainer = styled.div`
   img {
-    height: 200px;
+    min-height: 300px;
     width: auto;
     margin: auto;
   }
@@ -85,12 +85,12 @@ export const SlickContainer = styled.div`
     padding: 0 5px;
   }
   .slick-next {
-    width: 40px;
-    height: 40px;
-    right: -30px;
+    /* width: 40px;
+    height: 40px; */
+    /* right: -30px; */
   }
   .slick-prev {
-    width: 40px;
-    height: 40px;
+    /* width: 40px;
+    height: 40px; */
   }
 `;

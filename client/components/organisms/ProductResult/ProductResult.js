@@ -2,6 +2,7 @@ import React from 'react';
 import Section from 'react-bulma-companion/lib/Section';
 import Title from 'react-bulma-companion/lib/Title';
 import { postQuizResults } from '../../../api/quiz';
+import ScrollDialog from '../../molecules/ProductModal';
 import {
   Category,
   CategoryContainer,
@@ -33,6 +34,17 @@ function groupBy(arr, property) {
 
 export default function ProductResult(props) {
   const { data } = props;
+  const [currentCardData, setCurrentCardData] = React.useState(null);
+  const [open, setOpen] = React.useState(false);
+
+  const handleClickOpen = (product) => {
+    setCurrentCardData(product);
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
   const { products = [], categoryScores = [] } = data;
   if (products.length > 0 && categoryScores.length > 0) {
     const arrayOfCategories = groupBy(products, 'category');
@@ -53,10 +65,21 @@ export default function ProductResult(props) {
     // Should just be able to go through available categories
     // and display products and names
     return (
-      <ResultSliderV2
-        categoryScores={categoryScores}
-        arrayOfCategories={arrayOfCategories}
-      />
+      <React.Fragment>
+        <ResultSliderV2
+          handleCardClick={handleClickOpen}
+          categoryScores={categoryScores}
+          arrayOfCategories={arrayOfCategories}
+        />
+        {open && (
+          <ScrollDialog
+            open={open}
+            handleClickOpen={handleClickOpen}
+            handleClose={handleClose}
+            product={currentCardData}
+          />
+        )}
+      </React.Fragment>
     );
   } else {
     return <EmptyText>No Products matching</EmptyText>;
