@@ -2,6 +2,7 @@ import React from 'react';
 import { Wizard, Steps, Step } from 'react-albus';
 import { Container } from './styles';
 import QuizQuestion from '../../organisms/QuizQuestion/QuizQuestion';
+import { Route } from 'react-router-dom';
 
 const Quiz = () => {
   const [answers, setAnswers] = React.useState({});
@@ -131,48 +132,49 @@ const Quiz = () => {
         { message: '+$200', value: '200-999999' },
       ],
     },
-    {
-      id: 'createAccount',
-      title: 'Do you want to create an account?',
-      answers: [
-        { message: 'Yes', value: true },
-        { message: 'Not at this time', value: false },
-      ],
-    },
+    // {
+    //   id: 'createAccount',
+    //   title: 'Do you want to create an account?',
+    //   answers: [
+    //     { message: 'Yes', value: true },
+    //     { message: 'Not at this time', value: false },
+    //   ],
+    // },
     {
       id: 'results',
       title: '',
       answers: [''],
     },
   ];
-
   return (
-    <Container>
-      <Wizard>
-        <Steps>
-          {quizQuestions.map((quizData) => (
-            <Step
-              key={quizData.id}
-              id={quizData.id}
-              render={({ next }) => (
-                <QuizQuestion
-                  quizAge={quizAge}
-                  handleResponse={handleResponse}
-                  next={next}
-                  id={quizData.id}
-                  title={quizData.title}
-                  answers={quizData.answers}
-                  isSlider={quizData.isSlider || false}
-                  isMulti={quizData.isMulti || false}
-                  results={answers}
-                  hasAdditionalField={quizData.hasAdditionalField}
-                />
-              )}
-            />
-          ))}
-        </Steps>
-      </Wizard>
-    </Container>
+    <Route
+      render={({ history }) => (
+        <Wizard history={history}>
+          <Steps>
+            {quizQuestions.map((quizData) => (
+              <Step
+                key={quizData.id}
+                id={`quiz/${quizData.id}`}
+                render={({ next }) => (
+                  <QuizQuestion
+                    quizAge={quizAge}
+                    handleResponse={handleResponse}
+                    next={next}
+                    id={quizData.id}
+                    title={quizData.title}
+                    answers={quizData.answers}
+                    isSlider={quizData.isSlider || false}
+                    isMulti={quizData.isMulti || false}
+                    results={answers}
+                    hasAdditionalField={quizData.hasAdditionalField}
+                  />
+                )}
+              />
+            ))}
+          </Steps>
+        </Wizard>
+      )}
+    />
   );
 };
 
