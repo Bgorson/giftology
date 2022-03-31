@@ -122,16 +122,16 @@ const Quiz = () => {
         { message: 'Trendy', value: 'trendy' },
       ],
     },
-    {
-      id: 'price',
-      title: 'Price Range?',
-      answers: [
-        { message: '<$50', value: '0-50' },
-        { message: '<$100', value: '0-100' },
-        { message: '<$200', value: '0-200' },
-        { message: '+$200', value: '200-999999' },
-      ],
-    },
+    // {
+    //   id: 'price',
+    //   title: 'Price Range?',
+    //   answers: [
+    //     { message: '<$50', value: '0-50' },
+    //     { message: '<$100', value: '0-100' },
+    //     { message: '<$200', value: '0-200' },
+    //     { message: '+$200', value: '200-999999' },
+    //   ],
+    // },
     // {
     //   id: 'createAccount',
     //   title: 'Do you want to create an account?',

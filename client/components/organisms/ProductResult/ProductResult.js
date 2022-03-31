@@ -34,9 +34,11 @@ function groupBy(arr, property) {
 
 export default function ProductResult(props) {
   const { data } = props;
+  console.log('DATA', data);
   const [currentCardData, setCurrentCardData] = React.useState(null);
   const [open, setOpen] = React.useState(false);
 
+  // TODO: Put a use effect to sort it all once
   const handleClickOpen = (product) => {
     setCurrentCardData(product);
     setOpen(true);

@@ -25,7 +25,9 @@ export default function ProductCard({ product, handleCardClick }) {
         <img
           alt={product.productName}
           src={
-            product.website === 'Etsy' ? product.directImageSrc : parsedImage
+            product.website === 'Etsy' || product.directImageSrc !== ''
+              ? product.directImageSrc
+              : parsedImage
           }
         />
       </ImageWrapper>

@@ -1,0 +1,66 @@
+[
+  {
+    "name": "Mixology",
+    "score": 6.1
+  },
+  {
+    "name": "Camping",
+    "score": 2
+  },
+  {
+    "name": "Outdoor Games",
+    "score": 2
+  },
+  {
+    "name": "Board Games",
+    "score": 2
+  },
+  {
+    "name": "Home Chef",
+    "score": 1.8
+  },
+  {
+    "name": "Reading",
+    "score": 1.8
+  },
+  {
+    "name": "Just for Fun",
+    "score": 1.8
+  },
+  {
+    "name": "Home Office",
+    "score": 1.7
+  },
+  {
+    "name": "Health And Wellness",
+    "score": 1.5
+  },
+  {
+    "name": "Technology",
+    "score": 1.3
+  },
+  {
+    "name": "Dogs",
+    "score": 1.3
+  },
+  {
+    "name": "Gaming",
+    "score": 1.2
+  },
+  {
+    "name": "Home Decor",
+    "score": 1
+  },
+  {
+    "name": "Arts and Crafts",
+    "score": 1
+  },
+  {
+    "name": "Travel",
+    "score": 1
+  },
+  {
+    "name": "Cats",
+    "score": 1
+  }
+]

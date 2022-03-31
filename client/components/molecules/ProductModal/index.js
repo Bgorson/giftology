@@ -10,6 +10,7 @@ import {
   ProductPrice,
   ProductTags,
   Button,
+  ProductImage,
   Image,
 } from './styles';
 export default function ScrollDialog(props) {
@@ -48,15 +49,23 @@ export default function ScrollDialog(props) {
     >
       <DialogTitle id="scroll-dialog-title">{product.productName}</DialogTitle>
       <DialogContent style={{ display: 'flex' }} dividers={scroll === 'paper'}>
-        <div dangerouslySetInnerHTML={{ __html: product.htmlTag }}></div>
+        {product.directImageSrc !== '' ? (
+          <Image src={product.directImageSrc} />
+        ) : (
+          <ProductImage
+            dangerouslySetInnerHTML={{
+              __html: product.htmlTag,
+            }}
+          />
+        )}
 
         <TextContainer>
           <ProductTitle>{product.productName}</ProductTitle>
           <ProductDescription>{product.flavorText}</ProductDescription>
           <ProductPrice>${product.productBasePrice}</ProductPrice>
           <ProductTags>{`Tags: ${product.tags}`}</ProductTags>
-          <a href={product.wordpressLink} target="_blank">
-            <Button onClick={handleClose}>View Retailer</Button>
+          <a href={product.link} target="_blank">
+            <Button>View Retailer</Button>
           </a>
         </TextContainer>
       </DialogContent>

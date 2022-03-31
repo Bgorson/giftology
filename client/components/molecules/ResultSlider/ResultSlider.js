@@ -15,6 +15,7 @@ import {
   ProductScore,
   ProductText,
   SingleProductContainer,
+  DirectImage,
 } from './styled';
 import 'swiper/css/navigation';
 // Import Swiper styles
@@ -69,9 +70,15 @@ export default function ResultSlider({ categoryScores, arrayOfCategories }) {
             {arrayOfCategories[category.name].map((product, index) => (
               <SwiperSlide key={index}>
                 <SingleProductContainer>
-                  <ProductImage
-                    dangerouslySetInnerHTML={{ __html: product.htmlTag }}
-                  />
+                  {product.directImageSrc !== '' ? (
+                    <DirectImage src={product.directImageSrc} />
+                  ) : (
+                    <ProductImage
+                      dangerouslySetInnerHTML={{
+                        __html: product.htmlTag,
+                      }}
+                    />
+                  )}
                   <ProductTitle>{product.productName}</ProductTitle>
                   <ProductText>{product.flavorText},</ProductText>
                   <ProductScore>Score: {product.score}</ProductScore>

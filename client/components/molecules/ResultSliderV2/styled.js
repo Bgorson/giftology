@@ -63,9 +63,12 @@ export const CategoryDiv = styled.div`
 `;
 export const SlickContainer = styled.div`
   img {
-    min-height: 300px;
+    width: inherit;
+    max-height: 395px;
+
+    /* max-height: 300px;
     width: auto;
-    margin: auto;
+    margin: auto; */
   }
   .slick-prev {
     left: -35px;
