@@ -42,8 +42,13 @@ async function retriveProducts() {
 // The logic being if the  website is Etsy- run it through the etst fetcher and add it as a property of the products
 
 async function calculateScore(ageFiltered, quizResults) {
-  const minPrice = parseInt(quizResults?.price?.split('-')[0]) || 0;
-  const maxPrice = parseInt(quizResults?.price?.split('-')[1]) || 50000;
+  let minPrice = 0;
+  let maxPrice = 5000;
+  if (quizResults.price) {
+    minPrice = parseInt(quizResults.price.split('-')[0]);
+    maxPrice = parseInt(quizResults.price.split('-')[1]);
+  }
+
   const filteredArray = ageFiltered;
   for (const product of filteredArray) {
     // filteredArray.forEach(async function (product) {
