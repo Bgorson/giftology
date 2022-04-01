@@ -64,7 +64,8 @@ export const CategoryDiv = styled.div`
 export const SlickContainer = styled.div`
   img {
     width: inherit;
-    max-height: 395px;
+    margin: auto;
+    align-self: center;
 
     /* max-height: 300px;
     width: auto;

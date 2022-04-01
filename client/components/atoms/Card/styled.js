@@ -16,6 +16,10 @@ export const CardContentContainer = styled.div`
 
 export const ImageWrapper = styled.div`
   border: 1px solid black;
-  width: 400px;
-  height: 400px;
+  min-height: 399px;
+  display: flex;
+
+  @media (max-width: 768px) {
+    min-height: auto;
+  }
 `;

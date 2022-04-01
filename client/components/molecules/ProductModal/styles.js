@@ -8,8 +8,12 @@ export const TextContainer = styled.div`
   margin-left: 2em;
 `;
 export const Image = styled.img`
-  max-width: 600px;
   object-fit: contain;
+  max-width: 600px;
+
+  @media (max-width: 768px) {
+    max-width: 100%;
+  }
 `;
 
 export const ProductTitle = styled.h1`
@@ -23,3 +27,15 @@ export const ProductPrice = styled.div``;
 export const ProductTags = styled.div``;
 export const Button = styled.button``;
 export const ProductImage = styled.div``;
+export const MobileWrapper = styled.div`
+  display: none;
+  @media (max-width: 768px) {
+    display: block;
+  }
+`;
+export const DesktopWrapper = styled.div`
+  display: block;
+  @media (max-width: 768px) {
+    display: none;
+  }
+`;

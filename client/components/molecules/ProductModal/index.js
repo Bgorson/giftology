@@ -12,6 +12,8 @@ import {
   Button,
   ProductImage,
   Image,
+  DesktopWrapper,
+  MobileWrapper,
 } from './styles';
 export default function ScrollDialog(props) {
   const { product, open, handleClickOpen, handleClose } = props;
@@ -48,27 +50,55 @@ export default function ScrollDialog(props) {
       aria-describedby="scroll-dialog-description"
     >
       <DialogTitle id="scroll-dialog-title">{product.productName}</DialogTitle>
-      <DialogContent style={{ display: 'flex' }} dividers={scroll === 'paper'}>
-        {product.directImageSrc !== '' ? (
-          <Image src={product.directImageSrc} />
-        ) : (
-          <ProductImage
-            dangerouslySetInnerHTML={{
-              __html: product.htmlTag,
-            }}
-          />
-        )}
+      <MobileWrapper>
+        <DialogContent dividers={scroll === 'paper'}>
+          {product.directImageSrc !== '' ? (
+            <Image src={product.directImageSrc} />
+          ) : (
+            <ProductImage
+              dangerouslySetInnerHTML={{
+                __html: product.htmlTag,
+              }}
+            />
+          )}
 
-        <TextContainer>
-          <ProductTitle>{product.productName}</ProductTitle>
-          <ProductDescription>{product.flavorText}</ProductDescription>
-          <ProductPrice>${product.productBasePrice}</ProductPrice>
-          <ProductTags>{`Tags: ${product.tags}`}</ProductTags>
-          <a href={product.link} target="_blank">
-            <Button>View Retailer</Button>
-          </a>
-        </TextContainer>
-      </DialogContent>
+          <TextContainer>
+            <ProductTitle>{product.productName}</ProductTitle>
+            <ProductDescription>{product.flavorText}</ProductDescription>
+            <ProductPrice>${product.productBasePrice}</ProductPrice>
+            <ProductTags>{`Tags: ${product.tags}`}</ProductTags>
+            <a href={product.link} target="_blank">
+              <Button>View Retailer</Button>
+            </a>
+          </TextContainer>
+        </DialogContent>
+      </MobileWrapper>
+      <DesktopWrapper>
+        <DialogContent
+          style={{ display: 'flex' }}
+          dividers={scroll === 'paper'}
+        >
+          {product.directImageSrc !== '' ? (
+            <Image src={product.directImageSrc} />
+          ) : (
+            <ProductImage
+              dangerouslySetInnerHTML={{
+                __html: product.htmlTag,
+              }}
+            />
+          )}
+
+          <TextContainer>
+            <ProductTitle>{product.productName}</ProductTitle>
+            <ProductDescription>{product.flavorText}</ProductDescription>
+            <ProductPrice>${product.productBasePrice}</ProductPrice>
+            <ProductTags>{`Tags: ${product.tags}`}</ProductTags>
+            <a href={product.link} target="_blank">
+              <Button>View Retailer</Button>
+            </a>
+          </TextContainer>
+        </DialogContent>
+      </DesktopWrapper>
       <DialogActions>
         <Button onClick={handleClose}>Close</Button>
       </DialogActions>

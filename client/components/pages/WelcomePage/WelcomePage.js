@@ -35,7 +35,7 @@ export default function WelcomePage() {
           </HeroCallToAction>
         </HeroText>
       </Hero>
-      {/* <ProductResult data={data} /> */}
+      <ProductResult data={data} />
     </div>
   );
 }
