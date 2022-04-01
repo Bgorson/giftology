@@ -64,7 +64,6 @@ export const CategoryDiv = styled.div`
 export const SlickContainer = styled.div`
   img {
     max-height: 400px;
-    max-width: 400px;
 
     margin: auto;
     align-self: center;
