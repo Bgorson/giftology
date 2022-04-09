@@ -34,13 +34,6 @@ async function retriveProducts() {
   return await allProducts;
 }
 
-//TODO: Do all of the scoring in one function
-// Average the scores after all individual products have been scored
-
-//turn this into a get function that works
-//To test, get this activated on a route
-// The logic being if the  website is Etsy- run it through the etst fetcher and add it as a property of the products
-
 async function calculateScore(ageFiltered, quizResults) {
   let minPrice = 0;
   let maxPrice = 5000;
@@ -63,10 +56,10 @@ async function calculateScore(ageFiltered, quizResults) {
       // console.log('matching indoor', product.productName);
       score++;
     }
-    const hArray = product.hobbiesInterests.toString().split(',');
-    const oArray = product.occasion.toString().split(',');
+    const hArray = product.hobbiesInterests;
+    const oArray = product.occasion;
 
-    const tagArray = product.tags.toString().split(',');
+    const tagArray = product.tags;
     const lowerCase = hArray.map((array) => array.toLowerCase());
     const lowerCaseTagArray = tagArray.map((array) => array.toLowerCase());
     const lowerCaseOc = oArray.map((array) => array.toLowerCase());
@@ -174,9 +167,6 @@ router.post('/', async (req, res) => {
         arrayOfCategories[category].forEach((product) => {
           averageScore += product.score;
         });
-        // console.log('averageScore', averageScore);
-        // console.log('categories', category);
-        // console.log('amount', arrayOfCategories[category].length);
 
         averageScore = round10(
           averageScore / arrayOfCategories[category].length,

@@ -2,18 +2,25 @@ const express = require('express');
 const path = require('path');
 const router = express.Router();
 
-const products        = require('./products');
-const quiz        = require('./quiz');
-
+const products = require('./products');
+const quiz = require('./quiz');
 
 router.use('/api/products', products);
 router.use('/api/quiz', quiz);
 
-
 router.get('/api/tags', (req, res) => {
   res.send([
-    'MERN', 'Node', 'Express', 'Webpack', 'React', 'Mongoose',
-    'Bulma', 'Fontawesome', 'Ramda', 'ESLint', 'Jest',
+    'MERN',
+    'Node',
+    'Express',
+    'Webpack',
+    'React',
+    'Mongoose',
+    'Bulma',
+    'Fontawesome',
+    'Ramda',
+    'ESLint',
+    'Jest',
   ]);
 });
 
