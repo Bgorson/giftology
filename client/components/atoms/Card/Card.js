@@ -8,6 +8,10 @@ import {
   ImageWrapper,
 } from './styled';
 export default function ProductCard({ product, handleCardClick }) {
+  const tags = [...product.tags];
+  tags.forEach((tag, index) => {
+    tags[index] = tag.charAt(0).toUpperCase() + tag.slice(1);
+  });
   let parsedImage =
     product.htmlTag.split('src')[1]?.substring(2)?.slice(0, -12) || '';
   if (!parsedImage.includes('//ws-na.amazon')) {
@@ -45,7 +49,7 @@ export default function ProductCard({ product, handleCardClick }) {
           ${product.productBasePrice}
         </FlavorText>
         <FlavorText variant="body2" color="text.secondary">
-          {`Tags: ${product.tags}`}
+          {`Tags: ${tags}`}
         </FlavorText>
 
         {/* <Typography variant="body2" color="text.secondary">

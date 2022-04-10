@@ -18,8 +18,11 @@ import {
 export default function ScrollDialog(props) {
   const { product, open, handleClickOpen, handleClose } = props;
   const [scroll, setScroll] = React.useState('paper');
-
   const descriptionElementRef = React.useRef(null);
+  const tags = [...product.tags];
+  tags.forEach((tag, index) => {
+    tags[index] = tag.charAt(0).toUpperCase() + tag.slice(1);
+  });
   React.useEffect(() => {
     if (open) {
       const { current: descriptionElement } = descriptionElementRef;
@@ -66,7 +69,7 @@ export default function ScrollDialog(props) {
             <ProductTitle>{product.productName}</ProductTitle>
             <ProductDescription>{product.flavorText}</ProductDescription>
             <ProductPrice>${product.productBasePrice}</ProductPrice>
-            <ProductTags>{`Tags: ${product.tags}`}</ProductTags>
+            <ProductTags>{`Tags: ${tags}`}</ProductTags>
             <a href={product.link} target="_blank">
               <Button>View Retailer</Button>
             </a>
@@ -92,7 +95,7 @@ export default function ScrollDialog(props) {
             <ProductTitle>{product.productName}</ProductTitle>
             <ProductDescription>{product.flavorText}</ProductDescription>
             <ProductPrice>${product.productBasePrice}</ProductPrice>
-            <ProductTags>{`Tags: ${product.tags}`}</ProductTags>
+            <ProductTags>{`Tags: ${tags}`}</ProductTags>
             <a href={product.link} target="_blank">
               <Button>View Retailer</Button>
             </a>
