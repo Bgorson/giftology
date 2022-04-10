@@ -2,7 +2,6 @@ import * as React from 'react';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
-import DialogTitle from '@mui/material/DialogTitle';
 import {
   TextContainer,
   ProductTitle,
@@ -14,12 +13,14 @@ import {
   Image,
   DesktopWrapper,
   MobileWrapper,
+  ProductDescriptionHeading,
 } from './styles';
 export default function ScrollDialog(props) {
   const { product, open, handleClickOpen, handleClose } = props;
   const [scroll, setScroll] = React.useState('paper');
   const descriptionElementRef = React.useRef(null);
   const tags = [...product.tags];
+  console.log('TAGS', tags);
   tags.forEach((tag, index) => {
     tags[index] = tag.charAt(0).toUpperCase() + tag.slice(1);
   });
@@ -52,7 +53,7 @@ export default function ScrollDialog(props) {
       aria-labelledby="scroll-dialog-title"
       aria-describedby="scroll-dialog-description"
     >
-      <DialogTitle id="scroll-dialog-title">{product.productName}</DialogTitle>
+      {/* <DialogTitle id="scroll-dialog-title">{product.productName}</DialogTitle> */}
       <MobileWrapper>
         <DialogContent dividers={scroll === 'paper'}>
           {product.directImageSrc !== '' ? (
@@ -67,9 +68,14 @@ export default function ScrollDialog(props) {
 
           <TextContainer>
             <ProductTitle>{product.productName}</ProductTitle>
+            <ProductDescriptionHeading>
+              Who do we like this for?
+            </ProductDescriptionHeading>
             <ProductDescription>{product.flavorText}</ProductDescription>
             <ProductPrice>${product.productBasePrice}</ProductPrice>
-            <ProductTags>{`Tags: ${tags}`}</ProductTags>
+            <ProductTags>
+              {`Tags: ${product.category} ${tags != [''] ? ',' : ''}${tags}`}
+            </ProductTags>
             <a href={product.link} target="_blank">
               <Button>View Retailer</Button>
             </a>
@@ -93,9 +99,14 @@ export default function ScrollDialog(props) {
 
           <TextContainer>
             <ProductTitle>{product.productName}</ProductTitle>
+            <ProductDescriptionHeading>
+              Who do we like this for?
+            </ProductDescriptionHeading>
             <ProductDescription>{product.flavorText}</ProductDescription>
             <ProductPrice>${product.productBasePrice}</ProductPrice>
-            <ProductTags>{`Tags: ${tags}`}</ProductTags>
+            <ProductTags>{`Tags: ${product.category} ${
+              tags != [''] ? ',' : ''
+            }${tags}`}</ProductTags>
             <a href={product.link} target="_blank">
               <Button>View Retailer</Button>
             </a>

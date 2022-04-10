@@ -49,7 +49,7 @@ export default function ProductCard({ product, handleCardClick }) {
           ${product.productBasePrice}
         </FlavorText>
         <FlavorText variant="body2" color="text.secondary">
-          {`Tags: ${tags}`}
+          {`Tags: ${product.category} ${tags != [''] ? ',' : ''}${tags}`}
         </FlavorText>
 
         {/* <Typography variant="body2" color="text.secondary">

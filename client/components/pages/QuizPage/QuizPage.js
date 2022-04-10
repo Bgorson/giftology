@@ -61,7 +61,7 @@ const Quiz = () => {
         { message: 'White Elephant', value: 'whiteElephant' },
         { message: 'Who Needs An Occasion?', value: 'any' },
       ],
-      hasAdditionalField: 'date',
+      // hasAdditionalField: 'date',
     },
     {
       id: 'hobbies',

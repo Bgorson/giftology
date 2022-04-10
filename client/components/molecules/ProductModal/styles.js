@@ -39,3 +39,8 @@ export const DesktopWrapper = styled.div`
     display: none;
   }
 `;
+
+export const ProductDescriptionHeading = styled.h2`
+  font-size: 20px;
+  font-weight: bold;
+`;
