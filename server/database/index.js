@@ -29,7 +29,7 @@ const database = mongoose
 
     // Convert a csv file with csvtojson
     csv()
-      .fromFile('database.csv')
+      .fromFile('./database.csv')
       .then(async function (jsonArrayObj) {
         //when parse finished, result will be emitted here.
         await Product.findOneAndUpdate(jsonArrayObj, function (err, r) {
