@@ -133,49 +133,54 @@ router.post('/', async (req, res) => {
 
   // console.log('whats here', req.body)
   const quizResults = req.body;
-  console.log(quizResults);
-  const minAge = parseInt(quizResults.age.split('-')[0]);
-  const maxAge = parseInt(quizResults.age.split('-')[1]);
-  // This is the types we want to show
-  const giftTypeArray = quizResults.type;
-  let typeAndAgeFiltered = [];
-  retriveProducts().then((allProducts) => {
-    // console.log('everything', allProducts);
-    // FILTER OUT AGES
-    const minAgeFilter = allProducts.filter(
-      (product) => parseInt(product.ageMin) <= maxAge
-    );
-    const ageFiltered = minAgeFilter.filter(
-      (product) => parseInt(product.ageMax) >= minAge
-    );
-    // FILTER OUT GIFT TYPES
-    if (giftTypeArray.length > 0) {
-      typeAndAgeFiltered = ageFiltered.filter((product) => {
-        const productTypes = product.giftType.toString().split(',');
-        return giftTypeArray.some((r) => productTypes.includes(r));
-      });
-    } else {
-      typeAndAgeFiltered = ageFiltered;
-    }
-
-    calculateScore(typeAndAgeFiltered, quizResults).then((result) => {
-      const arrayOfCategories = groupBy(result, 'category');
-      const categories = Object.keys(arrayOfCategories);
-      const scores = [];
-      categories.forEach((category) => {
-        let averageScore = 0;
-        arrayOfCategories[category].forEach((product) => {
-          averageScore += product.score;
+  console.log('RESULTS', quizResults.age);
+  try {
+    console.log('WHY');
+    const minAge = parseInt(quizResults.age.split('-')[0]);
+    const maxAge = parseInt(quizResults.age.split('-')[1]);
+    // This is the types we want to show
+    const giftTypeArray = quizResults.type;
+    let typeAndAgeFiltered = [];
+    retriveProducts().then((allProducts) => {
+      // console.log('everything', allProducts);
+      // FILTER OUT AGES
+      const minAgeFilter = allProducts.filter(
+        (product) => parseInt(product.ageMin) <= maxAge
+      );
+      const ageFiltered = minAgeFilter.filter(
+        (product) => parseInt(product.ageMax) >= minAge
+      );
+      // FILTER OUT GIFT TYPES
+      if (giftTypeArray.length > 0) {
+        typeAndAgeFiltered = ageFiltered.filter((product) => {
+          const productTypes = product.giftType.toString().split(',');
+          return giftTypeArray.some((r) => productTypes.includes(r));
         });
+      } else {
+        typeAndAgeFiltered = ageFiltered;
+      }
 
-        averageScore = round10(
-          averageScore / arrayOfCategories[category].length,
-          -1
-        );
+      calculateScore(typeAndAgeFiltered, quizResults).then((result) => {
+        const arrayOfCategories = groupBy(result, 'category');
+        const categories = Object.keys(arrayOfCategories);
+        const scores = [];
+        categories.forEach((category) => {
+          let averageScore = 0;
+          arrayOfCategories[category].forEach((product) => {
+            averageScore += product.score;
+          });
 
-        scores.push({ name: category, score: averageScore });
+          averageScore = round10(
+            averageScore / arrayOfCategories[category].length,
+            -1
+          );
+
+          scores.push({ name: category, score: averageScore });
+        });
+        res.send({ categoryScores: scores, products: result });
       });
-      res.send({ categoryScores: scores, products: result });
     });
-  });
+  } catch (err) {
+    res.status(204).send(err);
+  }
 });
