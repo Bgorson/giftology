@@ -1,14 +1,15 @@
 const mongoose = require('mongoose');
 require('dotenv').config();
-const passport = require('passport');
-const express = require('express');
-const GoogleStrategy = require('passport-google-oauth20').Strategy;
-const app = express();
-const fs = require('mz/fs');
+const stream = require('stream');
+const util = require('util');
+const fs = require('fs');
+var csv = require('csvtojson');
+var assert = require('assert');
+
 const { parse } = require('@fast-csv/parse');
 const streamToIterator = require('stream-to-iterator');
 mongoose.Promise = global.Promise;
-mongoose.set('debug', true);
+// mongoose.set('debug', true);
 const Product = require('./schemas/Product');
 
 mongoose.Promise = global.Promise;
@@ -22,57 +23,21 @@ const database = mongoose
     process.env.DATABASE_URL || 'mongodb://127.0.0.1:27017/Giftology',
     options
   )
-  .then((db) =>
-    (async function () {
-      console.log('Connected to database.');
+  .then((db) => {
+    console.log('Connected to database.');
+    // require csvtojson
 
-      try {
-        // const conn = await mongoose.connect(
-        //   process.env.DATABASE_URL || 'mongodb://127.0.0.1:27017/Giftology'
-        // );
-
-        await Promise.all(
-          Object.entries(db.models).map(([k, m]) => m.deleteMany())
-        );
-
-        let headers = Object.keys(Product.schema.paths).filter(
-          (k) => ['_id', '__v'].indexOf(k) === -1
-        );
-
-        console.log(headers);
-
-        let stream = fs
-          .createReadStream('./database.csv')
-          .pipe(parse({ headers }));
-        const iterator = await streamToIterator(stream).init();
-
-        let buffer = [],
-          counter = 0;
-
-        for (let docPromise of iterator) {
-          let doc = await docPromise;
-
-          buffer.push(doc);
-          counter++;
-
-          if (counter > 10000) {
-            await Product.insertMany(buffer);
-            buffer = [];
-            counter = 0;
-          }
-        }
-
-        if (counter > 0) {
-          await Product.insertMany(buffer);
-
-          buffer = [];
-          counter = 0;
-        }
-      } catch (e) {
-        console.error(e);
-      }
-    })()
-  )
-  .catch((err) => console.error('Error connecting to database:', err));
+    // Convert a csv file with csvtojson
+    csv()
+      .fromFile('database.csv')
+      .then(async function (jsonArrayObj) {
+        //when parse finished, result will be emitted here.
+        console.log(jsonArrayObj.length);
+        await Product.findOneAndUpdate(jsonArrayObj, function (err, r) {
+          assert.equal(null, err);
+          assert.equal(3, r.insertedCount);
+        });
+      });
+  });
 
 module.exports = database;
