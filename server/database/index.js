@@ -32,7 +32,6 @@ const database = mongoose
       .fromFile('database.csv')
       .then(async function (jsonArrayObj) {
         //when parse finished, result will be emitted here.
-        console.log(jsonArrayObj.length);
         await Product.findOneAndUpdate(jsonArrayObj, function (err, r) {
           assert.equal(null, err);
           assert.equal(3, r.insertedCount);
