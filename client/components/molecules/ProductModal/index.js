@@ -19,11 +19,21 @@ export default function ScrollDialog(props) {
   const { product, open, handleClickOpen, handleClose } = props;
   const [scroll, setScroll] = React.useState('paper');
   const descriptionElementRef = React.useRef(null);
-  const tags = [...product.tags];
-  console.log('TAGS', tags);
+  let tags = [...product.tags];
   tags.forEach((tag, index) => {
-    tags[index] = tag.charAt(0).toUpperCase() + tag.slice(1);
+    console.log(tag);
+    if (tag === null || tag === 'null' || tag === 'Null') {
+      console.log('MATCH');
+
+      tags = tags.splice(index, 1);
+      if (tags.length === 1) {
+        tags = [];
+      }
+    } else {
+      tags[index] = ' ' + tag.charAt(0).toUpperCase() + tag.slice(1);
+    }
   });
+  console.log('THESE ARE TAGS', tags);
   React.useEffect(() => {
     if (open) {
       const { current: descriptionElement } = descriptionElementRef;
@@ -74,7 +84,7 @@ export default function ScrollDialog(props) {
             <ProductDescription>{product.flavorText}</ProductDescription>
             <ProductPrice>${product.productBasePrice}</ProductPrice>
             <ProductTags>
-              {`Tags: ${product.category} ${tags != [''] ? ',' : ''}${tags}`}
+              {`Tags: ${product.category}${tags.length > 0 ? ',' : ''}${tags}`}
             </ProductTags>
             <a href={product.link} target="_blank">
               <Button>View Retailer</Button>
@@ -104,9 +114,9 @@ export default function ScrollDialog(props) {
             </ProductDescriptionHeading>
             <ProductDescription>{product.flavorText}</ProductDescription>
             <ProductPrice>${product.productBasePrice}</ProductPrice>
-            <ProductTags>{`Tags: ${product.category} ${
-              tags != [''] ? ',' : ''
-            }${tags}`}</ProductTags>
+            <ProductTags>
+              {`Tags: ${product.category}${tags.length > 0 ? ',' : ''}${tags}`}
+            </ProductTags>
             <a href={product.link} target="_blank">
               <Button>View Retailer</Button>
             </a>

@@ -8,10 +8,25 @@ import {
   ImageWrapper,
 } from './styled';
 export default function ProductCard({ product, handleCardClick }) {
-  const tags = [...product.tags];
+  let tags = [...product.tags];
   tags.forEach((tag, index) => {
-    tags[index] = tag.charAt(0).toUpperCase() + tag.slice(1);
+    console.log(tag);
+    if (tag === null || tag === 'null' || tag === 'Null') {
+      console.log('MATCH');
+
+      tags = tags.splice(index, 1);
+      if (tags.length === 1) {
+        tags = [];
+      }
+    } else if (tag === 'healthNut') {
+      tags[index] = ' Health Nut';
+    } else if (tag === 'mustOwn') {
+      tags[index] = ' Must Own';
+    } else {
+      tags[index] = ' ' + tag.charAt(0).toUpperCase() + tag.slice(1);
+    }
   });
+  console.log('THESE ARE TAGS', tags);
   let parsedImage =
     product.htmlTag.split('src')[1]?.substring(2)?.slice(0, -12) || '';
   if (!parsedImage.includes('//ws-na.amazon')) {
@@ -49,7 +64,7 @@ export default function ProductCard({ product, handleCardClick }) {
           ${product.productBasePrice}
         </FlavorText>
         <FlavorText variant="body2" color="text.secondary">
-          {`Tags: ${product.category} ${tags != [''] ? ',' : ''}${tags}`}
+          {`Tags: ${product.category}${tags.length > 0 ? ',' : ''}${tags}`}
         </FlavorText>
 
         {/* <Typography variant="body2" color="text.secondary">
