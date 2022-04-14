@@ -10,6 +10,7 @@ export const TextContainer = styled.div`
 export const Image = styled.img`
   object-fit: contain;
   max-width: 600px;
+  max-height: 600px;
 
   @media (max-width: 768px) {
     max-width: 100%;
