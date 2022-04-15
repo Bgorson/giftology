@@ -16,7 +16,7 @@ import {
   FancyButton,
 } from './styles';
 export default function ScrollDialog(props) {
-  const { product, handleClickOpen, handleClose } = props;
+  const { product, handleClickOpen, handleClose, open } = props;
   const [scroll, setScroll] = React.useState('paper');
   const descriptionElementRef = React.useRef(null);
   let tags = [...product.tags];

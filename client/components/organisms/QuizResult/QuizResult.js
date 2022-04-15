@@ -12,11 +12,23 @@ import ReactGA from 'react-ga';
 export default function QuizResult(props) {
   const { results } = props;
   const [isLoading, setIsLoading] = useState(true);
+  const [resArray, setResArray] = useState([]);
 
+  function groupBy(arr, property) {
+    console.log('HIT');
+    return arr.reduce((memo, x) => {
+      if (!memo[x[property]]) {
+        memo[x[property]] = [];
+      }
+      memo[x[property]].push(x);
+      return memo;
+    }, {});
+  }
   ReactGA.event({
     category: 'Quiz Results',
     action: 'Finished Quiz',
   });
+
   const [productResults, setProductResults] = React.useState(null);
   React.useEffect(() => {
     if (Object.keys(results).length === 0) {
@@ -24,10 +36,33 @@ export default function QuizResult(props) {
       const productPromise = Promise.resolve(
         postQuizResults(JSON.parse(storedResults))
       );
-      productPromise.then((products) => {
+      productPromise.then((productRes) => {
+        const { products, categoryScores } = productRes;
+
+        const arrayOfCategories = groupBy(products, 'category');
+
+        categoryScores.sort((a, b) => (b.score > a.score ? 1 : -1));
+        categoryScores.forEach((category) => {
+          for (let i = 0; i < arrayOfCategories[category.name].length; i++) {
+            if (arrayOfCategories[category.name][i].score) {
+              //TODO: Add a sort for breaking tie to be price. Highest wins.
+              arrayOfCategories[category.name].sort(
+                (a, b) => b.score - a.score
+              );
+              arrayOfCategories[category.name].sort((a, b) =>
+                b.score === a.score
+                  ? b.productBasePrice - a.productBasePrice
+                  : 0
+              );
+            }
+          }
+        });
+        setProductResults(productRes);
+
+        setResArray(arrayOfCategories);
         setIsLoading(false);
-        setProductResults(products);
-        if (!products) {
+
+        if (!productRes) {
           ReactGA.event({
             category: 'Quiz Results',
             action: 'No Results Found',
@@ -38,10 +73,31 @@ export default function QuizResult(props) {
       localStorage.setItem('quizResults', JSON.stringify(results));
 
       const productPromise = Promise.resolve(postQuizResults(results));
-      productPromise.then((products) => {
+      productPromise.then((productRes) => {
         setIsLoading(false);
-        setProductResults(products);
-        if (!products) {
+
+        setProductResults(productRes);
+        const { products, categoryScores } = productRes;
+        const arrayOfCategories = groupBy(products, 'category');
+        categoryScores.sort((a, b) => (b.score > a.score ? 1 : -1));
+        categoryScores.forEach((category) => {
+          for (let i = 0; i < arrayOfCategories[category.name].length; i++) {
+            if (arrayOfCategories[category.name][i].score) {
+              //TODO: Add a sort for breaking tie to be price. Highest wins.
+              arrayOfCategories[category.name].sort(
+                (a, b) => b.score - a.score
+              );
+              arrayOfCategories[category.name].sort((a, b) =>
+                b.score === a.score
+                  ? b.productBasePrice - a.productBasePrice
+                  : 0
+              );
+            }
+          }
+        });
+        console.log('ARRAY', arrayOfCategories);
+        setResArray(arrayOfCategories);
+        if (!productRes) {
           ReactGA.event({
             category: 'Quiz Results',
             action: 'No Results Found',
@@ -68,7 +124,9 @@ export default function QuizResult(props) {
       {isLoading && (
         <Audio heigth="100" width="100" color="grey" ariaLabel="loading" />
       )}
-      {productResults && !isLoading && <ProductResult data={productResults} />}
+      {productResults && !isLoading && (
+        <ProductResult arrayOfCategories={resArray} data={productResults} />
+      )}
     </React.Fragment>
   );
 }
