@@ -10,6 +10,8 @@ const Quiz = () => {
   const [quizAge, setQuizAge] = React.useState(0);
 
   const handleResponse = (id, response, isMulti) => {
+    window.scrollTo(0, 0);
+
     if (id === 'who' && response === 'Myself') {
       setIsForSelf(true);
     }

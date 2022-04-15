@@ -16,7 +16,7 @@ import {
   FancyButton,
 } from './styles';
 export default function ScrollDialog(props) {
-  const { product, open, handleClickOpen, handleClose } = props;
+  const { product, handleClickOpen, handleClose } = props;
   const [scroll, setScroll] = React.useState('paper');
   const descriptionElementRef = React.useRef(null);
   let tags = [...product.tags];
@@ -30,14 +30,6 @@ export default function ScrollDialog(props) {
       tags[index] = ' ' + tag.charAt(0).toUpperCase() + tag.slice(1);
     }
   });
-  React.useEffect(() => {
-    if (open) {
-      const { current: descriptionElement } = descriptionElementRef;
-      if (descriptionElement !== null) {
-        descriptionElement.focus();
-      }
-    }
-  }, [open]);
 
   let parsedImage =
     product.htmlTag.split('src')[1]?.substring(2)?.slice(0, -12) || '';
@@ -52,7 +44,7 @@ export default function ScrollDialog(props) {
   return (
     <Dialog
       maxWidth={'lg'}
-      open={open}
+      open={true}
       onClose={handleClose}
       scroll={scroll}
       aria-labelledby="scroll-dialog-title"
