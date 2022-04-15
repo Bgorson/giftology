@@ -57,9 +57,11 @@ export default function QuizResult(props) {
             }
           }
         });
-        setProductResults(productRes);
+        console.log('ARRAY', arrayOfCategories);
 
         setResArray(arrayOfCategories);
+        setProductResults(productRes);
+
         setIsLoading(false);
 
         if (!productRes) {
@@ -74,8 +76,6 @@ export default function QuizResult(props) {
 
       const productPromise = Promise.resolve(postQuizResults(results));
       productPromise.then((productRes) => {
-        setIsLoading(false);
-
         setProductResults(productRes);
         const { products, categoryScores } = productRes;
         const arrayOfCategories = groupBy(products, 'category');
@@ -97,6 +97,8 @@ export default function QuizResult(props) {
         });
         console.log('ARRAY', arrayOfCategories);
         setResArray(arrayOfCategories);
+        setIsLoading(false);
+
         if (!productRes) {
           ReactGA.event({
             category: 'Quiz Results',
@@ -124,7 +126,7 @@ export default function QuizResult(props) {
       {isLoading && (
         <Audio heigth="100" width="100" color="grey" ariaLabel="loading" />
       )}
-      {productResults && !isLoading && (
+      {!isLoading && (
         <ProductResult arrayOfCategories={resArray} data={productResults} />
       )}
     </React.Fragment>
