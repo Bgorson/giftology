@@ -12,7 +12,6 @@ import ReactGA from 'react-ga';
 export default function QuizResult(props) {
   const { results } = props;
   const [isLoading, setIsLoading] = useState(true);
-  console.log('is loading', isLoading);
 
   ReactGA.event({
     category: 'Quiz Results',
@@ -20,18 +19,38 @@ export default function QuizResult(props) {
   });
   const [productResults, setProductResults] = React.useState(null);
   React.useEffect(() => {
-    const productPromise = Promise.resolve(postQuizResults(results));
-    productPromise.then((products) => {
-      setIsLoading(false);
-      setProductResults(products);
-      if (!products) {
-        ReactGA.event({
-          category: 'Quiz Results',
-          action: 'No Results Found',
-        });
-      }
-    });
+    if (Object.keys(results).length === 0) {
+      const storedResults = localStorage.getItem('quizResults');
+      const productPromise = Promise.resolve(
+        postQuizResults(JSON.parse(storedResults))
+      );
+      productPromise.then((products) => {
+        setIsLoading(false);
+        setProductResults(products);
+        if (!products) {
+          ReactGA.event({
+            category: 'Quiz Results',
+            action: 'No Results Found',
+          });
+        }
+      });
+    } else {
+      localStorage.setItem('quizResults', JSON.stringify(results));
+
+      const productPromise = Promise.resolve(postQuizResults(results));
+      productPromise.then((products) => {
+        setIsLoading(false);
+        setProductResults(products);
+        if (!products) {
+          ReactGA.event({
+            category: 'Quiz Results',
+            action: 'No Results Found',
+          });
+        }
+      });
+    }
   }, []);
+
   return (
     <React.Fragment>
       <TopContainer>

@@ -15,7 +15,6 @@ import { Container, MainContainer } from './styles';
 
 export default function Main() {
   const location = useLocation();
-  console.log(location);
   // const [loading] = useState(false);
   useEffect(() => {
     window.scrollTo(0, 0);

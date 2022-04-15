@@ -45,3 +45,31 @@ export const ProductDescriptionHeading = styled.h2`
   font-size: 20px;
   font-weight: bold;
 `;
+export const FancyButton = styled.button`
+  background-color: inherit;
+  white-space: nowrap;
+  min-width: 280px;
+  color: black;
+  cursor: pointer;
+  border-radius: 1000px;
+  padding: 0.5em;
+  font-size: 20px;
+
+  &:focus {
+  }
+
+  &:after {
+  }
+  &:active {
+  }
+
+  &:hover {
+    background-color: #44a2bb;
+    color: white;
+  }
+  @media (max-width: 768px) {
+    background-color: #44a2bb;
+    color: white;
+    min-width: 100%;
+  }
+`;

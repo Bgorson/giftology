@@ -11,6 +11,7 @@ import {
   HeroTitle,
   HeroImage,
   HeroText,
+  FancyButton,
 } from './styles';
 
 const data = {

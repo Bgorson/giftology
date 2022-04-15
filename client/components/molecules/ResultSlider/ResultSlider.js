@@ -15,7 +15,6 @@ import {
   ProductScore,
   ProductText,
   SingleProductContainer,
-  DirectImage,
 } from './styled';
 import 'swiper/css/navigation';
 // Import Swiper styles

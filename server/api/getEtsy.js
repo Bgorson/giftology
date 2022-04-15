@@ -8,7 +8,6 @@ const baseURL = `https://openapi.etsy.com/v2/listings/:listing_id?api_key=${apiK
 //To test, get this activated on a route
 // The logic being if the  website is Etsy- run it through the etst fetcher and add it as a property of the products
 const getEstyProduct = async (listingID) => {
-  console.log('id', listingID);
   try {
     return await axios.get(
       `https://openapi.etsy.com/v2/listings/${listingID}?api_key=${apiKey}&includes=MainImage`

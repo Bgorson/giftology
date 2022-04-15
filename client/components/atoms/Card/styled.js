@@ -20,6 +20,6 @@ export const ImageWrapper = styled.div`
   display: flex;
 
   @media (max-width: 768px) {
-    min-height: auto;
+    border: none;
   }
 `;

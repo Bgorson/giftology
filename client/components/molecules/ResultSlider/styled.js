@@ -24,6 +24,7 @@ export const CategoryScore = styled.h2`
   flex-basis: 33%;
   margin: auto;
 `;
+export const FullContainer = styled.div``;
 export const Container = styled.div`
   margin-top: 10em;
   display: flex;

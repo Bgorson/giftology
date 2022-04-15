@@ -75,9 +75,6 @@ async function calculateScore(ageFiltered, quizResults) {
     });
     // SCORING OCCASIONS
     if (lowerCaseOc.includes(quizResults.occasion.toLowerCase())) {
-      console.log('MATCH');
-      console.log('product name', product.productName);
-
       // console.log('product name', product.productName);
       // console.log('matching hobby', product.productName);
 
@@ -133,9 +130,7 @@ router.post('/', async (req, res) => {
 
   // console.log('whats here', req.body)
   const quizResults = req.body;
-  console.log('RESULTS', quizResults.age);
   try {
-    console.log('WHY');
     const minAge = parseInt(quizResults.age.split('-')[0]);
     const maxAge = parseInt(quizResults.age.split('-')[1]);
     // This is the types we want to show

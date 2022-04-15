@@ -24,7 +24,6 @@ const Quiz = () => {
     }
 
     setAnswers(answers);
-    console.log('res', answers);
   };
 
   const quizQuestions = [

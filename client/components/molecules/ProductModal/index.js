@@ -8,12 +8,12 @@ import {
   ProductDescription,
   ProductPrice,
   ProductTags,
-  Button,
   ProductImage,
   Image,
   DesktopWrapper,
   MobileWrapper,
   ProductDescriptionHeading,
+  FancyButton,
 } from './styles';
 export default function ScrollDialog(props) {
   const { product, open, handleClickOpen, handleClose } = props;
@@ -21,10 +21,7 @@ export default function ScrollDialog(props) {
   const descriptionElementRef = React.useRef(null);
   let tags = [...product.tags];
   tags.forEach((tag, index) => {
-    console.log(tag);
     if (tag === null || tag === 'null' || tag === 'Null') {
-      console.log('MATCH');
-
       tags = tags.splice(index, 1);
       if (tags.length === 1) {
         tags = [];
@@ -33,7 +30,6 @@ export default function ScrollDialog(props) {
       tags[index] = ' ' + tag.charAt(0).toUpperCase() + tag.slice(1);
     }
   });
-  console.log('THESE ARE TAGS', tags);
   React.useEffect(() => {
     if (open) {
       const { current: descriptionElement } = descriptionElementRef;
@@ -53,7 +49,6 @@ export default function ScrollDialog(props) {
     parsedImage =
       product.htmlTag.split('src')[3]?.substring(2)?.slice(0, -12) || '';
   }
-  console.log('PRODUCT', product.htmlTag);
   return (
     <Dialog
       maxWidth={'lg'}
@@ -87,7 +82,7 @@ export default function ScrollDialog(props) {
               {`Tags: ${product.category}${tags.length > 0 ? ',' : ''}${tags}`}
             </ProductTags>
             <a href={product.link} target="_blank">
-              <Button>View Retailer</Button>
+              <FancyButton>View Retailer</FancyButton>
             </a>
           </TextContainer>
         </DialogContent>
@@ -118,13 +113,13 @@ export default function ScrollDialog(props) {
               {`Tags: ${product.category}${tags.length > 0 ? ',' : ''}${tags}`}
             </ProductTags>
             <a href={product.link} target="_blank">
-              <Button>View Retailer</Button>
+              <FancyButton>View Retailer</FancyButton>
             </a>
           </TextContainer>
         </DialogContent>
       </DesktopWrapper>
       <DialogActions>
-        <Button onClick={handleClose}>Close</Button>
+        {/* <Button onClick={handleClose}>Close</Button> */}
       </DialogActions>
     </Dialog>
   );

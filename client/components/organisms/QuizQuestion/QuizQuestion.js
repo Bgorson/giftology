@@ -73,7 +73,6 @@ export default function QuizQuestion(props) {
     handleResponse(id, response, true);
   };
   if (parseInt(quizAge?.value?.split('-')[0]) < 21 && id === 'hobbies') {
-    console.log('underage');
     answers = answers.filter(function (el) {
       return el.value != 'mixology';
     });

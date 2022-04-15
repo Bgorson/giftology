@@ -9,7 +9,6 @@ import {
   CategoryDescription,
   CategoryScore,
   Container,
-  FullContainer,
   ProductContainer,
   ProductImage,
   ProductTitle,

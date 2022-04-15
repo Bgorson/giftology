@@ -10,10 +10,7 @@ import {
 export default function ProductCard({ product, handleCardClick }) {
   let tags = [...product.tags];
   tags.forEach((tag, index) => {
-    console.log(tag);
     if (tag === null || tag === 'null' || tag === 'Null') {
-      console.log('MATCH');
-
       tags = tags.splice(index, 1);
       if (tags.length === 1) {
         tags = [];
@@ -26,7 +23,6 @@ export default function ProductCard({ product, handleCardClick }) {
       tags[index] = ' ' + tag.charAt(0).toUpperCase() + tag.slice(1);
     }
   });
-  console.log('THESE ARE TAGS', tags);
   let parsedImage =
     product.htmlTag.split('src')[1]?.substring(2)?.slice(0, -12) || '';
   if (!parsedImage.includes('//ws-na.amazon')) {
