@@ -15,7 +15,6 @@ export const CardContentContainer = styled.div`
 `;
 
 export const ImageWrapper = styled.div`
-  border: 1px solid black;
   min-height: 399px;
   display: flex;
 

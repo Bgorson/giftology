@@ -1,11 +1,9 @@
 import React, { useState } from 'react';
-import Section from 'react-bulma-companion/lib/Section';
 import { Audio } from 'react-loader-spinner';
 
 // import Container from 'react-bulma-companion/lib/Container';
-import Title from 'react-bulma-companion/lib/Title';
 import { postQuizResults } from '../../../api/quiz';
-import { Disclosure, TopContainer, Link } from './styles';
+import { Disclosure, TopContainer, Link, Title } from './styles';
 import ProductResult from '../../organisms/ProductResult/ProductResult';
 import ReactGA from 'react-ga';
 
@@ -15,7 +13,6 @@ export default function QuizResult(props) {
   const [resArray, setResArray] = useState([]);
 
   function groupBy(arr, property) {
-    console.log('HIT');
     return arr.reduce((memo, x) => {
       if (!memo[x[property]]) {
         memo[x[property]] = [];
@@ -57,7 +54,6 @@ export default function QuizResult(props) {
             }
           }
         });
-        console.log('ARRAY', arrayOfCategories);
 
         setResArray(arrayOfCategories);
         setProductResults(productRes);
@@ -95,7 +91,6 @@ export default function QuizResult(props) {
             }
           }
         });
-        console.log('ARRAY', arrayOfCategories);
         setResArray(arrayOfCategories);
         setIsLoading(false);
 
@@ -116,9 +111,9 @@ export default function QuizResult(props) {
           Affiliate Disclosure: We may receive a commission on purchases made
           through the links on this page.
         </Disclosure>
-        <Link href={'https://forms.gle/sxP2CcBVmMaukWt68'} target={'_blank'}>
+        {/* <Link href={'https://forms.gle/sxP2CcBVmMaukWt68'} target={'_blank'}>
           Please complete this survey and give us some feedback!
-        </Link>
+        </Link> */}
         <Title>RESULTS</Title>
 
         {/* <p>{JSON.stringify(results)}</p> */}

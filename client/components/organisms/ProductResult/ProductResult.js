@@ -23,7 +23,6 @@ import ReactGA from 'react-ga';
 
 export default function ProductResult(props) {
   const { data, arrayOfCategories } = props;
-  console.log('PROPS', props);
   const [currentCardData, setCurrentCardData] = React.useState(null);
   const [open, setOpen] = React.useState(false);
 
