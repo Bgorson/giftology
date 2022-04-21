@@ -6,6 +6,8 @@ export const HeroImage = styled.img`
 `;
 export const Hero = styled.div`
   position: relative;
+  width: 95%;
+  margin: auto;
 `;
 
 export const HeroCallToAction = styled.div`
@@ -15,28 +17,40 @@ export const HeroCallToAction = styled.div`
   &:hover {
     color: #44a2bb;
   }
+  @media (max-width: 768px) {
+    font-size: 32px;
+  }
 `;
 export const HeroDescription = styled.p`
-  font-size: 18px;
+  font-size: 24px;
+  color: white;
+  font-family: 'Slabo13px-Regular';
+  margin-bottom: 43px;
   @media (max-width: 768px) {
-    margin-bottom: 0;
+    margin-bottom: 1em;
+    color: black;
   }
 `;
 export const HeroTitle = styled.h1`
+  font-family: 'FiraSansCondensed-Black';
   font-weight: bold;
   font-size: 36px;
   color: white;
   margin-bottom: 43px;
   @media (max-width: 768px) {
-    margin-bottom: 0;
+    margin-bottom: 1em;
     color: black;
+    font-size: 32px;
   }
 `;
 export const HeroText = styled.div`
+  font-family: 'FiraSansCondensed-Black';
+  margin-right: 2em;
   position: absolute;
   top: 35%;
   left: 50%;
   @media (max-width: 768px) {
+    margin-right: 0;
     position: relative;
     left: 0;
     top: 0;

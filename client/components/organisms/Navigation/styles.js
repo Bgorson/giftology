@@ -22,6 +22,14 @@ export const NavItem = styled.li`
   }
   list-style-type: none;
 `;
+export const LogoNavItem = styled.li`
+  list-style-type: none;
+
+  @media (max-width: 768px) {
+    height: 155px;
+  }
+`;
+
 export const Logo = styled.img`
   width: 400px;
   cursor: pointer;

@@ -12,6 +12,7 @@ import Navigation from '_organisms/Navigation';
 import Footer from '_organisms/Footer';
 
 import { Container, MainContainer } from './styles';
+import './index.css';
 
 export default function Main() {
   const location = useLocation();

@@ -15,6 +15,7 @@ import {
   NavItem,
   NavLink,
   Title,
+  LogoNavItem,
   Logo,
 } from './styles.js';
 
@@ -24,7 +25,7 @@ export default function Navigation({ pathname }) {
   return (
     <Navbar>
       <Container>
-        <NavItem>
+        <LogoNavItem>
           <Logo
             onClick={() => {
               ReactGA.event({
@@ -36,7 +37,7 @@ export default function Navigation({ pathname }) {
             }}
             src="./images/logo.png"
           />
-        </NavItem>
+        </LogoNavItem>
         <ActionItems>
           <NavItem>
             <NavLink
@@ -63,7 +64,7 @@ export default function Navigation({ pathname }) {
               }}
               href="/quiz"
             >
-              Take the quiz
+              Take The Quiz
             </NavLink>
           </NavItem>
           <NavItem>

@@ -18,7 +18,6 @@ export const CategoryScore = styled.h2`
   margin: auto;
 `;
 export const Container = styled.div`
-  margin-top: 10em;
   display: flex;
   flex-direction: column;
 `;

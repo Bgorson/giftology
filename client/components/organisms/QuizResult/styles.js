@@ -6,7 +6,6 @@ export const Disclosure = styled.h1`
 export const TopContainer = styled.div`
   display: flex;
   flex-direction: column;
-  margin: 1em;
 `;
 export const Link = styled.a`
   font-size: 2em;

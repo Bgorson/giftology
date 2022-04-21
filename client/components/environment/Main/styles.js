@@ -7,6 +7,7 @@ export const MainContainer = styled.div`
   margin-bottom: 10em;
 `;
 export const Container = styled.div`
+  font-family: 'Slabo13px-Regular';
   margin: auto;
   width: 90%;
   @media (max-width: 768px) {
