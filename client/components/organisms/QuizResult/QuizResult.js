@@ -21,10 +21,12 @@ export default function QuizResult(props) {
       return memo;
     }, {});
   }
-  ReactGA.event({
-    category: 'Quiz Results',
-    action: 'Finished Quiz',
-  });
+  React.useEffect(() => {
+    ReactGA.event({
+      category: 'Quiz Results',
+      action: 'Finished Quiz',
+    });
+  }, []);
 
   const [productResults, setProductResults] = React.useState(null);
   React.useEffect(() => {
