@@ -1,71 +1,111 @@
-const express  = require('express');
+const express = require('express');
 const passport = require('passport');
 const { User } = require('../database/schemas');
-
 const router = express.Router();
+const { requireAuth } = require('./middleware');
+const bcrypt = require('bcrypt');
 
 module.exports = router;
 
-router.post('/register', (req, res) => {
-  if (!req || !req.body || !req.body.username || !req.body.password) {
-    res.status(400).send({ message: 'Username and Password required' });
+// router.post('/', async (req, res) => {
+//   try {
+//     console.log('USER', User);
+//     const dbUserData = await User.create({
+//       username: req.body.username,
+//       password: req.body.password,
+//     });
+
+//     req.session.save(() => {
+//       req.session.loggedIn = true;
+
+//       res.status(200).json(dbUserData);
+//     });
+//   } catch (err) {
+//     console.log(err);
+//     res.status(500).json(err);
+//   }
+// });
+
+// Login
+router.post('/login', async (req, res) => {
+  try {
+    const dbUserData = await User.findOne({
+      where: {
+        username: req.body.username,
+      },
+    });
+
+    if (!dbUserData) {
+      res
+        .status(400)
+        .json({ message: 'Incorrect email or password. Please try again!' });
+      return;
+    }
+    const validPassword = await dbUserData.validatePassword(req.body.password);
+
+    if (!validPassword) {
+      res
+        .status(400)
+        .json({ message: 'Incorrect email or password. Please try again!' });
+      return;
+    }
+
+    req.session.save(() => {
+      req.session.loggedIn = true;
+
+      res
+        .status(200)
+        .json({ user: dbUserData, message: 'You are now logged in!' });
+    });
+  } catch (err) {
+    console.log(err);
+    res.status(500).json(err);
   }
+});
 
-  req.body.username_case = req.body.username;
-  req.body.username = req.body.username.toLowerCase();
+router.put('/password', async (req, res) => {
+  const { oldPassword, newPassword, username } = req.body;
 
-  const { username } = req.body;
-  const newUser = User(req.body);
+  const dbUserData = await User.findOne({
+    where: {
+      username,
+    },
+  });
+  const validPassword = await dbUserData.validatePassword(oldPassword);
 
-  User.find({ username }, (err, users) => {
-    if (err) {
-      res.status(400).send({ message: 'Create user failed', err });
-    }
-    if (users[0]) {
-      res.status(400).send({ message: 'Username exists' });
-    }
-
-    newUser.hashPassword().then(() => {
-      newUser.save((err, savedUser) => {
-        if (err || !savedUser) {
-          res.status(400).send({ message: 'Create user failed', err });
-        } else {
-          res.send({ message: 'User created successfully', user: savedUser.hidePassword() });
+  if (validPassword) {
+    bcrypt.genSalt(10, (err, salt) => {
+      if (err) {
+        res.status(400).send({ err, message: 'Error updating password' });
+      }
+      bcrypt.hash(newPassword, salt, (err, hash) => {
+        if (err) {
+          res.status(400).send({ err, message: 'Error updating password' });
         }
+        User.findOneAndUpdate(
+          { username: username },
+          { password: hash },
+          (err) => {
+            if (err) {
+              res.status(400).send({ err, message: 'Error updating password' });
+            }
+            res.status(200).send({ message: 'Password successfully updated' });
+          }
+        );
       });
     });
-
-  });
+  } else {
+    res.status(400).send({ message: 'Old password did not match' });
+  }
 });
 
-router.post('/login', (req, res, next) => {
-  req.body.username = req.body.username.toLowerCase();
-
-  passport.authenticate('local', (err, user, info) => {
-    if (err) {
-      return next(err);
-    }
-    if (!user) {
-      return res.status(401).send(info);
-    }
-
-    req.login(user, err => {
-      if (err) {
-        res.status(401).send({ message: 'Login failed', err });
-      }
-      res.send({ message: 'Logged in successfully', user: user.hidePassword() });
-    });
-
-  })(req, res, next);
-});
-
+// Logout
 router.post('/logout', (req, res) => {
-  req.session.destroy(err => {
-    if (err) {
-      res.status(400).send({ message: 'Logout failed', err });
-    }
-    req.sessionID = null;
-    req.logout();
-    res.send({ message: 'Logged out successfully' });
-  });
+  if (req.session.loggedIn) {
+    req.session.destroy(() => {
+      res.status(204).end();
+    });
+  } else {
+    res.status(404).end();
+  }
 });

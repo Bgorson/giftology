@@ -35,7 +35,7 @@ export default function Navigation({ pathname }) {
               });
               history.push('/');
             }}
-            src="./images/logo.png"
+            src="/images/logo.png"
           />
         </LogoNavItem>
         <ActionItems>

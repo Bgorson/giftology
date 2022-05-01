@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { useLocation, Switch, Route } from 'react-router-dom';
 import ReactNotification from 'react-notifications-component';
@@ -7,7 +7,9 @@ import HomePage from '_pages/HomePage';
 import LostPage from '_pages/LostPage';
 import QuizPage from '_pages/QuizPage';
 import AboutPage from '_pages/AboutPage';
-
+import AdminPage from '_pages/AdminPage';
+import Portal from '_pages/Portal';
+import Product from '_pages/Portal/Product';
 import Navigation from '_organisms/Navigation';
 import Footer from '_organisms/Footer';
 
@@ -20,6 +22,19 @@ export default function Main() {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [location.pathname]);
+  const [token, setToken] = useState();
+  const [product, setProduct] = useState();
+
+  const handleProductSelect = (product) => {
+    setProduct(product);
+  };
+  useEffect(() => {
+    const loggedInUser = localStorage.getItem('user');
+    if (loggedInUser) {
+      const foundUser = JSON.parse(loggedInUser);
+      setToken(foundUser);
+    }
+  }, []);
   return (
     <Container>
       <ReactNotification />
@@ -30,6 +45,20 @@ export default function Main() {
           <Route path="/home" component={HomePage} />
           <Route path="/quiz" component={QuizPage} />
           <Route path="/about" component={AboutPage} />
+          <Route path="/admin">
+            <AdminPage setToken={setToken} />
+          </Route>
+          <Route path="/portal/product">
+            {token && <Product product={product} />}
+          </Route>
+          <Route path="/portal">
+            {token ? (
+              <Portal onProductSelect={handleProductSelect} />
+            ) : (
+              <LostPage />
+            )}
+          </Route>
+
           <Route path="*" component={LostPage} />
         </Switch>
       </MainContainer>

@@ -4,9 +4,11 @@ const router = express.Router();
 
 const products = require('./products');
 const quiz = require('./quiz');
+const auth = require('./auth');
 
 router.use('/api/products', products);
 router.use('/api/quiz', quiz);
+router.use('/api/auth', auth);
 
 router.get('/api/tags', (req, res) => {
   res.send([

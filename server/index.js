@@ -45,28 +45,31 @@ const routes = require('./routes/index');
 const assetFolder = path.resolve(__dirname, '../dist/');
 const port = process.env.PORT;
 const app = express();
-app.use(
-  session({
-    secret: 'Our little secret.',
-    resave: false,
-    saveUninitialized: false,
-  })
-);
-app.use(passport.initialize());
-app.use(passport.session());
-app.get(
-  '/auth/google',
-  passport.authenticate('google', { scope: ['profile'] })
-);
-app.get(
-  '/auth/google/callback',
-  passport.authenticate('google', { failureRedirect: 'http://localhost:3000' }),
-  function (req, res) {
-    console.log('authed');
-    // Successful authentication, redirect secrets.
-    res.redirect('http://localhost:3000');
-  }
-);
+
+// app.use(passport.initialize());
+// app.use(passport.session());
+// app.get(
+//   '/auth/google',
+//   passport.authenticate('google', { scope: ['profile'] })
+// );
+// app.get(
+//   '/auth/google/callback',
+//   passport.authenticate('google', { failureRedirect: 'http://localhost:3000' }),
+//   function (req, res) {
+//     console.log('authed');
+//     // Successful authentication, redirect secrets.
+//     res.redirect('http://localhost:3000');
+//   }
+// );
+const sess = {
+  secret: 'Super secret secret',
+  cookie: {},
+  resave: false,
+  saveUninitialized: true,
+};
+
+app.use(session(sess));
+
 app.get('/logout', function (req, res) {
   res.redirect('http://localhost:3000/');
 });
