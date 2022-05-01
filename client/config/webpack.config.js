@@ -1,9 +1,9 @@
 const webpack = require('webpack');
-const path              = require('path');
+const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
-const resolve = dir => path.join(__dirname, '../../', dir);
+const resolve = (dir) => path.join(__dirname, '../../', dir);
 
 const env = process.env.NODE_ENV || 'development';
 const isDev = env === 'development';
@@ -49,6 +49,15 @@ module.exports = {
       _pages: resolve('client/components/pages/'),
       _environment: resolve('client/components/environment/'),
     },
+    fallback: {
+      crypto: require.resolve('crypto-browserify'),
+      zlib: require.resolve('browserify-zlib'),
+      https: require.resolve('https-browserify'),
+      url: require.resolve('url'),
+      vm: require.resolve('vm-browserify'),
+      http: require.resolve('stream-http'),
+      os: require.resolve('os-browserify'),
+    },
   },
   module: {
     rules: [
@@ -59,15 +68,26 @@ module.exports = {
       },
       {
         test: /\.css$/,
-        use: [isDev ? 'style-loader' : MiniCssExtractPlugin.loader, 'css-loader'],
+        use: [
+          isDev ? 'style-loader' : MiniCssExtractPlugin.loader,
+          'css-loader',
+        ],
       },
       {
         test: /\.scss$/,
-        use: [isDev ? 'style-loader' : MiniCssExtractPlugin.loader, 'css-loader', 'sass-loader'],
+        use: [
+          isDev ? 'style-loader' : MiniCssExtractPlugin.loader,
+          'css-loader',
+          'sass-loader',
+        ],
       },
       {
         test: /\.less$/,
-        use: [isDev ? 'style-loader' : MiniCssExtractPlugin.loader, 'css-loader', 'less-loader'],
+        use: [
+          isDev ? 'style-loader' : MiniCssExtractPlugin.loader,
+          'css-loader',
+          'less-loader',
+        ],
       },
       {
         test: /\.(jpe?g|png|gif)$/,
@@ -92,10 +112,7 @@ module.exports = {
       },
     ],
   },
-  plugins: [
-    HtmlWebpackPluginConfig,
-    WebpackDefinePluginConfig,
-  ],
+  plugins: [HtmlWebpackPluginConfig, WebpackDefinePluginConfig],
   performance: {
     hints: false,
   },
