@@ -2,8 +2,6 @@ const { default: axios } = require('axios');
 require('dotenv').config();
 
 const apiKey = process.env.ETSY;
-
-const baseURL = `https://openapi.etsy.com/v2/listings/:listing_id?api_key=${apiKey}&includes=MainImage`;
 //turn this into a get function that works
 //To test, get this activated on a route
 // The logic being if the  website is Etsy- run it through the etst fetcher and add it as a property of the products
