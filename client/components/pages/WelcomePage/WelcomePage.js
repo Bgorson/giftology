@@ -23,7 +23,7 @@ export default function WelcomePage() {
   return (
     <div className="welcome-page page">
       <Hero>
-        <HeroImage src="/images/backgroundImage.jpeg" />
+        <HeroImage src="./images/backgroundImage.jpeg" />
         <HeroText>
           <HeroTitle>Having Trouble Finding The Right Gift?</HeroTitle>
           <HeroDescription>
