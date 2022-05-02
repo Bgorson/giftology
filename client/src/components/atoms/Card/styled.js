@@ -20,6 +20,7 @@ export const CardContentContainer = styled.div`
 export const ImageWrapper = styled.div`
   min-height: 399px;
   display: flex;
+  justify-content: center;
 
   @media (max-width: 768px) {
     border: none;
