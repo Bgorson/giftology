@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Audio } from 'react-loader-spinner';
 
 import { postQuizResults } from '../../../api/quiz';
-import { Disclosure, TopContainer, Link, Title } from './styles';
+import { Disclosure, TopContainer, Title } from './styles';
 import ProductResult from '../../organisms/ProductResult/ProductResult';
 import ReactGA from 'react-ga';
 
@@ -103,7 +103,7 @@ export default function QuizResult(props) {
         }
       });
     }
-  }, []);
+  }, [results]);
 
   return (
     <React.Fragment>

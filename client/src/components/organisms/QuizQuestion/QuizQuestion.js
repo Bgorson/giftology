@@ -8,10 +8,6 @@ import {
   Container,
   ButtonContainer,
   FancyButton,
-  FancyText,
-  FancyLabel,
-  FancyDesign,
-  FancyRadioButton,
   DateInput,
   Title,
 } from './styles.js';

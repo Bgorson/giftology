@@ -7,6 +7,9 @@ export const FlavorText = styled.p`
 
 export const CardContainer = styled.div`
   color: black;
+  width: 90%;
+  margin: auto;
+  overflow: hidden;
 `;
 
 export const CardContentContainer = styled.div`

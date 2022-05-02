@@ -61,11 +61,12 @@ export const CategoryDiv = styled.div`
   width: 80%;
 `;
 export const SlickContainer = styled.div`
+  cursor: pointer;
   img {
-    max-height: 400px;
+    max-height: 300px;
 
-    margin: auto;
-    align-self: center;
+    /* margin: auto;
+    align-self: center; */
 
     /* max-height: 300px;
     width: auto;
@@ -83,15 +84,15 @@ export const SlickContainer = styled.div`
     font-size: 35px;
   } /* the slides */
   .slick-list {
-    margin: 0 -5px;
+    /* margin: 0 -5px; */
   }
   .slick-slide > div {
-    padding: 0 5px;
+    /* padding: 0 5px; */
   }
   .slick-next {
     /* width: 40px;
     height: 40px; */
-    /* right: -30px; */
+    right: -30px;
   }
   .slick-prev {
     /* width: 40px;

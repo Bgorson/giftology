@@ -1,8 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import ProductResult from '../../organisms/ProductResult/ProductResult';
-import categoryScores from './categoryData.json';
-import products from './productData.json';
+
 import backgroundImage from '../../../backgroundImage.jpeg';
 
 import {
@@ -12,13 +10,7 @@ import {
   HeroTitle,
   HeroImage,
   HeroText,
-  FancyButton,
 } from './styles';
-
-const data = {
-  categoryScores,
-  products,
-};
 
 export default function WelcomePage() {
   return (

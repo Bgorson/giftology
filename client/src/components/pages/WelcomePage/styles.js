@@ -1,4 +1,4 @@
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 
 export const HeroImage = styled.img`
   object-fit: cover;
@@ -17,7 +17,7 @@ export const HeroCallToAction = styled.div`
   &:hover {
     color: #44a2bb;
   }
-  @media (max-width: 768px) {
+  @media (max-width: 1025px) {
     font-size: 32px;
   }
 `;
@@ -26,7 +26,7 @@ export const HeroDescription = styled.p`
   color: white;
   font-family: 'Slabo13px-Regular';
   margin-bottom: 43px;
-  @media (max-width: 768px) {
+  @media (max-width: 1025px) {
     margin-bottom: 1em;
     color: black;
   }
@@ -37,7 +37,7 @@ export const HeroTitle = styled.h1`
   font-size: 36px;
   color: white;
   margin-bottom: 43px;
-  @media (max-width: 768px) {
+  @media (max-width: 1025px) {
     margin-bottom: 1em;
     color: black;
     font-size: 32px;
@@ -47,9 +47,10 @@ export const HeroText = styled.div`
   font-family: 'FiraSansCondensed-Black';
   margin-right: 2em;
   position: absolute;
-  top: 35%;
+  top: 10%;
   left: 50%;
-  @media (max-width: 768px) {
+
+  @media (max-width: 1025px) {
     margin-right: 0;
     position: relative;
     left: 0;

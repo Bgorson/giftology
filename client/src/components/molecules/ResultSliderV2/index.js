@@ -7,15 +7,8 @@ import {
   SlickContainer,
   Category,
   CategoryContainer,
-  CategoryDescription,
-  CategoryScore,
   Container,
   CategoryDiv,
-  ProductImage,
-  ProductTitle,
-  ProductScore,
-  ProductText,
-  SingleProductContainer,
 } from './styled';
 import ProductCard from '../../atoms/Card';
 

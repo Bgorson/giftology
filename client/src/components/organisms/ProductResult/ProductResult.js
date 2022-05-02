@@ -12,6 +12,10 @@ export default function ProductResult(props) {
 
   // TODO: Put a use effect to sort it all once
   const handleClickOpen = (product) => {
+    ReactGA.event({
+      category: 'Product Selected',
+      action: product.productName,
+    });
     setCurrentCardData(product);
     setOpen(true);
   };

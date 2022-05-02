@@ -13,7 +13,7 @@ const Portal = ({ onProductSelect }) => {
   useEffect(() => {
     handleRetrieveProducts();
   }, []);
-  const tData = React.useMemo(() => dataBase, []);
+  const tData = React.useMemo(() => dataBase, [dataBase]);
   const columns = React.useMemo(
     () => [
       {

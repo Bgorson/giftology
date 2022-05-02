@@ -15,10 +15,11 @@ import {
   ProductDescriptionHeading,
   FancyButton,
 } from './styles';
+import ReactGA from 'react-ga';
+
 export default function ScrollDialog(props) {
-  const { product, handleClickOpen, handleClose, open } = props;
+  const { product, handleClose } = props;
   const [scroll, setScroll] = React.useState('paper');
-  const descriptionElementRef = React.useRef(null);
   let tags = [...product.tags];
   tags.forEach((tag, index) => {
     if (tag === null || tag === 'null' || tag === 'Null') {
@@ -73,7 +74,17 @@ export default function ScrollDialog(props) {
             <ProductTags>
               {`Tags: ${product.category}${tags.length > 0 ? ',' : ''}${tags}`}
             </ProductTags>
-            <a href={product.link} target="_blank">
+            <a
+              onClick={() =>
+                ReactGA.event({
+                  category: 'Retailer Visited',
+                  action: product.productName,
+                  label: 'Home',
+                })
+              }
+              href={product.link}
+              target="_blank"
+            >
               <FancyButton>View Retailer</FancyButton>
             </a>
           </TextContainer>
@@ -105,7 +116,17 @@ export default function ScrollDialog(props) {
               {`Tags: ${product.category}${tags.length > 0 ? ',' : ''}${tags}`}
             </ProductTags>
             <a href={product.link} target="_blank">
-              <FancyButton>View Retailer</FancyButton>
+              <FancyButton
+                onClick={() =>
+                  ReactGA.event({
+                    category: 'Retailer Visited',
+                    action: product.productName,
+                    label: 'Home',
+                  })
+                }
+              >
+                View Retailer
+              </FancyButton>
             </a>
           </TextContainer>
         </DialogContent>
