@@ -37,6 +37,7 @@ export const HeroTitle = styled.h1`
   font-size: 36px;
   color: white;
   margin-bottom: 43px;
+  margin-top: 0;
   @media (max-width: 1025px) {
     margin-bottom: 1em;
     color: black;
@@ -47,7 +48,7 @@ export const HeroText = styled.div`
   font-family: 'FiraSansCondensed-Black';
   margin-right: 2em;
   position: absolute;
-  top: 10%;
+  top: 38%;
   left: 50%;
 
   @media (max-width: 1025px) {

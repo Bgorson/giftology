@@ -65,8 +65,8 @@ export const SlickContainer = styled.div`
   img {
     max-height: 300px;
 
-    /* margin: auto;
-    align-self: center; */
+    margin: auto;
+    align-self: center;
 
     /* max-height: 300px;
     width: auto;

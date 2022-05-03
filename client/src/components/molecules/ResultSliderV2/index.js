@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
-
 import 'slick-carousel/slick/slick-theme.css';
+
 import {
   SlickContainer,
   Category,
@@ -91,19 +91,10 @@ export default function ResultSlider({
                     }
                   >
                     {arrayOfCategories[category.name].map((product, index) => (
-                      <a
-                        key={product.productName}
-                        // href={product.htmlTag
-                        //   .match(/(?:"[^"]*"|^[^"]*$)/)[0]
-                        //   .replace(/"/g, '')}
-                        target="_blank"
-                        rel="noreferrer"
-                      >
-                        <ProductCard
-                          handleCardClick={handleCardClick}
-                          product={product}
-                        />
-                      </a>
+                      <ProductCard
+                        handleCardClick={handleCardClick}
+                        product={product}
+                      />
                     ))}
                   </Slider>
                 </SlickContainer>

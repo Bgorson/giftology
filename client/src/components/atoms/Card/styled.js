@@ -18,11 +18,17 @@ export const CardContentContainer = styled.div`
 `;
 
 export const ImageWrapper = styled.div`
-  min-height: 399px;
   display: flex;
   justify-content: center;
+  min-height: 399px;
 
   @media (max-width: 768px) {
     border: none;
+  }
+  img {
+    margin: auto;
+    align-self: center;
+    max-width: 400px;
+    height: 100%;
   }
 `;
