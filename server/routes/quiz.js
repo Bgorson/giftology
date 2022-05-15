@@ -115,20 +115,18 @@ function groupBy(arr, property) {
 // full path is api/quiz
 router.post('/', async (req, res) => {
   const test = {
-    who: 'relative',
-    prefer: 'indoor',
-    age: '5-6',
-    occasion: 'birthday',
-    type: 'whimsical',
-    hobbies: 'camping',
-    price: '0-100',
-    createAccount: false,
+    age: '30-30',
+    hobbies: ['gardening', 'healthAndWellness', 'reading'],
+    occasion: 'holiday',
+    prefer: 'outdoor',
+    tags: [],
+    type: ['thoughtful'],
+    who: 'myself',
   };
 
   //What to send:
   // Array of Categories with products and the average score
 
-  // console.log('whats here', req.body)
   const quizResults = req.body;
   try {
     const minAge = parseInt(quizResults.age.split('-')[0]);
@@ -149,7 +147,7 @@ router.post('/', async (req, res) => {
       if (giftTypeArray.length > 0) {
         typeAndAgeFiltered = ageFiltered.filter((product) => {
           const productTypes = product.giftType.toString().split(',');
-          return giftTypeArray.some((r) => productTypes.includes(r));
+          return giftTypeArray.some((r) => !productTypes.includes(r));
         });
       } else {
         typeAndAgeFiltered = ageFiltered;
