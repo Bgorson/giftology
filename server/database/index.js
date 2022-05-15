@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 require('dotenv').config();
-
+let dataB = require('./schemas/database.json');
 mongoose.Promise = global.Promise;
 // mongoose.set('debug', true);
 const Product = require('./schemas/Product');
@@ -15,20 +15,39 @@ const database = mongoose.connect(
   process.env.DATABASE_URL || 'mongodb://127.0.0.1:27017/Giftology',
   options
 );
-//   .then((db) => {
 //     console.log('Connected to database.');
 //     // require csvtojson
 
 //     // Convert a csv file with csvtojson
 //     csv()
 //       .fromFile('./database.csv')
-//       .then(async function (jsonArrayObj) {
-//         //when parse finished, result will be emitted here.
-//         await Product.findOneAndUpdate(jsonArrayObj, function (err, r) {
-//           assert.equal(null, err);
-//           assert.equal(3, r.insertedCount);
-//         });
-//       });
+// .then(async function () {
+//   let cleanedupD = [];
+//   dataB.forEach((product) => {
+//     console.log(product);
+//     let splitGiftTypes = product.giftType.split(',');
+//     let splitGiftTags = product.tags.split(',');
+//     let splitHobbiesInterests = product.hobbiesInterests
+//       ? product.hobbiesInterests.split(',')
+//       : null;
+//     let splitOccasisons = product.ocassion
+//       ? product.ocassion.split(',')
+//       : null;
+
+//     cleanedupD.push({
+//       ...product,
+//       giftType: splitGiftTypes,
+//       tags: splitGiftTags,
+//       hobbiesInterests: splitHobbiesInterests,
+//       ocassion: splitOccasisons,
+//     });
 //   });
+//   console.log('cleanedupD', cleanedupD);
+//   //when parse finished, result will be emitted here.
+//   await Product.deleteMany({});
+
+//   await Product.collection.insertMany(cleanedupD);
+//   //
+// });
 
 module.exports = database;

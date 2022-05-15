@@ -56,13 +56,20 @@ async function calculateScore(ageFiltered, quizResults) {
       // console.log('matching indoor', product.productName);
       score++;
     }
-    const hArray = product.hobbiesInterests;
-    const oArray = product.occasion;
-
+    let hArray = product.hobbiesInterests;
+    if (hArray == null) {
+      hArray = [];
+    }
+    let oArray = product.occasion;
+    if (oArray == null) {
+      oArray = [];
+    }
     const tagArray = product.tags;
     const lowerCase = hArray.map((array) => array.toLowerCase());
     const lowerCaseTagArray = tagArray.map((array) => array.toLowerCase());
-    const lowerCaseOc = oArray.map((array) => array.toLowerCase());
+    const lowerCaseOc = Array.isArray(oArray)
+      ? oArray.map((array) => array.toLowerCase())
+      : oArray.toLowerCase();
 
     // SCORING HOBBIES
     quizResults.hobbies.forEach((hobby) => {
