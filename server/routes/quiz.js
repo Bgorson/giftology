@@ -154,7 +154,7 @@ router.post('/', async (req, res) => {
       if (giftTypeArray.length > 0) {
         typeAndAgeFiltered = ageFiltered.filter((product) => {
           const productTypes = product.giftType.toString().split(',');
-          return giftTypeArray.some((r) => !productTypes.includes(r));
+          return giftTypeArray.some((r) => productTypes.includes(r));
         });
       } else {
         typeAndAgeFiltered = ageFiltered;
