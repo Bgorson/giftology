@@ -31,3 +31,4 @@ patches/
 .DS_Store
 
 .eslintcache
+client/.eslintcache

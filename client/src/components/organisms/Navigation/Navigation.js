@@ -60,7 +60,7 @@ export default function Navigation({ pathname }) {
                   label: 'Quiz',
                 });
               }}
-              to="/quiz"
+              to="/quiz/who"
             >
               Take The Quiz
             </NavLink>
