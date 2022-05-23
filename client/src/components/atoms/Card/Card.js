@@ -19,6 +19,8 @@ export default function ProductCard({ product, handleCardClick }) {
       tags[index] = ' Health Nut';
     } else if (tag === 'mustOwn') {
       tags[index] = ' Must Own';
+    } else if (tag === 'MustOwn') {
+      tags[index] = ' Must Own';
     } else {
       tags[index] = ' ' + tag.charAt(0).toUpperCase() + tag.slice(1);
     }

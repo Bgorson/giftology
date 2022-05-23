@@ -8,7 +8,6 @@ module.exports = router;
 
 // full path is api/product
 router.get('/', async (req, res) => {
-  console.log('HIT');
   const products = await Product.find({});
 
   res.send({ message: 'Product retrieved successfully', products });

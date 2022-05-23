@@ -48,8 +48,15 @@ const Quiz = () => {
     {
       id: 'age',
       title: `How old are ${isForSelf ? 'you' : 'they'}?`,
-      answers: [],
-      isSlider: true,
+      answers: [
+        { message: '0-2', value: '0-2' },
+        { message: '3-5', value: '3-5' },
+        { message: '6-11', value: '6-11' },
+        { message: '12-20', value: '12-20' },
+        { message: '21-44', value: '21-44' },
+        { message: '45-65', value: '45-65' },
+        { message: '65+', value: '65-100' },
+      ],
     },
     {
       id: 'occasion',

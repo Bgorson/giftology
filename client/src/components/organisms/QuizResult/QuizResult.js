@@ -47,10 +47,9 @@ export default function QuizResult(props) {
               arrayOfCategories[category.name].sort(
                 (a, b) => b.score - a.score
               );
-              arrayOfCategories[category.name].sort((a, b) =>
-                b.score === a.score
-                  ? b.productBasePrice - a.productBasePrice
-                  : 0
+              arrayOfCategories[category.name].sort(
+                (a, b) =>
+                  parseInt(a.productBasePrice) - parseInt(b.productBasePrice)
               );
             }
           }
@@ -104,7 +103,7 @@ export default function QuizResult(props) {
       });
     }
   }, [results]);
-
+  console.log('RES', resArray);
   return (
     <React.Fragment>
       <TopContainer>
