@@ -69,7 +69,7 @@ export default function ResultSlider({
       <Container>
         {categoryScores.map(
           (category, index) =>
-            category.score >= 2 && (
+            (category.score >= 2 || categoryScores.length < 2) && (
               <CategoryDiv key={category.name}>
                 <CategoryContainer key={0}>
                   <Category>{category.name}</Category>
