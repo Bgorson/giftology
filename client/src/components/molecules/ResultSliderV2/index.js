@@ -50,8 +50,8 @@ export default function ResultSlider({
       {
         breakpoint: 600,
         settings: {
-          slidesToShow: 2,
-          slidesToScroll: 2,
+          slidesToShow: 1,
+          slidesToScroll: 1,
           initialSlide: 2,
         },
       },
@@ -92,6 +92,7 @@ export default function ResultSlider({
                   >
                     {arrayOfCategories[category.name].map((product, index) => (
                       <ProductCard
+                        key={index}
                         handleCardClick={handleCardClick}
                         product={product}
                       />

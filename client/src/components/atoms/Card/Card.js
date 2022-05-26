@@ -21,6 +21,10 @@ export default function ProductCard({ product, handleCardClick }) {
       tags[index] = ' Must Own';
     } else if (tag === 'MustOwn') {
       tags[index] = ' Must Own';
+    } else if (tag === 'WhiteElephant') {
+      tags[index] = ' White Elephant';
+    } else if (tag === 'whiteElephant') {
+      tags[index] = ' White Elephant';
     } else {
       tags[index] = ' ' + tag.charAt(0).toUpperCase() + tag.slice(1);
     }

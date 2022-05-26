@@ -73,3 +73,71 @@ export const FancyButton = styled.button`
     min-width: 100%;
   }
 `;
+
+export const ModalClose = styled.img`
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  margin-left: auto;
+  align-self: center;
+`;
+export const ModalHeading = styled.div`
+  display: flex;
+  flex-direction: row;
+`;
+
+export const ModalMain = styled.section`
+  position: fixed;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+
+  > .overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: rgba(0, 0, 0, 0.4);
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+  }
+
+  > .content {
+    position: relative;
+    background-color: #fefefe;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 70%;
+    max-height: 90%;
+    min-height: 200px;
+    overflow-y: auto;
+    z-index: 1;
+    text-align: center;
+
+    img {
+      max-width: 100%;
+    }
+
+    > .close-modal {
+      position: absolute;
+      right: 10px;
+      top: 10px;
+      font-size: 1.2rem;
+
+      &:hover {
+        opacity: 0.5;
+        cursor: pointer;
+      }
+    }
+  }
+
+  &.small > .content {
+    max-width: 600px;
+  }
+`;

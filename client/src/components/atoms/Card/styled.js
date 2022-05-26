@@ -25,10 +25,10 @@ export const ImageWrapper = styled.div`
   @media (max-width: 768px) {
     border: none;
   }
+  max-width: 350px;
+  width: 100%;
+
   img {
-    margin: auto;
-    align-self: center;
-    max-width: 400px;
-    height: 100%;
+    max-width: 100%;
   }
 `;

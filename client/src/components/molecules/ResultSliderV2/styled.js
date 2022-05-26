@@ -20,6 +20,10 @@ export const CategoryScore = styled.h2`
 export const Container = styled.div`
   display: flex;
   flex-direction: column;
+  @media (max-width: 768px) {
+    width: 80%;
+    margin: auto;
+  }
 `;
 export const FullContainer = styled.div`
   width: 100%;
@@ -58,7 +62,7 @@ export const CategoryDescription = styled.p`
 
 export const CategoryDiv = styled.div`
   margin: 2em auto;
-  width: 80%;
+  width: 100%;
 `;
 export const SlickContainer = styled.div`
   cursor: pointer;

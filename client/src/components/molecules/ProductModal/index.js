@@ -1,6 +1,7 @@
 import * as React from 'react';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
+import CloseIcon from '../../../close.png';
 import DialogContent from '@mui/material/DialogContent';
 import {
   TextContainer,
@@ -14,6 +15,8 @@ import {
   MobileWrapper,
   ProductDescriptionHeading,
   FancyButton,
+  ModalClose,
+  ModalHeading,
 } from './styles';
 import ReactGA from 'react-ga';
 
@@ -44,6 +47,7 @@ export default function ScrollDialog(props) {
   }
   return (
     <Dialog
+      disableScrollLock={true}
       maxWidth={'lg'}
       open={true}
       onClose={handleClose}
@@ -65,7 +69,10 @@ export default function ScrollDialog(props) {
           )}
 
           <TextContainer>
-            <ProductTitle>{product.productName}</ProductTitle>
+            <ModalHeading>
+              <ProductTitle>{product.productName}</ProductTitle>
+              <ModalClose onClick={() => handleClose()} src={CloseIcon} />
+            </ModalHeading>
             <ProductDescriptionHeading>
               Who do we like this for?
             </ProductDescriptionHeading>
@@ -106,7 +113,10 @@ export default function ScrollDialog(props) {
           )}
 
           <TextContainer>
-            <ProductTitle>{product.productName}</ProductTitle>
+            <ModalHeading>
+              <ProductTitle>{product.productName}</ProductTitle>
+              <ModalClose onClick={() => handleClose()} src={CloseIcon} />
+            </ModalHeading>
             <ProductDescriptionHeading>
               Who do we like this for?
             </ProductDescriptionHeading>
