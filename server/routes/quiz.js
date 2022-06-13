@@ -161,11 +161,7 @@ router.post('/', async (req, res) => {
       }
 
       calculateScore(typeAndAgeFiltered, quizResults).then((result) => {
-        let sortedData = [...result];
-        sortedData.sort(function (a, b) {
-          return a.productBasePrice.localeCompare(b.productBasePrice);
-        });
-        const arrayOfCategories = groupBy(sortedData, 'category');
+        const arrayOfCategories = groupBy(result, 'category');
         const categories = Object.keys(arrayOfCategories);
         const scores = [];
         categories.forEach((category) => {
@@ -181,7 +177,7 @@ router.post('/', async (req, res) => {
 
           scores.push({ name: category, score: averageScore });
         });
-        res.send({ categoryScores: scores, products: sortedData });
+        res.send({ categoryScores: scores, products: result });
       });
     });
   } catch (err) {

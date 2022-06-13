@@ -17,6 +17,12 @@ export default function ResultSlider({
   categoryScores,
   arrayOfCategories,
 }) {
+  categoryScores.forEach((category) => {
+    return arrayOfCategories[category.name].sort((a, b) => {
+      return a.productBasePrice - b.productBasePrice;
+    });
+  });
+
   const [width, setWidth] = useState(window.innerWidth);
 
   function handleWindowSizeChange() {
