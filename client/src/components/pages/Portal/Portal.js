@@ -6,7 +6,6 @@ const Portal = ({ onProductSelect }) => {
 
   const handleRetrieveProducts = async () => {
     const products = await getProducts();
-    console.log('P', products);
     const data = products.products;
     setDatabase(data);
   };
@@ -31,8 +30,6 @@ const Portal = ({ onProductSelect }) => {
     ],
     []
   );
-  console.log(tData);
-  console.log(columns);
 
   // const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
   //   useTable({ columns, tData });

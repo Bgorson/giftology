@@ -6,6 +6,9 @@ export const ButtonContainer = styled.div`
   flex-wrap: wrap;
   max-width: 900px;
   justify-content: center;
+  @media (max-width: 768px) {
+    width: 98%;
+  }
 `;
 
 export const Container = styled.div`
@@ -17,6 +20,9 @@ export const Container = styled.div`
   border-radius: 40px;
   padding: 5em 0;
   text-align: center;
+  @media (max-width: 768px) {
+    padding: 2em 0;
+  }
 `;
 
 export const Title = styled.h1`
@@ -67,7 +73,12 @@ export const FancyButton = styled.button`
       background-color: black;
       color: white;
     `}
-  @media (min-width: 768px) {
+  @media (max-width: 768px) {
+    ${(props) =>
+      !props.isSubmit &&
+      css`
+        min-width: 30%;
+      `}
   }
 `;
 

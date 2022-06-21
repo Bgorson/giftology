@@ -52,10 +52,10 @@ async function calculateScore(ageFiltered, quizResults) {
     }
 
     let score = 0;
-    if (product.indoorOutdoor == quizResults.prefer) {
-      // console.log('matching indoor', product.productName);
-      score++;
-    }
+    // if (product.indoorOutdoor == quizResults.prefer) {
+    //   // console.log('matching indoor', product.productName);
+    //   score++;
+    // }
     let hArray = product.hobbiesInterests;
     if (hArray == null) {
       hArray = [];

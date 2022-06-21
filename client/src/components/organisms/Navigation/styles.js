@@ -26,13 +26,16 @@ export const LogoNavItem = styled.li`
   list-style-type: none;
 
   @media (max-width: 768px) {
-    height: 155px;
+    height: 115px;
   }
 `;
 
 export const Logo = styled.img`
   width: 400px;
   cursor: pointer;
+  @media (max-width: 768px) {
+    width: 300px;
+  }
 `;
 export const NavLink = styled.a`
   color: black;

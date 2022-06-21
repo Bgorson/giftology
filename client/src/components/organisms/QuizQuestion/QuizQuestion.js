@@ -141,6 +141,7 @@ export default function QuizQuestion(props) {
       </ButtonContainer>
       {isMulti ? (
         <FancyButton
+          isSubmit={true}
           isMulti={isMulti}
           type="submit"
           onClick={() => {
@@ -168,6 +169,7 @@ export default function QuizQuestion(props) {
           />
           <ButtonContainer>
             <FancyButton
+              isSubmit={true}
               type="submit"
               onClick={() => {
                 ReactGA.event({
@@ -187,6 +189,7 @@ export default function QuizQuestion(props) {
       )}
       {isSlider ? (
         <FancyButton
+          isSubmit={true}
           isSlider={isSlider}
           isMulti={isMulti}
           type="submit"

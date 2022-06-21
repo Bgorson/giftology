@@ -103,7 +103,6 @@ export default function QuizResult(props) {
       });
     }
   }, [results]);
-  console.log('RES', resArray);
   return (
     <React.Fragment>
       <TopContainer>

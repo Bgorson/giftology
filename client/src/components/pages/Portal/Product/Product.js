@@ -2,7 +2,6 @@ import React from 'react';
 
 const Product = (props) => {
   const { product } = props;
-  console.log('WHAT I CLICKED', product.row.original);
 
   // const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
   //   useTable({ columns, tData });

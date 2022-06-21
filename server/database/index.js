@@ -19,34 +19,30 @@ const database = mongoose.connect(
 //     // require csvtojson
 
 //     // Convert a csv file with csvtojson
-//     csv()
-//       .fromFile('./database.csv')
-// .then(async function () {
-//   let cleanedupD = [];
-//   dataB.forEach((product) => {
-//     console.log(product);
-//     let splitGiftTypes = product.giftType.split(',');
-//     let splitGiftTags = product.tags.split(',');
-//     let splitHobbiesInterests = product.hobbiesInterests
-//       ? product.hobbiesInterests.split(',')
-//       : null;
-//     let splitOccasisons = product.ocassion
-//       ? product.ocassion.split(',')
-//       : null;
+// Product.deleteMany({});
 
-//     cleanedupD.push({
-//       ...product,
-//       giftType: splitGiftTypes,
-//       tags: splitGiftTags,
-//       hobbiesInterests: splitHobbiesInterests,
-//       ocassion: splitOccasisons,
-//     });
+// let cleanedupD = [];
+// dataB.forEach((product) => {
+//   console.log(product);
+//   let splitGiftTypes = product.giftType.split(',');
+//   let splitGiftTags = product.tags.split(',');
+//   let splitHobbiesInterests = product.hobbiesInterests
+//     ? product.hobbiesInterests.split(',')
+//     : null;
+//   let splitOccasisons = product.ocassion ? product.ocassion.split(',') : null;
+
+//   cleanedupD.push({
+//     ...product,
+//     giftType: splitGiftTypes,
+//     tags: splitGiftTags,
+//     hobbiesInterests: splitHobbiesInterests,
+//     ocassion: splitOccasisons,
 //   });
-//   console.log('cleanedupD', cleanedupD);
-//   //when parse finished, result will be emitted here.
-//   await Product.deleteMany({});
+// });
+// console.log('cleanedupD', cleanedupD);
+// //when parse finished, result will be emitted here.
 
-//   await Product.collection.insertMany(cleanedupD);
+// Product.collection.insertMany(cleanedupD);
 //   //
 // });
 
