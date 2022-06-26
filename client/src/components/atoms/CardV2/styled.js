@@ -8,11 +8,12 @@ export const FlavorText = styled.p`
 export const CardContainer = styled.div`
   color: black;
   width: 350px;
-  flex-basis: 23%;
+  flex-basis: 30%;
   display: flex;
   flex-direction: column;
-  justify-content: space-around;
   cursor: pointer;
+  color: black;
+  overflow: hidden;
   @media (max-width: 768px) {
     flex-basis: auto;
   }
@@ -24,17 +25,17 @@ export const CardContentContainer = styled.div`
 `;
 
 export const ImageWrapper = styled.div`
-  display: flex;
-  justify-content: center;
-  /* min-height: 200px; */
+  min-height: 399px;
 
   @media (max-width: 768px) {
     border: none;
   }
-
+  max-width: 350px;
+  width: 100%;
   img {
-    object-fit: cover;
-    width: 100%;
-    height: 15.625rem;
+    object-fit: scale-down;
+    height: 500px;
+    width: 500px;
+    max-width: 100%;
   }
 `;
