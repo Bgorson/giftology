@@ -41,7 +41,10 @@ export default function ProductCard({ product, showScore, handleCardClick }) {
   }
 
   return (
-    <CardContainer onClick={() => handleCardClick(product)}>
+    <CardContainer
+      data-id={product.score}
+      onClick={() => handleCardClick(product)}
+    >
       <ImageWrapper>
         <img
           alt={product.productName}
