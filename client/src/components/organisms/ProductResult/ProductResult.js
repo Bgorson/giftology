@@ -1,12 +1,22 @@
 import React from 'react';
-
+import { useLocation } from 'react-router-dom';
+import GiftBox from '../../organisms/GiftBox';
 import ScrollDialog from '../../molecules/ProductModal';
+// import ProductCard from '../../atoms/Card/Card';
+import ProductCardV2 from '../../atoms/CardV2/CardV2';
 
 import ResultSliderV2 from '../../molecules/ResultSliderV2';
+import { ProductGrid } from './styled';
 import ReactGA from 'react-ga';
 
 export default function ProductResult(props) {
+  function useQuery() {
+    const { search } = useLocation();
+    return search;
+  }
+  const score = useQuery();
   const { data, arrayOfCategories } = props;
+  const { products } = data;
   const [currentCardData, setCurrentCardData] = React.useState(null);
   const [open, setOpen] = React.useState(false);
 
@@ -31,11 +41,23 @@ export default function ProductResult(props) {
   // and display products and names
   return (
     <React.Fragment>
-      <ResultSliderV2
+      {/* <GiftBox product={products[0]} /> */}
+      <ProductGrid>
+        {products.map((product, index) => (
+          <ProductCardV2
+            showScore={score === '?score'}
+            key={index}
+            handleCardClick={handleClickOpen}
+            product={product}
+          />
+        ))}
+      </ProductGrid>
+
+      {/* <ResultSliderV2
         handleCardClick={handleClickOpen}
         categoryScores={categoryScores}
         arrayOfCategories={arrayOfCategories}
-      />
+      /> */}
       {open && (
         <ScrollDialog
           open={open}

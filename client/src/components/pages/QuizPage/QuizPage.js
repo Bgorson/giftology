@@ -18,13 +18,22 @@ const Quiz = () => {
       setQuizAge(response);
     }
     const newInput = `${id}`;
-    if (isMulti) {
-      answers[newInput] = response;
-    } else {
-      answers[newInput] = response.value;
-    }
 
-    setAnswers(answers);
+    if (id === 'additionalTags') {
+      let currentTags = answers['tags'];
+
+      currentTags.push(...response);
+      setAnswers({ ...answers, tags: currentTags });
+    } else {
+      if (isMulti) {
+        answers[newInput] = response;
+      } else {
+        answers[newInput] = response.value;
+      }
+
+      setAnswers(answers);
+    }
+    console.log('CURRENT ASNWERS', answers);
   };
 
   const quizQuestions = [
@@ -100,40 +109,43 @@ const Quiz = () => {
     },
     {
       id: 'tags',
-      title: `Describe ${
-        isForSelf ? 'your' : 'their'
-      } personality and interests`,
+      title: `Describe ${isForSelf ? 'your' : 'their'} personality`,
       isMulti: true,
       answers: [
-        { message: 'Alcohol', value: 'alcohol' },
         { message: 'Artsy', value: 'artsy' },
-        { message: 'Athletic', value: 'athletic' },
-        { message: 'Bath & Body', value: 'bathAndBody' },
-        { message: 'Books', value: 'books' },
-        { message: 'Cats', value: 'cats' },
-        { message: 'Classy', value: 'classy' },
-        { message: 'Coffee', value: 'coffee' },
-        { message: 'Competitive', value: 'competitive' },
         { message: 'Creative', value: 'creative' },
-        { message: 'DIY', value: 'diy' },
-        { message: 'Dogs', value: 'dogs' },
-        { message: 'Eco-Friendly', value: 'ecoFriendly' },
+        { message: 'Quirky', value: 'quirky' },
+        { message: 'Practical', value: 'practical' },
+        { message: 'Organized', value: 'organized' },
         { message: 'Efficient', value: 'efficient' },
+        { message: 'Athletic', value: 'athletic' },
+        { message: 'Competitive', value: 'competitive' },
+        { message: 'Handy', value: 'handy' },
+        { message: 'Eco-Friendly', value: 'ecoFriendly' },
+        { message: 'Classy', value: 'classy' },
+        { message: 'Nerdy', value: 'nerdy' },
+        { message: 'Trendy', value: 'trendy' },
+      ],
+    },
+    {
+      id: 'additionalTags',
+      title: `What are ${isForSelf ? 'your' : 'their'} interests?`,
+      isMulti: true,
+      answers: [
         { message: 'Indoors', value: 'indoors' },
-        { message: 'Health Nut', value: 'healthNut' },
+        { message: 'Outdoors', value: 'outdoors' },
+        { message: 'Travel', value: 'travel' },
+        { message: 'Coffee', value: 'coffee' },
+        { message: 'Tea', value: 'tea' },
+        { message: 'Alcohol', value: 'alcohol' },
+        { message: 'Bath & Body', value: 'bathAndBody' },
         { message: 'Home Decor', value: 'homeDecor' },
         { message: 'Home Office', value: 'homeOffice' },
+        { message: 'Cats', value: 'cats' },
+        { message: 'Dogs', value: 'dogs' },
+        { message: 'Books', value: 'books' },
         { message: 'Music', value: 'music' },
-        { message: 'Nerdy', value: 'nerdy' },
-        { message: 'Organized', value: 'organized' },
-        { message: 'Outdoors', value: 'outdoors' },
-        { message: 'Practical', value: 'practical' },
-        { message: 'Quirky', value: 'quirky' },
-        { message: 'Science', value: 'science' },
-        { message: 'Tea', value: 'tea' },
-        { message: 'Tea', value: 'tea' },
         { message: 'Technology', value: 'technology' },
-        { message: 'Trendy', value: 'trendy' },
       ],
     },
     // {

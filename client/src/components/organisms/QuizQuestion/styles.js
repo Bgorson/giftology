@@ -22,6 +22,8 @@ export const Container = styled.div`
   text-align: center;
   @media (max-width: 768px) {
     padding: 2em 0;
+    width: 95%;
+    margin: auto;
   }
 `;
 
@@ -31,7 +33,6 @@ export const Title = styled.h1`
 `;
 /* CSS */
 export const FancyButton = styled.button`
-  /* background-color: #44a2bb; */
   background-color: inherit;
   white-space: nowrap;
   min-width: 280px;
@@ -74,10 +75,12 @@ export const FancyButton = styled.button`
       color: white;
     `}
   @media (max-width: 768px) {
+    font-size: 18px;
+
     ${(props) =>
       !props.isSubmit &&
       css`
-        min-width: 30%;
+        min-width: 100px;
       `}
   }
 `;

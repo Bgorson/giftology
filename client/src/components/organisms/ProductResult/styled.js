@@ -63,3 +63,12 @@ export const EmptyText = styled.p`
   font-size: 50px;
   text-align: center;
 `;
+export const ProductGrid = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 10px;
+  @media (max-width: 768px) {
+    justify-content: center;
+  }
+`;

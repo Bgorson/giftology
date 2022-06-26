@@ -55,6 +55,8 @@ export default function ScrollDialog(props) {
       aria-labelledby="scroll-dialog-title"
       aria-describedby="scroll-dialog-description"
     >
+      <ModalClose onClick={() => handleClose()} src={CloseIcon} />
+
       {/* <DialogTitle id="scroll-dialog-title">{product.productName}</DialogTitle> */}
       <MobileWrapper>
         <DialogContent dividers={scroll === 'paper'}>
@@ -71,7 +73,7 @@ export default function ScrollDialog(props) {
           <TextContainer>
             <ModalHeading>
               <ProductTitle>{product.productName}</ProductTitle>
-              <ModalClose onClick={() => handleClose()} src={CloseIcon} />
+              {/* <ModalClose onClick={() => handleClose()} src={CloseIcon} /> */}
             </ModalHeading>
             <ProductDescriptionHeading>
               Who do we like this for?
@@ -115,7 +117,6 @@ export default function ScrollDialog(props) {
           <TextContainer>
             <ModalHeading>
               <ProductTitle>{product.productName}</ProductTitle>
-              <ModalClose onClick={() => handleClose()} src={CloseIcon} />
             </ModalHeading>
             <ProductDescriptionHeading>
               Who do we like this for?

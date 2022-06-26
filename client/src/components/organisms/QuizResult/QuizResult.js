@@ -1,12 +1,14 @@
 import React, { useState } from 'react';
 import { Audio } from 'react-loader-spinner';
 
-import { postQuizResults } from '../../../api/quiz';
+// import { postQuizResults } from '../../../api/quiz';
+import { postAllQuizResults } from '../../../api/allQuiz';
 import { Disclosure, TopContainer, Title } from './styles';
 import ProductResult from '../../organisms/ProductResult/ProductResult';
 import ReactGA from 'react-ga';
 
 export default function QuizResult(props) {
+  console.log(props);
   const { results } = props;
   const [isLoading, setIsLoading] = useState(true);
   const [resArray, setResArray] = useState([]);
@@ -32,30 +34,32 @@ export default function QuizResult(props) {
     if (Object.keys(results).length === 0) {
       const storedResults = localStorage.getItem('quizResults');
       const productPromise = Promise.resolve(
-        postQuizResults(JSON.parse(storedResults))
+        postAllQuizResults(JSON.parse(storedResults))
       );
       productPromise.then((productRes) => {
-        const { products, categoryScores } = productRes;
+        console.log(productRes);
 
-        const arrayOfCategories = groupBy(products, 'category');
+        // const { products, categoryScores } = productRes;
 
-        categoryScores.sort((a, b) => (b.score > a.score ? 1 : -1));
-        categoryScores.forEach((category) => {
-          for (let i = 0; i < arrayOfCategories[category.name].length; i++) {
-            if (arrayOfCategories[category.name][i].score) {
-              //TODO: Add a sort for breaking tie to be price. Highest wins.
-              arrayOfCategories[category.name].sort(
-                (a, b) => b.score - a.score
-              );
-              arrayOfCategories[category.name].sort(
-                (a, b) =>
-                  parseInt(a.productBasePrice) - parseInt(b.productBasePrice)
-              );
-            }
-          }
-        });
+        // const arrayOfCategories = groupBy(products, 'category');
 
-        setResArray(arrayOfCategories);
+        // categoryScores.sort((a, b) => (b.score > a.score ? 1 : -1));
+        // categoryScores.forEach((category) => {
+        //   for (let i = 0; i < arrayOfCategories[category.name].length; i++) {
+        //     if (arrayOfCategories[category.name][i].score) {
+        //       //TODO: Add a sort for breaking tie to be price. Highest wins.
+        //       arrayOfCategories[category.name].sort(
+        //         (a, b) => b.score - a.score
+        //       );
+        //       arrayOfCategories[category.name].sort(
+        //         (a, b) =>
+        //           parseInt(a.productBasePrice) - parseInt(b.productBasePrice)
+        //       );
+        //     }
+        //   }
+        // });
+
+        // setResArray(arrayOfCategories);
         setProductResults(productRes);
 
         setIsLoading(false);
@@ -70,28 +74,30 @@ export default function QuizResult(props) {
     } else {
       localStorage.setItem('quizResults', JSON.stringify(results));
 
-      const productPromise = Promise.resolve(postQuizResults(results));
+      const productPromise = Promise.resolve(postAllQuizResults(results));
       productPromise.then((productRes) => {
         setProductResults(productRes);
-        const { products, categoryScores } = productRes;
-        const arrayOfCategories = groupBy(products, 'category');
-        categoryScores.sort((a, b) => (b.score > a.score ? 1 : -1));
-        categoryScores.forEach((category) => {
-          for (let i = 0; i < arrayOfCategories[category.name].length; i++) {
-            if (arrayOfCategories[category.name][i].score) {
-              //TODO: Add a sort for breaking tie to be price. Highest wins.
-              arrayOfCategories[category.name].sort(
-                (a, b) => b.score - a.score
-              );
-              arrayOfCategories[category.name].sort((a, b) =>
-                b.score === a.score
-                  ? b.productBasePrice - a.productBasePrice
-                  : 0
-              );
-            }
-          }
-        });
-        setResArray(arrayOfCategories);
+        console.log(productRes);
+
+        // const { products, categoryScores } = productRes;
+        // const arrayOfCategories = groupBy(products, 'category');
+        // categoryScores.sort((a, b) => (b.score > a.score ? 1 : -1));
+        // categoryScores.forEach((category) => {
+        //   for (let i = 0; i < arrayOfCategories[category.name].length; i++) {
+        //     if (arrayOfCategories[category.name][i].score) {
+        //       //TODO: Add a sort for breaking tie to be price. Highest wins.
+        //       arrayOfCategories[category.name].sort(
+        //         (a, b) => b.score - a.score
+        //       );
+        //       arrayOfCategories[category.name].sort((a, b) =>
+        //         b.score === a.score
+        //           ? b.productBasePrice - a.productBasePrice
+        //           : 0
+        //       );
+        //     }
+        //   }
+        // });
+        // setResArray(arrayOfCategories);
         setIsLoading(false);
 
         if (!productRes) {
@@ -121,7 +127,8 @@ export default function QuizResult(props) {
         <Audio heigth="100" width="100" color="grey" ariaLabel="loading" />
       )}
       {!isLoading && (
-        <ProductResult arrayOfCategories={resArray} data={productResults} />
+        // <ProductResult arrayOfCategories={resArray} data={productResults} />
+        <ProductResult data={productResults} />
       )}
     </React.Fragment>
   );
