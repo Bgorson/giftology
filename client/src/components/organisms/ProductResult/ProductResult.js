@@ -10,15 +10,11 @@ import { ProductGrid } from './styled';
 import ReactGA from 'react-ga';
 
 export default function ProductResult(props) {
-  function useQuery() {
-    const { search } = useLocation();
-    return search;
-  }
-  const score = useQuery();
   const { data, arrayOfCategories } = props;
   const { products } = data;
   const [currentCardData, setCurrentCardData] = React.useState(null);
   const [open, setOpen] = React.useState(false);
+  const location = useLocation();
 
   // TODO: Put a use effect to sort it all once
   const handleClickOpen = (product) => {
@@ -33,6 +29,7 @@ export default function ProductResult(props) {
   const handleClose = () => {
     setOpen(false);
   };
+
   const { categoryScores = [] } = data;
   // if (products.length > 0 && categoryScores.length > 0) {
   ReactGA.pageview('Product Result Viewed');
@@ -45,7 +42,7 @@ export default function ProductResult(props) {
       <ProductGrid>
         {products.map((product, index) => (
           <ProductCardV2
-            showScore={score === '?score'}
+            showScore={location.search ? true : false}
             key={index}
             handleCardClick={handleClickOpen}
             product={product}
