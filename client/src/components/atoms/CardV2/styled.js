@@ -10,6 +10,7 @@ export const CardContainer = styled.div`
   width: 350px;
   flex-basis: 30%;
   display: flex;
+  align-items: center;
   flex-direction: column;
   cursor: pointer;
   color: black;
@@ -32,6 +33,7 @@ export const ImageWrapper = styled.div`
   }
   max-width: 350px;
   width: 100%;
+
   img {
     object-fit: scale-down;
     height: 500px;

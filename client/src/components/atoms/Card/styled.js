@@ -14,20 +14,22 @@ export const CardContainer = styled.div`
 
 export const CardContentContainer = styled.div`
   min-height: 100px;
-  text-align: left;
+  text-align: center;
+  & div {
+    text-align: center !important;
+  }
 `;
 
 export const ImageWrapper = styled.div`
   display: flex;
   justify-content: center;
   min-height: 399px;
-
+  margin: auto;
   @media (max-width: 768px) {
     border: none;
   }
   max-width: 350px;
   width: 100%;
-
   img {
     max-width: 100%;
   }

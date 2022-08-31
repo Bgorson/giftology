@@ -1,12 +1,12 @@
 import React from 'react';
 import { useLocation } from 'react-router-dom';
-import GiftBox from '../../organisms/GiftBox';
+import GiftBox from '../../../components/box/box';
 import ScrollDialog from '../../molecules/ProductModal';
 // import ProductCard from '../../atoms/Card/Card';
 import ProductCardV2 from '../../atoms/CardV2/CardV2';
 
 import ResultSliderV2 from '../../molecules/ResultSliderV2';
-import { ProductGrid } from './styled';
+import { ProductGrid, BoxContainer } from './styled';
 import ReactGA from 'react-ga';
 
 export default function ProductResult(props) {
@@ -19,7 +19,7 @@ export default function ProductResult(props) {
   // TODO: Put a use effect to sort it all once
   const handleClickOpen = (product) => {
     ReactGA.event({
-      category: 'Product Selected',
+      category: 'Highlighted Product Selected',
       action: product.productName,
     });
     setCurrentCardData(product);
@@ -38,15 +38,24 @@ export default function ProductResult(props) {
   // and display products and names
   return (
     <React.Fragment>
-      {/* <GiftBox product={products[0]} /> */}
+      <BoxContainer>
+        <GiftBox handleCardClick={handleClickOpen} product={products[0]} />
+        <GiftBox handleCardClick={handleClickOpen} product={products[1]} />
+        <GiftBox handleCardClick={handleClickOpen} product={products[2]} />
+      </BoxContainer>
+
       <ProductGrid>
         {products.map((product, index) => (
-          <ProductCardV2
-            showScore={location.search ? true : false}
-            key={index}
-            handleCardClick={handleClickOpen}
-            product={product}
-          />
+          <>
+            {index > 3 ? (
+              <ProductCardV2
+                showScore={location.search ? true : false}
+                key={index}
+                handleCardClick={handleClickOpen}
+                product={product}
+              />
+            ) : null}
+          </>
         ))}
       </ProductGrid>
 

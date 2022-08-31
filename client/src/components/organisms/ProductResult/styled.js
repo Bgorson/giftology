@@ -72,3 +72,13 @@ export const ProductGrid = styled.div`
     justify-content: center;
   }
 `;
+export const BoxContainer = styled.div`
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: nowrap;
+  gap: 10px;
+  @media (max-width: 768px) {
+    justify-content: center;
+    flex-direction: column;
+  }
+`;

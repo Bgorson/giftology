@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-
+import Box from '../../../components/box/box.js';
 import backgroundImage from '../../../backgroundImage.jpeg';
 
 import {
@@ -29,6 +29,7 @@ export default function WelcomePage() {
           </HeroCallToAction>
         </HeroText>
       </Hero>
+      {/* <Box /> */}
       {/* <ProductResult data={data} /> */}
     </div>
   );
