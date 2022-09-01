@@ -38,8 +38,8 @@ const shake = keyframes`
 `;
 
 const Circle = styled.img`
-  width: 200px;
-  height: 200px;
+  width: 300px;
+  height: 300px;
   cursor: pointer;
   transform: translate(-9px, -15px);
 
@@ -49,42 +49,27 @@ const Circle = styled.img`
 `;
 const CircleContainer = styled.div`
   flex-basis: 30%;
+  border-radius: 3em;
   display: flex;
+  min-height: 690px;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   margin-top: 2em;
   visibility: ${(props) => (props.out ? 'hidden' : 'visible')};
-  animation: ${(props) => (props.out ? fadeOut : fadeIn)} 1s linear;
   transition: visibility 1s linear;
-`;
-
-const fadeIn = keyframes`
-  from {
-    transform: scale(0.25);
-    opacity: 0;
-  }
-
-  to {
-    transform: scale(1);
-    opacity: 1;
-  }
-`;
-
-const fadeOut = keyframes`
-  from {
-    transform: scale(1);
-    opacity: 1;
-  }
-
-  to {
-    transform: scale(0.25);
-    opacity: 0;
-  }
+  ${(props) =>
+    props.visible &&
+    css`
+      background: #27eaf4;
+      background: -webkit-linear-gradient(top left, #27eaf4, #208dc5);
+      background: -moz-linear-gradient(top left, #27eaf4, #208dc5);
+      background: linear-gradient(to bottom right, #27eaf4, #208dc5);
+    `}
 `;
 
 export default function ({ product, handleCardClick, id }) {
-  const handleClick = (el) => {
+  const handleClick = () => {
     setIsVisible(false);
     setTimeout(() => {
       setFadeIn(false);
@@ -95,7 +80,7 @@ export default function ({ product, handleCardClick, id }) {
 
   return (
     <>
-      <CircleContainer onClick={() => handleClick(`star${id}`)}>
+      <CircleContainer visible={visible} onClick={() => handleClick()}>
         {visible ? (
           <>
             <Circle src={star}></Circle>
