@@ -8,7 +8,7 @@ import ProductResult from '../../organisms/ProductResult/ProductResult';
 import ReactGA from 'react-ga';
 
 export default function QuizResult(props) {
-  console.log(props);
+  // console.log(props);
   const { results } = props;
   const [isLoading, setIsLoading] = useState(true);
   const [resArray, setResArray] = useState([]);
@@ -37,7 +37,7 @@ export default function QuizResult(props) {
         postAllQuizResults(JSON.parse(storedResults))
       );
       productPromise.then((productRes) => {
-        console.log(productRes);
+        // console.log(productRes);
 
         // const { products, categoryScores } = productRes;
 
@@ -77,7 +77,7 @@ export default function QuizResult(props) {
       const productPromise = Promise.resolve(postAllQuizResults(results));
       productPromise.then((productRes) => {
         setProductResults(productRes);
-        console.log(productRes);
+        // console.log(productRes);
 
         // const { products, categoryScores } = productRes;
         // const arrayOfCategories = groupBy(products, 'category');

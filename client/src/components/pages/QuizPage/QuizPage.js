@@ -33,7 +33,7 @@ const Quiz = () => {
 
       setAnswers(answers);
     }
-    console.log('CURRENT ASNWERS', answers);
+    // console.log('CURRENT ASNWERS', answers);
   };
 
   const quizQuestions = [

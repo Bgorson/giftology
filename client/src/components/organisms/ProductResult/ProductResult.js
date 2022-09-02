@@ -17,11 +17,19 @@ export default function ProductResult(props) {
   const location = useLocation();
 
   // TODO: Put a use effect to sort it all once
-  const handleClickOpen = (product) => {
-    ReactGA.event({
-      category: 'Highlighted Product Selected',
-      action: product.productName,
-    });
+  const handleClickOpen = (product, isHighlighted) => {
+    if (isHighlighted) {
+      ReactGA.event({
+        category: 'Highlighted Product Selected',
+        action: product.productName,
+      });
+    } else {
+      ReactGA.event({
+        category: 'Product Selected',
+        action: product.productName,
+      });
+    }
+
     setCurrentCardData(product);
     setOpen(true);
   };

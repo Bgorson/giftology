@@ -7,7 +7,11 @@ import {
   CardContentContainer,
   ImageWrapper,
 } from './styled';
-export default function ProductCard({ product, handleCardClick }) {
+export default function ProductCard({
+  product,
+  handleCardClick,
+  isHighlighted,
+}) {
   let tags = [...product.tags];
   tags.forEach((tag, index) => {
     if (tag === null || tag === 'null' || tag === 'Null') {
@@ -41,7 +45,7 @@ export default function ProductCard({ product, handleCardClick }) {
   }
 
   return (
-    <CardContainer onClick={() => handleCardClick(product)}>
+    <CardContainer onClick={() => handleCardClick(product, isHighlighted)}>
       <ImageWrapper>
         <img
           alt={product.productName}

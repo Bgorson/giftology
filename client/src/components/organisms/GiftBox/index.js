@@ -17,7 +17,6 @@ import { useState } from 'react';
 const GiftBox = (props) => {
   const { product } = props;
   const [checked, setChecked] = useState(false);
-  console.log(checked);
   return (
     <BirthdayGift>
       <Gift>

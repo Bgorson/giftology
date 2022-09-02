@@ -71,6 +71,13 @@ const CircleContainer = styled.div`
 export default function ({ product, handleCardClick, id }) {
   const handleClick = () => {
     setIsVisible(false);
+    if (visible) {
+      ReactGA.event({
+        category: 'Star Selected',
+        action: product.productName,
+      });
+    }
+
     setTimeout(() => {
       setFadeIn(false);
     }, 1000);
@@ -87,7 +94,11 @@ export default function ({ product, handleCardClick, id }) {
             {'Click me!'}
           </>
         ) : (
-          <ProductCard handleCardClick={handleCardClick} product={product} />
+          <ProductCard
+            isHighlighted={true}
+            handleCardClick={handleCardClick}
+            product={product}
+          />
         )}
       </CircleContainer>
     </>
