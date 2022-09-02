@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import styled, { css, keyframes } from 'styled-components';
+import ReactGA from 'react-ga';
 
 import star from '../../star.png';
 import ProductCard from '../atoms/Card';
