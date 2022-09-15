@@ -3,7 +3,7 @@ import { Audio } from 'react-loader-spinner';
 
 // import { postQuizResults } from '../../../api/quiz';
 import { postAllQuizResults } from '../../../api/allQuiz';
-import { Disclosure, TopContainer, Title } from './styles';
+import { Disclosure, TopContainer, Title, LoaderContainer } from './styles';
 import ProductResult from '../../organisms/ProductResult/ProductResult';
 import ReactGA from 'react-ga';
 
@@ -124,7 +124,10 @@ export default function QuizResult(props) {
         {/* <p>{JSON.stringify(results)}</p> */}
       </TopContainer>
       {isLoading && (
-        <Audio heigth="100" width="100" color="grey" ariaLabel="loading" />
+        <LoaderContainer>
+          Calculating the perfect gift...
+          <Audio heigth="500" width="500" color="grey" ariaLabel="loading" />
+        </LoaderContainer>
       )}
       {!isLoading && (
         // <ProductResult arrayOfCategories={resArray} data={productResults} />

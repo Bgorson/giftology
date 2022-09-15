@@ -64,21 +64,24 @@ export const EmptyText = styled.p`
   text-align: center;
 `;
 export const ProductGrid = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  gap: 10px;
+  max-width: 1200px;
+  margin: auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  grid-gap: 2em;
   @media (max-width: 768px) {
     justify-content: center;
+    width: 75%;
   }
 `;
 export const BoxContainer = styled.div`
-  display: flex;
-  justify-content: space-between;
-  flex-wrap: nowrap;
-  gap: 10px;
+  max-width: 1200px;
+  margin: auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  grid-gap: 2em;
   @media (max-width: 768px) {
     justify-content: center;
-    flex-direction: column;
+    width: 75%;
   }
 `;

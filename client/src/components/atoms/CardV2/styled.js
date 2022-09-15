@@ -7,11 +7,13 @@ export const FlavorText = styled.p`
 
 export const CardContainer = styled.div`
   color: black;
-  width: 350px;
+  padding: 0 1em;
   flex-basis: 30%;
   display: flex;
   align-items: center;
   flex-direction: column;
+  margin: auto;
+
   cursor: pointer;
   color: black;
   overflow: hidden;
@@ -31,13 +33,13 @@ export const ImageWrapper = styled.div`
   @media (max-width: 768px) {
     border: none;
   }
-  max-width: 350px;
   width: 100%;
 
   img {
+    margin: auto;
     object-fit: scale-down;
-    height: 500px;
-    width: 500px;
-    max-width: 100%;
+    height: 350px;
+
+    width: 100%;
   }
 `;

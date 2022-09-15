@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import styled, { css, keyframes } from 'styled-components';
 import ReactGA from 'react-ga';
 
-import star from '../../star.png';
-import ProductCard from '../atoms/Card';
+import gift from '../../present.jpg';
+import ProductCard from '../atoms/CardV2';
 
 const testData = {
   _id: '628ba23c7cef8ce8b60969e9',
@@ -43,6 +43,8 @@ const Circle = styled.img`
   height: 300px;
   cursor: pointer;
   transform: translate(-9px, -15px);
+  border: 1px solid black;
+  border-radius: 3em;
 
   &:hover {
     animation: ${shake} 0.3s infinite alternate;
@@ -52,21 +54,32 @@ const CircleContainer = styled.div`
   flex-basis: 30%;
   border-radius: 3em;
   display: flex;
-  min-height: 690px;
+  min-width: 300px;
+  height: 500px;
+
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  margin-top: 2em;
   visibility: ${(props) => (props.out ? 'hidden' : 'visible')};
   transition: visibility 1s linear;
   ${(props) =>
     props.visible &&
     css`
-      background: #27eaf4;
+      /* background: #27eaf4;
       background: -webkit-linear-gradient(top left, #27eaf4, #208dc5);
       background: -moz-linear-gradient(top left, #27eaf4, #208dc5);
-      background: linear-gradient(to bottom right, #27eaf4, #208dc5);
+      background: linear-gradient(to bottom right, #27eaf4, #208dc5); */
     `}
+  ${(props) =>
+    !props.visible &&
+    css`
+      /* flex-basis: auto; */
+      display: block;
+    `}
+`;
+
+const TeaserText = styled.p`
+  padding-bottom: 1em;
 `;
 
 export default function ({ product, handleCardClick, id }) {
@@ -88,20 +101,23 @@ export default function ({ product, handleCardClick, id }) {
 
   return (
     <>
-      <CircleContainer visible={visible} onClick={() => handleClick()}>
-        {visible ? (
+      {visible && (
+        <CircleContainer visible={visible} onClick={() => handleClick()}>
           <>
-            <Circle src={star}></Circle>
-            {'Click me!'}
+            <TeaserText>{'Click to reveal your top gifts!'}</TeaserText>
+            <Circle src={gift}></Circle>
+            {'Click into images to learn more!'}
           </>
-        ) : (
-          <ProductCard
-            isHighlighted={true}
-            handleCardClick={handleCardClick}
-            product={product}
-          />
-        )}
-      </CircleContainer>
+        </CircleContainer>
+      )}
+
+      {!visible && (
+        <ProductCard
+          isHighlighted={true}
+          handleCardClick={handleCardClick}
+          product={product}
+        />
+      )}
     </>
   );
 }

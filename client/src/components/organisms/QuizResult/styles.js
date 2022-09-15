@@ -17,3 +17,16 @@ export const Title = styled.h1`
   margin: 1em;
   text-align: center;
 `;
+
+export const LoaderContainer = styled.div`
+  width: 100%;
+  padding: 2em 0;
+  text-align: center;
+  & > div {
+    justify-content: center;
+    padding-top: 1em;
+  }
+  @media (max-width: 768px) {
+    padding-top: 0;
+  }
+`;
