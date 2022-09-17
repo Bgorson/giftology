@@ -5,6 +5,7 @@ import {
   FlavorText,
   CardContentContainer,
   ImageWrapper,
+  SubTextContainer,
 } from './styled';
 
 export default function ProductCard({ product, showScore, handleCardClick }) {
@@ -58,20 +59,22 @@ export default function ProductCard({ product, showScore, handleCardClick }) {
 
       <CardContentContainer>
         <Typography
-          style={{ fontWeight: 'bold', textAlign: 'left' }}
+          style={{ textAlign: 'left' }}
           gutterBottom
-          variant="h5"
+          variant="h6"
           component="div"
         >
           {product.productName}
         </Typography>
-        <FlavorText variant="body2" color="text.secondary">
-          ${product.productBasePrice}
-        </FlavorText>
-        {showScore && <FlavorText>SCORE:{product.score}</FlavorText>}
-        <FlavorText variant="body2" color="text.secondary">
-          {`Tags: ${product.category}${tags.length > 0 ? ',' : ''}${tags}`}
-        </FlavorText>
+        <SubTextContainer>
+          <FlavorText variant="body2" color="text.secondary">
+            ${product.productBasePrice}
+          </FlavorText>
+          {showScore && <FlavorText>SCORE:{product.score}</FlavorText>}
+          <FlavorText variant="body2" color="text.secondary">
+            {`Tags: ${product.category}${tags.length > 0 ? ',' : ''}${tags}`}
+          </FlavorText>
+        </SubTextContainer>
 
         {/* <Typography variant="body2" color="text.secondary">
             {product.score}

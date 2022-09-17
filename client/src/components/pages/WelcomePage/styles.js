@@ -3,6 +3,8 @@ import styled from 'styled-components';
 export const HeroImage = styled.img`
   object-fit: cover;
   width: 100%;
+  box-shadow: 5px 5px #ededed;
+  border-radius: 2em;
 `;
 export const Hero = styled.div`
   position: relative;

@@ -50,6 +50,7 @@ const Circle = styled.img`
     animation: ${shake} 0.3s infinite alternate;
   }
 `;
+
 const CircleContainer = styled.div`
   flex-basis: 30%;
   border-radius: 3em;
