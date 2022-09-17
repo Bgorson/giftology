@@ -26,7 +26,11 @@ export const CardContentContainer = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  height: 155px;
+  & > div {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
 `;
 
 export const ImageWrapper = styled.div`
