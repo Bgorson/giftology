@@ -75,15 +75,3 @@ export const ProductGrid = styled.div`
     width: 75%;
   }
 `;
-export const BoxContainer = styled.div`
-  max-width: 1250px;
-
-  margin: auto;
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  grid-gap: 2em;
-  @media (max-width: 768px) {
-    justify-content: center;
-    width: 75%;
-  }
-`;

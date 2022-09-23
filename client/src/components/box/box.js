@@ -39,25 +39,21 @@ const shake = keyframes`
 `;
 
 const Circle = styled.img`
-  width: 300px;
-  height: 300px;
   cursor: pointer;
   transform: translate(-9px, -15px);
-  border: 1px solid black;
-  border-radius: 3em;
-
+  width: calc(100% - 32px);
+  margin: 0 auto;
   &:hover {
     animation: ${shake} 0.3s infinite alternate;
   }
 `;
 
 const CircleContainer = styled.div`
-  flex-basis: 30%;
+  cursor: pointer;
+  border: 1px solid black;
   border-radius: 3em;
   display: flex;
-  min-width: 300px;
-  height: 500px;
-
+  height: 450px;
   flex-direction: column;
   justify-content: center;
   align-items: center;
@@ -79,16 +75,14 @@ const CircleContainer = styled.div`
     `}
 `;
 
-const TeaserText = styled.p`
-  padding-bottom: 1em;
-`;
+const TeaserText = styled.p``;
 
 export default function ({ product, handleCardClick, id }) {
   const handleClick = () => {
     setIsVisible(false);
     if (visible) {
       ReactGA.event({
-        category: 'Star Selected',
+        category: 'Gift Box Selected',
         action: product.productName,
       });
     }

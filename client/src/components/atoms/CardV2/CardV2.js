@@ -8,7 +8,12 @@ import {
   SubTextContainer,
 } from './styled';
 
-export default function ProductCard({ product, showScore, handleCardClick }) {
+export default function ProductCard({
+  product,
+  showScore,
+  handleCardClick,
+  isHighlighted,
+}) {
   let tags = [...product.tags];
   tags.forEach((tag, index) => {
     if (tag === null || tag === 'null' || tag === 'Null') {
@@ -44,7 +49,7 @@ export default function ProductCard({ product, showScore, handleCardClick }) {
   return (
     <CardContainer
       data-id={product.score}
-      onClick={() => handleCardClick(product)}
+      onClick={() => handleCardClick(product, isHighlighted)}
     >
       <ImageWrapper>
         <img

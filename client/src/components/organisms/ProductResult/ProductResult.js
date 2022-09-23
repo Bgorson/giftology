@@ -6,7 +6,7 @@ import ScrollDialog from '../../molecules/ProductModal';
 import ProductCardV2 from '../../atoms/CardV2/CardV2';
 
 import ResultSliderV2 from '../../molecules/ResultSliderV2';
-import { ProductGrid, BoxContainer } from './styled';
+import { ProductGrid } from './styled';
 import ReactGA from 'react-ga';
 
 export default function ProductResult(props) {
@@ -46,13 +46,10 @@ export default function ProductResult(props) {
   // and display products and names
   return (
     <React.Fragment>
-      <BoxContainer>
+      <ProductGrid>
         <GiftBox handleCardClick={handleClickOpen} product={products[0]} />
         <GiftBox handleCardClick={handleClickOpen} product={products[1]} />
         <GiftBox handleCardClick={handleClickOpen} product={products[2]} />
-      </BoxContainer>
-
-      <ProductGrid>
         {products.map((product, index) => (
           <>
             {index > 3 ? (
