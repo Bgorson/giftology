@@ -51,12 +51,11 @@ export default function ProductCard({
       data-id={product.score}
       onClick={() => handleCardClick(product, isHighlighted)}
     >
-      {product?.product_card_banner ||
-        (isHighlighted && (
-          <Badge
-            text={isHighlighted ? 'Top Gift!' : product.product_card_banner}
-          />
-        ))}
+      {(product?.product_card_banner || isHighlighted) && (
+        <Badge
+          text={isHighlighted ? 'Top Gift!' : product.product_card_banner}
+        />
+      )}
       <ImageWrapper>
         <img
           alt={product.productName}
