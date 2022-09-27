@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import styled, { css, keyframes } from 'styled-components';
 import ReactGA from 'react-ga';
+import Badge from '../atoms/CardV2/Badge';
 
 import gift from '../../present.jpg';
 import ProductCard from '../atoms/CardV2';
@@ -50,6 +51,8 @@ const Circle = styled.img`
 
 const CircleContainer = styled.div`
   cursor: pointer;
+  position: relative;
+
   border: 1px solid black;
   border-radius: 3em;
   display: flex;
@@ -103,10 +106,11 @@ export default function ({ product, handleCardClick, id }) {
     <>
       {visible && (
         <CircleContainer visible={visible} onClick={() => handleClick()}>
+          <Badge text={'Top Gift!'} />
           <>
-            <TeaserText>{'Click to reveal your top gifts!'}</TeaserText>
+            {/* <TeaserText>{'Click to reveal your top gifts!'}</TeaserText> */}
             <Circle src={gift}></Circle>
-            {'Click into images to learn more!'}
+            {/* {'Click into images to learn more!'} */}
           </>
         </CircleContainer>
       )}

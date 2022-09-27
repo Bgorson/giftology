@@ -54,6 +54,7 @@ export const ImageWrapper = styled.div`
 export const SubTextContainer = styled.div``;
 export const BadgeContainer = styled.div`
   position: absolute;
+  z-index: 100;
   top: 5%;
   left: 70%;
   background-color: skyblue;
