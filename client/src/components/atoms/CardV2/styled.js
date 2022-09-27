@@ -8,6 +8,8 @@ export const FlavorText = styled.p`
 
 export const CardContainer = styled.div`
   color: black;
+  position: relative;
+
   padding: 5px 1em;
   border: 1px solid grey;
   border-radius: 2em;
@@ -50,3 +52,17 @@ export const ImageWrapper = styled.div`
   }
 `;
 export const SubTextContainer = styled.div``;
+export const BadgeContainer = styled.div`
+  position: absolute;
+  top: 5%;
+  left: 70%;
+  background-color: skyblue;
+  transform: rotate(35deg);
+  min-width: 150px;
+  text-align: center;
+  height: 40px;
+  border-radius: 15px;
+`;
+export const BadgeText = styled.p`
+  margin-top: 10px;
+`;

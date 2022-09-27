@@ -33,6 +33,7 @@ const productSchema = new Schema({
   listingId: { type: String },
   updated_at: { type: Date },
   score: { type: Number },
+  product_card_banner: { type: String },
 });
 
 const Product = mongoose.model('Products', productSchema);

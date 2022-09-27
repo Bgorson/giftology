@@ -53,6 +53,8 @@ const CircleContainer = styled.div`
   border: 1px solid black;
   border-radius: 3em;
   display: flex;
+  padding: 15px;
+
   height: 450px;
   flex-direction: column;
   justify-content: center;
@@ -73,6 +75,9 @@ const CircleContainer = styled.div`
       /* flex-basis: auto; */
       display: block;
     `}
+    @media (max-width: 768px) {
+    padding: 0px;
+  }
 `;
 
 const TeaserText = styled.p``;

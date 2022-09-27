@@ -7,7 +7,7 @@ import {
   ImageWrapper,
   SubTextContainer,
 } from './styled';
-
+import Badge from './Badge';
 export default function ProductCard({
   product,
   showScore,
@@ -51,6 +51,9 @@ export default function ProductCard({
       data-id={product.score}
       onClick={() => handleCardClick(product, isHighlighted)}
     >
+      {product?.product_card_banner && (
+        <Badge text={product.product_card_banner} />
+      )}
       <ImageWrapper>
         <img
           alt={product.productName}

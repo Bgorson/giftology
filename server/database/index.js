@@ -43,7 +43,5 @@ const database = mongoose.connect(
 // //when parse finished, result will be emitted here.
 
 // Product.collection.insertMany(cleanedupD);
-//   //
-// });
 
 module.exports = database;
