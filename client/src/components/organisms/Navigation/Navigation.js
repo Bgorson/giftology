@@ -70,6 +70,21 @@ export default function Navigation({ pathname }) {
               as={Link}
               onClick={() => {
                 ReactGA.event({
+                  category: 'Feedback',
+                  action: 'Clicked Feedback',
+                  label: 'Feedback',
+                });
+              }}
+              to="/feedback"
+            >
+              Feedback
+            </NavLink>
+          </NavItem>
+          <NavItem>
+            <NavLink
+              as={Link}
+              onClick={() => {
+                ReactGA.event({
                   category: 'Navlink',
                   action: 'Clicked About',
                   label: 'About',

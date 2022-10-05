@@ -5,6 +5,8 @@ import HomePage from '../../pages/HomePage';
 import LostPage from '../../pages/LostPage';
 import QuizPage from '../../pages/QuizPage';
 import AboutPage from '../../pages/AboutPage';
+import FeedbackPage from '../../pages/Feedbackpage';
+
 import AdminPage from '../../pages/AdminPage';
 import Portal from '../../pages/Portal';
 import Product from '../../pages/Portal/Product';
@@ -40,6 +42,7 @@ export default function Main() {
         <Switch>
           <Route exact path="/" component={WelcomePage} />
           <Route path="/quiz" component={QuizPage} />
+          <Route path="/feedback" component={FeedbackPage} />
           <Route path="/about" component={AboutPage} />
           <Route path="/admin" component={AdminPage} />
           {/* <AdminPage setToken={setToken} /> */}

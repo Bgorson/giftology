@@ -58,7 +58,7 @@ export const BadgeContainer = styled.div`
   top: 5%;
   left: 70%;
   background-color: skyblue;
-  transform: rotate(35deg);
+  transform: rotate(45deg);
   min-width: 150px;
   text-align: center;
   height: 40px;
