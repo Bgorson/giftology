@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useLocation, Switch, Route } from 'react-router-dom';
+import { useLocation, Switch, Route, Redirect } from 'react-router-dom';
 import WelcomePage from '../../pages/WelcomePage';
 import HomePage from '../../pages/HomePage';
 import LostPage from '../../pages/LostPage';
@@ -44,9 +44,10 @@ export default function Main() {
           <Route path="/quiz" component={QuizPage} />
           <Route path="/feedback" component={FeedbackPage} />
           <Route path="/about" component={AboutPage} />
-          <Route path="/admin" component={AdminPage} />
+          <Route path="/admin" component={AdminPage} />{' '}
+          {/* <Redirect to="/not-found" /> */}
+          <Redirect to="/" />
           {/* <AdminPage setToken={setToken} /> */}
-
           {/* <Route path="/portal/product">
             {token && <Product product={product} />}
           </Route> */}
@@ -57,7 +58,6 @@ export default function Main() {
               <LostPage />
             )}
           </Route> */}
-
           <Route path="*" element={LostPage} />
         </Switch>
       </MainContainer>

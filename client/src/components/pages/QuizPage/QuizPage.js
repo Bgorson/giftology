@@ -1,12 +1,13 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Wizard, Steps, Step } from 'react-albus';
 import QuizQuestion from '../../organisms/QuizQuestion/QuizQuestion';
 import { Route } from 'react-router-dom';
 
 const Quiz = () => {
-  const [answers, setAnswers] = React.useState({});
-  const [isForSelf, setIsForSelf] = React.useState(false);
-  const [quizAge, setQuizAge] = React.useState(0);
+  const [answers, setAnswers] = useState({});
+  // const [isForCoworkers, setIsForCoworkers] = useState(false);
+  const [isForSelf, setIsForSelf] = useState(false);
+  const [quizAge, setQuizAge] = useState(0);
 
   const handleResponse = (id, response, isMulti) => {
     window.scrollTo(0, 0);
@@ -14,6 +15,12 @@ const Quiz = () => {
     if (id === 'who' && response === 'Myself') {
       setIsForSelf(true);
     }
+    // if (id === 'who' && response === 'A Coworker') {
+    //   setIsForCoworkers(true);
+    // }
+    // if (id === 'howMany' && response === '1') {
+    //   setIsForCoworkers(false);
+    // }
     if (id === 'age') {
       setQuizAge(response);
     }
@@ -42,6 +49,7 @@ const Quiz = () => {
       title: 'Who are you shopping for?',
       answers: [
         { message: 'Myself', value: 'myself' },
+        { message: 'A Coworker', value: 'coworker' },
         { message: 'A Relative', value: 'relative' },
         { message: 'A Friend', value: 'friend' },
       ],
@@ -166,6 +174,47 @@ const Quiz = () => {
     //     { message: 'Not at this time', value: false },
     //   ],
     // },
+    //   {
+    //     id: 'results',
+    //     title: '',
+    //     answers: [''],
+    //   },
+    // ];
+    // const quizCoWorkerQuestions = [
+    //   {
+    //     id: 'howMany',
+    //     title: 'How many coworkers?',
+    //     answers: [
+    //       { message: '1', value: '1' },
+    //       { message: '2-5', value: '2-5' },
+    //       { message: '6-11', value: '6-11' },
+    //       { message: '12-20', value: '12-20' },
+    //       { message: '20+', value: '20-10000' },
+    //     ],
+    //   },
+    //   {
+    //     id: 'occasion',
+    //     title: 'What is the Occasion?',
+    //     answers: [
+    //       { message: 'Anniversary', value: 'anniversary' },
+    //       { message: 'Birthday', value: 'birthday' },
+    //       { message: 'Holiday', value: 'holiday' },
+    //       { message: 'White Elephant', value: 'whiteElephant' },
+    //       { message: 'Who Needs An Occasion?', value: 'any' },
+    //     ],
+    //   },
+    //   {
+    //     id: 'price',
+    //     title: 'Price Range?',
+    //     answers: [
+    //       { message: '$0-$10', value: '0-10' },
+    //       { message: '$10-$30', value: '10-30' },
+    //       { message: '$30-$50', value: '30-50' },
+    //       { message: '$50-$100', value: '50-100' },
+    //       { message: '+$100', value: '100-999999' },
+    //     ],
+    //   },
+
     {
       id: 'results',
       title: '',
