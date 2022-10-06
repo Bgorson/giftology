@@ -25,7 +25,7 @@ app.use(session(sess));
 app.use(bodyParser.json());
 
 app.use('/api', routes);
-app.get('/', (req, res) => {
+app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, '../client/build/index.html'));
 });
 
