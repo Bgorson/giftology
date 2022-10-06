@@ -49,9 +49,9 @@ const Quiz = () => {
       title: 'Who are you shopping for?',
       answers: [
         { message: 'Myself', value: 'myself' },
-        { message: 'A Coworker', value: 'coworker' },
-        { message: 'A Relative', value: 'relative' },
-        { message: 'A Friend', value: 'friend' },
+        { message: 'Coworker', value: 'coworker' },
+        { message: 'Relative', value: 'relative' },
+        { message: 'Friend', value: 'friend' },
       ],
     },
     // {
