@@ -1,4 +1,4 @@
-import React, { useState, Fragment } from 'react';
+import React, { useState, Fragment, useEffect } from 'react';
 
 import AgeSlider from '../../atoms/Slider/AgeSlider';
 import QuizResult from '../QuizResult/QuizResult';
@@ -23,12 +23,26 @@ export default function QuizQuestion(props) {
     results,
     isMulti,
     hasAdditionalField,
+    isForCoworkers,
+    questionType,
   } = props;
   let { answers } = props;
   const [checkedState, setCheckedState] = useState(
     new Array(answers.length).fill(false)
   );
 
+  useEffect(() => {
+    if (
+      ((localStorage.getItem('forCoworkers') === 'true' || isForCoworkers) &&
+        !questionType.includes('coworker') &&
+        id !== 'results') ||
+      ((localStorage.getItem('forCoworkers') === 'false' || !isForCoworkers) &&
+        questionType.includes('coworker') &&
+        questionType.length === 1)
+    ) {
+      next();
+    }
+  }, []);
   const [age, setAge] = useState(30);
   const [date, setDate] = useState('');
   const [placeholder, setPlaceholder] = useState('MM/DD/YYYY');

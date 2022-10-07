@@ -5,22 +5,31 @@ import { Route } from 'react-router-dom';
 
 const Quiz = () => {
   const [answers, setAnswers] = useState({});
-  // const [isForCoworkers, setIsForCoworkers] = useState(false);
+  const [isForCoworkers, setIsForCoworkers] = useState(false);
   const [isForSelf, setIsForSelf] = useState(false);
   const [quizAge, setQuizAge] = useState(0);
 
   const handleResponse = (id, response, isMulti) => {
+    console.log('RES', response);
     window.scrollTo(0, 0);
 
-    if (id === 'who' && response === 'Myself') {
+    if (id === 'who' && response.value === 'myself') {
       setIsForSelf(true);
     }
-    // if (id === 'who' && response === 'A Coworker') {
-    //   setIsForCoworkers(true);
-    // }
-    // if (id === 'howMany' && response === '1') {
-    //   setIsForCoworkers(false);
-    // }
+    if (id === 'who') {
+      localStorage.setItem('forCoworkers', false);
+      setIsForCoworkers(false);
+    }
+    if (id === 'who' && response.value === 'coworker') {
+      localStorage.setItem('forCoworkers', true);
+      setIsForCoworkers(true);
+    }
+
+    if (id === 'howMany' && response.value === '1') {
+      localStorage.setItem('forCoworkers', false);
+
+      setIsForCoworkers(false);
+    }
     if (id === 'age') {
       setQuizAge(response);
     }
@@ -47,11 +56,24 @@ const Quiz = () => {
     {
       id: 'who',
       title: 'Who are you shopping for?',
+      questionType: ['general', 'coworker'],
       answers: [
         { message: 'Myself', value: 'myself' },
         { message: 'Coworker', value: 'coworker' },
         { message: 'Relative', value: 'relative' },
         { message: 'Friend', value: 'friend' },
+      ],
+    },
+    {
+      id: 'howMany',
+      title: 'How many coworkers?',
+      questionType: ['coworker'],
+      answers: [
+        { message: '1', value: '1' },
+        { message: '2-5', value: '2-5' },
+        { message: '6-11', value: '6-11' },
+        { message: '12-20', value: '12-20' },
+        { message: '20+', value: '20-10000' },
       ],
     },
     // {
@@ -65,6 +87,7 @@ const Quiz = () => {
     {
       id: 'age',
       title: `How old are ${isForSelf ? 'you' : 'they'}?`,
+      questionType: ['general'],
       answers: [
         { message: '0-2', value: '0-2' },
         { message: '3-5', value: '3-5' },
@@ -78,6 +101,7 @@ const Quiz = () => {
     {
       id: 'occasion',
       title: 'What is the Occasion?',
+      questionType: ['general', 'coworker'],
       answers: [
         { message: 'Anniversary', value: 'anniversary' },
         { message: 'Birthday', value: 'birthday' },
@@ -90,6 +114,7 @@ const Quiz = () => {
     {
       id: 'hobbies',
       title: 'What about hobbies?',
+      questionType: ['general'],
       isMulti: true,
       answers: [
         { message: 'Arts and Crafts', value: 'artsAndCrafts' },
@@ -108,6 +133,7 @@ const Quiz = () => {
     {
       id: 'type',
       title: "You're looking for items that are: ",
+      questionType: ['general'],
       isMulti: true,
       answers: [
         { message: 'Essential', value: 'essentials' },
@@ -119,8 +145,31 @@ const Quiz = () => {
       id: 'tags',
       title: `Describe ${isForSelf ? 'your' : 'their'} personality`,
       isMulti: true,
+      questionType: ['general'],
       answers: [
         { message: 'Artsy', value: 'artsy' },
+        { message: 'Creative', value: 'creative' },
+        { message: 'Quirky', value: 'quirky' },
+        { message: 'Practical', value: 'practical' },
+        { message: 'Organized', value: 'organized' },
+        { message: 'Efficient', value: 'efficient' },
+        { message: 'Athletic', value: 'athletic' },
+        { message: 'Competitive', value: 'competitive' },
+        { message: 'Handy', value: 'handy' },
+        { message: 'Eco-Friendly', value: 'ecoFriendly' },
+        { message: 'Classy', value: 'classy' },
+        { message: 'Nerdy', value: 'nerdy' },
+        { message: 'Trendy', value: 'trendy' },
+      ],
+    },
+    {
+      id: 'coworkerTags',
+      title: `You're looking for items that are:`,
+      isMulti: true,
+      questionType: ['coworker'],
+      answers: [
+        { message: 'Artsy', value: 'artsy' },
+        { message: 'Customizable', value: 'customizable' },
         { message: 'Creative', value: 'creative' },
         { message: 'Quirky', value: 'quirky' },
         { message: 'Practical', value: 'practical' },
@@ -139,6 +188,7 @@ const Quiz = () => {
       id: 'additionalTags',
       title: `What are ${isForSelf ? 'your' : 'their'} interests?`,
       isMulti: true,
+      questionType: ['general'],
       answers: [
         { message: 'Indoors', value: 'indoors' },
         { message: 'Outdoors', value: 'outdoors' },
@@ -156,16 +206,18 @@ const Quiz = () => {
         { message: 'Technology', value: 'technology' },
       ],
     },
-    // {
-    //   id: 'price',
-    //   title: 'Price Range?',
-    //   answers: [
-    //     { message: '<$50', value: '0-50' },
-    //     { message: '<$100', value: '0-100' },
-    //     { message: '<$200', value: '0-200' },
-    //     { message: '+$200', value: '200-999999' },
-    //   ],
-    // },
+    {
+      id: 'price',
+      title: 'Price Range per Gift?',
+      questionType: ['coworker'],
+      answers: [
+        { message: '$0-$10', value: '0-10' },
+        { message: '$10-$30', value: '10-30' },
+        { message: '$30-$50', value: '30-50' },
+        { message: '$50-$100', value: '50-100' },
+        { message: '+$100', value: '100-999999' },
+      ],
+    },
     // {
     //   id: 'createAccount',
     //   title: 'Do you want to create an account?',
@@ -180,43 +232,9 @@ const Quiz = () => {
     //     answers: [''],
     //   },
     // ];
-    // const quizCoWorkerQuestions = [
-    //   {
-    //     id: 'howMany',
-    //     title: 'How many coworkers?',
-    //     answers: [
-    //       { message: '1', value: '1' },
-    //       { message: '2-5', value: '2-5' },
-    //       { message: '6-11', value: '6-11' },
-    //       { message: '12-20', value: '12-20' },
-    //       { message: '20+', value: '20-10000' },
-    //     ],
-    //   },
-    //   {
-    //     id: 'occasion',
-    //     title: 'What is the Occasion?',
-    //     answers: [
-    //       { message: 'Anniversary', value: 'anniversary' },
-    //       { message: 'Birthday', value: 'birthday' },
-    //       { message: 'Holiday', value: 'holiday' },
-    //       { message: 'White Elephant', value: 'whiteElephant' },
-    //       { message: 'Who Needs An Occasion?', value: 'any' },
-    //     ],
-    //   },
-    //   {
-    //     id: 'price',
-    //     title: 'Price Range?',
-    //     answers: [
-    //       { message: '$0-$10', value: '0-10' },
-    //       { message: '$10-$30', value: '10-30' },
-    //       { message: '$30-$50', value: '30-50' },
-    //       { message: '$50-$100', value: '50-100' },
-    //       { message: '+$100', value: '100-999999' },
-    //     ],
-    //   },
-
     {
       id: 'results',
+      questionType: ['general', 'coworker'],
       title: '',
       answers: [''],
     },
@@ -233,8 +251,10 @@ const Quiz = () => {
                 render={({ next }) => (
                   <QuizQuestion
                     quizAge={quizAge}
+                    isForCoworkers={isForCoworkers}
                     handleResponse={handleResponse}
                     next={next}
+                    questionType={quizData.questionType}
                     id={quizData.id}
                     title={quizData.title}
                     answers={quizData.answers}

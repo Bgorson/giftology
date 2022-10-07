@@ -72,14 +72,17 @@ async function calculateScoreByCategory(ageFiltered, quizResults) {
       : oArray.toLowerCase();
 
     // SCORING HOBBIES
-    quizResults.hobbies.forEach((hobby) => {
-      if (lowerCase.includes(hobby.toLowerCase())) {
-        // console.log('product name', product.productName);
-        // console.log('matching hobby', product.productName);
+    if (quizResults.hobbies) {
+      quizResults.hobbies.forEach((hobby) => {
+        if (lowerCase.includes(hobby.toLowerCase())) {
+          // console.log('product name', product.productName);
+          // console.log('matching hobby', product.productName);
 
-        score = score + 5;
-      }
-    });
+          score = score + 5;
+        }
+      });
+    }
+
     // SCORING OCCASIONS
     if (lowerCaseOc.includes(quizResults.occasion.toLowerCase())) {
       // console.log('product name', product.productName);
@@ -89,17 +92,27 @@ async function calculateScoreByCategory(ageFiltered, quizResults) {
     }
 
     // SCORING TAGS
-    quizResults.tags.forEach((tag) => {
-      if (lowerCaseTagArray.includes(tag.toLowerCase())) {
-        score++;
-      }
-    });
+    if (quizResults.tags) {
+      quizResults.tags.forEach((tag) => {
+        if (lowerCaseTagArray.includes(tag.toLowerCase())) {
+          score++;
+        }
+      });
+    }
+    if (quizResults.coworkerTags) {
+      quizResults.coworkerTags.forEach((tag) => {
+        if (lowerCaseTagArray.includes(tag.toLowerCase())) {
+          score++;
+        }
+      });
+    }
+
     if (
       product.productBasePrice >= minPrice &&
       product.productBasePrice <= maxPrice
     ) {
       // console.log('matching price', product.productName);
-
+      // TODO: place eligible items on top, everything else below
       score++;
     }
     product.score = score;
@@ -204,52 +217,103 @@ router.post('/', async (req, res) => {
 
   const quizResults = req.body;
   try {
-    const minAge = parseInt(quizResults.age.split('-')[0]);
-    const maxAge = parseInt(quizResults.age.split('-')[1]);
-    // This is the types we want to show
-    const giftTypeArray = quizResults.type;
-    let typeAndAgeFiltered = [];
-    retriveProducts().then((allProducts) => {
-      // console.log('everything', allProducts);
-      // FILTER OUT AGES
-      const minAgeFilter = allProducts.filter(
-        (product) => parseInt(product.ageMin) <= maxAge
-      );
-      const ageFiltered = minAgeFilter.filter(
-        (product) => parseInt(product.ageMax) >= minAge
-      );
-      // FILTER OUT GIFT TYPES
-      if (giftTypeArray.length > 0) {
-        typeAndAgeFiltered = ageFiltered.filter((product) => {
-          const productTypes = product.giftType.toString().split(',');
-          return giftTypeArray.some((r) => productTypes.includes(r));
-        });
-      } else {
-        typeAndAgeFiltered = ageFiltered;
-      }
-
-      calculateScoreByCategory(typeAndAgeFiltered, quizResults).then(
-        (result) => {
-          const arrayOfCategories = groupBy(result, 'category');
-          const categories = Object.keys(arrayOfCategories);
-          const scores = [];
-          categories.forEach((category) => {
-            let averageScore = 0;
-            arrayOfCategories[category].forEach((product) => {
-              averageScore += product.score;
-            });
-
-            averageScore = round10(
-              averageScore / arrayOfCategories[category].length,
-              -1
-            );
-
-            scores.push({ name: category, score: averageScore });
+    if (quizResults.age) {
+      const minAge = parseInt(quizResults.age.split('-')[0]);
+      const maxAge = parseInt(quizResults.age.split('-')[1]);
+      // This is the types we want to show
+      const giftTypeArray = quizResults.type;
+      let typeAndAgeFiltered = [];
+      retriveProducts().then((allProducts) => {
+        // console.log('everything', allProducts);
+        // FILTER OUT AGES
+        const minAgeFilter = allProducts.filter(
+          (product) => parseInt(product.ageMin) <= maxAge
+        );
+        const ageFiltered = minAgeFilter.filter(
+          (product) => parseInt(product.ageMax) >= minAge
+        );
+        // FILTER OUT GIFT TYPES
+        if (giftTypeArray.length > 0) {
+          typeAndAgeFiltered = ageFiltered.filter((product) => {
+            const productTypes = product.giftType.toString().split(',');
+            return giftTypeArray.some((r) => productTypes.includes(r));
           });
-          res.send({ categoryScores: scores, products: result });
+        } else {
+          typeAndAgeFiltered = ageFiltered;
         }
-      );
-    });
+
+        calculateScoreByCategory(typeAndAgeFiltered, quizResults).then(
+          (result) => {
+            const arrayOfCategories = groupBy(result, 'category');
+            const categories = Object.keys(arrayOfCategories);
+            const scores = [];
+            categories.forEach((category) => {
+              let averageScore = 0;
+              arrayOfCategories[category].forEach((product) => {
+                averageScore += product.score;
+              });
+
+              averageScore = round10(
+                averageScore / arrayOfCategories[category].length,
+                -1
+              );
+
+              scores.push({ name: category, score: averageScore });
+            });
+            res.send({ categoryScores: scores, products: result });
+          }
+        );
+      });
+    }
+    //Split products if coworkers
+    if (quizResults.who === 'coworker') {
+      console.log('going down coworker path');
+      const minPrice = parseInt(quizResults.price.split('-')[0]);
+      const maxPrice = parseInt(quizResults.price.split('-')[1]);
+
+      let priceandTypeFiltered = [];
+      retriveProducts().then((allProducts) => {
+        // console.log('everything', allProducts);
+        // FILTER OUT AGES
+        const minPriceFilter = allProducts.filter(
+          (product) => parseInt(product.productBasePrice) <= maxPrice
+        );
+        const priceFiltered = minPriceFilter.filter(
+          (product) => parseInt(product.productBasePrice) >= minPrice
+        );
+        // FILTER OUT GIFT TYPES
+        // if (giftTypeArray.length > 0) {
+        //   priceandTypeFiltered = priceFiltered.filter((product) => {
+        //     const productTypes = product.giftType.toString().split(',');
+        //     return giftTypeArray.some((r) => productTypes.includes(r));
+        //   });
+        // } else {
+        priceandTypeFiltered = priceFiltered;
+        // }
+
+        calculateScoreByCategory(priceandTypeFiltered, quizResults).then(
+          (result) => {
+            const arrayOfCategories = groupBy(result, 'category');
+            const categories = Object.keys(arrayOfCategories);
+            const scores = [];
+            categories.forEach((category) => {
+              let averageScore = 0;
+              arrayOfCategories[category].forEach((product) => {
+                averageScore += product.score;
+              });
+
+              averageScore = round10(
+                averageScore / arrayOfCategories[category].length,
+                -1
+              );
+
+              scores.push({ name: category, score: averageScore });
+            });
+            res.send({ categoryScores: scores, products: result });
+          }
+        );
+      });
+    }
   } catch (err) {
     res.status(204).send(err);
   }
@@ -270,44 +334,95 @@ router.post('/allProducts', async (req, res) => {
 
   const quizResults = req.body;
   try {
-    const minAge = parseInt(quizResults.age.split('-')[0]);
-    const maxAge = parseInt(quizResults.age.split('-')[1]);
-    // This is the types we want to show
-    const giftTypeArray = quizResults.type;
-    let typeAndAgeFiltered = [];
-    retriveProducts().then((allProducts) => {
-      // console.log('everything', allProducts);
-      // FILTER OUT AGES
-      const minAgeFilter = allProducts.filter(
-        (product) => parseInt(product.ageMin) <= maxAge
-      );
-      const ageFiltered = minAgeFilter.filter(
-        (product) => parseInt(product.ageMax) >= minAge
-      );
-      // FILTER OUT GIFT TYPES
-      if (giftTypeArray.length > 0) {
-        typeAndAgeFiltered = ageFiltered.filter((product) => {
-          const productTypes = product.giftType.toString().split(',');
-          return giftTypeArray.some((r) => productTypes.includes(r));
+    if (quizResults.age) {
+      const minAge = parseInt(quizResults.age.split('-')[0]);
+      const maxAge = parseInt(quizResults.age.split('-')[1]);
+      // This is the types we want to show
+      const giftTypeArray = quizResults.type;
+      let typeAndAgeFiltered = [];
+      retriveProducts().then((allProducts) => {
+        // console.log('everything', allProducts);
+        // FILTER OUT AGES
+        const minAgeFilter = allProducts.filter(
+          (product) => parseInt(product.ageMin) <= maxAge
+        );
+        const ageFiltered = minAgeFilter.filter(
+          (product) => parseInt(product.ageMax) >= minAge
+        );
+        // FILTER OUT GIFT TYPES
+        if (giftTypeArray.length > 0) {
+          typeAndAgeFiltered = ageFiltered.filter((product) => {
+            const productTypes = product.giftType.toString().split(',');
+            return giftTypeArray.some((r) => productTypes.includes(r));
+          });
+        } else {
+          typeAndAgeFiltered = ageFiltered;
+        }
+
+        // calculate score for each product and return all in a collection
+        calculateScoreForAll(typeAndAgeFiltered, quizResults).then((result) => {
+          result.sort(function (a, b) {
+            let n = b.score - a.score;
+            if (n !== 0) {
+              return n;
+            }
+
+            return parseInt(a.productBasePrice) - parseInt(b.productBasePrice);
+          });
+
+          res.send({ products: result });
         });
-      } else {
-        typeAndAgeFiltered = ageFiltered;
-      }
-
-      // calculate score for each product and return all in a collection
-      calculateScoreForAll(typeAndAgeFiltered, quizResults).then((result) => {
-        result.sort(function (a, b) {
-          let n = b.score - a.score;
-          if (n !== 0) {
-            return n;
-          }
-
-          return parseInt(a.productBasePrice) - parseInt(b.productBasePrice);
-        });
-
-        res.send({ products: result });
       });
-    });
+    }
+    //Split products if coworkers
+    if (quizResults.who === 'coworker') {
+      console.log('going down coworker path');
+      const minPrice = parseInt(quizResults.price.split('-')[0]);
+      const maxPrice = parseInt(quizResults.price.split('-')[1]);
+
+      let priceandTypeFiltered = [];
+      retriveProducts().then((allProducts) => {
+        // console.log('everything', allProducts);
+        // FILTER OUT AGES
+        const minPriceFilter = allProducts.filter(
+          (product) => parseInt(product.productBasePrice) <= maxPrice
+        );
+        const priceFiltered = minPriceFilter.filter(
+          (product) => parseInt(product.productBasePrice) >= minPrice
+        );
+        // FILTER OUT GIFT TYPES
+        // if (giftTypeArray.length > 0) {
+        //   priceandTypeFiltered = priceFiltered.filter((product) => {
+        //     const productTypes = product.giftType.toString().split(',');
+        //     return giftTypeArray.some((r) => productTypes.includes(r));
+        //   });
+        // } else {
+        priceandTypeFiltered = priceFiltered;
+        // }
+
+        calculateScoreByCategory(priceandTypeFiltered, quizResults).then(
+          (result) => {
+            const arrayOfCategories = groupBy(result, 'category');
+            const categories = Object.keys(arrayOfCategories);
+            const scores = [];
+            categories.forEach((category) => {
+              let averageScore = 0;
+              arrayOfCategories[category].forEach((product) => {
+                averageScore += product.score;
+              });
+
+              averageScore = round10(
+                averageScore / arrayOfCategories[category].length,
+                -1
+              );
+
+              scores.push({ name: category, score: averageScore });
+            });
+            res.send({ categoryScores: scores, products: result });
+          }
+        );
+      });
+    }
   } catch (err) {
     res.status(204).send(err);
   }
