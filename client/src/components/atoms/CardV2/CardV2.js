@@ -7,6 +7,8 @@ import {
   ImageWrapper,
   SubTextContainer,
 } from './styled';
+import placeHolder from '../../../placeholder.jpeg';
+
 import Badge from './Badge';
 export default function ProductCard({
   product,
@@ -45,7 +47,14 @@ export default function ProductCard({
     parsedImage =
       product.htmlTag.split('src')[3]?.substring(2)?.slice(0, -12) || '';
   }
+  let finalImage =
+    product.website === 'Etsy' || product.directImageSrc !== ''
+      ? product.directImageSrc
+      : parsedImage;
 
+  if (!finalImage) {
+    finalImage = placeHolder;
+  }
   return (
     <CardContainer
       data-id={product.score}
@@ -57,14 +66,7 @@ export default function ProductCard({
         />
       )}
       <ImageWrapper>
-        <img
-          alt={product.productName}
-          src={
-            product.website === 'Etsy' || product.directImageSrc !== ''
-              ? product.directImageSrc
-              : parsedImage
-          }
-        />
+        <img alt={product.productName} src={finalImage} />
       </ImageWrapper>
 
       <CardContentContainer>
