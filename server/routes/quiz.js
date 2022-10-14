@@ -115,6 +115,10 @@ async function calculateScoreByCategory(ageFiltered, quizResults) {
       // TODO: place eligible items on top, everything else below
       score++;
     }
+    // COWORKER
+    if (quizResults.who == 'coworker' && product.who_ind === 'coworker') {
+      score = score + 25;
+    }
     product.score = score;
     // console.log('product Price', product.score);
     // console.log('product name', product.productName);
@@ -183,7 +187,10 @@ async function calculateScoreForAll(filteredProducts, quizResults) {
     ) {
       // console.log('matching price', product.productName);
 
-      score++;
+      score = score + 5;
+    }
+    if (quizResults.who == 'coworker' && product.who_ind === 'coworker') {
+      score = score + 25;
     }
     product.score = score;
   }
@@ -273,7 +280,6 @@ router.post('/', async (req, res) => {
 
       let priceandTypeFiltered = [];
       retriveProducts().then((allProducts) => {
-        // console.log('everything', allProducts);
         // FILTER OUT AGES
         const minPriceFilter = allProducts.filter(
           (product) => parseInt(product.productBasePrice) <= maxPrice
@@ -315,7 +321,7 @@ router.post('/', async (req, res) => {
       });
     }
   } catch (err) {
-    res.status(204).send(err);
+    res.send(err);
   }
 });
 router.post('/allProducts', async (req, res) => {
@@ -334,7 +340,49 @@ router.post('/allProducts', async (req, res) => {
 
   const quizResults = req.body;
   try {
-    if (quizResults.age) {
+    //Split products if coworkers
+    if (quizResults.who === 'coworker') {
+      const minPrice = parseInt(quizResults.price.split('-')[0]);
+      const maxPrice = parseInt(quizResults.price.split('-')[1]);
+
+      retriveProducts().then((allProducts) => {
+        let priceandTypeFiltered = [];
+
+        // FILTER OUT AGES
+        const minPriceFilter = allProducts.filter(
+          (product) => parseInt(product.productBasePrice) <= maxPrice
+        );
+        const priceFiltered = minPriceFilter.filter(
+          (product) => parseInt(product.productBasePrice) >= minPrice
+        );
+        // FILTER OUT GIFT TYPES
+        // if (giftTypeArray.length > 0) {
+        //   priceandTypeFiltered = priceFiltered.filter((product) => {
+        //     const productTypes = product.giftType.toString().split(',');
+        //     return giftTypeArray.some((r) => productTypes.includes(r));
+        //   });
+        // } else {
+        priceandTypeFiltered = priceFiltered;
+        // }
+
+        calculateScoreForAll(priceandTypeFiltered, quizResults).then(
+          (result) => {
+            result.sort(function (a, b) {
+              let n = b.score - a.score;
+              if (n !== 0) {
+                return n;
+              }
+
+              return (
+                parseInt(a.productBasePrice) - parseInt(b.productBasePrice)
+              );
+            });
+
+            res.send({ products: result });
+          }
+        );
+      });
+    } else {
       const minAge = parseInt(quizResults.age.split('-')[0]);
       const maxAge = parseInt(quizResults.age.split('-')[1]);
       // This is the types we want to show
@@ -374,56 +422,7 @@ router.post('/allProducts', async (req, res) => {
         });
       });
     }
-    //Split products if coworkers
-    if (quizResults.who === 'coworker') {
-      console.log('going down coworker path');
-      const minPrice = parseInt(quizResults.price.split('-')[0]);
-      const maxPrice = parseInt(quizResults.price.split('-')[1]);
-
-      let priceandTypeFiltered = [];
-      retriveProducts().then((allProducts) => {
-        // console.log('everything', allProducts);
-        // FILTER OUT AGES
-        const minPriceFilter = allProducts.filter(
-          (product) => parseInt(product.productBasePrice) <= maxPrice
-        );
-        const priceFiltered = minPriceFilter.filter(
-          (product) => parseInt(product.productBasePrice) >= minPrice
-        );
-        // FILTER OUT GIFT TYPES
-        // if (giftTypeArray.length > 0) {
-        //   priceandTypeFiltered = priceFiltered.filter((product) => {
-        //     const productTypes = product.giftType.toString().split(',');
-        //     return giftTypeArray.some((r) => productTypes.includes(r));
-        //   });
-        // } else {
-        priceandTypeFiltered = priceFiltered;
-        // }
-
-        calculateScoreByCategory(priceandTypeFiltered, quizResults).then(
-          (result) => {
-            const arrayOfCategories = groupBy(result, 'category');
-            const categories = Object.keys(arrayOfCategories);
-            const scores = [];
-            categories.forEach((category) => {
-              let averageScore = 0;
-              arrayOfCategories[category].forEach((product) => {
-                averageScore += product.score;
-              });
-
-              averageScore = round10(
-                averageScore / arrayOfCategories[category].length,
-                -1
-              );
-
-              scores.push({ name: category, score: averageScore });
-            });
-            res.send({ categoryScores: scores, products: result });
-          }
-        );
-      });
-    }
   } catch (err) {
-    res.status(204).send(err);
+    res.send(err);
   }
 });

@@ -8,11 +8,11 @@ const Quiz = () => {
   const [isForCoworkers, setIsForCoworkers] = useState(false);
   const [isForSelf, setIsForSelf] = useState(false);
   const [quizAge, setQuizAge] = useState(0);
-
   const handleResponse = (id, response, isMulti) => {
-    console.log('RES', response);
     window.scrollTo(0, 0);
-
+    if (id === 'who') {
+      setAnswers({});
+    }
     if (id === 'who' && response.value === 'myself') {
       setIsForSelf(true);
     }
@@ -49,7 +49,6 @@ const Quiz = () => {
 
       setAnswers(answers);
     }
-    // console.log('CURRENT ASNWERS', answers);
   };
 
   const quizQuestions = [

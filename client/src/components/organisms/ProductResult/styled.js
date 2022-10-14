@@ -75,3 +75,14 @@ export const ProductGrid = styled.div`
     width: 75%;
   }
 `;
+
+export const Filter = styled.div`
+  margin-bottom: 36px;
+  font-size: 2em;
+  margin-right: 16px;
+`;
+export const FilterSelect = styled.select`
+  font-size: 0.75em;
+`;
+export const FilterLabel = styled.label``;
+export const FilterOption = styled.option``;

@@ -131,7 +131,7 @@ export default function QuizResult(props) {
       )}
       {!isLoading && (
         // <ProductResult arrayOfCategories={resArray} data={productResults} />
-        <ProductResult data={productResults} />
+        <ProductResult results={results} data={productResults} />
       )}
     </React.Fragment>
   );

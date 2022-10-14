@@ -1,4 +1,7 @@
 const { default: axios } = require('axios');
+const axiosThrottle = require('axios-request-throttle');
+axiosThrottle.use(axios, { requestsPerSecond: 15 });
+
 require('dotenv').config();
 
 const apiKey = process.env.ETSY;
