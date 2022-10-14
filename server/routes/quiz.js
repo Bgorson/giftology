@@ -179,11 +179,14 @@ async function calculateScoreForAll(filteredProducts, quizResults) {
     }
 
     // SCORING TAGS
-    quizResults.tags.forEach((tag) => {
-      if (lowerCaseTagArray.includes(tag.toLowerCase())) {
-        score++;
-      }
-    });
+    if (quizResults.tags) {
+      quizResults.tags.forEach((tag) => {
+        if (lowerCaseTagArray.includes(tag.toLowerCase())) {
+          score++;
+        }
+      });
+    }
+
     if (
       product.productBasePrice >= minPrice &&
       product.productBasePrice <= maxPrice
