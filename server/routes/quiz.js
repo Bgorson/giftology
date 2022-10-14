@@ -341,7 +341,7 @@ router.post('/allProducts', async (req, res) => {
   const quizResults = req.body;
   try {
     //Split products if coworkers
-    if (quizResults.who === 'coworker') {
+    if (quizResults.who === 'coworker' && quizResults.howMany != '1') {
       const minPrice = parseInt(quizResults.price.split('-')[0]);
       const maxPrice = parseInt(quizResults.price.split('-')[1]);
 
