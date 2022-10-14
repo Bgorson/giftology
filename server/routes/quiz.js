@@ -159,14 +159,17 @@ async function calculateScoreForAll(filteredProducts, quizResults) {
       : oArray.toLowerCase();
 
     // SCORING HOBBIES
-    quizResults.hobbies.forEach((hobby) => {
-      if (lowerCase.includes(hobby.toLowerCase())) {
-        // console.log('product name', product.productName);
-        // console.log('matching hobby', product.productName);
+    if (quizResults.hobbies) {
+      quizResults.hobbies.forEach((hobby) => {
+        if (lowerCase.includes(hobby.toLowerCase())) {
+          // console.log('product name', product.productName);
+          // console.log('matching hobby', product.productName);
 
-        score = score + 5;
-      }
-    });
+          score = score + 5;
+        }
+      });
+    }
+
     // SCORING OCCASIONS
     if (lowerCaseOc.includes(quizResults.occasion.toLowerCase())) {
       // console.log('product name', product.productName);
