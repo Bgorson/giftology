@@ -273,7 +273,7 @@ router.post('/', async (req, res) => {
       });
     }
     //Split products if coworkers
-    if (quizResults.who === 'coworker') {
+    if (quizResults.who === 'coworker' && quizResults.howMany != '1') {
       console.log('going down coworker path');
       const minPrice = parseInt(quizResults.price.split('-')[0]);
       const maxPrice = parseInt(quizResults.price.split('-')[1]);
