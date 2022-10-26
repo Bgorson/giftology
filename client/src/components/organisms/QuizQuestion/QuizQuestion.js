@@ -87,37 +87,40 @@ export default function QuizQuestion(props) {
       return el.value != 'mixology';
     });
   }
-  const possibleAnswers = answers.map((answers, index) => (
-    <FancyButton
-      type={showAdditionalField ? 'checkbox' : 'submit'}
-      checked={
-        showAdditionalField
-          ? additionalMainAnswer.value === answers.value
-          : checkedState[index]
-      }
-      onClick={(e) => {
-        handleOnChange(index, e);
-        ReactGA.event({
-          category: 'Quiz',
-          action: `Clicked ${answers.message}`,
-          label: 'QuizButton',
-        });
-        if (
-          hasAdditionalField &&
-          (answers.value === 'anniversary' || answers.value === 'birthday')
-        ) {
-          handleAdditionalData(answers);
-        } else {
-          handleResponse(id, answers);
+  const possibleAnswers = answers.map(
+    (answers, index) =>
+      answers && (
+        <FancyButton
+          type={showAdditionalField ? 'checkbox' : 'submit'}
+          checked={
+            showAdditionalField
+              ? additionalMainAnswer.value === answers.value
+              : checkedState[index]
+          }
+          onClick={(e) => {
+            handleOnChange(index, e);
+            ReactGA.event({
+              category: 'Quiz',
+              action: `Clicked ${answers.message}`,
+              label: 'QuizButton',
+            });
+            if (
+              hasAdditionalField &&
+              (answers.value === 'anniversary' || answers.value === 'birthday')
+            ) {
+              handleAdditionalData(answers);
+            } else {
+              handleResponse(id, answers);
 
-          next();
-        }
-      }}
-      key={answers.value}
-    >
-      {answers.message}
-    </FancyButton>
-  ));
+              next();
+            }
+          }}
+          key={answers.value}
+        >
+          {answers.message}
+        </FancyButton>
+      )
+  );
 
   const multiPossibleAnswers = answers.map((answers, index) => (
     <div key={answers.message}>

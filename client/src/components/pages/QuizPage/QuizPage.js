@@ -6,6 +6,8 @@ import { Route } from 'react-router-dom';
 const Quiz = () => {
   const [answers, setAnswers] = useState({});
   const [isForCoworkers, setIsForCoworkers] = useState(false);
+  const [isCoworker, setIsCoworker] = useState(false);
+
   const [isForSelf, setIsForSelf] = useState(false);
   const [quizAge, setQuizAge] = useState(0);
   const handleResponse = (id, response, isMulti) => {
@@ -26,12 +28,16 @@ const Quiz = () => {
     }
 
     if (id === 'howMany' && response.value === '1') {
+      setIsCoworker(true);
       localStorage.setItem('forCoworkers', false);
 
       setIsForCoworkers(false);
     }
     if (id === 'age') {
       setQuizAge(response);
+    }
+    if (id === 'price') {
+      answers['age'] = '21-44';
     }
     const newInput = `${id}`;
 
@@ -70,8 +76,7 @@ const Quiz = () => {
       answers: [
         { message: '1', value: '1' },
         { message: '2-5', value: '2-5' },
-        { message: '6-11', value: '6-11' },
-        { message: '12-20', value: '12-20' },
+        { message: '6-20', value: '6-20' },
         { message: '20+', value: '20-10000' },
       ],
     },
@@ -88,9 +93,9 @@ const Quiz = () => {
       title: `How old are ${isForSelf ? 'you' : 'they'}?`,
       questionType: ['general'],
       answers: [
-        { message: '0-2', value: '0-2' },
-        { message: '3-5', value: '3-5' },
-        { message: '6-11', value: '6-11' },
+        !isCoworker && { message: '0-2', value: '0-2' },
+        !isCoworker && { message: '3-5', value: '3-5' },
+        !isCoworker && { message: '6-11', value: '6-11' },
         { message: '12-20', value: '12-20' },
         { message: '21-44', value: '21-44' },
         { message: '45-65', value: '45-65' },
@@ -238,6 +243,9 @@ const Quiz = () => {
       answers: [''],
     },
   ];
+  if (isForCoworkers) {
+  }
+
   return (
     <Route
       render={({ history }) => (

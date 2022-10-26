@@ -16,7 +16,8 @@ export default function ProductCard({
   handleCardClick,
   isHighlighted,
 }) {
-  let tags = [...product.tags];
+  let tags = [...product.tags_display];
+  tags = tags[0].split(',');
   tags.forEach((tag, index) => {
     if (tag === null || tag === 'null' || tag === 'Null') {
       tags = tags.splice(index, 1);
@@ -33,6 +34,14 @@ export default function ProductCard({
       tags[index] = ' White Elephant';
     } else if (tag === 'whiteElephant') {
       tags[index] = ' White Elephant';
+    } else if (tag === 'bathAndBody') {
+      tags[index] = ' Bath And Body';
+    } else if (tag === 'justForFun') {
+      tags[index] = ' Just For Fun';
+    } else if (tag === 'artsAndCrafts') {
+      tags[index] = ' Arts And Crafts';
+    } else if (tag === 'samplerkits') {
+      tags[index] = ' Sampler Kits';
     } else {
       tags[index] = ' ' + tag.charAt(0).toUpperCase() + tag.slice(1);
     }
@@ -84,7 +93,7 @@ export default function ProductCard({
           </FlavorText>
           {showScore && <FlavorText>SCORE:{product.score}</FlavorText>}
           <FlavorText variant="body2" color="text.secondary">
-            {`Tags: ${product.category}${tags.length > 0 ? ',' : ''}${tags}`}
+            {`Tags: ${tags}`}
           </FlavorText>
         </SubTextContainer>
 

@@ -15,10 +15,21 @@ router.get('/', async (req, res) => {
 
 router.get('/product/:product', async (req, res) => {
   const productID = req.params.product;
+  if (isNaN(productID)) {
+    res.send({ error: true });
+    return;
+  }
   // used _ID component
-  const product = await Product.findOne({ _id: productID });
-
-  res.send({ message: 'Specific Product retrieved successfully', product });
+  const product = await Product.findOne({ productId: productID });
+  if (product) {
+    if (product?.website === 'Etsy') {
+      const imageURL = await getImage(product.listingId);
+      product.directImageSrc = imageURL;
+    }
+    res.send({ message: 'Specific Product retrieved successfully', product });
+  } else {
+    res.send({ error: true });
+  }
 });
 
 router.get('/category/:name', async (req, res) => {

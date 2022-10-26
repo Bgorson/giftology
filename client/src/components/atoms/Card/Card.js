@@ -12,7 +12,8 @@ export default function ProductCard({
   handleCardClick,
   isHighlighted,
 }) {
-  let tags = [...product.tags];
+  let tags = [...product.tags_display];
+  tags = tags[0].split(',');
   tags.forEach((tag, index) => {
     if (tag === null || tag === 'null' || tag === 'Null') {
       tags = tags.splice(index, 1);
@@ -70,7 +71,7 @@ export default function ProductCard({
           ${product.productBasePrice}
         </FlavorText>
         <FlavorText variant="body2" color="text.secondary">
-          {`Tags: ${product.category}${tags.length > 0 ? ',' : ''}${tags}`}
+          {`Tags: ${tags}`}
         </FlavorText>
 
         {/* <Typography variant="body2" color="text.secondary">
