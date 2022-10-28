@@ -84,6 +84,7 @@ async function calculateScoreByCategory(ageFiltered, quizResults) {
     }
 
     // SCORING OCCASIONS
+
     if (lowerCaseOc.includes(quizResults.occasion.toLowerCase())) {
       // console.log('product name', product.productName);
       // console.log('matching hobby', product.productName);
@@ -127,13 +128,13 @@ async function calculateScoreByCategory(ageFiltered, quizResults) {
 }
 
 async function calculateScoreForAll(filteredProducts, quizResults) {
-  let minPrice = 0;
-  let maxPrice = 5000;
+  // let minPrice = 0;
+  // let maxPrice = 5000;
 
-  if (quizResults.price) {
-    minPrice = parseInt(quizResults.price.split('-')[0]);
-    maxPrice = parseInt(quizResults.price.split('-')[1]);
-  }
+  // if (quizResults.price) {
+  //   minPrice = parseInt(quizResults.price.split('-')[0]);
+  //   maxPrice = parseInt(quizResults.price.split('-')[1]);
+  // }
   for (const product of filteredProducts) {
     let score = 0;
 
@@ -180,21 +181,24 @@ async function calculateScoreForAll(filteredProducts, quizResults) {
 
     // SCORING TAGS
     if (quizResults.tags) {
+      let tagScore = 0;
       quizResults.tags.forEach((tag) => {
         if (lowerCaseTagArray.includes(tag.toLowerCase())) {
-          score++;
+          tagScore++;
         }
       });
+      console.log(tagScore);
+      score += tagScore;
     }
 
-    if (
-      product.productBasePrice >= minPrice &&
-      product.productBasePrice <= maxPrice
-    ) {
-      // console.log('matching price', product.productName);
+    // if (
+    //   product.productBasePrice >= minPrice &&
+    //   product.productBasePrice <= maxPrice
+    // ) {
+    //   // console.log('matching price', product.productName);
 
-      score = score + 5;
-    }
+    //   score = score + 5;
+    // }
     if (quizResults.who == 'coworker' && product.who_ind === 'coworker') {
       score = score + 25;
     }
