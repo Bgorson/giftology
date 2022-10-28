@@ -17,7 +17,6 @@ export default function ProductCard({
   isHighlighted,
 }) {
   let tags = [...product.tags_display];
-  tags = tags[0].split(',');
   tags.forEach((tag, index) => {
     if (tag === null || tag === 'null' || tag === 'Null') {
       tags = tags.splice(index, 1);

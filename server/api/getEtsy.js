@@ -22,7 +22,7 @@ const getImage = async (id) => {
   const product = await getEstyProduct(id);
   let image;
 
-  if (product.data.results[0].MainImage) {
+  if (product?.data?.results[0].MainImage) {
     image = product.data.results[0].MainImage.url_fullxfull;
     return image;
   } else console.log('Not found');

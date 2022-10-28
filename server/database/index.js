@@ -26,6 +26,9 @@ const database = mongoose.connect(
 //   console.log(product);
 //   let splitGiftTypes = product.giftType.split(',');
 //   let splitGiftTags = product.tags.split(',');
+//   let splitGiftTagsSort = product.tags_sort.split(',');
+//   let splitGiftTagsDisplay = product.tags_display.split(',');
+
 //   let splitHobbiesInterests = product.hobbiesInterests
 //     ? product.hobbiesInterests.split(',')
 //     : null;
@@ -35,7 +38,9 @@ const database = mongoose.connect(
 //     ...product,
 //     giftType: splitGiftTypes,
 //     tags: splitGiftTags,
+//     tags_sort: splitGiftTagsSort,
 //     hobbiesInterests: splitHobbiesInterests,
+//     tags_display: splitGiftTagsDisplay,
 //     ocassion: splitOccasisons,
 //   });
 // });

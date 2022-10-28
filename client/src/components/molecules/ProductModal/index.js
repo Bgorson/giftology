@@ -27,7 +27,6 @@ export default function ScrollDialog(props) {
   const [parsedLabText, setParsedLabText] = React.useState(null);
 
   let tags = [...product.tags_display];
-  tags = tags[0].split(',');
   tags.forEach((tag, index) => {
     if (tag === null || tag === 'null' || tag === 'Null') {
       tags = tags.splice(index, 1);

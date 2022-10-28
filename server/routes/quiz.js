@@ -64,7 +64,6 @@ async function calculateScoreByCategory(ageFiltered, quizResults) {
     if (oArray == null) {
       oArray = [];
     }
-    const tagArray = product?.tags_sort;
     const lowerCase = hArray.map((array) => array.toLowerCase());
     const lowerCaseTagArray = tagArray.map((array) => array.toLowerCase());
     const lowerCaseOc = Array.isArray(oArray)
@@ -93,21 +92,25 @@ async function calculateScoreByCategory(ageFiltered, quizResults) {
     }
 
     // SCORING TAGS
-    if (quizResults.tags) {
+
+    if (quizResults?.tags) {
+      let tagScore = 0;
       quizResults.tags.forEach((tag) => {
         if (lowerCaseTagArray.includes(tag.toLowerCase())) {
-          score++;
+          tagScore++;
         }
       });
+      score += tagScore;
     }
-    if (quizResults.coworkerTags) {
+    if (quizResults?.coworkerTags) {
+      let tagScore = 0;
       quizResults.coworkerTags.forEach((tag) => {
         if (lowerCaseTagArray.includes(tag.toLowerCase())) {
-          score++;
+          tagScore++;
         }
       });
+      score += tagScore;
     }
-
     if (
       product.productBasePrice >= minPrice &&
       product.productBasePrice <= maxPrice
@@ -183,11 +186,22 @@ async function calculateScoreForAll(filteredProducts, quizResults) {
     if (quizResults.tags) {
       let tagScore = 0;
       quizResults.tags.forEach((tag) => {
+        console.log('TAG', tag);
+        console.log('lowerCaseTagArray', lowerCaseTagArray);
+        if (lowerCaseTagArray.includes(tag.toLowerCase())) {
+          console.log('MATCH');
+          tagScore++;
+        }
+      });
+      score += tagScore;
+    }
+    if (quizResults.coworkerTags) {
+      let tagScore = 0;
+      quizResults.coworkerTags.forEach((tag) => {
         if (lowerCaseTagArray.includes(tag.toLowerCase())) {
           tagScore++;
         }
       });
-      console.log(tagScore);
       score += tagScore;
     }
 
