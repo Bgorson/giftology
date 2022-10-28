@@ -293,15 +293,8 @@ router.post('/', async (req, res) => {
         const priceFiltered = minPriceFilter.filter(
           (product) => parseInt(product.productBasePrice) >= minPrice
         );
-        // FILTER OUT GIFT TYPES
-        // if (giftTypeArray.length > 0) {
-        //   priceandTypeFiltered = priceFiltered.filter((product) => {
-        //     const productTypes = product.giftType.toString().split(',');
-        //     return giftTypeArray.some((r) => productTypes.includes(r));
-        //   });
-        // } else {
+
         priceandTypeFiltered = priceFiltered;
-        // }
 
         calculateScoreByCategory(priceandTypeFiltered, quizResults).then(
           (result) => {
@@ -361,15 +354,19 @@ router.post('/allProducts', async (req, res) => {
         const priceFiltered = minPriceFilter.filter(
           (product) => parseInt(product.productBasePrice) >= minPrice
         );
-        // FILTER OUT GIFT TYPES
-        // if (giftTypeArray.length > 0) {
-        //   priceandTypeFiltered = priceFiltered.filter((product) => {
-        //     const productTypes = product.giftType.toString().split(',');
-        //     return giftTypeArray.some((r) => productTypes.includes(r));
-        //   });
-        // } else {
-        priceandTypeFiltered = priceFiltered;
-        // }
+        const minAge = parseInt(quizResults.age.split('-')[0]);
+        const maxAge = parseInt(quizResults.age.split('-')[1]);
+        // This is the types we want to show
+        // console.log('everything', allProducts);
+        // FILTER OUT AGES
+        const minAgeFilter = priceFiltered.filter(
+          (product) => parseInt(product.ageMin) <= maxAge
+        );
+        const ageFiltered = minAgeFilter.filter(
+          (product) => parseInt(product.ageMax) >= minAge
+        );
+
+        priceandTypeFiltered = ageFiltered;
 
         calculateScoreForAll(priceandTypeFiltered, quizResults).then(
           (result) => {
