@@ -186,10 +186,7 @@ async function calculateScoreForAll(filteredProducts, quizResults) {
     if (quizResults.tags) {
       let tagScore = 0;
       quizResults.tags.forEach((tag) => {
-        console.log('TAG', tag);
-        console.log('lowerCaseTagArray', lowerCaseTagArray);
         if (lowerCaseTagArray.includes(tag.toLowerCase())) {
-          console.log('MATCH');
           tagScore++;
         }
       });
