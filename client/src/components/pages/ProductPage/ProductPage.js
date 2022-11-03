@@ -21,7 +21,12 @@ export default function ProductPage() {
   const [parsedLabText, setParsedLabText] = useState(null);
 
   const linkCreator = (link) => {
-    let urlMatches = link.match(/(?<=ID=).*?(?=\s)/gm);
+    let urlMatches = link.match(/[ID=](?=[ID=]).*?(?=\s)/gm);
+    if (urlMatches) {
+      urlMatches = urlMatches.map((match) => {
+        return match.replace(/ID=/g, '');
+      });
+    }
     const textMatches = link.match(/text=(.*)~~/gm);
     return { url: urlMatches, text: textMatches };
   };
