@@ -38,10 +38,6 @@ async function calculateScoreForAll(filteredProducts, quizResults) {
   // let minPrice = 0;
   // let maxPrice = 5000;
 
-  if (quizResults.price) {
-    minPrice = parseInt(quizResults.price.split('-')[0]);
-    maxPrice = parseInt(quizResults.price.split('-')[1]);
-  }
   for (const product of filteredProducts) {
     let score = 0;
 
@@ -109,14 +105,19 @@ async function calculateScoreForAll(filteredProducts, quizResults) {
     if (quizResults.who == 'coworker' && product.who_ind === 'coworker') {
       score = score + 25;
     }
-    if (
-      product.productBasePrice >= minPrice &&
-      product.productBasePrice <= maxPrice &&
-      score > 0
-    ) {
-      // console.log('matching price', product.productName);
+    if (quizResults.price) {
+      let minPrice = parseInt(quizResults.price.split('-')[0]);
+      let maxPrice = parseInt(quizResults.price.split('-')[1]);
 
-      score = score + 35;
+      if (
+        product.productBasePrice >= minPrice &&
+        product.productBasePrice <= maxPrice &&
+        score > 0
+      ) {
+        // console.log('matching price', product.productName);
+
+        score = score + 100;
+      }
     }
     product.score = score;
   }
