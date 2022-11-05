@@ -5,13 +5,16 @@ import ScrollDialog from '../../molecules/ProductModal';
 // import ProductCard from '../../atoms/Card/Card';
 import ProductCardV2 from '../../atoms/CardV2/CardV2';
 import { postAllQuizResults } from '../../../api/allQuiz';
-import ResultSliderV2 from '../../molecules/ResultSliderV2';
+// import ResultSliderV2 from '../../molecules/ResultSliderV2';
+import { Audio } from 'react-loader-spinner';
+
 import {
   ProductGrid,
   Filter,
   FilterLabel,
   FilterSelect,
   FilterOption,
+  LoaderContainer,
 } from './styled';
 import ReactGA from 'react-ga';
 
@@ -23,6 +26,7 @@ export default function ProductResult(props) {
   const [open, setOpen] = React.useState(false);
   const [quizResults, setQuizResults] = React.useState(results);
   const [productResults, setProductResults] = React.useState(products);
+  const [isLoading, setIsLoading] = React.useState(false);
 
   const location = useLocation();
 
@@ -43,7 +47,19 @@ export default function ProductResult(props) {
     setCurrentCardData(product);
     setOpen(true);
   };
+
+  const renderGiftBoxes = (products) => {
+    return (
+      <>
+        <GiftBox handleCardClick={handleClickOpen} product={products[0]} />
+        <GiftBox handleCardClick={handleClickOpen} product={products[1]} />
+        <GiftBox handleCardClick={handleClickOpen} product={products[2]} />
+      </>
+    );
+  };
+
   const handlePriceChange = (newPrice) => {
+    setIsLoading(true);
     const updatedPriceResults = { ...quizResults, price: newPrice };
     setQuizResults(updatedPriceResults);
     localStorage.setItem('quizResults', JSON.stringify(updatedPriceResults));
@@ -52,6 +68,8 @@ export default function ProductResult(props) {
       postAllQuizResults(updatedPriceResults)
     );
     productPromise.then((productRes) => {
+      setIsLoading(false);
+
       setProductResults(productRes.products);
     });
   };
@@ -73,7 +91,7 @@ export default function ProductResult(props) {
     <React.Fragment>
       {quizResults.price && (
         <Filter>
-          <FilterLabel for="prices">Current Prices:</FilterLabel>
+          <FilterLabel for="prices">Prefer Price Range:</FilterLabel>
           <FilterSelect
             onChange={(e) => handlePriceChange(e.target.value)}
             name="prices"
@@ -88,33 +106,40 @@ export default function ProductResult(props) {
               $30-$50
             </FilterOption>
             <FilterOption
-              selected={quizResults.price == '100-999999'}
-              value="100-999999"
+              selected={quizResults.price == '50-999999'}
+              value="50-999999"
             >
-              +$100
+              +$50
             </FilterOption>
           </FilterSelect>
         </Filter>
       )}
-      <ProductGrid>
-        <GiftBox handleCardClick={handleClickOpen} product={products[0]} />
-        <GiftBox handleCardClick={handleClickOpen} product={products[1]} />
-        <GiftBox handleCardClick={handleClickOpen} product={products[2]} />
+      {isLoading && (
+        <LoaderContainer>
+          Calculating the perfect gift...
+          <Audio heigth="500" width="500" color="grey" ariaLabel="loading" />
+        </LoaderContainer>
+      )}
+      {!isLoading && (
+        <>
+          <ProductGrid>
+            {renderGiftBoxes(productResults)}
 
-        {productResults.map((product, index) => (
-          <>
-            {index > 3 ? (
-              <ProductCardV2
-                showScore={location.search ? true : false}
-                key={index}
-                handleCardClick={handleClickOpen}
-                product={product}
-              />
-            ) : null}
-          </>
-        ))}
-      </ProductGrid>
-
+            {productResults.map((product, index) => (
+              <>
+                {index > 3 ? (
+                  <ProductCardV2
+                    showScore={location.search ? true : false}
+                    key={index}
+                    handleCardClick={handleClickOpen}
+                    product={product}
+                  />
+                ) : null}
+              </>
+            ))}
+          </ProductGrid>
+        </>
+      )}
       {/* <ResultSliderV2
         handleCardClick={handleClickOpen}
         categoryScores={categoryScores}
@@ -130,12 +155,10 @@ export default function ProductResult(props) {
       )}
     </React.Fragment>
   );
+
   // }
   //   else {
   //     return <EmptyText>No Products matching</EmptyText>;
   //   }
   // }
 }
-/* <p key={index}>{"product"}</p>
-            <p key={index}>{"product"}</p>
-            <p key={index}>{"product"}</p> */

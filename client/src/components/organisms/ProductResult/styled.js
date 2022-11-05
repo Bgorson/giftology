@@ -86,3 +86,15 @@ export const FilterSelect = styled.select`
 `;
 export const FilterLabel = styled.label``;
 export const FilterOption = styled.option``;
+export const LoaderContainer = styled.div`
+  width: 100%;
+  padding: 2em 0;
+  text-align: center;
+  & > div {
+    justify-content: center;
+    padding-top: 1em;
+  }
+  @media (max-width: 768px) {
+    padding-top: 0;
+  }
+`;

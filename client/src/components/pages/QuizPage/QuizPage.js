@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Wizard, Steps, Step } from 'react-albus';
 import QuizQuestion from '../../organisms/QuizQuestion/QuizQuestion';
 import { Route } from 'react-router-dom';
@@ -7,14 +7,11 @@ const Quiz = () => {
   const [answers, setAnswers] = useState({});
   const [isForCoworkers, setIsForCoworkers] = useState(false);
   const [isCoworker, setIsCoworker] = useState(false);
-
   const [isForSelf, setIsForSelf] = useState(false);
   const [quizAge, setQuizAge] = useState(0);
   const handleResponse = (id, response, isMulti) => {
     window.scrollTo(0, 0);
-    if (id === 'who') {
-      setAnswers({});
-    }
+
     if (id === 'who' && response.value === 'myself') {
       setIsForSelf(true);
     }
@@ -40,7 +37,10 @@ const Quiz = () => {
       answers['age'] = '21-44';
     }
     const newInput = `${id}`;
-
+    if (id === 'who') {
+      setAnswers({ who: response.value });
+      return;
+    }
     if (id === 'additionalTags') {
       let currentTags = answers['tags'];
 
@@ -56,7 +56,6 @@ const Quiz = () => {
       setAnswers(answers);
     }
   };
-
   const quizQuestions = [
     {
       id: 'who',
@@ -160,7 +159,7 @@ const Quiz = () => {
         { message: 'Athletic', value: 'athletic' },
         { message: 'Competitive', value: 'competitive' },
         { message: 'Handy', value: 'handy' },
-        { message: 'Eco-Friendly', value: 'ecoFriendly' },
+        { message: 'Eco-Friendly', value: 'eco-friendly' },
         { message: 'Classy', value: 'classy' },
         { message: 'Nerdy', value: 'nerdy' },
         { message: 'Trendy', value: 'trendy' },
@@ -168,21 +167,17 @@ const Quiz = () => {
     },
     {
       id: 'coworkerTags',
-      title: `You're looking for items that are:`,
+      title: `Gifts that are:`,
       isMulti: true,
       questionType: ['coworker'],
       answers: [
         { message: 'Artsy', value: 'artsy' },
-        { message: 'Customizable', value: 'customizable' },
         { message: 'Creative', value: 'creative' },
+        { message: 'Customizable', value: 'customizable' },
+        { message: 'Delicious', value: 'delicious' },
         { message: 'Quirky', value: 'quirky' },
         { message: 'Practical', value: 'practical' },
-        { message: 'Organized', value: 'organized' },
-        { message: 'Efficient', value: 'efficient' },
-        { message: 'Athletic', value: 'athletic' },
-        { message: 'Competitive', value: 'competitive' },
-        { message: 'Handy', value: 'handy' },
-        { message: 'Eco-Friendly', value: 'ecoFriendly' },
+        { message: 'Eco-Friendly', value: 'eco-friendly' },
         { message: 'Classy', value: 'classy' },
         { message: 'Nerdy', value: 'nerdy' },
         { message: 'Trendy', value: 'trendy' },
@@ -218,8 +213,7 @@ const Quiz = () => {
         { message: '$0-$10', value: '0-10' },
         { message: '$10-$30', value: '10-30' },
         { message: '$30-$50', value: '30-50' },
-        { message: '$50-$100', value: '50-100' },
-        { message: '+$100', value: '100-999999' },
+        { message: '$50+', value: '50-999999' },
       ],
     },
     // {
