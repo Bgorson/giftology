@@ -5,6 +5,8 @@ import HomePage from '../../pages/HomePage';
 import LostPage from '../../pages/LostPage';
 import QuizPage from '../../pages/QuizPage';
 import AboutPage from '../../pages/AboutPage';
+import ProfilePage from '../../pages/ProfilePage';
+
 import FeedbackPage from '../../pages/Feedbackpage';
 import ProductPage from '../../pages/ProductPage';
 import AdminPage from '../../pages/AdminPage';
@@ -45,6 +47,8 @@ export default function Main() {
           <Route path="/product/:id" component={ProductPage} />
           <Route path="/feedback" component={FeedbackPage} />
           <Route path="/about" component={AboutPage} />
+          <Route path="/profile" component={ProfilePage} />
+
           <Route path="/admin" component={AdminPage} />
           {/* <Redirect to="/not-found" /> */}
           <Redirect to="/" />

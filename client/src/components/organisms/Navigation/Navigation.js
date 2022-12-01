@@ -1,9 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import PropTypes from 'prop-types';
 import { Link, useHistory } from 'react-router-dom';
 import ReactGA from 'react-ga';
 import logo from '../../../logo.png';
+import Login from '../../molecules/LoginButton';
 
+import { UserContext } from '../../../context/UserContext';
 import {
   ActionItems,
   Navbar,
@@ -17,6 +19,7 @@ import {
 
 export default function Navigation({ pathname }) {
   const navigate = useHistory();
+  const { isLoggedIn } = useContext(UserContext);
 
   return (
     <Navbar>
@@ -94,6 +97,27 @@ export default function Navigation({ pathname }) {
             >
               About Us
             </NavLink>
+          </NavItem>
+          <NavItem>
+            {isLoggedIn ? (
+              <NavLink
+                as={Link}
+                onClick={() => {
+                  ReactGA.event({
+                    category: 'Navlink',
+                    action: 'Clicked Profile',
+                    label: 'Profile',
+                  });
+                }}
+                to="/profile"
+              >
+                Profile
+              </NavLink>
+            ) : (
+              <NavLink>
+                <Login />
+              </NavLink>
+            )}
           </NavItem>
           {/* <NavItem>
             <a href="/auth/google">Sign In with Google</a>

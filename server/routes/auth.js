@@ -1,9 +1,10 @@
 const express = require('express');
 const passport = require('passport');
+const jwt = require('jsonwebtoken');
 const { User } = require('../database/schemas');
 const router = express.Router();
 const { requireAuth } = require('./middleware');
-const bcrypt = require('bcrypt');
+const { OAuth2Client } = require('google-auth-library');
 
 module.exports = router;
 
@@ -26,76 +27,110 @@ module.exports = router;
 //   }
 // });
 
+router.post('/signup', async (req, res) => {
+  console.log(req.body);
+  const { name, email, password } = req.body;
+  User.findOne({ email }).exec((err, user) => {
+    if (user) {
+      return res.status(400).json({ error: 'User with e mail exists' });
+    }
+    const token = jwt.sign(
+      { name, email, password },
+      process.env.JWT_ACC_ACTIVATE,
+      { expiresIn: '20m' }
+    );
+
+    let newUser = new User({ name, email, password });
+    newUser.save((err, success) => {
+      if (err) {
+        console.log('Error in signup', err);
+        return res.status(400).json({ error: 'Signup Error' });
+      }
+      res.json({
+        message: 'sign up successful',
+      });
+    });
+  });
+});
+
 // Login
-router.post('/login', async (req, res) => {
+router.post('/login', async (req, res, next) => {
+  console.log('REQ', req.query);
+  const client = new OAuth2Client(process.env.CLIENT_ID);
+
+  const { token } = req.body;
   try {
-    const dbUserData = await User.findOne({
-      where: {
-        username: req.body.username,
-      },
+    const ticket = await client.verifyIdToken({
+      idToken: token,
+      audience: process.env.CLIENT_ID,
     });
+    const payload = ticket.getPayload();
 
-    if (!dbUserData) {
-      res
-        .status(400)
-        .json({ message: 'Incorrect email or password. Please try again!' });
-      return;
+    const { email_verified, name, email } = payload;
+    if (email_verified) {
+      User.findOne({ email }).exec((err, user) => {
+        if (err) {
+          return res.status(400).json({
+            error: 'Something went wrong',
+          });
+        } else {
+          if (user) {
+            const token = jwt.sign(
+              { _id: user._id },
+              process.env.JWT_ACC_ACTIVATE,
+              { expiresIn: '7d' }
+            );
+            const { _id, name, email } = user;
+            res.json({ token, user: { _id, name, email } });
+          } else {
+            let newUser = new User({ name, email });
+            newUser.save((err, data) => {
+              if (err) {
+                return res.status(400).json({
+                  error: 'Something went wrong',
+                });
+              }
+              const token = jwt.sign(
+                { _id: user._id },
+                process.env.JWT_ACC_ACTIVATE,
+                { expiresIn: '7d' }
+              );
+              const { _id, name, email } = newUser;
+
+              res.json({ token, user: { _id, name, email } });
+            });
+          }
+        }
+      });
     }
-    const validPassword = await dbUserData.validatePassword(req.body.password);
+    // User.find({ email: payload.email }, function (err, docs) {
+    //   if (err) {
+    //     console.log(err);
+    //   } else {
+    //     console.log('First function call : ', docs);
+    //     if (docs.length > 0) {
+    //       console.log('sending payload', docs);
+    //       console.log('TOKEN', payload);
 
-    if (!validPassword) {
-      res
-        .status(400)
-        .json({ message: 'Incorrect email or password. Please try again!' });
-      return;
-    }
-
-    req.session.save(() => {
-      req.session.loggedIn = true;
-
-      res
-        .status(200)
-        .json({ user: dbUserData, message: 'You are now logged in!' });
-    });
+    //       res.send({
+    //         email: docs[0].email,
+    //         name: docs[0].name,
+    //         isNew: docs[0].isNew,
+    //       });
+    //     } else {
+    //       User.create({
+    //         email: payload.email,
+    //         name: payload.name,
+    //       }),
+    //         function () {
+    //           res.send(payload);
+    //         };
+    //     }
+    //   }
+    // });
   } catch (err) {
     console.log(err);
     res.status(500).json(err);
-  }
-});
-
-router.put('/password', async (req, res) => {
-  const { oldPassword, newPassword, username } = req.body;
-
-  const dbUserData = await User.findOne({
-    where: {
-      username,
-    },
-  });
-  const validPassword = await dbUserData.validatePassword(oldPassword);
-
-  if (validPassword) {
-    bcrypt.genSalt(10, (err, salt) => {
-      if (err) {
-        res.status(400).send({ err, message: 'Error updating password' });
-      }
-      bcrypt.hash(newPassword, salt, (err, hash) => {
-        if (err) {
-          res.status(400).send({ err, message: 'Error updating password' });
-        }
-        User.findOneAndUpdate(
-          { username: username },
-          { password: hash },
-          (err) => {
-            if (err) {
-              res.status(400).send({ err, message: 'Error updating password' });
-            }
-            res.status(200).send({ message: 'Password successfully updated' });
-          }
-        );
-      });
-    });
-  } else {
-    res.status(400).send({ message: 'Old password did not match' });
   }
 });
 

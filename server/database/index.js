@@ -45,7 +45,7 @@ const database = mongoose.connect(
 //   });
 // });
 // console.log('cleanedupD', cleanedupD);
-// //when parse finished, result will be emitted here.
+//when parse finished, result will be emitted here.
 
 // Product.collection.insertMany(cleanedupD);
 

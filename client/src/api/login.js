@@ -1,9 +1,9 @@
 import request from 'superagent';
 import { handleSuccess, handleError } from './utils';
 
-export const loginUser = (credentials) =>
+export const loginUser = (token) =>
   request
     .post('/api/auth/login')
-    .send(credentials)
+    .send({ token })
     .then(handleSuccess)
     .catch(handleError);
