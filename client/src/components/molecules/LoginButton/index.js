@@ -1,7 +1,8 @@
 import React, { useContext } from 'react';
 import { GoogleLogin } from 'react-google-login';
 import { loginUser } from '../../../api/login';
-const clientId = process.env.REACT_APP_CLIENT_ID;
+const clientId =
+  '1009874905788-4eotoe38h0ppnmuv672ng5nccvd2sce0.apps.googleusercontent.com';
 import { UserContext } from '../../../context/UserContext';
 
 function Login() {
