@@ -16,7 +16,12 @@ export default function WelcomePage() {
   return (
     <div className="welcome-page page">
       <Hero>
-        <HeroImage alt={'Gift Quiz'} src={backgroundImage} />
+        <HeroImage
+          alt={'Gift Quiz'}
+          src={backgroundImage}
+          width="1400"
+          height="800"
+        />
         <HeroText>
           <HeroTitle>Having Trouble Finding The Right Gift?</HeroTitle>
           <HeroDescription>

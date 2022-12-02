@@ -87,7 +87,7 @@ const CircleContainer = styled.div`
 `;
 
 export default function ({ product, handleCardClick, id }) {
-  const temporaryTest = true;
+  const temporaryTest = false;
   const { isLoggedIn } = useContext(UserContext);
   const [isOpen, setIsOpen] = useState(false);
   const handleClick = () => {

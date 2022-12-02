@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 export const HeroImage = styled.img`
-  object-fit: cover;
+  /* aspect-ratio: auto 2304 / 1142; */
   width: 100%;
   box-shadow: 5px 5px #ededed;
   border-radius: 2em;

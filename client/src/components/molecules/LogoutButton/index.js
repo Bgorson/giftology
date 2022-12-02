@@ -5,7 +5,6 @@ import { useHistory } from 'react-router-dom';
 
 const clientId =
   '1009874905788-4eotoe38h0ppnmuv672ng5nccvd2sce0.apps.googleusercontent.com';
-console.log(process.env);
 function Logout() {
   const history = useHistory();
 

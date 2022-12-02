@@ -2,6 +2,8 @@
   font-family: 'FiraSansCondensed-Black';
   src: local('FiraSansCondensed-Black'),
     url(../../../fonts/FiraSansCondensed-Black.ttf) format('truetype');
+  font-display: swap;
+
   /* other formats include: 'woff2', 'truetype, 'opentype',
                               'embedded-opentype', and 'svg' */
 }
@@ -9,6 +11,8 @@
   font-family: 'Slabo13px-Regular';
   src: local('Slabo13px-Regular'),
     url(../../../fonts/Slabo13px-Regular.ttf) format('truetype');
+  font-display: swap;
+
   /* other formats include: 'woff2', 'truetype, 'opentype',
                                 'embedded-opentype', and 'svg' */
 }
