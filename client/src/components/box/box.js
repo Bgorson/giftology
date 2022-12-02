@@ -1,10 +1,13 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import styled, { css, keyframes } from 'styled-components';
 import ReactGA from 'react-ga';
+
 import Badge from '../atoms/CardV2/Badge';
+import LoginModal from '../molecules/LoginModal';
 
 import gift from '../../present.jpg';
 import ProductCard from '../atoms/CardV2';
+import { UserContext } from '../../context/UserContext';
 
 const testData = {
   _id: '628ba23c7cef8ce8b60969e9',
@@ -83,21 +86,32 @@ const CircleContainer = styled.div`
   }
 `;
 
-const TeaserText = styled.p``;
-
 export default function ({ product, handleCardClick, id }) {
+  const temporaryTest = true;
+  const { isLoggedIn } = useContext(UserContext);
+  const [isOpen, setIsOpen] = useState(false);
   const handleClick = () => {
-    setIsVisible(false);
-    if (visible) {
-      ReactGA.event({
-        category: 'Gift Box Selected',
-        action: product.productName,
-      });
-    }
+    if (!temporaryTest || isLoggedIn) {
+      setIsVisible(false);
+      if (visible) {
+        ReactGA.event({
+          category: 'Gift Box Selected',
+          action: product.productName,
+        });
+      }
 
-    setTimeout(() => {
-      setFadeIn(false);
-    }, 1000);
+      setTimeout(() => {
+        setFadeIn(false);
+      }, 1000);
+    } else {
+      setIsOpen(true);
+    }
+  };
+  const handleClickOpen = () => {
+    setIsOpen(true);
+  };
+  const handleClose = () => {
+    setIsOpen(false);
   };
   const [visible, setIsVisible] = useState(true);
   const [fadeIn, setFadeIn] = useState(true);
@@ -120,6 +134,13 @@ export default function ({ product, handleCardClick, id }) {
           isHighlighted={true}
           handleCardClick={handleCardClick}
           product={product}
+        />
+      )}
+      {isOpen && (
+        <LoginModal
+          open={isOpen}
+          handleClickOpen={handleClickOpen}
+          handleClose={handleClose}
         />
       )}
     </>

@@ -5,7 +5,7 @@ const clientId =
   '1009874905788-4eotoe38h0ppnmuv672ng5nccvd2sce0.apps.googleusercontent.com';
 import { UserContext } from '../../../context/UserContext';
 
-function Login() {
+function Login({ modalAction }) {
   const { loggedIn } = useContext(UserContext);
 
   const onSuccess = async (res) => {
@@ -13,9 +13,15 @@ function Login() {
     const response = await loginUser(res.tokenId);
     console.log('response', response);
     loggedIn({ token: response.token });
+    if (modalAction) {
+      modalAction();
+    }
   };
   const onFailure = (res) => {
     console.log('failed to login: ', res);
+    if (modalAction) {
+      modalAction();
+    }
   };
   return (
     <div>
