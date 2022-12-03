@@ -91,11 +91,11 @@ router.post('/login', async (req, res, next) => {
                 });
               }
               const token = jwt.sign(
-                { _id: user._id },
+                { _id: data },
                 process.env.JWT_ACC_ACTIVATE,
                 { expiresIn: '7d' }
               );
-              const { _id, name, email } = newUser;
+              const { _id, name, email } = data;
 
               res.json({ token, user: { _id, name, email } });
             });

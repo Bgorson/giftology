@@ -9,9 +9,8 @@ function Login({ modalAction }) {
   const { loggedIn } = useContext(UserContext);
 
   const onSuccess = async (res) => {
-    console.log('login Successful- Current user:', res.tokenId);
+    // console.log('login Successful- Current user:', res.tokenId);
     const response = await loginUser(res.tokenId);
-    console.log('response', response);
     loggedIn({ token: response.token });
     if (modalAction) {
       modalAction();
