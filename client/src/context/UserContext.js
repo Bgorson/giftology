@@ -25,6 +25,7 @@ const UserProvider = (props) => {
   React.useEffect(() => {
     setState(defaultValue);
   }, []);
+  console.log('STATE', state);
   return (
     <UserContext.Provider value={{ ...state, ...actions }}>
       {children}

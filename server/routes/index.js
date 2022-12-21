@@ -9,6 +9,6 @@ const user = require('./user');
 router.use('/products', products);
 router.use('/quiz', quiz);
 router.use('/auth', auth);
-// router.use('/user', user);
+router.use('/user', user);
 
 module.exports = router;

@@ -4,6 +4,8 @@ const UserSchema = new mongoose.Schema(
   {
     email: { type: String, required: true, unique: true },
     name: { type: String, required: false },
+    quizResults: { type: Array, required: false },
+    favorites: { type: Array, required: false },
   },
   { timestamps: true }
 );

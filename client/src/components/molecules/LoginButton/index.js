@@ -12,6 +12,7 @@ function Login({ modalAction }) {
     // console.log('login Successful- Current user:', res.tokenId);
     const response = await loginUser(res.tokenId);
     loggedIn({ token: response.token });
+    console.log(response.token);
     if (modalAction) {
       modalAction();
     }

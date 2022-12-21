@@ -28,33 +28,29 @@ function loggedIn(req, res, next) {
 router.get('/', verifyToken, (req, res) => {
   jwt.verify(req.token, process.env.JWT_ACC_ACTIVATE, (err, authData) => {
     if (err) {
+      console.log('ERROR', err);
       res.sendStatus(403);
     } else {
-      res.json({
-        message: 'All good',
+      const { _id } = authData;
+      User.findById(_id, (err, user) => {
+        res.send(user);
       });
     }
   });
-
-  console.log('userobject', req.user);
-  res.send({ message: 'User info successfully retreived' });
 });
 
-// router.put('/', requireAuth, (req, res) => {
-//   req.body.updated_at = Date.now();
-
-//   User.findByIdAndUpdate(
-//     { _id: req.user._id },
-//     req.body,
-//     { new: true },
-//     (err, user) => {
-//       if (err) {
-//         res.status(400).send({ err, message: 'Error updating user' });
-//       }
-//       res.status(200).send({
-//         message: 'User successfully updated',
-//         user: user.hidePassword(),
+// change to put favorites
+// router.get('/favorites', verifyToken, (req, res) => {
+//   console.log('HIT');
+//   jwt.verify(req.token, process.env.JWT_ACC_ACTIVATE, (err, authData) => {
+//     if (err) {
+//       console.log('ERROR', err);
+//       res.sendStatus(403);
+//     } else {
+//       const { _id } = authData;
+//       User.findById(_id, (err, user) => {
+//         res.send(user);
 //       });
 //     }
-//   );
+//   });
 // });
