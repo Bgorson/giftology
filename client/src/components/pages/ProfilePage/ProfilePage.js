@@ -20,9 +20,7 @@ import {
 export default function ProfilePage() {
   const history = useHistory();
   const { token, loggedOut } = useContext(UserContext);
-  console.log("TOKEN", token);
   const [profileData, setProfileData] = useState();
-  console.log("profileData", profileData);
 
   const hobbyTransform = (hobbies) => {
     let string = "";

@@ -20,10 +20,8 @@ import {
 import ReactGA from "react-ga";
 
 export default function ProductResult(props) {
-  console.log("PROPS", props);
   const { data, arrayOfCategories, results } = props;
   const { token, email } = useContext(UserContext);
-  console.log("EMAIL", email);
   const { products } = data;
   const [currentCardData, setCurrentCardData] = React.useState(null);
   const [open, setOpen] = React.useState(false);
@@ -32,7 +30,6 @@ export default function ProductResult(props) {
   const [quizData, setQuizData] = React.useState(data?.quizData);
   const [isLoading, setIsLoading] = React.useState(false);
   const location = useLocation();
-  console.log("quizData", quizData);
   // TODO: Put a use effect to sort it all once
   const handleClickOpen = (product, isHighlighted) => {
     if (isHighlighted) {

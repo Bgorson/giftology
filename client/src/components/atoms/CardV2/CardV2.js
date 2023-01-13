@@ -24,8 +24,6 @@ export default function ProductCard({
   quizId,
 }) {
   const { token } = React.useContext(UserContext);
-  console.log("ID", quizId);
-  console.log("isFavorite", isFavorite);
   const handleAddToFavorites = (product, quizId) => {
     if (isFavorite) {
       removeFavorites(product, quizId, token);

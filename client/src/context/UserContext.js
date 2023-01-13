@@ -13,7 +13,6 @@ const UserConsumer = UserContext.Consumer;
 const UserProvider = (props) => {
   const { children } = props;
   const loggedIn = ({ token, email }) => {
-    console.log("FROM LOG IN", token);
     localStorage.setItem("token", token);
     setState({ isLoggedIn: true, token: token, email: email });
   };
@@ -24,7 +23,6 @@ const UserProvider = (props) => {
     setState({ isLoggedIn: false });
   };
   const attempToLogin = async (token) => {
-    console.log("attemptig");
     return await getUser(token);
   };
 
@@ -34,12 +32,9 @@ const UserProvider = (props) => {
     loggedOut,
   };
   React.useEffect(() => {
-    console.log("use effect running");
     if (localStorage.getItem("token")) {
-      console.log("here");
       const token = localStorage.getItem("token");
       attempToLogin(token).then((data) => {
-        console.log("DATA", data);
         localStorage.setItem("userEmail", data?.email);
 
         setState({ ...data, token: token, isLoggedIn: true });
@@ -48,7 +43,6 @@ const UserProvider = (props) => {
       setState(defaultValue);
     }
   }, []);
-  console.log("STATE", state);
   return (
     <UserContext.Provider value={{ ...state, ...actions }}>
       {children}

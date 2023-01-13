@@ -13,7 +13,6 @@ export default function QuizResult(props) {
   const { results } = props;
   const [isLoading, setIsLoading] = useState(true);
   const { token, email } = useContext(UserContext);
-  console.log("RESULTS", email);
 
   const [resArray, setResArray] = useState([]);
 

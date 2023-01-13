@@ -45,14 +45,12 @@ export default function FavoritesPage() {
     setOpen(false);
   };
 
-  console.log("quizId", quizId);
   const [productResults, setProductResults] = React.useState(null);
 
   useEffect(() => {
     if (token) {
       const productPromise = Promise.resolve(getFavorites(quizId, token));
       productPromise.then((productRes) => {
-        console.log("RES", productRes);
         setProductResults(productRes);
       });
     }
