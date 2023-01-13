@@ -1,16 +1,20 @@
-import React, { useState } from 'react';
-import { Audio } from 'react-loader-spinner';
+import React, { useState, useContext } from "react";
+import { Audio } from "react-loader-spinner";
 
 // import { postQuizResults } from '../../../api/quiz';
-import { postAllQuizResults } from '../../../api/allQuiz';
-import { Disclosure, TopContainer, Title, LoaderContainer } from './styles';
-import ProductResult from '../../organisms/ProductResult/ProductResult';
-import ReactGA from 'react-ga';
+import { postAllQuizResults } from "../../../api/allQuiz";
+import { Disclosure, TopContainer, Title, LoaderContainer } from "./styles";
+import ProductResult from "../../organisms/ProductResult/ProductResult";
+import ReactGA from "react-ga";
+import { UserContext } from "../../../context/UserContext";
 
 export default function QuizResult(props) {
   // console.log(props);
   const { results } = props;
   const [isLoading, setIsLoading] = useState(true);
+  const { token, email } = useContext(UserContext);
+  console.log("RESULTS", email);
+
   const [resArray, setResArray] = useState([]);
 
   function groupBy(arr, property) {
@@ -24,17 +28,21 @@ export default function QuizResult(props) {
   }
   React.useEffect(() => {
     ReactGA.event({
-      category: 'Quiz Results',
-      action: 'Finished Quiz',
+      category: "Quiz Results",
+      action: "Finished Quiz",
     });
   }, []);
 
   const [productResults, setProductResults] = React.useState(null);
+  const [quizData, setQuizData] = React.useState(null);
+
   React.useEffect(() => {
     if (Object.keys(results).length === 0) {
-      const storedResults = localStorage.getItem('quizResults');
+      const storedResults = localStorage.getItem("quizResults");
+      let storedEmail = localStorage.getItem("userEmail");
+      console.log("from ls", storedEmail);
       const productPromise = Promise.resolve(
-        postAllQuizResults(JSON.parse(storedResults))
+        postAllQuizResults(JSON.parse(storedResults), email || storedEmail)
       );
       productPromise.then((productRes) => {
         // console.log(productRes);
@@ -61,22 +69,28 @@ export default function QuizResult(props) {
 
         // setResArray(arrayOfCategories);
         setProductResults(productRes);
+        setQuizData(productRes.quizData);
 
         setIsLoading(false);
 
         if (!productRes) {
           ReactGA.event({
-            category: 'Quiz Results',
-            action: 'No Results Found',
+            category: "Quiz Results",
+            action: "No Results Found",
           });
         }
       });
     } else {
-      localStorage.setItem('quizResults', JSON.stringify(results));
+      localStorage.setItem("quizResults", JSON.stringify(results));
+      let storedEmail = localStorage.getItem("userEmail");
 
-      const productPromise = Promise.resolve(postAllQuizResults(results));
+      const productPromise = Promise.resolve(
+        postAllQuizResults(results, email || storedEmail)
+      );
       productPromise.then((productRes) => {
         setProductResults(productRes);
+        setQuizData(productRes.quizId);
+
         // console.log(productRes);
 
         // const { products, categoryScores } = productRes;
@@ -102,13 +116,13 @@ export default function QuizResult(props) {
 
         if (!productRes) {
           ReactGA.event({
-            category: 'Quiz Results',
-            action: 'No Results Found',
+            category: "Quiz Results",
+            action: "No Results Found",
           });
         }
       });
     }
-  }, [results]);
+  }, []);
   return (
     <React.Fragment>
       <TopContainer>
@@ -131,7 +145,11 @@ export default function QuizResult(props) {
       )}
       {!isLoading && (
         // <ProductResult arrayOfCategories={resArray} data={productResults} />
-        <ProductResult results={results} data={productResults} />
+        <ProductResult
+          quizData={quizData}
+          results={results}
+          data={productResults}
+        />
       )}
     </React.Fragment>
   );

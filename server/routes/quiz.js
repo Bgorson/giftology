@@ -1,28 +1,54 @@
-const express = require('express');
+const express = require("express");
 // const { requireAuth } = require('./middleware');
-const { Product } = require('../database/schemas');
-const getImage = require('../api/getEtsy');
+const { Product } = require("../database/schemas");
+const getImage = require("../api/getEtsy");
+const { User } = require("../database/schemas");
+const { v4 } = require("uuid");
+const updateUser = async (email, answers) => {
+  const foundUser = await User.findOne({ email });
+  const quizId = v4();
+  const newQuizData = {
+    id: quizId,
+    quizResults: answers,
+    wishlist: [],
+  };
+  let oldWishList = [];
+  if (foundUser) {
+    if (foundUser.userData) {
+      for (i = 0; i < foundUser.userData.length; i++) {
+        if (foundUser.userData[i]?.quizResults?.name == answers?.name) {
+          oldWishList = foundUser.userData[i].wishlist;
+          foundUser.userData.splice(i, 1);
+        }
+      }
+    }
+    newQuizData.wishlist = oldWishList;
 
+    foundUser.userData.push(newQuizData);
+    await foundUser.save();
+  }
+  return newQuizData;
+};
 function decimalAdjust(type, value, exp) {
   // If the exp is undefined or zero...
-  if (typeof exp === 'undefined' || +exp === 0) {
+  if (typeof exp === "undefined" || +exp === 0) {
     return Math[type](value);
   }
   value = +value;
   exp = +exp;
   // If the value is not a number or the exp is not an integer...
-  if (isNaN(value) || !(typeof exp === 'number' && exp % 1 === 0)) {
+  if (isNaN(value) || !(typeof exp === "number" && exp % 1 === 0)) {
     return NaN;
   }
   // Shift
-  value = value.toString().split('e');
-  value = Math[type](+(value[0] + 'e' + (value[1] ? +value[1] - exp : -exp)));
+  value = value.toString().split("e");
+  value = Math[type](+(value[0] + "e" + (value[1] ? +value[1] - exp : -exp)));
   // Shift back
-  value = value.toString().split('e');
-  return +(value[0] + 'e' + (value[1] ? +value[1] + exp : exp));
+  value = value.toString().split("e");
+  return +(value[0] + "e" + (value[1] ? +value[1] + exp : exp));
 }
 
-const round10 = (value, exp) => decimalAdjust('round', value, exp);
+const round10 = (value, exp) => decimalAdjust("round", value, exp);
 
 const router = express.Router();
 
@@ -43,7 +69,7 @@ async function calculateScoreForAll(filteredProducts, quizResults) {
 
     // filteredArray.forEach(async function (product) {
     // FETCH ETSY IMAGE IF NEEDED
-    if (product.website == 'Etsy') {
+    if (product.website == "Etsy") {
       const imageURL = await getImage(product.listingId);
       product.directImageSrc = imageURL;
     }
@@ -102,12 +128,12 @@ async function calculateScoreForAll(filteredProducts, quizResults) {
       score += tagScore;
     }
 
-    if (quizResults.who == 'coworker' && product.who_ind === 'coworker') {
+    if (quizResults.who == "coworker" && product.who_ind === "coworker") {
       score = score + 25;
     }
     if (quizResults.price) {
-      let minPrice = parseInt(quizResults.price.split('-')[0]);
-      let maxPrice = parseInt(quizResults.price.split('-')[1]);
+      let minPrice = parseInt(quizResults.price.split("-")[0]);
+      let maxPrice = parseInt(quizResults.price.split("-")[1]);
 
       if (
         product.productBasePrice >= minPrice &&
@@ -137,26 +163,32 @@ function groupBy(arr, property) {
 // full path is api/quiz
 // CURRENT MAIN QUIZ ROUTE
 
-router.post('/allProducts', async (req, res) => {
+router.post("/allProducts", async (req, res) => {
+  console.log("REQ BODY", req.body);
+  let quizData;
+  if (req.body.email) {
+    quizData = await updateUser(req.body.email, req.body.answers);
+  }
+  console.log("QUIZ ID", quizData);
   const test = {
-    age: '30-30',
-    hobbies: ['gardening', 'healthAndWellness', 'reading'],
-    occasion: 'holiday',
-    prefer: 'outdoor',
+    age: "30-30",
+    hobbies: ["gardening", "healthAndWellness", "reading"],
+    occasion: "holiday",
+    prefer: "outdoor",
     tags: [],
-    type: ['thoughtful'],
-    who: 'myself',
+    type: ["thoughtful"],
+    who: "myself",
   };
 
   //What to send:
   // Array of Categories with products and the average score
 
-  const quizResults = req.body;
+  const { answers: quizResults } = req.body;
   try {
     //Split products if coworkers
-    if (quizResults.who === 'coworker' && quizResults.howMany != '1') {
-      const minPrice = parseInt(quizResults.price.split('-')[0]);
-      const maxPrice = parseInt(quizResults.price.split('-')[1]);
+    if (quizResults.who === "coworker" && quizResults.howMany != "1") {
+      const minPrice = parseInt(quizResults.price.split("-")[0]);
+      const maxPrice = parseInt(quizResults.price.split("-")[1]);
 
       retriveProducts().then((allProducts) => {
         let priceandTypeFiltered = [];
@@ -168,8 +200,8 @@ router.post('/allProducts', async (req, res) => {
         // const priceFiltered = minPriceFilter.filter(
         //   (product) => parseInt(product.productBasePrice) >= minPrice
         // );
-        const minAge = parseInt(quizResults.age.split('-')[0]);
-        const maxAge = parseInt(quizResults.age.split('-')[1]);
+        const minAge = parseInt(quizResults.age.split("-")[0]);
+        const maxAge = parseInt(quizResults.age.split("-")[1]);
         // This is the types we want to show
         // console.log('everything', allProducts);
         // FILTER OUT AGES
@@ -192,12 +224,12 @@ router.post('/allProducts', async (req, res) => {
             return parseInt(a.productBasePrice) - parseInt(b.productBasePrice);
           });
 
-          res.send({ products: result });
+          res.send({ products: result, quizData: quizData });
         });
       });
     } else {
-      const minAge = parseInt(quizResults.age.split('-')[0]);
-      const maxAge = parseInt(quizResults.age.split('-')[1]);
+      const minAge = parseInt(quizResults.age.split("-")[0]);
+      const maxAge = parseInt(quizResults.age.split("-")[1]);
       // This is the types we want to show
       const giftTypeArray = quizResults.type;
       let typeAndAgeFiltered = [];
@@ -213,7 +245,7 @@ router.post('/allProducts', async (req, res) => {
         // FILTER OUT GIFT TYPES
         if (giftTypeArray.length > 0) {
           typeAndAgeFiltered = ageFiltered.filter((product) => {
-            const productTypes = product.giftType.toString().split(',');
+            const productTypes = product.giftType.toString().split(",");
             return giftTypeArray.some((r) => productTypes.includes(r));
           });
         } else {
@@ -231,7 +263,7 @@ router.post('/allProducts', async (req, res) => {
             return parseInt(a.productBasePrice) - parseInt(b.productBasePrice);
           });
 
-          res.send({ products: result });
+          res.send({ products: result, quizData: quizData });
         });
       });
     }
@@ -244,15 +276,15 @@ async function calculateScoreByCategory(ageFiltered, quizResults) {
   let minPrice = 0;
   let maxPrice = 5000;
   if (quizResults.price) {
-    minPrice = parseInt(quizResults.price.split('-')[0]);
-    maxPrice = parseInt(quizResults.price.split('-')[1]);
+    minPrice = parseInt(quizResults.price.split("-")[0]);
+    maxPrice = parseInt(quizResults.price.split("-")[1]);
   }
 
   const filteredArray = ageFiltered;
   for (const product of filteredArray) {
     // filteredArray.forEach(async function (product) {
     // FETCH ETSY IMAGE IF NEEDED
-    if (product.website == 'Etsy') {
+    if (product.website == "Etsy") {
       const imageURL = await getImage(product.listingId);
       product.directImageSrc = imageURL;
     }
@@ -326,7 +358,7 @@ async function calculateScoreByCategory(ageFiltered, quizResults) {
       score++;
     }
     // COWORKER
-    if (quizResults.who == 'coworker' && product.who_ind === 'coworker') {
+    if (quizResults.who == "coworker" && product.who_ind === "coworker") {
       score = score + 25;
     }
     product.score = score;
@@ -335,15 +367,15 @@ async function calculateScoreByCategory(ageFiltered, quizResults) {
   }
   return filteredArray;
 }
-router.post('/', async (req, res) => {
+router.post("/", async (req, res) => {
   const test = {
-    age: '30-30',
-    hobbies: ['gardening', 'healthAndWellness', 'reading'],
-    occasion: 'holiday',
-    prefer: 'outdoor',
+    age: "30-30",
+    hobbies: ["gardening", "healthAndWellness", "reading"],
+    occasion: "holiday",
+    prefer: "outdoor",
     tags: [],
-    type: ['thoughtful'],
-    who: 'myself',
+    type: ["thoughtful"],
+    who: "myself",
   };
 
   //What to send:
@@ -352,8 +384,8 @@ router.post('/', async (req, res) => {
   const quizResults = req.body;
   try {
     if (quizResults.age) {
-      const minAge = parseInt(quizResults.age.split('-')[0]);
-      const maxAge = parseInt(quizResults.age.split('-')[1]);
+      const minAge = parseInt(quizResults.age.split("-")[0]);
+      const maxAge = parseInt(quizResults.age.split("-")[1]);
       // This is the types we want to show
       const giftTypeArray = quizResults.type;
       let typeAndAgeFiltered = [];
@@ -369,7 +401,7 @@ router.post('/', async (req, res) => {
         // FILTER OUT GIFT TYPES
         if (giftTypeArray.length > 0) {
           typeAndAgeFiltered = ageFiltered.filter((product) => {
-            const productTypes = product.giftType.toString().split(',');
+            const productTypes = product.giftType.toString().split(",");
             return giftTypeArray.some((r) => productTypes.includes(r));
           });
         } else {
@@ -378,7 +410,7 @@ router.post('/', async (req, res) => {
 
         calculateScoreByCategory(typeAndAgeFiltered, quizResults).then(
           (result) => {
-            const arrayOfCategories = groupBy(result, 'category');
+            const arrayOfCategories = groupBy(result, "category");
             const categories = Object.keys(arrayOfCategories);
             const scores = [];
             categories.forEach((category) => {
@@ -400,10 +432,10 @@ router.post('/', async (req, res) => {
       });
     }
     //Split products if coworkers
-    if (quizResults.who === 'coworker' && quizResults.howMany != '1') {
-      console.log('going down coworker path');
-      const minPrice = parseInt(quizResults.price.split('-')[0]);
-      const maxPrice = parseInt(quizResults.price.split('-')[1]);
+    if (quizResults.who === "coworker" && quizResults.howMany != "1") {
+      console.log("going down coworker path");
+      const minPrice = parseInt(quizResults.price.split("-")[0]);
+      const maxPrice = parseInt(quizResults.price.split("-")[1]);
 
       let priceandTypeFiltered = [];
       retriveProducts().then((allProducts) => {
@@ -419,7 +451,7 @@ router.post('/', async (req, res) => {
 
         calculateScoreByCategory(priceandTypeFiltered, quizResults).then(
           (result) => {
-            const arrayOfCategories = groupBy(result, 'category');
+            const arrayOfCategories = groupBy(result, "category");
             const categories = Object.keys(arrayOfCategories);
             const scores = [];
             categories.forEach((category) => {

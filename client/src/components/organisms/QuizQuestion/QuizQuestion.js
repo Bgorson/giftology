@@ -1,8 +1,8 @@
-import React, { useState, Fragment, useEffect } from 'react';
+import React, { useState, Fragment, useEffect } from "react";
 
-import AgeSlider from '../../atoms/Slider/AgeSlider';
-import QuizResult from '../QuizResult/QuizResult';
-import ReactGA from 'react-ga';
+import AgeSlider from "../../atoms/Slider/AgeSlider";
+import QuizResult from "../QuizResult/QuizResult";
+import ReactGA from "react-ga";
 
 import {
   Container,
@@ -10,7 +10,8 @@ import {
   FancyButton,
   DateInput,
   Title,
-} from './styles.js';
+  InputName,
+} from "./styles.js";
 
 export default function QuizQuestion(props) {
   const {
@@ -25,36 +26,45 @@ export default function QuizQuestion(props) {
     hasAdditionalField,
     isForCoworkers,
     questionType,
+    isText,
   } = props;
   let { answers } = props;
   const [checkedState, setCheckedState] = useState(
     new Array(answers.length).fill(false)
   );
+  const [text, setText] = useState("");
 
   useEffect(() => {
     if (
-      ((localStorage.getItem('forCoworkers') === 'true' || isForCoworkers) &&
-        !questionType.includes('coworker') &&
-        id !== 'results') ||
-      ((localStorage.getItem('forCoworkers') === 'false' || !isForCoworkers) &&
-        questionType.includes('coworker') &&
+      ((localStorage.getItem("forCoworkers") === "true" || isForCoworkers) &&
+        !questionType.includes("coworker") &&
+        id !== "results") ||
+      ((localStorage.getItem("forCoworkers") === "false" || !isForCoworkers) &&
+        questionType.includes("coworker") &&
         questionType.length === 1)
     ) {
       next();
     }
   }, []);
   const [age, setAge] = useState(30);
-  const [date, setDate] = useState('');
-  const [placeholder, setPlaceholder] = useState('MM/DD/YYYY');
+  const [date, setDate] = useState("");
+  const [placeholder, setPlaceholder] = useState("MM/DD/YYYY");
 
-  const [additionalMainAnswer, setAdditionalMainAnswer] = useState('');
+  const [additionalMainAnswer, setAdditionalMainAnswer] = useState("");
   const [showAdditionalField, setShowAdditionalField] = useState(false);
 
   const handleAgeValue = (e) => {
     setAge(e);
   };
+  const handleText = (e) => {
+    console.log(e.target.value);
+    setText(e.target.value);
+  };
   const handleSliderResponse = (id, age) => {
     handleResponse(id, { value: `${age}-${age}` });
+  };
+  const handleNameResponse = (id, name) => {
+    handleResponse(id, { value: name });
   };
 
   const handleOnChange = (position, e) => {
@@ -82,16 +92,16 @@ export default function QuizQuestion(props) {
     });
     handleResponse(id, response, true);
   };
-  if (parseInt(quizAge?.value?.split('-')[0]) < 21 && id === 'hobbies') {
+  if (parseInt(quizAge?.value?.split("-")[0]) < 21 && id === "hobbies") {
     answers = answers.filter(function (el) {
-      return el.value != 'mixology';
+      return el.value != "mixology";
     });
   }
   const possibleAnswers = answers.map(
     (answers, index) =>
       answers && (
         <FancyButton
-          type={showAdditionalField ? 'checkbox' : 'submit'}
+          type={showAdditionalField ? "checkbox" : "submit"}
           checked={
             showAdditionalField
               ? additionalMainAnswer.value === answers.value
@@ -100,13 +110,13 @@ export default function QuizQuestion(props) {
           onClick={(e) => {
             handleOnChange(index, e);
             ReactGA.event({
-              category: 'Quiz',
+              category: "Quiz",
               action: `Clicked ${answers.message}`,
-              label: 'QuizButton',
+              label: "QuizButton",
             });
             if (
               hasAdditionalField &&
-              (answers.value === 'anniversary' || answers.value === 'birthday')
+              (answers.value === "anniversary" || answers.value === "birthday")
             ) {
               handleAdditionalData(answers);
             } else {
@@ -127,8 +137,8 @@ export default function QuizQuestion(props) {
       <FancyButton
         style={
           checkedState[index]
-            ? { backgroundColor: '#44a2bb' }
-            : { backgroundColor: 'initial', color: 'initial' }
+            ? { backgroundColor: "#44a2bb" }
+            : { backgroundColor: "initial", color: "initial" }
         }
         type="checkbox"
         id={`custom-checkbox-${index}`}
@@ -136,9 +146,9 @@ export default function QuizQuestion(props) {
         checked={checkedState[index]}
         onClick={(e) => {
           ReactGA.event({
-            category: 'Quiz',
+            category: "Quiz",
             action: `Clicked ${answers.message}`,
-            label: 'QuizButton',
+            label: "QuizButton",
           });
           handleOnChange(index, e);
         }}
@@ -148,10 +158,11 @@ export default function QuizQuestion(props) {
     </div>
   ));
 
-  return id !== 'results' ? (
+  return id !== "results" ? (
     <Container>
       {title && <Title>{title}</Title>}
       {isSlider && <AgeSlider handleAgeValue={handleAgeValue} />}
+      {isText && <InputName onChange={handleText} />}
 
       <ButtonContainer>
         {isMulti ? multiPossibleAnswers : possibleAnswers}
@@ -163,9 +174,9 @@ export default function QuizQuestion(props) {
           type="submit"
           onClick={() => {
             ReactGA.event({
-              category: 'Quiz',
+              category: "Quiz",
               action: `Clicked Multi Submit ${id}`,
-              label: 'QuizButton',
+              label: "QuizButton",
             });
             handleMultiResponse(id, answers, checkedState);
             next();
@@ -190,12 +201,12 @@ export default function QuizQuestion(props) {
               type="submit"
               onClick={() => {
                 ReactGA.event({
-                  category: 'Quiz',
+                  category: "Quiz",
                   action: `Clicked Multi Submit ${id}`,
-                  label: 'QuizButton',
+                  label: "QuizButton",
                 });
                 handleResponse(id, additionalMainAnswer);
-                handleResponse('date', date, true);
+                handleResponse("date", date, true);
                 next();
               }}
             >
@@ -212,11 +223,29 @@ export default function QuizQuestion(props) {
           type="submit"
           onClick={() => {
             ReactGA.event({
-              category: 'Quiz',
+              category: "Quiz",
               action: `Clicked Age ${age}`,
-              label: 'QuizButton',
+              label: "QuizButton",
             });
             handleSliderResponse(id, age);
+            next();
+          }}
+        >
+          Submit
+        </FancyButton>
+      ) : null}
+      {isText ? (
+        <FancyButton
+          isSubmit={true}
+          isText={isText}
+          type="submit"
+          onClick={() => {
+            ReactGA.event({
+              category: "Quiz",
+              action: `Entered Name`,
+              label: "QuizButton",
+            });
+            handleNameResponse(id, text);
             next();
           }}
         >

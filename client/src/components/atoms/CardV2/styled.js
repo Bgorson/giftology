@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 
 export const FlavorText = styled.p`
   padding-top: 0.5em;
@@ -10,7 +10,7 @@ export const CardContainer = styled.div`
   color: black;
   position: relative;
 
-  padding: 5px 1em;
+  padding: 25px 1em;
   border: 1px solid grey;
   border-radius: 2em;
   cursor: pointer;
@@ -66,4 +66,10 @@ export const BadgeContainer = styled.div`
 `;
 export const BadgeText = styled.p`
   margin-top: 10px;
+`;
+export const FavoriteContainer = styled.div`
+  position: relative;
+  z-index: 100;
+  top: 5%;
+  right: -5%;
 `;

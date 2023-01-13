@@ -1,9 +1,9 @@
-import React, { useContext } from 'react';
-import { GoogleLogin } from 'react-google-login';
-import { loginUser } from '../../../api/login';
+import React, { useContext } from "react";
+import { GoogleLogin } from "react-google-login";
+import { loginUser } from "../../../api/login";
 const clientId =
-  '1009874905788-4eotoe38h0ppnmuv672ng5nccvd2sce0.apps.googleusercontent.com';
-import { UserContext } from '../../../context/UserContext';
+  "1009874905788-4eotoe38h0ppnmuv672ng5nccvd2sce0.apps.googleusercontent.com";
+import { UserContext } from "../../../context/UserContext";
 
 function Login({ modalAction }) {
   const { loggedIn } = useContext(UserContext);
@@ -11,14 +11,16 @@ function Login({ modalAction }) {
   const onSuccess = async (res) => {
     // console.log('login Successful- Current user:', res.tokenId);
     const response = await loginUser(res.tokenId);
-    loggedIn({ token: response.token });
-    console.log(response.token);
+    loggedIn({ token: response.token, email: response.user.email });
+    console.log("res", response);
+    localStorage.setItem("userEmail", response.user.email);
+
     if (modalAction) {
       modalAction();
     }
   };
   const onFailure = (res) => {
-    console.log('failed to login: ', res);
+    console.log("failed to login: ", res);
     if (modalAction) {
       modalAction();
     }
@@ -30,8 +32,8 @@ function Login({ modalAction }) {
         buttonText="Login"
         onSuccess={onSuccess}
         onFailure={onFailure}
-        cookiePolicy={'single_host_origin'}
-        style={{ marginTop: '100px' }}
+        cookiePolicy={"single_host_origin"}
+        style={{ marginTop: "100px" }}
         // isSignedIn={true}
       />
     </div>

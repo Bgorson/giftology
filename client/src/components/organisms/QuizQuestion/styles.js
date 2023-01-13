@@ -1,4 +1,4 @@
-import styled, { css } from 'styled-components';
+import styled, { css } from "styled-components";
 
 export const ButtonContainer = styled.div`
   display: flex;
@@ -127,7 +127,7 @@ export const FancyDesign = styled.div`
   );
   position: relative;
   &:before {
-    content: '';
+    content: "";
 
     display: inline-block;
     width: inherit;
@@ -166,11 +166,16 @@ export const DateInput = styled.input`
   display: block;
   min-height: 1.2em;
   ${(props) =>
-    props.placeholder === 'MM/DD/YYYY' &&
+    props.placeholder === "MM/DD/YYYY" &&
     css`
       :before {
         width: 100%;
         content: attr(placeholder);
       }
     `}
+`;
+export const InputName = styled.input`
+  padding: 0.5em;
+  margin-bottom: 1em;
+  font-size: 20px;
 `;

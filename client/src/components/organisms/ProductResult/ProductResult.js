@@ -1,12 +1,13 @@
-import React, { useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
-import GiftBox from '../../../components/box/box';
-import ScrollDialog from '../../molecules/ProductModal';
+import React, { useEffect, useContext } from "react";
+import { useLocation } from "react-router-dom";
+import GiftBox from "../../../components/box/box";
+import ScrollDialog from "../../molecules/ProductModal";
 // import ProductCard from '../../atoms/Card/Card';
-import ProductCardV2 from '../../atoms/CardV2/CardV2';
-import { postAllQuizResults } from '../../../api/allQuiz';
+import ProductCardV2 from "../../atoms/CardV2/CardV2";
+import { postAllQuizResults } from "../../../api/allQuiz";
 // import ResultSliderV2 from '../../molecules/ResultSliderV2';
-import { Audio } from 'react-loader-spinner';
+import { Audio } from "react-loader-spinner";
+import { UserContext } from "../../../context/UserContext";
 
 import {
   ProductGrid,
@@ -15,31 +16,33 @@ import {
   FilterSelect,
   FilterOption,
   LoaderContainer,
-} from './styled';
-import ReactGA from 'react-ga';
+} from "./styled";
+import ReactGA from "react-ga";
 
 export default function ProductResult(props) {
+  console.log("PROPS", props);
   const { data, arrayOfCategories, results } = props;
-
+  const { token, email } = useContext(UserContext);
+  console.log("EMAIL", email);
   const { products } = data;
   const [currentCardData, setCurrentCardData] = React.useState(null);
   const [open, setOpen] = React.useState(false);
   const [quizResults, setQuizResults] = React.useState(results);
   const [productResults, setProductResults] = React.useState(products);
+  const [quizData, setQuizData] = React.useState(data?.quizData);
   const [isLoading, setIsLoading] = React.useState(false);
-
   const location = useLocation();
-
+  console.log("quizData", quizData);
   // TODO: Put a use effect to sort it all once
   const handleClickOpen = (product, isHighlighted) => {
     if (isHighlighted) {
       ReactGA.event({
-        category: 'Highlighted Product Selected',
+        category: "Highlighted Product Selected",
         action: product.productName,
       });
     } else {
       ReactGA.event({
-        category: 'Product Selected',
+        category: "Product Selected",
         action: product.productName,
       });
     }
@@ -62,15 +65,19 @@ export default function ProductResult(props) {
     setIsLoading(true);
     const updatedPriceResults = { ...quizResults, price: newPrice };
     setQuizResults(updatedPriceResults);
-    localStorage.setItem('quizResults', JSON.stringify(updatedPriceResults));
+    localStorage.setItem("quizResults", JSON.stringify(updatedPriceResults));
 
     const productPromise = Promise.resolve(
-      postAllQuizResults(updatedPriceResults)
+      postAllQuizResults(
+        updatedPriceResults,
+        email || localStorage.getItem("userEmail")
+      )
     );
     productPromise.then((productRes) => {
       setIsLoading(false);
 
       setProductResults(productRes.products);
+      setQuizData(productRes.quizData);
     });
   };
   const handleClose = () => {
@@ -78,12 +85,12 @@ export default function ProductResult(props) {
   };
 
   useEffect(() => {
-    setQuizResults(JSON.parse(localStorage.getItem('quizResults')));
+    setQuizResults(JSON.parse(localStorage.getItem("quizResults")));
   }, []);
 
   const { categoryScores = [] } = data;
   // if (products.length > 0 && categoryScores.length > 0) {
-  ReactGA.pageview('Product Result Viewed');
+  ReactGA.pageview("Product Result Viewed");
 
   // Should just be able to go through available categories
   // and display products and names
@@ -96,17 +103,17 @@ export default function ProductResult(props) {
             onChange={(e) => handlePriceChange(e.target.value)}
             name="prices"
           >
-            <FilterOption selected={quizResults.price == '0-10'} value="0-10">
+            <FilterOption selected={quizResults.price == "0-10"} value="0-10">
               $0-$10
             </FilterOption>
-            <FilterOption selected={quizResults.price == '10-30'} value="10-30">
+            <FilterOption selected={quizResults.price == "10-30"} value="10-30">
               $10-$30
             </FilterOption>
-            <FilterOption selected={quizResults.price == '30-50'} value="30-50">
+            <FilterOption selected={quizResults.price == "30-50"} value="30-50">
               $30-$50
             </FilterOption>
             <FilterOption
-              selected={quizResults.price == '50-999999'}
+              selected={quizResults.price == "50-999999"}
               value="50-999999"
             >
               +$50
@@ -129,6 +136,12 @@ export default function ProductResult(props) {
               <>
                 {index > 3 ? (
                   <ProductCardV2
+                    quizId={quizData?.id}
+                    isFavorite={
+                      quizData?.wishlist
+                        ? quizData.wishlist.includes(product.productId)
+                        : false
+                    }
                     showScore={location.search ? true : false}
                     key={index}
                     handleCardClick={handleClickOpen}
