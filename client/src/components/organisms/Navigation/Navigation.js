@@ -1,11 +1,11 @@
-import React, { useState, useEffect, useContext } from 'react';
-import PropTypes from 'prop-types';
-import { Link, useHistory } from 'react-router-dom';
-import ReactGA from 'react-ga';
-import logo from '../../../logo.png';
-import Login from '../../molecules/LoginButton';
+import React, { useState, useEffect, useContext } from "react";
+import PropTypes from "prop-types";
+import { Link, useHistory } from "react-router-dom";
+import ReactGA from "react-ga";
+import logo from "../../../logo.png";
+import Login from "../../molecules/LoginButton";
 
-import { UserContext } from '../../../context/UserContext';
+import { UserContext } from "../../../context/UserContext";
 import {
   ActionItems,
   Navbar,
@@ -15,12 +15,12 @@ import {
   Title,
   LogoNavItem,
   Logo,
-} from './styles.js';
+} from "./styles.js";
 
 export default function Navigation({ pathname }) {
   const navigate = useHistory();
   const { isLoggedIn } = useContext(UserContext);
-
+  console.log("Navigation.js: isLoggedIn: ", isLoggedIn);
   return (
     <Navbar>
       <Container>
@@ -28,11 +28,11 @@ export default function Navigation({ pathname }) {
           <Logo
             onClick={() => {
               ReactGA.event({
-                category: 'Navlink',
-                action: 'Clicked Logo',
-                label: 'Logo',
+                category: "Navlink",
+                action: "Clicked Logo",
+                label: "Logo",
               });
-              navigate.push('/');
+              navigate.push("/");
             }}
             src={logo}
           />
@@ -43,9 +43,9 @@ export default function Navigation({ pathname }) {
               as={Link}
               onClick={() => {
                 ReactGA.event({
-                  category: 'Navlink',
-                  action: 'Clicked Home',
-                  label: 'Home',
+                  category: "Navlink",
+                  action: "Clicked Home",
+                  label: "Home",
                 });
               }}
               to="/"
@@ -58,9 +58,9 @@ export default function Navigation({ pathname }) {
               as={Link}
               onClick={() => {
                 ReactGA.event({
-                  category: 'Navlink',
-                  action: 'Clicked Quiz',
-                  label: 'Quiz',
+                  category: "Navlink",
+                  action: "Clicked Quiz",
+                  label: "Quiz",
                 });
               }}
               to="/quiz/who"
@@ -73,9 +73,9 @@ export default function Navigation({ pathname }) {
               as={Link}
               onClick={() => {
                 ReactGA.event({
-                  category: 'Feedback',
-                  action: 'Clicked Feedback',
-                  label: 'Feedback',
+                  category: "Feedback",
+                  action: "Clicked Feedback",
+                  label: "Feedback",
                 });
               }}
               to="/feedback"
@@ -88,9 +88,9 @@ export default function Navigation({ pathname }) {
               as={Link}
               onClick={() => {
                 ReactGA.event({
-                  category: 'Navlink',
-                  action: 'Clicked About',
-                  label: 'About',
+                  category: "Navlink",
+                  action: "Clicked About",
+                  label: "About",
                 });
               }}
               to="/about"
@@ -104,9 +104,9 @@ export default function Navigation({ pathname }) {
                 as={Link}
                 onClick={() => {
                   ReactGA.event({
-                    category: 'Navlink',
-                    action: 'Clicked Profile',
-                    label: 'Profile',
+                    category: "Navlink",
+                    action: "Clicked Profile",
+                    label: "Profile",
                   });
                 }}
                 to="/profile"

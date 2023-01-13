@@ -1,7 +1,6 @@
-import React from 'react';
+import React from "react";
 
-import { Container, TextDescription } from './styles';
-
+import { Container, TextDescription } from "./styles";
 export default function AboutPage() {
   return (
     <div>

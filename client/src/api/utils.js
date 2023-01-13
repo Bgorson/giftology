@@ -6,7 +6,7 @@ export const handleError = (error) => {
   } else {
     const response = {
       status: 500,
-      body: { message: 'Internal Server error' },
+      body: { message: "Internal Server error" },
     };
     throw response;
   }

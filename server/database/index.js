@@ -1,9 +1,9 @@
-const mongoose = require('mongoose');
-require('dotenv').config();
-let dataB = require('./schemas/database.json');
+const mongoose = require("mongoose");
+require("dotenv").config();
+let dataB = require("./schemas/database.json");
 mongoose.Promise = global.Promise;
 // mongoose.set('debug', true);
-const Product = require('./schemas/Product');
+const Product = require("./schemas/Product");
 
 mongoose.Promise = global.Promise;
 
@@ -12,7 +12,7 @@ const options = {
   useUnifiedTopology: true,
 };
 const database = mongoose.connect(
-  process.env.DATABASE_URL || 'mongodb://127.0.0.1:27017/Giftology',
+  process.env.DATABASE_URL || "mongodb://127.0.0.1:27017/Giftology",
   options
 );
 //     console.log('Connected to database.');

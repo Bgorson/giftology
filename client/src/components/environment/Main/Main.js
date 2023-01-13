@@ -1,22 +1,23 @@
-import React, { useEffect, useState } from 'react';
-import { useLocation, Switch, Route, Redirect } from 'react-router-dom';
-import WelcomePage from '../../pages/WelcomePage';
-import HomePage from '../../pages/HomePage';
-import LostPage from '../../pages/LostPage';
-import QuizPage from '../../pages/QuizPage';
-import AboutPage from '../../pages/AboutPage';
-import ProfilePage from '../../pages/ProfilePage';
+import React, { useEffect, useContext, useState } from "react";
 
-import FeedbackPage from '../../pages/Feedbackpage';
-import ProductPage from '../../pages/ProductPage';
-import AdminPage from '../../pages/AdminPage';
-import Portal from '../../pages/Portal';
-import Product from '../../pages/Portal/Product';
-import Navigation from '../../organisms/Navigation';
-import Footer from '../../organisms/Footer';
+import { useLocation, Switch, Route, Redirect } from "react-router-dom";
+import WelcomePage from "../../pages/WelcomePage";
+import HomePage from "../../pages/HomePage";
+import LostPage from "../../pages/LostPage";
+import QuizPage from "../../pages/QuizPage";
+import AboutPage from "../../pages/AboutPage";
+import ProfilePage from "../../pages/ProfilePage";
+import FavoritesPage from "../../pages/FavoritesPage";
+import FeedbackPage from "../../pages/Feedbackpage";
+import ProductPage from "../../pages/ProductPage";
+import AdminPage from "../../pages/AdminPage";
+import Portal from "../../pages/Portal";
+import Product from "../../pages/Portal/Product";
+import Navigation from "../../organisms/Navigation";
+import Footer from "../../organisms/Footer";
 
-import { Container, MainContainer } from './styles';
-import './index.css';
+import { Container, MainContainer } from "./styles";
+import "./index.css";
 
 export default function Main() {
   const location = useLocation();
@@ -24,19 +25,12 @@ export default function Main() {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [location.pathname]);
-  const [token, setToken] = useState();
   const [product, setProduct] = useState();
 
   const handleProductSelect = (product) => {
     setProduct(product);
   };
-  useEffect(() => {
-    const loggedInUser = localStorage.getItem('user');
-    if (loggedInUser) {
-      const foundUser = JSON.parse(loggedInUser);
-      setToken(foundUser);
-    }
-  }, []);
+
   return (
     <Container>
       <Navigation pathname={location.pathname} />
@@ -48,6 +42,10 @@ export default function Main() {
           <Route path="/feedback" component={FeedbackPage} />
           <Route path="/about" component={AboutPage} />
           <Route path="/profile" component={ProfilePage} />
+          <Route
+            path="/favorites/:quizId"
+            render={(props) => <FavoritesPage {...props} />}
+          />
 
           <Route path="/admin" component={AdminPage} />
           {/* <Redirect to="/not-found" /> */}
