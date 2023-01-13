@@ -1,11 +1,9 @@
 import React, { useEffect, useContext } from "react";
 import { useLocation } from "react-router-dom";
-import GiftBox from "../../../components/box/box";
+import GiftBox from "../../../components/GiftBox/GiftBox";
 import ScrollDialog from "../../molecules/ProductModal";
-// import ProductCard from '../../atoms/Card/Card';
 import ProductCardV2 from "../../atoms/CardV2/CardV2";
 import { postAllQuizResults } from "../../../api/allQuiz";
-// import ResultSliderV2 from '../../molecules/ResultSliderV2';
 import { Audio } from "react-loader-spinner";
 import { UserContext } from "../../../context/UserContext";
 
@@ -20,8 +18,8 @@ import {
 import ReactGA from "react-ga";
 
 export default function ProductResult(props) {
-  const { data, arrayOfCategories, results } = props;
-  const { token, email } = useContext(UserContext);
+  const { data, results } = props;
+  const { email } = useContext(UserContext);
   const { products } = data;
   const [currentCardData, setCurrentCardData] = React.useState(null);
   const [open, setOpen] = React.useState(false);
@@ -129,32 +127,26 @@ export default function ProductResult(props) {
           <ProductGrid>
             {renderGiftBoxes(productResults)}
 
-            {productResults.map((product, index) => (
-              <>
-                {index > 3 ? (
-                  <ProductCardV2
-                    quizId={quizData?.id}
-                    isFavorite={
-                      quizData?.wishlist
-                        ? quizData.wishlist.includes(product.productId)
-                        : false
-                    }
-                    showScore={location.search ? true : false}
-                    key={index}
-                    handleCardClick={handleClickOpen}
-                    product={product}
-                  />
-                ) : null}
-              </>
-            ))}
+            {productResults.map((product, index) =>
+              index > 3 ? (
+                <ProductCardV2
+                  quizId={quizData?.id}
+                  isFavorite={
+                    quizData?.wishlist
+                      ? quizData.wishlist.includes(product.productId)
+                      : false
+                  }
+                  showScore={location.search ? true : false}
+                  key={`${index}-${product.productId}`}
+                  handleCardClick={handleClickOpen}
+                  product={product}
+                />
+              ) : null
+            )}
           </ProductGrid>
         </>
       )}
-      {/* <ResultSliderV2
-        handleCardClick={handleClickOpen}
-        categoryScores={categoryScores}
-        arrayOfCategories={arrayOfCategories}
-      /> */}
+
       {open && (
         <ScrollDialog
           open={open}
@@ -165,10 +157,4 @@ export default function ProductResult(props) {
       )}
     </React.Fragment>
   );
-
-  // }
-  //   else {
-  //     return <EmptyText>No Products matching</EmptyText>;
-  //   }
-  // }
 }

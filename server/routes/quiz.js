@@ -1,9 +1,10 @@
 const express = require("express");
-// const { requireAuth } = require('./middleware');
 const { Product } = require("../database/schemas");
 const getImage = require("../api/getEtsy");
 const { User } = require("../database/schemas");
 const { v4 } = require("uuid");
+const router = express.Router();
+
 const updateUser = async (email, answers) => {
   const foundUser = await User.findOne({ email });
   const quizId = v4();
@@ -29,7 +30,8 @@ const updateUser = async (email, answers) => {
   }
   return newQuizData;
 };
-function decimalAdjust(type, value, exp) {
+// Score Calculation Helpers
+const decimalAdjust = (type, value, exp) => {
   // If the exp is undefined or zero...
   if (typeof exp === "undefined" || +exp === 0) {
     return Math[type](value);
@@ -46,21 +48,15 @@ function decimalAdjust(type, value, exp) {
   // Shift back
   value = value.toString().split("e");
   return +(value[0] + "e" + (value[1] ? +value[1] + exp : exp));
-}
-
+};
 const round10 = (value, exp) => decimalAdjust("round", value, exp);
 
-const router = express.Router();
-
-module.exports = router;
-
-async function retriveProducts() {
+const retriveProducts = async () => {
   const allProducts = await Product.find({});
 
   return await allProducts;
-}
-
-async function calculateScoreForAll(filteredProducts, quizResults) {
+};
+const calculateScoreForAll = async (filteredProducts, quizResults) => {
   // let minPrice = 0;
   // let maxPrice = 5000;
 
@@ -148,9 +144,9 @@ async function calculateScoreForAll(filteredProducts, quizResults) {
     product.score = score;
   }
   return filteredProducts;
-}
-
-function groupBy(arr, property) {
+};
+// Put all products in a group by category
+const groupBy = (arr, property) => {
   return arr.reduce((memo, x) => {
     if (!memo[x[property]]) {
       memo[x[property]] = [];
@@ -158,18 +154,16 @@ function groupBy(arr, property) {
     memo[x[property]].push(x);
     return memo;
   }, {});
-}
+};
 
 // full path is api/quiz
 // CURRENT MAIN QUIZ ROUTE
 
 router.post("/allProducts", async (req, res) => {
-  console.log("REQ BODY", req.body);
   let quizData;
   if (req.body.email) {
     quizData = await updateUser(req.body.email, req.body.answers);
   }
-  console.log("QUIZ ID", quizData);
   const test = {
     age: "30-30",
     hobbies: ["gardening", "healthAndWellness", "reading"],
@@ -179,9 +173,6 @@ router.post("/allProducts", async (req, res) => {
     type: ["thoughtful"],
     who: "myself",
   };
-
-  //What to send:
-  // Array of Categories with products and the average score
 
   const { answers: quizResults } = req.body;
   try {
@@ -203,7 +194,6 @@ router.post("/allProducts", async (req, res) => {
         const minAge = parseInt(quizResults.age.split("-")[0]);
         const maxAge = parseInt(quizResults.age.split("-")[1]);
         // This is the types we want to show
-        // console.log('everything', allProducts);
         // FILTER OUT AGES
         const minAgeFilter = allProducts.filter(
           (product) => parseInt(product.ageMin) <= maxAge
@@ -215,6 +205,7 @@ router.post("/allProducts", async (req, res) => {
         // priceandTypeFiltered = ageFiltered;
 
         calculateScoreForAll(ageFiltered, quizResults).then((result) => {
+          // Organize results by high to low score
           result.sort(function (a, b) {
             let n = b.score - a.score;
             if (n !== 0) {
@@ -272,101 +263,7 @@ router.post("/allProducts", async (req, res) => {
   }
 });
 
-async function calculateScoreByCategory(ageFiltered, quizResults) {
-  let minPrice = 0;
-  let maxPrice = 5000;
-  if (quizResults.price) {
-    minPrice = parseInt(quizResults.price.split("-")[0]);
-    maxPrice = parseInt(quizResults.price.split("-")[1]);
-  }
-
-  const filteredArray = ageFiltered;
-  for (const product of filteredArray) {
-    // filteredArray.forEach(async function (product) {
-    // FETCH ETSY IMAGE IF NEEDED
-    if (product.website == "Etsy") {
-      const imageURL = await getImage(product.listingId);
-      product.directImageSrc = imageURL;
-    }
-
-    let score = 0;
-    // if (product.indoorOutdoor == quizResults.prefer) {
-    //   // console.log('matching indoor', product.productName);
-    //   score++;
-    // }
-    let hArray = product.hobbiesInterests;
-    if (hArray == null) {
-      hArray = [];
-    }
-    let oArray = product.occasion;
-    if (oArray == null) {
-      oArray = [];
-    }
-    const lowerCase = hArray.map((array) => array.toLowerCase());
-    const lowerCaseTagArray = tagArray.map((array) => array.toLowerCase());
-    const lowerCaseOc = Array.isArray(oArray)
-      ? oArray.map((array) => array.toLowerCase())
-      : oArray.toLowerCase();
-
-    // SCORING HOBBIES
-    if (quizResults.hobbies) {
-      quizResults.hobbies.forEach((hobby) => {
-        if (lowerCase.includes(hobby.toLowerCase())) {
-          // console.log('product name', product.productName);
-          // console.log('matching hobby', product.productName);
-
-          score = score + 5;
-        }
-      });
-    }
-
-    // SCORING OCCASIONS
-
-    if (lowerCaseOc.includes(quizResults.occasion.toLowerCase())) {
-      // console.log('product name', product.productName);
-      // console.log('matching hobby', product.productName);
-
-      score = score + 1;
-    }
-
-    // SCORING TAGS
-
-    if (quizResults?.tags) {
-      let tagScore = 0;
-      quizResults.tags.forEach((tag) => {
-        if (lowerCaseTagArray.includes(tag.toLowerCase())) {
-          tagScore++;
-        }
-      });
-      score += tagScore;
-    }
-    if (quizResults?.coworkerTags) {
-      let tagScore = 0;
-      quizResults.coworkerTags.forEach((tag) => {
-        if (lowerCaseTagArray.includes(tag.toLowerCase())) {
-          tagScore++;
-        }
-      });
-      score += tagScore;
-    }
-    if (
-      product.productBasePrice >= minPrice &&
-      product.productBasePrice <= maxPrice
-    ) {
-      // console.log('matching price', product.productName);
-      // TODO: place eligible items on top, everything else below
-      score++;
-    }
-    // COWORKER
-    if (quizResults.who == "coworker" && product.who_ind === "coworker") {
-      score = score + 25;
-    }
-    product.score = score;
-    // console.log('product Price', product.score);
-    // console.log('product name', product.productName);
-  }
-  return filteredArray;
-}
+//!!!!DEPRECATED ROUTE!!!!!!
 router.post("/", async (req, res) => {
   const test = {
     age: "30-30",
@@ -476,3 +373,5 @@ router.post("/", async (req, res) => {
     res.send(err);
   }
 });
+
+module.exports = router;

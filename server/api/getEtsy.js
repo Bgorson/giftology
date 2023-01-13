@@ -1,8 +1,8 @@
-const { default: axios } = require('axios');
-const axiosThrottle = require('axios-request-throttle');
+const { default: axios } = require("axios");
+const axiosThrottle = require("axios-request-throttle");
 axiosThrottle.use(axios, { requestsPerSecond: 15 });
 
-require('dotenv').config();
+require("dotenv").config();
 
 const apiKey = process.env.ETSY;
 //turn this into a get function that works
@@ -20,11 +20,8 @@ const getEstyProduct = async (listingID) => {
 
 const getImage = async (id) => {
   const product = await getEstyProduct(id);
-  let image;
-
   if (product?.data?.results[0].MainImage) {
-    image = product.data.results[0].MainImage.url_fullxfull;
-    return image;
-  } else console.log('Not found');
+    return product.data.results[0].MainImage.url_fullxfull;
+  } else console.log("Not found");
 };
 module.exports = getImage;

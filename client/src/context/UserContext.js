@@ -23,7 +23,9 @@ const UserProvider = (props) => {
     setState({ isLoggedIn: false });
   };
   const attempToLogin = async (token) => {
-    return await getUser(token);
+    if (token) {
+      return await getUser(token);
+    }
   };
 
   const [state, setState] = useState(defaultValue);

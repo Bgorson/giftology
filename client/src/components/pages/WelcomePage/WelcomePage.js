@@ -1,7 +1,6 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import Box from '../../../components/box/box.js';
-import backgroundImage from '../../../backgroundImage.jpeg';
+import React from "react";
+import { Link } from "react-router-dom";
+import backgroundImage from "../../../backgroundImage.jpeg";
 
 import {
   Hero,
@@ -10,14 +9,14 @@ import {
   HeroTitle,
   HeroImage,
   HeroText,
-} from './styles';
+} from "./styles";
 
 export default function WelcomePage() {
   return (
     <div className="welcome-page page">
       <Hero>
         <HeroImage
-          alt={'Gift Quiz'}
+          alt={"Gift Quiz"}
           src={backgroundImage}
           width="1400"
           height="800"
@@ -34,8 +33,6 @@ export default function WelcomePage() {
           </HeroCallToAction>
         </HeroText>
       </Hero>
-      {/* <Box /> */}
-      {/* <ProductResult data={data} /> */}
     </div>
   );
 }

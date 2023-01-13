@@ -1,8 +1,7 @@
-import React, { useEffect, useContext, useState } from "react";
+import React, { useEffect } from "react";
 
 import { useLocation, Switch, Route, Redirect } from "react-router-dom";
 import WelcomePage from "../../pages/WelcomePage";
-import HomePage from "../../pages/HomePage";
 import LostPage from "../../pages/LostPage";
 import QuizPage from "../../pages/QuizPage";
 import AboutPage from "../../pages/AboutPage";
@@ -25,11 +24,6 @@ export default function Main() {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [location.pathname]);
-  const [product, setProduct] = useState();
-
-  const handleProductSelect = (product) => {
-    setProduct(product);
-  };
 
   return (
     <Container>

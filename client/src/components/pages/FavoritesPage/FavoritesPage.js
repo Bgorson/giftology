@@ -58,7 +58,7 @@ export default function FavoritesPage() {
 
   return (
     <div>
-      Favorites
+      <h1>My Favorites</h1>
       <ProductGrid>
         {productResults &&
           productResults.map((product, index) => (

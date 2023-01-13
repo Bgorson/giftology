@@ -14,6 +14,7 @@ const Quiz = () => {
   const [quizAge, setQuizAge] = useState(0);
   const handleResponse = (id, response, isMulti) => {
     window.scrollTo(0, 0);
+    //TODO: Refactor this to use a switch statement
 
     if (id === "who" && response.value === "myself") {
       setIsForSelf(true);

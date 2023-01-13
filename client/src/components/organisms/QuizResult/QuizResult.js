@@ -1,7 +1,6 @@
 import React, { useState, useContext } from "react";
 import { Audio } from "react-loader-spinner";
 
-// import { postQuizResults } from '../../../api/quiz';
 import { postAllQuizResults } from "../../../api/allQuiz";
 import { Disclosure, TopContainer, Title, LoaderContainer } from "./styles";
 import ProductResult from "../../organisms/ProductResult/ProductResult";
@@ -9,22 +8,10 @@ import ReactGA from "react-ga";
 import { UserContext } from "../../../context/UserContext";
 
 export default function QuizResult(props) {
-  // console.log(props);
   const { results } = props;
   const [isLoading, setIsLoading] = useState(true);
-  const { token, email } = useContext(UserContext);
+  const { email } = useContext(UserContext);
 
-  const [resArray, setResArray] = useState([]);
-
-  function groupBy(arr, property) {
-    return arr.reduce((memo, x) => {
-      if (!memo[x[property]]) {
-        memo[x[property]] = [];
-      }
-      memo[x[property]].push(x);
-      return memo;
-    }, {});
-  }
   React.useEffect(() => {
     ReactGA.event({
       category: "Quiz Results",
@@ -39,34 +26,10 @@ export default function QuizResult(props) {
     if (Object.keys(results).length === 0) {
       const storedResults = localStorage.getItem("quizResults");
       let storedEmail = localStorage.getItem("userEmail");
-      console.log("from ls", storedEmail);
       const productPromise = Promise.resolve(
         postAllQuizResults(JSON.parse(storedResults), email || storedEmail)
       );
       productPromise.then((productRes) => {
-        // console.log(productRes);
-
-        // const { products, categoryScores } = productRes;
-
-        // const arrayOfCategories = groupBy(products, 'category');
-
-        // categoryScores.sort((a, b) => (b.score > a.score ? 1 : -1));
-        // categoryScores.forEach((category) => {
-        //   for (let i = 0; i < arrayOfCategories[category.name].length; i++) {
-        //     if (arrayOfCategories[category.name][i].score) {
-        //       //TODO: Add a sort for breaking tie to be price. Highest wins.
-        //       arrayOfCategories[category.name].sort(
-        //         (a, b) => b.score - a.score
-        //       );
-        //       arrayOfCategories[category.name].sort(
-        //         (a, b) =>
-        //           parseInt(a.productBasePrice) - parseInt(b.productBasePrice)
-        //       );
-        //     }
-        //   }
-        // });
-
-        // setResArray(arrayOfCategories);
         setProductResults(productRes);
         setQuizData(productRes.quizData);
 
@@ -90,27 +53,6 @@ export default function QuizResult(props) {
         setProductResults(productRes);
         setQuizData(productRes.quizId);
 
-        // console.log(productRes);
-
-        // const { products, categoryScores } = productRes;
-        // const arrayOfCategories = groupBy(products, 'category');
-        // categoryScores.sort((a, b) => (b.score > a.score ? 1 : -1));
-        // categoryScores.forEach((category) => {
-        //   for (let i = 0; i < arrayOfCategories[category.name].length; i++) {
-        //     if (arrayOfCategories[category.name][i].score) {
-        //       //TODO: Add a sort for breaking tie to be price. Highest wins.
-        //       arrayOfCategories[category.name].sort(
-        //         (a, b) => b.score - a.score
-        //       );
-        //       arrayOfCategories[category.name].sort((a, b) =>
-        //         b.score === a.score
-        //           ? b.productBasePrice - a.productBasePrice
-        //           : 0
-        //       );
-        //     }
-        //   }
-        // });
-        // setResArray(arrayOfCategories);
         setIsLoading(false);
 
         if (!productRes) {
@@ -133,8 +75,6 @@ export default function QuizResult(props) {
           Please complete this survey and give us some feedback!
         </Link> */}
         <Title>RESULTS</Title>
-
-        {/* <p>{JSON.stringify(results)}</p> */}
       </TopContainer>
       {isLoading && (
         <LoaderContainer>
@@ -143,7 +83,6 @@ export default function QuizResult(props) {
         </LoaderContainer>
       )}
       {!isLoading && (
-        // <ProductResult arrayOfCategories={resArray} data={productResults} />
         <ProductResult
           quizData={quizData}
           results={results}

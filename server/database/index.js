@@ -2,7 +2,6 @@ const mongoose = require("mongoose");
 require("dotenv").config();
 let dataB = require("./schemas/database.json");
 mongoose.Promise = global.Promise;
-// mongoose.set('debug', true);
 const Product = require("./schemas/Product");
 
 mongoose.Promise = global.Promise;
