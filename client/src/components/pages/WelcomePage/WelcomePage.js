@@ -4,6 +4,7 @@ import backgroundHomeImage from "../../../backgroundHomeImage.png";
 import ellipse from "../../../ellipse.png";
 import GiftShortCut from "./components/GiftShortCut";
 import GiftIconBanner from "./components/GiftIconBanner";
+import GiftCategories from "./components/GiftCategories";
 import {
   Hero,
   HeroCallToAction,
@@ -39,6 +40,7 @@ export default function WelcomePage() {
       </Hero>
       <GiftShortCut />
       <GiftIconBanner />
+      <GiftCategories />
     </div>
   );
 }
