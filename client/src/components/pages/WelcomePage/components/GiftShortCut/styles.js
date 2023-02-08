@@ -5,12 +5,16 @@ margin-bottom: 32px;
 `;
 
 export const CallToActionContainer = styles.div`
+
 `;
 
 export const ShortCutCollection = styles.div`
 display: flex;
 justify-content: space-between;
 gap:20px;
+@media (max-width: 768px) {
+ flex-direction: column;
+  }
 `;
 export const ShortCut = styles.button`
 font-size: 12px;
@@ -32,4 +36,7 @@ display: flex;
 align-items: center;
 justify-content: center;
 flex-direction: column;
+@media (max-width: 768px) {
+  height:100%;
+  }
 `;
