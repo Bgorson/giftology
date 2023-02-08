@@ -2,7 +2,6 @@ import React, { useState, useEffect, useContext } from "react";
 import PropTypes from "prop-types";
 import { Link, useHistory } from "react-router-dom";
 import ReactGA from "react-ga";
-import logo from "../../../logo.png";
 import Login from "../../molecules/LoginButton";
 
 import { UserContext } from "../../../context/UserContext";
@@ -15,6 +14,7 @@ import {
   Title,
   LogoNavItem,
   Logo,
+  LogoText,
 } from "./styles.js";
 
 export default function Navigation({ pathname }) {
@@ -24,19 +24,18 @@ export default function Navigation({ pathname }) {
   return (
     <Navbar>
       <Container>
-        <LogoNavItem>
-          <Logo
-            onClick={() => {
-              ReactGA.event({
-                category: "Navlink",
-                action: "Clicked Logo",
-                label: "Logo",
-              });
-              navigate.push("/");
-            }}
-            src={logo}
-          />
-        </LogoNavItem>
+        <Logo
+          onClick={() => {
+            ReactGA.event({
+              category: "Navlink",
+              action: "Clicked Logo",
+              label: "Logo",
+            });
+            navigate.push("/");
+          }}
+        >
+          <LogoText>Giftology</LogoText>
+        </Logo>
         <ActionItems>
           <NavItem>
             <NavLink

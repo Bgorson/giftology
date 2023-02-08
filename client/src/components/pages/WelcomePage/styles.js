@@ -1,62 +1,71 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 
-export const HeroImage = styled.img`
-  /* aspect-ratio: auto 2304 / 1142; */
-  width: 100%;
-  box-shadow: 5px 5px #ededed;
-  border-radius: 2em;
-`;
 export const Hero = styled.div`
+  display: flex;
   position: relative;
-  width: 95%;
-  margin: auto;
+  align-items: center;
+  justify-content: space-around;
+  height: 643px;
+  background: linear-gradient(
+    90deg,
+    rgba(11, 138, 253, 0.2) 0%,
+    rgba(197, 118, 255, 0.2) 100%
+  );
+  overflow: hidden;
 `;
 
-export const HeroCallToAction = styled.div`
-  font-size: 36px;
-  text-decoration: underline;
-  color: black;
+export const HeroCallToAction = styled.button`
+  font-size: 12px;
+  cursor: pointer;
+  color: white;
+  background-color: black;
+  padding: 16px 24px;
+  border-radius: 1em;
+  text-transform: uppercase;
   &:hover {
     color: #44a2bb;
   }
-  @media (max-width: 1025px) {
-    font-size: 32px;
-  }
 `;
 export const HeroDescription = styled.p`
-  font-size: 24px;
-  color: white;
-  font-family: 'Slabo13px-Regular';
-  margin-bottom: 43px;
+  font-size: 16px;
+  line-height: 28px;
+  font-family: "Slabo13px-Regular";
+  margin: 16 0 24px 0;
   @media (max-width: 1025px) {
-    margin-bottom: 1em;
-    color: black;
   }
 `;
 export const HeroTitle = styled.h1`
-  font-family: 'FiraSansCondensed-Black';
+  font-family: "FiraSansCondensed-Black";
   font-weight: bold;
-  font-size: 36px;
-  color: white;
-  margin-bottom: 43px;
+  font-size: 40px;
   margin-top: 0;
   @media (max-width: 1025px) {
-    margin-bottom: 1em;
-    color: black;
     font-size: 32px;
   }
 `;
-export const HeroText = styled.div`
-  font-family: 'FiraSansCondensed-Black';
-  margin-right: 2em;
-  position: absolute;
-  top: 38%;
-  left: 50%;
 
-  @media (max-width: 1025px) {
-    margin-right: 0;
-    position: relative;
-    left: 0;
-    top: 0;
+export const HeroContent = styled.div`
+  width: 440px;
+  padding-left: 121px;
+  @media (max-width: 768px) {
+    text-align: center;
+    padding: 0;
+    width: 95%;
   }
+`;
+
+export const HeroImage = styled.img`
+  max-width: 312px;
+  max-height: 369px;
+  @media (max-width: 1025px) {
+    display: none;
+  }
+`;
+export const Ellipse = styled.img`
+  position: absolute;
+  right: -100px;
+  top: 0px;
+  width: 650px;
+  height: 650px;
+  z-index: -100;
 `;

@@ -1,7 +1,12 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 
 export const Navbar = styled.nav`
   margin: 0;
+  width: 90%;
+  @media (max-width: 768px) {
+    width: 100%;
+  }
+  margin: auto;
 `;
 
 export const Container = styled.ul`
@@ -26,22 +31,26 @@ export const LogoNavItem = styled.li`
   list-style-type: none;
 
   @media (max-width: 768px) {
-    height: 115px;
   }
 `;
 
-export const Logo = styled.img`
-  width: 400px;
+export const Logo = styled.div`
   cursor: pointer;
+`;
+
+export const LogoText = styled.h1`
+  font-size: 20px;
+  text-transform: uppercase;
+  margin: 18px 0 23px 0px;
   @media (max-width: 768px) {
-    width: 300px;
+    margin-left: 20px;
   }
 `;
 export const NavLink = styled.a`
   color: black;
+  padding: 0 40px;
+  white-space: nowrap;
   display: block;
-  line-height: 3em;
-  padding: 1em 2em;
   text-decoration: none;
   font-size: 18px;
   &:hover {
@@ -49,10 +58,8 @@ export const NavLink = styled.a`
     text-decoration: underline;
   }
   @media (max-width: 768px) {
-    white-space: nowrap;
     padding-top: 0;
     padding-bottom: 0;
-    padding: 1em 0.5em;
   }
   &:last-child {
     padding-right: 0;
@@ -60,11 +67,13 @@ export const NavLink = styled.a`
 `;
 export const ActionItems = styled.div`
   display: flex;
-  align-self: center;
   justify-content: center;
-  margin-top: 2em;
+  padding: 23px 0 25px 0;
+
   @media (max-width: 768px) {
-    /* flex-direction: column; */
-    margin: 0;
+    flex-direction: column;
+    padding: 25px 0px;
+    justify-content: left;
+    align-self: flex-start;
   }
 `;

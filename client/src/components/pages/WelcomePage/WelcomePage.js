@@ -1,38 +1,41 @@
 import React from "react";
-import { Link } from "react-router-dom";
-import backgroundImage from "../../../backgroundImage.jpeg";
-
+import { useHistory } from "react-router-dom";
+import backgroundHomeImage from "../../../backgroundHomeImage.png";
+import ellipse from "../../../ellipse.png";
 import {
   Hero,
   HeroCallToAction,
   HeroDescription,
   HeroTitle,
+  HeroContent,
   HeroImage,
-  HeroText,
+  Ellipse,
 } from "./styles";
 
 export default function WelcomePage() {
+  let history = useHistory();
+  const routeChange = () => {
+    let path = `/quiz`;
+    history.push(path);
+  };
   return (
-    <div className="welcome-page page">
+    <div>
       <Hero>
-        <HeroImage
-          alt={"Gift Quiz"}
-          src={backgroundImage}
-          width="1400"
-          height="800"
-        />
-        <HeroText>
-          <HeroTitle>Having Trouble Finding The Right Gift?</HeroTitle>
+        <HeroContent>
+          <HeroTitle>{"Take the quiz to find the ideal gift"}</HeroTitle>
           <HeroDescription>
             Check out our gift quiz and we’ll do the searching for you. All you
             need to know is who you’re shopping for and what they do for fun.
             We’ll handle the rest.
           </HeroDescription>
-          <HeroCallToAction as={Link} to="/quiz">
+          <HeroCallToAction onClick={routeChange}>
             Take The Quiz
           </HeroCallToAction>
-        </HeroText>
+        </HeroContent>
+        <HeroImage src={backgroundHomeImage} />
+        <Ellipse src={ellipse} />
       </Hero>
+      {/* <GiftShortCut/> */}
     </div>
   );
 }
