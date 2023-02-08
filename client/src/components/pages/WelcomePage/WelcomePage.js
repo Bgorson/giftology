@@ -2,6 +2,8 @@ import React from "react";
 import { useHistory } from "react-router-dom";
 import backgroundHomeImage from "../../../backgroundHomeImage.png";
 import ellipse from "../../../ellipse.png";
+import GiftShortCut from "./components/GiftShortCut";
+import GiftIconBanner from "./components/GiftIconBanner";
 import {
   Hero,
   HeroCallToAction,
@@ -35,7 +37,8 @@ export default function WelcomePage() {
         <HeroImage src={backgroundHomeImage} />
         <Ellipse src={ellipse} />
       </Hero>
-      {/* <GiftShortCut/> */}
+      <GiftShortCut />
+      <GiftIconBanner />
     </div>
   );
 }
