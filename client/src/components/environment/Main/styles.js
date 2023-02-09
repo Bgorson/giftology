@@ -4,7 +4,7 @@ export const MainContainer = styled.div`
   /* display: flex; */
   justify-content: center;
   align-content: center;
-  margin-bottom: 10em;
+  margin-bottom: 3em;
 `;
 export const Container = styled.div`
   font-family: "Slabo13px-Regular";

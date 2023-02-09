@@ -5,6 +5,8 @@ import ellipse from "../../../ellipse.png";
 import GiftShortCut from "./components/GiftShortCut";
 import GiftIconBanner from "./components/GiftIconBanner";
 import GiftCategories from "./components/GiftCategories";
+import GiftSpecialOccasions from "./components/GiftSpecialOccasions";
+import JoinCommunity from "./components/JoinCommunity";
 import {
   Hero,
   HeroCallToAction,
@@ -41,6 +43,8 @@ export default function WelcomePage() {
       <GiftShortCut />
       <GiftIconBanner />
       <GiftCategories />
+      <GiftSpecialOccasions />
+      <JoinCommunity />
     </div>
   );
 }
