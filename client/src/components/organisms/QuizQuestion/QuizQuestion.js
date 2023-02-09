@@ -11,6 +11,10 @@ import {
   DateInput,
   Title,
   InputName,
+  ProgressBar,
+  QuizHeader,
+  Progress,
+  ProgressFill,
 } from "./styles.js";
 
 export default function QuizQuestion(props) {
@@ -27,6 +31,8 @@ export default function QuizQuestion(props) {
     isForCoworkers,
     questionType,
     isText,
+    totalStepNumber,
+    currentStepNumber,
   } = props;
   let { answers } = props;
   const [checkedState, setCheckedState] = useState(
@@ -158,100 +164,113 @@ export default function QuizQuestion(props) {
   ));
 
   return id !== "results" ? (
-    <Container>
-      {title && <Title>{title}</Title>}
-      {isSlider && <AgeSlider handleAgeValue={handleAgeValue} />}
-      {isText && <InputName onChange={handleText} />}
-
-      <ButtonContainer>
-        {isMulti ? multiPossibleAnswers : possibleAnswers}
-      </ButtonContainer>
-      {isMulti ? (
-        <FancyButton
-          isSubmit={true}
-          isMulti={isMulti}
-          type="submit"
-          onClick={() => {
-            ReactGA.event({
-              category: "Quiz",
-              action: `Clicked Multi Submit ${id}`,
-              label: "QuizButton",
-            });
-            handleMultiResponse(id, answers, checkedState);
-            next();
-          }}
-        >
-          Submit
-        </FancyButton>
-      ) : null}
-      {showAdditionalField && (
-        <Fragment>
-          <DateInput
-            placeholder={placeholder}
-            onChange={(e) => {
-              setPlaceholder(e.target.value);
-              setDate(e.target.value);
+    <>
+      <QuizHeader>
+        <ProgressBar>
+          {`Question ${currentStepNumber} of ${totalStepNumber}`}
+          <Progress>
+            <ProgressFill
+              fillPercent={
+                (parseInt(currentStepNumber) / parseInt(totalStepNumber)) * 100
+              }
+            />
+          </Progress>
+        </ProgressBar>
+      </QuizHeader>
+      <Container>
+        {title && <Title>{title}</Title>}
+        {isSlider && <AgeSlider handleAgeValue={handleAgeValue} />}
+        {isText && <InputName onChange={handleText} />}
+        <ButtonContainer>
+          {isMulti ? multiPossibleAnswers : possibleAnswers}
+        </ButtonContainer>
+        {isMulti ? (
+          <FancyButton
+            isSubmit={true}
+            isMulti={isMulti}
+            type="submit"
+            onClick={() => {
+              ReactGA.event({
+                category: "Quiz",
+                action: `Clicked Multi Submit ${id}`,
+                label: "QuizButton",
+              });
+              handleMultiResponse(id, answers, checkedState);
+              next();
             }}
-            type="date"
-          />
-          <ButtonContainer>
-            <FancyButton
-              isSubmit={true}
-              type="submit"
-              onClick={() => {
-                ReactGA.event({
-                  category: "Quiz",
-                  action: `Clicked Multi Submit ${id}`,
-                  label: "QuizButton",
-                });
-                handleResponse(id, additionalMainAnswer);
-                handleResponse("date", date, true);
-                next();
+          >
+            Submit
+          </FancyButton>
+        ) : null}
+        {showAdditionalField && (
+          <Fragment>
+            <DateInput
+              placeholder={placeholder}
+              onChange={(e) => {
+                setPlaceholder(e.target.value);
+                setDate(e.target.value);
               }}
-            >
-              Submit
-            </FancyButton>
-          </ButtonContainer>
-        </Fragment>
-      )}
-      {isSlider ? (
-        <FancyButton
-          isSubmit={true}
-          isSlider={isSlider}
-          isMulti={isMulti}
-          type="submit"
-          onClick={() => {
-            ReactGA.event({
-              category: "Quiz",
-              action: `Clicked Age ${age}`,
-              label: "QuizButton",
-            });
-            handleSliderResponse(id, age);
-            next();
-          }}
-        >
-          Submit
-        </FancyButton>
-      ) : null}
-      {isText ? (
-        <FancyButton
-          isSubmit={true}
-          isText={isText}
-          type="submit"
-          onClick={() => {
-            ReactGA.event({
-              category: "Quiz",
-              action: `Entered Name`,
-              label: "QuizButton",
-            });
-            handleNameResponse(id, text);
-            next();
-          }}
-        >
-          Submit
-        </FancyButton>
-      ) : null}
-    </Container>
+              type="date"
+            />
+            <ButtonContainer>
+              <FancyButton
+                isSubmit={true}
+                type="submit"
+                onClick={() => {
+                  ReactGA.event({
+                    category: "Quiz",
+                    action: `Clicked Multi Submit ${id}`,
+                    label: "QuizButton",
+                  });
+                  handleResponse(id, additionalMainAnswer);
+                  handleResponse("date", date, true);
+                  next();
+                }}
+              >
+                Submit
+              </FancyButton>
+            </ButtonContainer>
+          </Fragment>
+        )}
+        {isSlider ? (
+          <FancyButton
+            isSubmit={true}
+            isSlider={isSlider}
+            isMulti={isMulti}
+            type="submit"
+            onClick={() => {
+              ReactGA.event({
+                category: "Quiz",
+                action: `Clicked Age ${age}`,
+                label: "QuizButton",
+              });
+              handleSliderResponse(id, age);
+              next();
+            }}
+          >
+            Submit
+          </FancyButton>
+        ) : null}
+        {isText ? (
+          <FancyButton
+            isSubmit={true}
+            isText={isText}
+            type="submit"
+            onClick={() => {
+              ReactGA.event({
+                category: "Quiz",
+                action: `Entered Name`,
+                label: "QuizButton",
+              });
+              handleNameResponse(id, text);
+              next();
+            }}
+          >
+            Submit
+          </FancyButton>
+        ) : null}
+      </Container>
+    </>
   ) : (
     <QuizResult results={results} />
   );

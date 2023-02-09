@@ -1,18 +1,36 @@
 import React, { useEffect, useState } from "react";
+import { useLocation } from "react-router-dom";
+
 import { Wizard, Steps, Step } from "react-albus";
 import QuizQuestion from "../../organisms/QuizQuestion/QuizQuestion";
 import { Route } from "react-router-dom";
 import { hobbyMap } from "../../../utils/hobbyMap";
 import { coworkerTagMap } from "../../../utils/coworkerTagMap";
 
+const totalCoWorkerQuestions = 5;
+const totalGeneralQuestions = 8;
+
 const Quiz = () => {
+  const location = useLocation();
+
   const [answers, setAnswers] = useState({});
   const [isForCoworkers, setIsForCoworkers] = useState(false);
   const [isCoworker, setIsCoworker] = useState(false);
 
   const [isForSelf, setIsForSelf] = useState(false);
   const [quizAge, setQuizAge] = useState(0);
+  const [currentStepNumber, setCurrentStepNumber] = useState(1);
+  const [totalStepNumber, setTotalStepNumber] = useState(totalGeneralQuestions);
+  useEffect(() => {
+    if (location.pathname === "/quiz/who") {
+      setCurrentStepNumber(1);
+      setTotalStepNumber(totalGeneralQuestions);
+    }
+  }, [location]);
+
   const handleResponse = (id, response, isMulti) => {
+    setCurrentStepNumber(currentStepNumber + 1);
+
     window.scrollTo(0, 0);
     //TODO: Refactor this to use a switch statement
 
@@ -22,17 +40,19 @@ const Quiz = () => {
     if (id === "who") {
       localStorage.setItem("forCoworkers", false);
       setIsForCoworkers(false);
+      setTotalStepNumber(totalGeneralQuestions);
     }
     if (id === "who" && response.value === "coworker") {
       localStorage.setItem("forCoworkers", true);
       setIsForCoworkers(true);
+      setTotalStepNumber(totalCoWorkerQuestions);
     }
 
     if (id === "howMany" && response.value === "1") {
       setIsCoworker(true);
       localStorage.setItem("forCoworkers", false);
-
       setIsForCoworkers(false);
+      setTotalStepNumber(totalGeneralQuestions);
     }
     if (id === "age") {
       setQuizAge(response);
@@ -229,37 +249,41 @@ const Quiz = () => {
   }
 
   return (
-    <Route
-      render={({ history }) => (
-        <Wizard history={history}>
-          <Steps>
-            {quizQuestions.map((quizData) => (
-              <Step
-                key={quizData.id}
-                id={`quiz/${quizData.id}`}
-                render={({ next }) => (
-                  <QuizQuestion
-                    quizAge={quizAge}
-                    isForCoworkers={isForCoworkers}
-                    handleResponse={handleResponse}
-                    next={next}
-                    questionType={quizData.questionType}
-                    id={quizData.id}
-                    title={quizData.title}
-                    answers={quizData.answers}
-                    isSlider={quizData.isSlider || false}
-                    isText={quizData?.isTextEntry || false}
-                    isMulti={quizData.isMulti || false}
-                    results={answers}
-                    hasAdditionalField={quizData.hasAdditionalField}
-                  />
-                )}
-              />
-            ))}
-          </Steps>
-        </Wizard>
-      )}
-    />
+    <>
+      <Route
+        render={({ history }) => (
+          <Wizard history={history}>
+            <Steps>
+              {quizQuestions.map((quizData) => (
+                <Step
+                  key={quizData.id}
+                  id={`quiz/${quizData.id}`}
+                  render={({ next }) => (
+                    <QuizQuestion
+                      totalStepNumber={totalStepNumber}
+                      currentStepNumber={currentStepNumber}
+                      quizAge={quizAge}
+                      isForCoworkers={isForCoworkers}
+                      handleResponse={handleResponse}
+                      next={next}
+                      questionType={quizData.questionType}
+                      id={quizData.id}
+                      title={quizData.title}
+                      answers={quizData.answers}
+                      isSlider={quizData.isSlider || false}
+                      isText={quizData?.isTextEntry || false}
+                      isMulti={quizData.isMulti || false}
+                      results={answers}
+                      hasAdditionalField={quizData.hasAdditionalField}
+                    />
+                  )}
+                />
+              ))}
+            </Steps>
+          </Wizard>
+        )}
+      />
+    </>
   );
 };
 

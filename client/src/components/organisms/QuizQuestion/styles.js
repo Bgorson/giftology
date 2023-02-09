@@ -1,5 +1,32 @@
 import styled, { css } from "styled-components";
 
+export const ProgressBar = styled.h2`
+  font-size: 20px;
+`;
+export const Progress = styled.div`
+  width: 80%;
+  height: 10px;
+  margin-top: 16px;
+  border: 1px solid lightgrey;
+  border-radius: 10px;
+`;
+export const ProgressFill = styled.div`
+  width: 0%;
+  height: 100%;
+  border-radius: 10px;
+  background: linear-gradient(90deg, #0b8afd 0%, #c576ff 100%);
+  ${(props) =>
+    props.fillPercent &&
+    css`
+      width: ${props.fillPercent}%;
+    `}
+`;
+export const QuizHeader = styled.div`
+  padding-top: 8em;
+  width: 90%;
+  margin: auto;
+`;
+
 export const ButtonContainer = styled.div`
   display: flex;
   gap: 1.5em;
@@ -15,7 +42,6 @@ export const Container = styled.div`
   display: flex;
   align-items: center;
   flex-direction: column;
-  background-color: lightgray;
   justify-content: space-evenly;
   border-radius: 40px;
   padding: 5em 0;

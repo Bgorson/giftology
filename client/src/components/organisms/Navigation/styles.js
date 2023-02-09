@@ -2,20 +2,26 @@ import styled from "styled-components";
 
 export const Navbar = styled.nav`
   margin: 0;
-  width: 90%;
-  @media (max-width: 768px) {
-    width: 100%;
-  }
+  width: 100%;
+  border-bottom: 1px solid #e5e5e5;
+  position: fixed;
   margin: auto;
+  background: white;
+  z-index: 100;
+  @media (max-width: 768px) {
+    position: relative;
+  }
 `;
 
 export const Container = styled.ul`
-  margin: 0;
+  margin: 0 auto;
   padding: 0;
   display: flex;
   justify-content: space-between;
+  width: 90%;
   @media (max-width: 768px) {
     flex-direction: column;
+    width: 90%;
   }
 `;
 
