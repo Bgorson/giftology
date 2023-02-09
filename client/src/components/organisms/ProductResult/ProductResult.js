@@ -49,9 +49,15 @@ export default function ProductResult(props) {
   const renderGiftBoxes = (products) => {
     return (
       <>
-        <GiftBox handleCardClick={handleClickOpen} product={products[0]} />
-        <GiftBox handleCardClick={handleClickOpen} product={products[1]} />
-        <GiftBox handleCardClick={handleClickOpen} product={products[2]} />
+        {products[0] && (
+          <GiftBox handleCardClick={handleClickOpen} product={products[0]} />
+        )}
+        {products[1] && (
+          <GiftBox handleCardClick={handleClickOpen} product={products[1]} />
+        )}
+        {products[2] && (
+          <GiftBox handleCardClick={handleClickOpen} product={products[2]} />
+        )}
       </>
     );
   };

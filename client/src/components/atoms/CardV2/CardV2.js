@@ -82,54 +82,56 @@ export default function ProductCard({
     finalImage = placeHolder;
   }
   return (
-    <div>
-      {token && (
-        <FavoriteContainer
-          onClick={() => {
-            handleAddToFavorites(product, quizId);
-          }}
-        >
-          <AddToFavorites filled={filled} />
-        </FavoriteContainer>
-      )}
-
-      <CardContainer
-        data-id={product.score}
-        onClick={() => handleCardClick(product, isHighlighted)}
-      >
-        {(product?.product_card_banner || isHighlighted) && (
-          <Badge
-            text={isHighlighted ? "Top Gift!" : product.product_card_banner}
-          />
-        )}
-        <ImageWrapper>
-          <img alt={product.productName} src={finalImage} />
-        </ImageWrapper>
-
-        <CardContentContainer>
-          <Typography
-            style={{ textAlign: "left" }}
-            gutterBottom
-            variant="h6"
-            component="div"
+    product && (
+      <div>
+        {token && (
+          <FavoriteContainer
+            onClick={() => {
+              handleAddToFavorites(product, quizId);
+            }}
           >
-            {product.productName}
-          </Typography>
-          <SubTextContainer>
-            <FlavorText variant="body2" color="text.secondary">
-              ${product.productBasePrice}
-            </FlavorText>
-            {showScore && <FlavorText>SCORE:{product.score}</FlavorText>}
-            <FlavorText variant="body2" color="text.secondary">
-              {`Tags: ${tags}`}
-            </FlavorText>
-          </SubTextContainer>
+            <AddToFavorites filled={filled} />
+          </FavoriteContainer>
+        )}
 
-          {/* <Typography variant="body2" color="text.secondary">
+        <CardContainer
+          data-id={product.score}
+          onClick={() => handleCardClick(product, isHighlighted)}
+        >
+          {(product?.product_card_banner || isHighlighted) && (
+            <Badge
+              text={isHighlighted ? "Top Gift!" : product.product_card_banner}
+            />
+          )}
+          <ImageWrapper>
+            <img alt={product.productName} src={finalImage} />
+          </ImageWrapper>
+
+          <CardContentContainer>
+            <Typography
+              style={{ textAlign: "left" }}
+              gutterBottom
+              variant="h6"
+              component="div"
+            >
+              {product.productName}
+            </Typography>
+            <SubTextContainer>
+              <FlavorText variant="body2" color="text.secondary">
+                ${product.productBasePrice}
+              </FlavorText>
+              {showScore && <FlavorText>SCORE:{product.score}</FlavorText>}
+              <FlavorText variant="body2" color="text.secondary">
+                {`Tags: ${tags}`}
+              </FlavorText>
+            </SubTextContainer>
+
+            {/* <Typography variant="body2" color="text.secondary">
             {product.score}
           </Typography> */}
-        </CardContentContainer>
-      </CardContainer>
-    </div>
+          </CardContentContainer>
+        </CardContainer>
+      </div>
+    )
   );
 }

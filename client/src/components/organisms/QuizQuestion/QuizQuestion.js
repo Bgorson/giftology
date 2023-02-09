@@ -140,11 +140,7 @@ export default function QuizQuestion(props) {
   const multiPossibleAnswers = answers.map((answers, index) => (
     <div key={answers.message}>
       <FancyButton
-        style={
-          checkedState[index]
-            ? { backgroundColor: "#44a2bb" }
-            : { backgroundColor: "initial", color: "initial" }
-        }
+        customBackground={checkedState[index] ? true : false}
         type="checkbox"
         id={`custom-checkbox-${index}`}
         value={answers.message}

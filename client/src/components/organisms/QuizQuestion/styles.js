@@ -4,9 +4,9 @@ export const ProgressBar = styled.h2`
   font-size: 20px;
 `;
 export const Progress = styled.div`
-  width: 80%;
-  height: 10px;
-  margin-top: 16px;
+  width: 90%;
+  height: 8px;
+  margin: 16px auto 0 0;
   border: 1px solid lightgrey;
   border-radius: 10px;
 `;
@@ -54,23 +54,22 @@ export const Container = styled.div`
 `;
 
 export const Title = styled.h1`
-  font-size: 32px;
-  margin-bottom: 1em;
+  font-size: 40px;
+  margin-bottom: 50px;
 `;
 /* CSS */
 export const FancyButton = styled.button`
-  background-color: inherit;
   white-space: nowrap;
   min-width: 280px;
   color: black;
   cursor: pointer;
   border-radius: 1000px;
-  padding: 0.5em;
+  padding: 10px 40px;
   font-size: 20px;
   ${(props) =>
-    props.checked &&
+    (props.checked || props.customBackground) &&
     css`
-      background-color: #44a2bb;
+      background-color: black;
       color: white;
     `}
   ${(props) =>
@@ -88,7 +87,7 @@ export const FancyButton = styled.button`
   }
 
   &:hover {
-    background-color: #44a2bb;
+    background-color: black;
     color: white;
   }
   ${(props) =>
@@ -109,6 +108,14 @@ export const FancyButton = styled.button`
         min-width: 100px;
       `}
   }
+  ${(props) =>
+    props.isSubmit &&
+    css`
+      background: linear-gradient(90deg, #0b8afd 0%, #c576ff 100%);
+      &:hover {
+        color: black;
+      }
+    `}
 `;
 
 export const FancyText = styled.div`
