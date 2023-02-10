@@ -33,6 +33,7 @@ export default function QuizQuestion(props) {
     isText,
     totalStepNumber,
     currentStepNumber,
+    quizData,
   } = props;
   let { answers } = props;
   const [checkedState, setCheckedState] = useState(
@@ -41,6 +42,7 @@ export default function QuizQuestion(props) {
   const [text, setText] = useState("");
 
   useEffect(() => {
+    // Skip questions that are not relevant to the user
     if (
       ((localStorage.getItem("forCoworkers") === "true" || isForCoworkers) &&
         !questionType.includes("coworker") &&
@@ -125,9 +127,25 @@ export default function QuizQuestion(props) {
             ) {
               handleAdditionalData(answers);
             } else {
-              handleResponse(id, answers);
-
-              next();
+              if (id === "createAccount" && answers.message === "Yes") {
+                let widget = window.cloudinary.createUploadWidget(
+                  {
+                    cloudName: "deruncuzv",
+                    uploadPreset: "jedjicbi",
+                  },
+                  (error, result) => {
+                    if (!error && result && result.event === "success") {
+                      console.log(result.info.url);
+                      handleResponse(id, result.info.url, true);
+                      next();
+                    }
+                  }
+                );
+                widget.open();
+              } else {
+                handleResponse(id, answers);
+                next();
+              }
             }
           }}
           key={answers.value}

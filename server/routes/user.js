@@ -97,3 +97,61 @@ router.delete("/favorites", verifyToken, (req, res) => {
     }
   });
 });
+router.delete("/profile", verifyToken, (req, res) => {
+  jwt.verify(req.token, process.env.JWT_ACC_ACTIVATE, (err, authData) => {
+    if (err) {
+      console.log("ERROR", err);
+      res.sendStatus(403);
+    } else {
+      const { _id } = authData;
+      User.findById(_id, (err, user) => {
+        if (user) {
+          const profileId = req.body.id;
+          user.userData = user.userData.filter((item) => item.id !== profileId);
+
+          user.save((err, success) => {
+            if (err) {
+              console.log("Error in update", err);
+              return err;
+            }
+            console.log("Success", success);
+            res.send(user);
+          });
+        } else {
+          res.status(404).json({ message: "User not found", err });
+        }
+      });
+    }
+  });
+});
+
+router.patch("/profile", verifyToken, (req, res) => {
+  jwt.verify(req.token, process.env.JWT_ACC_ACTIVATE, (err, authData) => {
+    if (err) {
+      console.log("ERROR", err);
+      res.sendStatus(403);
+    } else {
+      const { _id } = authData;
+      User.findById(_id, (err, user) => {
+        if (user) {
+          const { id, url } = req.body;
+          const profileIndex = user.userData.findIndex(
+            (item) => item.id === id
+          );
+          user.userData[profileIndex].quizResults.createAccount = url;
+          user.markModified("userData");
+          user.save((err, success) => {
+            if (err) {
+              console.log("Error in update", err);
+              return err;
+            }
+            console.log("Success", success);
+            res.send(user);
+          });
+        } else {
+          res.status(404).json({ message: "User not found", err });
+        }
+      });
+    }
+  });
+});

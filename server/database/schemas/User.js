@@ -14,6 +14,7 @@ const UserSchema = new mongoose.Schema(
         hobbies: { type: Array, required: false },
         type: { type: Array, required: false },
         tags: { type: Array, required: false },
+        createAccount: { type: String, required: false },
         type: Object,
         required: false,
       },

@@ -10,7 +10,7 @@ display:flex;
 flex-direction:column;
 justify-content:center;
 align-items:center;
-padding-top:16px;
+padding-top:64px;
 @media (max-width: 768px) {
     width:95%;
     height:100%;

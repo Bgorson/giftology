@@ -5,8 +5,8 @@ export const TextDescription = styled.p`
   font-size: 18px;
 `;
 export const Container = styled.div`
+  padding-top: 5em;
   margin: auto;
-  width: 66%;
   padding-bottom: 2em;
   @media (max-width: 768px) {
     width: 100%;
@@ -52,4 +52,37 @@ export const ButtonContainer = styled.div`
   @media (max-width: 768px) {
     flex-direction: column;
   }
+`;
+
+export const Header = styled.h1`
+  text-align: center;
+  padding-top: 80px;
+`;
+export const HeaderText = styled.p`
+  text-align: center;
+  padding-bottom: 80px;
+  width: 30%;
+  margin: auto;
+  font-size: 14px;
+  line-height: 32px;
+`;
+
+export const ProfileGrid = styled.div`
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  width: 90%;
+  margin: auto;
+  gap: 1em;
+  justify-items: center;
+  @media (max-width: 1280px) {
+    grid-template-columns: 1fr 1fr;
+  }
+  @media (max-width: 830px) {
+    grid-template-columns: 1fr;
+    width: 100%;
+  }
+`;
+export const LogoutButtonContainer = styled.div`
+  text-align: center;
+  font-size: 30px;
 `;

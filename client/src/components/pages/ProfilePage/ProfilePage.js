@@ -2,9 +2,13 @@ import React, { useEffect, useContext, useState } from "react";
 import Logout from "../../molecules/LogoutButton";
 import { getUser } from "../../../api/user";
 import { UserContext } from "../../../context/UserContext";
-import { useHistory } from "react-router";
 import { hobbyMap } from "../../../utils/hobbyMap";
 import { coworkerTagMap } from "../../../utils/coworkerTagMap";
+import ProfileTiles from "./components/ProfileTiles";
+import JoinCommunity from "../WelcomePage/components/JoinCommunity";
+import { removeProfile } from "../../../api/removeProfile";
+import { updateProfilePicture } from "../../../api/updateProfilePicture";
+
 import {
   Container,
   TextContainer,
@@ -15,36 +19,34 @@ import {
   Title,
   HobbiesText,
   ButtonContainer,
+  HeaderText,
+  ProfileGrid,
+  LogoutButtonContainer,
+  Header,
 } from "./styles";
 
 export default function ProfilePage() {
-  const history = useHistory();
   const { token, loggedOut } = useContext(UserContext);
   const [profileData, setProfileData] = useState();
 
-  const hobbyTransform = (hobbies) => {
-    let string = "";
-
-    hobbies.forEach((hobby) => {
-      const val = hobbyMap.find((entry) => entry.value === hobby);
-      string += `${val.message}, `;
-    });
-    return string.substring(0, string.length - 2);
+  const uploadNewImage = (id) => {
+    let widget = window.cloudinary.createUploadWidget(
+      {
+        cloudName: "deruncuzv",
+        uploadPreset: "jedjicbi",
+      },
+      (error, result) => {
+        if (!error && result && result.event === "success") {
+          console.log(result.info.url);
+          updateProfilePicture(id, result.info.url, token).then((data) => {
+            setProfileData(data);
+          });
+        }
+      }
+    );
+    widget.open();
   };
 
-  const coWorkerTagTransform = (tags) => {
-    let string = "";
-
-    tags.forEach((tag) => {
-      const val = coworkerTagMap.find((entry) => entry.value === tag);
-      string += `${val.message}, `;
-    });
-    return string.substring(0, string.length - 2);
-  };
-
-  function capitalizeFirstLetter(string) {
-    return string.charAt(0).toUpperCase() + string.slice(1);
-  }
   useEffect(() => {
     try {
       getUser(token || localStorage.getItem("token")).then((data) => {
@@ -56,15 +58,32 @@ export default function ProfilePage() {
     }
   }, [token]);
 
-  const navigateToQuizPage = (data) => {
-    localStorage.setItem("quizResults", JSON.stringify(data));
-    history.push("quiz/results");
+  const handleProfileDelete = (id) => {
+    removeProfile(id, token).then((data) => {
+      setProfileData(data);
+    });
   };
   return (
     <div>
       <Container>
+        <Header>All your Profiles in One Place</Header>
+        <HeaderText>
+          Profiles are generated for all quizes you've taken
+        </HeaderText>
         {/* {JSON.stringify(profileData)} */}
-        {profileData &&
+        <ProfileGrid>
+          {profileData &&
+            profileData.userData.length > 0 &&
+            profileData.userData.map((data, index) => (
+              <ProfileTiles
+                uploadNewImage={uploadNewImage}
+                handleProfileDelete={handleProfileDelete}
+                profileData={data}
+              />
+            ))}
+        </ProfileGrid>
+
+        {/* {profileData &&
           profileData.userData.map((data, index) => (
             <ProfileRow key={index}>
               <TextContainer>
@@ -77,7 +96,6 @@ export default function ProfilePage() {
                     Relationship: {capitalizeFirstLetter(data.quizResults.who)}
                   </RelationshipText>
                 )}
-                {/* <BirthDayText>Birthday: 12/12/12</BirthDayText> */}
                 {data.quizResults.hobbies && (
                   <HobbiesText>
                     Hobbiest and Interests:{" "}
@@ -108,14 +126,17 @@ export default function ProfilePage() {
                 </ProfileButton>
               </ButtonContainer>
             </ProfileRow>
-          ))}
-        <ButtonContainer>
+          ))} */}
+        {/* <ButtonContainer>
           <ProfileButton onClick={() => history.push("quiz/")}>
             New Profile
           </ProfileButton>
-        </ButtonContainer>
+        </ButtonContainer> */}
       </Container>
-      <Logout />
+      <LogoutButtonContainer>
+        <Logout />
+      </LogoutButtonContainer>
+      <JoinCommunity />
     </div>
   );
 }

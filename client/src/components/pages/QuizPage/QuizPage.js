@@ -7,8 +7,8 @@ import { Route } from "react-router-dom";
 import { hobbyMap } from "../../../utils/hobbyMap";
 import { coworkerTagMap } from "../../../utils/coworkerTagMap";
 
-const totalCoWorkerQuestions = 5;
-const totalGeneralQuestions = 8;
+const totalCoWorkerQuestions = 6;
+const totalGeneralQuestions = 9;
 
 const Quiz = () => {
   const location = useLocation();
@@ -29,7 +29,9 @@ const Quiz = () => {
   }, [location]);
 
   const handleResponse = (id, response, isMulti) => {
-    setCurrentStepNumber(currentStepNumber + 1);
+    if (id != "createAccount") {
+      setCurrentStepNumber(currentStepNumber + 1);
+    }
 
     window.scrollTo(0, 0);
     //TODO: Refactor this to use a switch statement
@@ -65,6 +67,7 @@ const Quiz = () => {
       setAnswers({ who: response.value });
       return;
     }
+
     if (id === "additionalTags") {
       let currentTags = answers["tags"];
 
@@ -76,7 +79,7 @@ const Quiz = () => {
       } else {
         answers[newInput] = response.value;
       }
-
+      console.log("ASNWERS", answers);
       setAnswers(answers);
     }
   };
@@ -224,14 +227,17 @@ const Quiz = () => {
         { message: "$50+", value: "50-999999" },
       ],
     },
-    // {
-    //   id: 'createAccount',
-    //   title: 'Do you want to create an account?',
-    //   answers: [
-    //     { message: 'Yes', value: true },
-    //     { message: 'Not at this time', value: false },
-    //   ],
-    // },
+    {
+      id: "createAccount",
+      questionType: ["general", "coworker"],
+
+      title: "Do you want to add a profile picture for this user?",
+      openWidget: true,
+      answers: [
+        { message: "Yes", value: true },
+        { message: "Not at this time", value: false },
+      ],
+    },
     //   {
     //     id: 'results',
     //     title: '',
@@ -263,6 +269,7 @@ const Quiz = () => {
                       totalStepNumber={totalStepNumber}
                       currentStepNumber={currentStepNumber}
                       quizAge={quizAge}
+                      quizData={quizData}
                       isForCoworkers={isForCoworkers}
                       handleResponse={handleResponse}
                       next={next}
