@@ -7,14 +7,23 @@ import {
   InputField,
   SubmitButton,
 } from "./styles";
+import { postToMailingList } from "./../../../../../api/postToMailingList";
 
 export default function JoinCommunity() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
+  const [buttonText, setButtonText] = useState("Join Giftology!");
+  const [submitIsDisabled, setSubmitIsDisabled] = useState(false);
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log("submit", name, email);
+    postToMailingList(name, email);
+    setName("");
+    setEmail("");
+    setButtonText("Thanks for joining!");
+    setSubmitIsDisabled(true);
   };
+
   return (
     <Container>
       <Header>
@@ -26,20 +35,25 @@ export default function JoinCommunity() {
       </Description>
       <InputContainer>
         <InputField
+          value={name}
           onChange={(e) => {
             setName(e.target.value);
           }}
           placeholder="Full Name"
         ></InputField>
         <InputField
+          value={email}
           onChange={(e) => {
             setEmail(e.target.value);
           }}
           type={"email"}
           placeholder="Email Address"
         ></InputField>
-        <SubmitButton onClick={(e) => handleSubmit(e)}>
-          Join Giftology!
+        <SubmitButton
+          disabled={submitIsDisabled}
+          onClick={(e) => handleSubmit(e)}
+        >
+          {buttonText}
         </SubmitButton>
       </InputContainer>
     </Container>

@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { postToMailingList } from "./../../../api/postToMailingList";
 
 import {
   Footer,
@@ -14,6 +15,19 @@ import {
 
 export default function FooterComponent() {
   const year = new Date().getFullYear();
+  const handleSubmit = (email) => {
+    console.log("submit", email);
+    const validateEmail = (email) => {
+      return String(email)
+        .toLowerCase()
+        .match(
+          /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+        );
+    };
+    if (validateEmail(email)) {
+      postToMailingList("unknown", email);
+    }
+  };
 
   return (
     <Footer>
@@ -56,6 +70,7 @@ export default function FooterComponent() {
           <form
             onSubmit={(e) => {
               e.preventDefault();
+              handleSubmit(e.target[0].value);
               console.log(e.target[0].value);
               e.target[0].value = "";
             }}

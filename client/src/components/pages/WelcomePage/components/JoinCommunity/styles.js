@@ -84,4 +84,9 @@ text-transform: uppercase;
   color: #44a2bb;
   background-color: black;
 }
+&:disabled {
+  color: #44a2bb;
+  background-color: black;
+  cursor: not-allowed;
+}
 `;

@@ -22,6 +22,7 @@ const UserSchema = new mongoose.Schema(
       type: Array,
       required: false,
     },
+    mailingList: { type: Boolean, required: false },
   },
   { timestamps: true }
 );

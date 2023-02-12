@@ -7,17 +7,41 @@ import {
   CallToActionContainer,
 } from "./styles";
 
-export default function GiftShortCut() {
+export default function GiftShortCut({ routeChange }) {
   return (
     <Container>
       <CallToActionContainer>
         <Header> Who 's Getting the Gift</Header>
         <ShortCutCollection>
-          <ShortCut>Relative</ShortCut>
+          <ShortCut
+            onClick={() => {
+              routeChange("quiz/name", "relative");
+            }}
+          >
+            Relative
+          </ShortCut>
 
-          <ShortCut>Colleague</ShortCut>
-          <ShortCut>Myself</ShortCut>
-          <ShortCut>Friend</ShortCut>
+          <ShortCut
+            onClick={() => {
+              routeChange("quiz/howMany", "coworker");
+            }}
+          >
+            Colleague
+          </ShortCut>
+          <ShortCut
+            onClick={() => {
+              routeChange("quiz/name", "myself");
+            }}
+          >
+            Myself
+          </ShortCut>
+          <ShortCut
+            onClick={() => {
+              routeChange("quiz/name", "friend");
+            }}
+          >
+            Friend
+          </ShortCut>
         </ShortCutCollection>
       </CallToActionContainer>
     </Container>

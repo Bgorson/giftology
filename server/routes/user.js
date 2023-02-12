@@ -155,3 +155,41 @@ router.patch("/profile", verifyToken, (req, res) => {
     }
   });
 });
+
+router.post("/mailingList", (req, res) => {
+  const { userName, email } = req.body;
+
+  User.findOne({ email }).exec((err, user) => {
+    if (err) {
+      return res.status(400).json({
+        error: "Something went wrong",
+      });
+    } else {
+      //Login
+      if (user) {
+        res.json({ message: "User already exists" });
+      } else {
+        //Signup
+        const newUser = new User({
+          name: userName,
+          email: email,
+          mailingList: true,
+        });
+        newUser.save((err, data) => {
+          if (err) {
+            return res.status(400).json({
+              error: "Something went wrong",
+            });
+          }
+
+          res.json({ message: "User added" });
+        });
+      }
+    }
+  });
+
+  // Receive Full name and Email.
+  // add to User database
+  // if user already exists, don't do anything
+  // if user doesn't exist, add to database
+});

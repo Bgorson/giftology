@@ -16,12 +16,27 @@ const Quiz = () => {
   const [answers, setAnswers] = useState({});
   const [isForCoworkers, setIsForCoworkers] = useState(false);
   const [isCoworker, setIsCoworker] = useState(false);
+  console.log("Answers", answers);
 
   const [isForSelf, setIsForSelf] = useState(false);
   const [quizAge, setQuizAge] = useState(0);
   const [currentStepNumber, setCurrentStepNumber] = useState(1);
   const [totalStepNumber, setTotalStepNumber] = useState(totalGeneralQuestions);
   useEffect(() => {
+    if (location.search) {
+      setAnswers({ ...answers, who: location.search.slice(1) });
+      localStorage.setItem("forCoworkers", false);
+      setIsForCoworkers(false);
+
+      if (location.search.slice(1) === "myself") {
+        setIsForSelf(true);
+      }
+      if (location.search.slice(1) === "coworker") {
+        setIsForCoworkers(true);
+        setTotalStepNumber(totalCoWorkerQuestions);
+        localStorage.setItem("forCoworkers", true);
+      }
+    }
     if (location.pathname === "/quiz/who") {
       setCurrentStepNumber(1);
       setTotalStepNumber(totalGeneralQuestions);

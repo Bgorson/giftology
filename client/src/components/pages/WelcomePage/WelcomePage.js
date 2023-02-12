@@ -19,8 +19,8 @@ import {
 
 export default function WelcomePage() {
   let history = useHistory();
-  const routeChange = () => {
-    let path = `/quiz`;
+  const routeChange = (route, queryParams) => {
+    let path = `/${route}${queryParams ? `?${queryParams}` : ""}`;
     history.push(path);
   };
   return (
@@ -33,14 +33,14 @@ export default function WelcomePage() {
             need to know is who you’re shopping for and what they do for fun.
             We’ll handle the rest.
           </HeroDescription>
-          <HeroCallToAction onClick={routeChange}>
+          <HeroCallToAction onClick={() => routeChange("quiz")}>
             Take The Quiz
           </HeroCallToAction>
         </HeroContent>
         <HeroImage src={backgroundHomeImage} />
         <Ellipse src={ellipse} />
       </Hero>
-      <GiftShortCut />
+      <GiftShortCut routeChange={routeChange} />
       <GiftIconBanner />
       <GiftCategories />
       <GiftSpecialOccasions />
