@@ -5,7 +5,7 @@ import ReactGA from "react-ga";
 import Badge from "../atoms/CardV2/Badge";
 import LoginModal from "../molecules/LoginModal";
 
-import gift from "../../present.jpg";
+import gift from "../../gift.png";
 import ProductCard from "../atoms/CardV2";
 import { UserContext } from "../../context/UserContext";
 
@@ -45,7 +45,7 @@ const shake = keyframes`
 const Circle = styled.img`
   cursor: pointer;
   transform: translate(-9px, -15px);
-  width: calc(100% - 32px);
+  width: 142px;
   margin: 0 auto;
   &:hover {
     animation: ${shake} 0.3s infinite alternate;
@@ -115,11 +115,10 @@ export default function ({ product, handleCardClick, id }) {
     <>
       {visible && (
         <CircleContainer visible={visible} onClick={() => handleClick()}>
-          <Badge text={"Top Gift!"} />
           <>
             {/* <TeaserText>{'Click to reveal your top gifts!'}</TeaserText> */}
             <Circle src={gift}></Circle>
-            {/* {'Click into images to learn more!'} */}
+            {"Click to reveal surprise gift"}
           </>
         </CircleContainer>
       )}

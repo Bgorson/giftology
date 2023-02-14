@@ -130,7 +130,7 @@ export default function ProductResult(props) {
       )}
       {!isLoading && (
         <>
-          <ProductGrid>
+          <ProductGrid blurred={open}>
             {renderGiftBoxes(productResults)}
 
             {productResults.map((product, index) =>
@@ -155,6 +155,7 @@ export default function ProductResult(props) {
 
       {open && (
         <ScrollDialog
+          quizId={quizData?.id}
           open={open}
           handleClickOpen={handleClickOpen}
           handleClose={handleClose}

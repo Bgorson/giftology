@@ -7,6 +7,7 @@ import {
   ImageWrapper,
   SubTextContainer,
   FavoriteContainer,
+  Image,
 } from "./styled";
 import { UserContext } from "../../../context/UserContext";
 import placeHolder from "../../../placeholder.jpeg";
@@ -25,7 +26,7 @@ export default function ProductCard({
 }) {
   const { token } = React.useContext(UserContext);
   const handleAddToFavorites = (product, quizId) => {
-    if (isFavorite) {
+    if (isFavorite || filled) {
       removeFavorites(product, quizId, token);
       setFilled(false);
     } else {
@@ -84,27 +85,21 @@ export default function ProductCard({
   return (
     product && (
       <div>
-        {token && (
-          <FavoriteContainer
-            onClick={() => {
-              handleAddToFavorites(product, quizId);
-            }}
-          >
-            <AddToFavorites filled={filled} />
-          </FavoriteContainer>
-        )}
-
         <CardContainer
           data-id={product.score}
           onClick={() => handleCardClick(product, isHighlighted)}
         >
-          {(product?.product_card_banner || isHighlighted) && (
-            <Badge
-              text={isHighlighted ? "Top Gift!" : product.product_card_banner}
-            />
+          {token && (
+            <FavoriteContainer
+              onClick={(e) => {
+                e.stopPropagation(), handleAddToFavorites(product, quizId);
+              }}
+            >
+              <AddToFavorites filled={filled} />
+            </FavoriteContainer>
           )}
           <ImageWrapper>
-            <img alt={product.productName} src={finalImage} />
+            <Image alt={product.productName} src={finalImage} />
           </ImageWrapper>
 
           <CardContentContainer>
@@ -121,14 +116,17 @@ export default function ProductCard({
                 ${product.productBasePrice}
               </FlavorText>
               {showScore && <FlavorText>SCORE:{product.score}</FlavorText>}
-              <FlavorText variant="body2" color="text.secondary">
+              {/* <FlavorText variant="body2" color="text.secondary">
                 {`Tags: ${tags}`}
-              </FlavorText>
+              </FlavorText> */}
             </SubTextContainer>
 
             {/* <Typography variant="body2" color="text.secondary">
             {product.score}
           </Typography> */}
+            {product?.product_card_banner && (
+              <Badge text={product.product_card_banner} />
+            )}
           </CardContentContainer>
         </CardContainer>
       </div>

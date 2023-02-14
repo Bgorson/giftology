@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 
 export const TextContainer = styled.div`
   display: flex;
@@ -18,14 +18,24 @@ export const Image = styled.img`
 `;
 
 export const ProductTitle = styled.h1`
-  font-size: 26px;
-  font-weight: bold;
+  font-size: 34px;
 `;
 export const ProductDescription = styled.p`
   font-size: 16px;
 `;
-export const ProductPrice = styled.div``;
-export const ProductTags = styled.div``;
+export const ProductPrice = styled.div`
+  margin: 0 24px 0 auto;
+  font-size: 32px;
+`;
+export const ProductTags = styled.div`
+  display: flex;
+  padding-top: 40px;
+  gap: 1em;
+  @media (max-width: 768px) {
+    flex-direction: column;
+    padding-bottom: 2em;
+  }
+`;
 export const Button = styled.button``;
 export const ProductImage = styled.div``;
 export const MobileWrapper = styled.div`
@@ -48,11 +58,9 @@ export const ProductDescriptionHeading = styled.h2`
 export const FancyButton = styled.button`
   background-color: inherit;
   white-space: nowrap;
-  min-width: 280px;
   color: black;
   cursor: pointer;
-  border-radius: 1000px;
-  padding: 0.5em;
+  padding: 12px 24px;
   font-size: 20px;
 
   &:focus {
@@ -72,11 +80,32 @@ export const FancyButton = styled.button`
     color: white;
     min-width: 100%;
   }
+  ${(props) =>
+    props.disabled &&
+    css`
+      cursor: not-allowed;
+      background-color: grey;
+      &:hover {
+        background-color: grey;
+        color: black;
+      }
+    `}
+  ${(props) =>
+    props.isPurchase &&
+    css`
+      background: linear-gradient(90deg, #0b8afd 0%, #c576ff 100%);
+      border: 1px solid rgba(0, 0, 0, 0.15);
+      &:hover {
+        background-color: grey;
+        color: black;
+      }
+    `}
 `;
 
 export const ModalClose = styled.img`
-  width: 30px;
-  height: 30px;
+  padding: 30px 30px 0 0;
+  width: 12px;
+  height: 12px;
   cursor: pointer;
   margin-left: auto;
   align-self: center;
@@ -140,4 +169,20 @@ export const ModalMain = styled.section`
   &.small > .content {
     max-width: 600px;
   }
+`;
+export const ButtonContainer = styled.div`
+  display: flex;
+  gap: 1em;
+  flex-direction: row;
+  align-items: center;
+  margin-top: auto;
+  padding-bottom: 2em;
+  @media (max-width: 768px) {
+    flex-direction: column;
+  }
+`;
+export const Tag = styled.div`
+  border: 1px solid grey;
+  width: fit-content;
+  padding: 12px 20px;
 `;

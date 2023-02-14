@@ -66,8 +66,8 @@ export const FancyButton = styled.button`
 `;
 
 export const ModalClose = styled.img`
-  width: 30px;
-  height: 30px;
+  width: 12px;
+  height: 12px;
   cursor: pointer;
   margin-left: auto;
   align-self: center;

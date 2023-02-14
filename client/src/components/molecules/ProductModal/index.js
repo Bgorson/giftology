@@ -1,8 +1,11 @@
 import * as React from "react";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
-import CloseIcon from "../../../close.png";
+import CloseIcon from "../../../close.svg";
 import DialogContent from "@mui/material/DialogContent";
+import { addFavorites } from "../../../api/addFavorites.js";
+import { UserContext } from "../../../context/UserContext";
+
 import {
   TextContainer,
   ProductTitle,
@@ -17,12 +20,15 @@ import {
   FancyButton,
   ModalClose,
   ModalHeading,
+  ButtonContainer,
+  Tag,
 } from "./styles";
 import ReactGA from "react-ga";
 
 export default function ScrollDialog(props) {
-  const { product, handleClose } = props;
+  const { product, handleClose, quizId } = props;
   const [scroll, setScroll] = React.useState("paper");
+  const { token } = React.useContext(UserContext);
 
   const [parsedLabText, setParsedLabText] = React.useState(null);
 
@@ -55,6 +61,7 @@ export default function ScrollDialog(props) {
       tags[index] = " " + tag.charAt(0).toUpperCase() + tag.slice(1);
     }
   });
+  console.log("tags", tags);
   //Creates the availle Links
   const linkCreator = (link) => {
     let urlMatches = link.match(/[ID=](?=[ID=]).*?(?=\s)/gm);
@@ -120,7 +127,7 @@ export default function ScrollDialog(props) {
     product && (
       <Dialog
         disableScrollLock={true}
-        maxWidth={"lg"}
+        maxWidth={"60%"}
         open={true}
         onClose={handleClose}
         scroll={scroll}
@@ -131,7 +138,7 @@ export default function ScrollDialog(props) {
 
         {/* <DialogTitle id="scroll-dialog-title">{product.productName}</DialogTitle> */}
         <MobileWrapper>
-          <DialogContent dividers={scroll === "paper"}>
+          <DialogContent>
             {product.directImageSrc !== "" ? (
               <Image src={product.directImageSrc} />
             ) : (
@@ -155,29 +162,41 @@ export default function ScrollDialog(props) {
                 <div dangerouslySetInnerHTML={{ __html: parsedLabText }} />
               ) : null}
 
-              <ProductPrice>${product.productBasePrice}</ProductPrice>
-              <ProductTags>{`Tags: ${tags}`}</ProductTags>
-              <a
-                onClick={() =>
-                  ReactGA.event({
-                    category: "Retailer Visited",
-                    action: product.productName,
-                    label: "Home",
-                  })
-                }
-                href={product.link}
-                target="_blank"
-              >
-                <FancyButton>View Retailer</FancyButton>
-              </a>
+              <ProductTags>
+                {tags &&
+                  tags.map((tag, index) => {
+                    return <Tag key={index}>{tag}</Tag>;
+                  })}
+              </ProductTags>
+              <ButtonContainer>
+                <a href={product.link} target="_blank">
+                  <FancyButton
+                    isPurchase={true}
+                    onClick={() =>
+                      ReactGA.event({
+                        category: "Retailer Visited",
+                        action: product.productName,
+                        label: "Home",
+                      })
+                    }
+                  >
+                    Buy this now
+                  </FancyButton>
+                </a>
+                <FancyButton
+                  disabled={!token}
+                  onClick={() => addFavorites(product, quizId, token)}
+                >
+                  Add to Wishlist
+                </FancyButton>
+                <ProductPrice>${product.productBasePrice}</ProductPrice>
+              </ButtonContainer>
             </TextContainer>
           </DialogContent>
         </MobileWrapper>
+
         <DesktopWrapper>
-          <DialogContent
-            style={{ display: "flex" }}
-            dividers={scroll === "paper"}
-          >
+          <DialogContent style={{ display: "flex" }}>
             {product.directImageSrc !== "" ? (
               <Image src={product.directImageSrc} />
             ) : (
@@ -200,25 +219,38 @@ export default function ScrollDialog(props) {
                 <div dangerouslySetInnerHTML={{ __html: parsedLabText }} />
               ) : null}
 
-              <ProductPrice>${product.productBasePrice}</ProductPrice>
-              <ProductTags>{`Tags: ${tags}`}</ProductTags>
-              <a href={product.link} target="_blank">
+              <ProductTags>
+                {tags &&
+                  tags.map((tag, index) => {
+                    return <Tag key={index}>{tag}</Tag>;
+                  })}
+              </ProductTags>
+              <ButtonContainer>
+                <a href={product.link} target="_blank">
+                  <FancyButton
+                    isPurchase={true}
+                    onClick={() =>
+                      ReactGA.event({
+                        category: "Retailer Visited",
+                        action: product.productName,
+                        label: "Home",
+                      })
+                    }
+                  >
+                    Buy this now
+                  </FancyButton>
+                </a>
                 <FancyButton
-                  onClick={() =>
-                    ReactGA.event({
-                      category: "Retailer Visited",
-                      action: product.productName,
-                      label: "Home",
-                    })
-                  }
+                  disabled={!token}
+                  onClick={() => addFavorites(product, quizId, token)}
                 >
-                  View Retailer
+                  Add to Wishlist
                 </FancyButton>
-              </a>
+                <ProductPrice>${product.productBasePrice}</ProductPrice>
+              </ButtonContainer>
             </TextContainer>
           </DialogContent>
         </DesktopWrapper>
-        <DialogActions></DialogActions>
       </Dialog>
     )
   );

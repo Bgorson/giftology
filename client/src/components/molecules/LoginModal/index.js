@@ -1,7 +1,7 @@
 import * as React from "react";
 import Dialog from "@mui/material/Dialog";
 import Login from "../LoginButton";
-import CloseIcon from "../../../close.png";
+import CloseIcon from "../../../close.svg";
 import DialogContent from "@mui/material/DialogContent";
 import {
   TextContainer,

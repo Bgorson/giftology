@@ -4,28 +4,29 @@ export const FlavorText = styled.p`
   padding-top: 0.5em;
   margin: 0;
   font-size: 1em;
+  color: rgba(0, 0, 0, 0.8);
 `;
 
 export const CardContainer = styled.div`
   color: black;
   position: relative;
+  height: 500px;
 
-  padding: 25px 1em;
-  border: 1px solid grey;
-  border-radius: 2em;
   cursor: pointer;
   color: black;
   &:hover {
-    box-shadow: 10px 10px #ededed;
+    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.5);
   }
   @media (max-width: 768px) {
     flex-basis: auto;
   }
+  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.2);
 `;
 
 export const CardContentContainer = styled.div`
   text-align: left;
   display: flex;
+  padding: 24px;
   flex-direction: column;
   justify-content: space-between;
   & > div {
@@ -37,7 +38,7 @@ export const CardContentContainer = styled.div`
 
 export const ImageWrapper = styled.div`
   height: 350px;
-
+  background-color: #f5f5f5;
   @media (max-width: 768px) {
     border: none;
   }
@@ -53,23 +54,29 @@ export const ImageWrapper = styled.div`
 `;
 export const SubTextContainer = styled.div``;
 export const BadgeContainer = styled.div`
-  position: absolute;
-  z-index: 100;
-  top: 5%;
-  left: 70%;
-  background-color: skyblue;
-  transform: rotate(45deg);
-  min-width: 150px;
+  background-color: #4896c2;
+  text-transform: uppercase;
+  color: white;
+  font-size: 12px;
+  max-width: 150px;
   text-align: center;
-  height: 40px;
+  padding: 10px;
   border-radius: 15px;
+  margin: 0;
+  align-self: flex-end;
 `;
 export const BadgeText = styled.p`
-  margin-top: 10px;
+  margin: 0;
 `;
 export const FavoriteContainer = styled.div`
-  position: relative;
-  z-index: 100;
-  top: 5%;
-  right: -5%;
+  position: absolute;
+  z-index: 60;
+  top: 50px;
+  right: 20px;
+  width: 30px;
+  height: 30px;
+`;
+
+export const Image = styled.img`
+  width: 100%;
 `;

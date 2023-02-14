@@ -70,30 +70,20 @@ router.put("/favorites", verifyToken, (req, res) => {
 });
 
 router.delete("/favorites", verifyToken, (req, res) => {
-  jwt.verify(req.token, process.env.JWT_ACC_ACTIVATE, (err, authData) => {
+  jwt.verify(req.token, process.env.JWT_ACC_ACTIVATE, async (err, authData) => {
     if (err) {
       console.log("ERROR", err);
       res.sendStatus(403);
     } else {
       const { _id } = authData;
-      User.findById(_id, (err, user) => {
-        if (user) {
-          const index = user.indexOf(req.body);
-          if (index > -1) {
-            // only splice array when item is found
-            user.splice(index, 1); // 2nd parameter means remove one item only
-          }
-          user.save((err, success) => {
-            if (err) {
-              console.log("Error in update", err);
-              return err;
-            }
-            res.send(user);
-          });
-        } else {
-          res.status(404).json({ message: "User not found", err });
-        }
-      });
+      const { product } = req.body;
+      const { productId } = product;
+      await User.updateOne(
+        { _id, "userData.id": req.body.quizId },
+        { $pull: { "userData.$.wishlist": productId } }
+      );
+
+      res.send("Removed");
     }
   });
 });

@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled, { css } from "styled-components";
 
 export const Category = styled.h1`
   font-size: 30px;
@@ -65,7 +65,7 @@ export const EmptyText = styled.p`
 `;
 export const ProductGrid = styled.div`
   max-width: 1250px;
-
+  padding: 2em;
   margin: auto;
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
@@ -73,7 +73,13 @@ export const ProductGrid = styled.div`
   @media (max-width: 768px) {
     justify-content: center;
     width: 75%;
+    padding: 0;
   }
+  ${(props) =>
+    props.blurred &&
+    css`
+      filter: blur(8px);
+    `}
 `;
 
 export const Filter = styled.div`
