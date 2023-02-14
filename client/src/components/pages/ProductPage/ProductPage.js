@@ -1,6 +1,8 @@
-import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
-import { getProducts } from '../../../api/getSingleProduct';
+import React, { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import { getProducts } from "../../../api/getSingleProduct";
+import { addFavorites } from "../../../api/addFavorites.js";
+import { UserContext } from "../../../context/UserContext";
 import {
   Image,
   TextContainer,
@@ -11,9 +13,12 @@ import {
   ProductTags,
   FancyButton,
   ProductContainer,
-} from './styles';
+  Tag,
+  ButtonContainer,
+} from "./styles";
 export default function ProductPage() {
   let { id } = useParams();
+  const { token } = React.useContext(UserContext);
 
   const [product, setProduct] = useState();
   const [tags, setTags] = useState();
@@ -24,7 +29,7 @@ export default function ProductPage() {
     let urlMatches = link.match(/[ID=](?=[ID=]).*?(?=\s)/gm);
     if (urlMatches) {
       urlMatches = urlMatches.map((match) => {
-        return match.replace(/ID=/g, '');
+        return match.replace(/ID=/g, "");
       });
     }
     const textMatches = link.match(/text=(.*)~~/gm);
@@ -36,10 +41,10 @@ export default function ProductPage() {
   const createATags = (matches) => {
     let aTags = [];
     matches.url.forEach((url, index) => {
-      let cleanUrl = url.replace(/['‘’"“”]/g, '');
-      let cleanText = matches.text[index].replace(/['‘’"“”]/g, '');
-      let newText1 = cleanText.replace(/text=/g, '');
-      let newText = newText1.replace(/\~~/g, '');
+      let cleanUrl = url.replace(/['‘’"“”]/g, "");
+      let cleanText = matches.text[index].replace(/['‘’"“”]/g, "");
+      let newText1 = cleanText.replace(/text=/g, "");
+      let newText = newText1.replace(/\~~/g, "");
 
       aTags.push(
         `<a  target="_blank" href=.././product/${cleanUrl}> ${newText}</a>`
@@ -63,31 +68,31 @@ export default function ProductPage() {
 
         let tags = [...product.tags_display];
         tags.forEach((tag, index) => {
-          if (tag === null || tag === 'null' || tag === 'Null') {
+          if (tag === null || tag === "null" || tag === "Null") {
             tags = tags.splice(index, 1);
             if (tags.length === 1) {
               tags = [];
             }
-          } else if (tag === 'healthNut') {
-            tags[index] = ' Health Nut';
-          } else if (tag === 'mustOwn') {
-            tags[index] = ' Must Own';
-          } else if (tag === 'MustOwn') {
-            tags[index] = ' Must Own';
-          } else if (tag === 'WhiteElephant') {
-            tags[index] = ' White Elephant';
-          } else if (tag === 'whiteElephant') {
-            tags[index] = ' White Elephant';
-          } else if (tag === 'bathAndBody') {
-            tags[index] = ' Bath And Body';
-          } else if (tag === 'justForFun') {
-            tags[index] = ' Just For Fun';
-          } else if (tag === 'artsAndCrafts') {
-            tags[index] = ' Arts And Crafts';
-          } else if (tag === 'samplerkits') {
-            tags[index] = ' Sampler Kits';
+          } else if (tag === "healthNut") {
+            tags[index] = " Health Nut";
+          } else if (tag === "mustOwn") {
+            tags[index] = " Must Own";
+          } else if (tag === "MustOwn") {
+            tags[index] = " Must Own";
+          } else if (tag === "WhiteElephant") {
+            tags[index] = " White Elephant";
+          } else if (tag === "whiteElephant") {
+            tags[index] = " White Elephant";
+          } else if (tag === "bathAndBody") {
+            tags[index] = " Bath And Body";
+          } else if (tag === "justForFun") {
+            tags[index] = " Just For Fun";
+          } else if (tag === "artsAndCrafts") {
+            tags[index] = " Arts And Crafts";
+          } else if (tag === "samplerkits") {
+            tags[index] = " Sampler Kits";
           } else {
-            tags[index] = ' ' + tag.charAt(0).toUpperCase() + tag.slice(1);
+            tags[index] = " " + tag.charAt(0).toUpperCase() + tag.slice(1);
           }
         });
         setTags(tags);
@@ -114,7 +119,6 @@ export default function ProductPage() {
 
       <TextContainer>
         <ProductTitle>{product.productName}</ProductTitle>
-
         <ProductDescriptionHeading>
           Who do we like this for?
         </ProductDescriptionHeading>
@@ -122,22 +126,30 @@ export default function ProductPage() {
         {product.labResults ? (
           <div dangerouslySetInnerHTML={{ __html: parsedLabText }} />
         ) : null}
+        <ProductTags>
+          {tags &&
+            tags.map((tag, index) => {
+              return <Tag key={index}>{tag}</Tag>;
+            })}
+        </ProductTags>
+        <ButtonContainer>
+          <a href={product.link} target="_blank">
+            <FancyButton
+              isPurchase={true}
+              onClick={() =>
+                ReactGA.event({
+                  category: "Retailer Visited",
+                  action: product.productName,
+                  label: "Home",
+                })
+              }
+            >
+              Buy this now
+            </FancyButton>
+          </a>
 
-        <ProductPrice>${product.productBasePrice}</ProductPrice>
-        {tags && <ProductTags>{`Tags: ${tags}`}</ProductTags>}
-        <a href={product.link} target="_blank">
-          <FancyButton
-            onClick={() =>
-              ReactGA.event({
-                category: 'Retailer Visited',
-                action: product.productName,
-                label: 'Home',
-              })
-            }
-          >
-            View Retailer
-          </FancyButton>
-        </a>
+          <ProductPrice>${product.productBasePrice}</ProductPrice>
+        </ButtonContainer>
       </TextContainer>
     </ProductContainer>
   ) : error ? (
