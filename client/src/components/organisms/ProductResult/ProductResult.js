@@ -99,7 +99,7 @@ export default function ProductResult(props) {
     <React.Fragment>
       {quizResults.price && (
         <Filter>
-          <FilterLabel for="prices">Prefer Price Range:</FilterLabel>
+          <FilterLabel for="prices">Preferred Price Range:</FilterLabel>
           <FilterSelect
             onChange={(e) => handlePriceChange(e.target.value)}
             name="prices"

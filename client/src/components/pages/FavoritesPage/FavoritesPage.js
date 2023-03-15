@@ -19,6 +19,10 @@ const ProductGrid = styled.div`
   }
 `;
 
+const Container = styled.div`
+  padding-top: 5em;
+`;
+
 export default function FavoritesPage() {
   let { quizId } = useParams();
   const { token } = useContext(UserContext);
@@ -57,7 +61,7 @@ export default function FavoritesPage() {
   }, [token]);
 
   return (
-    <div>
+    <Container>
       <h1>My Favorites</h1>
       <ProductGrid>
         {productResults &&
@@ -81,6 +85,6 @@ export default function FavoritesPage() {
           product={currentCardData}
         />
       )}
-    </div>
+    </Container>
   );
 }

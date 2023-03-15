@@ -50,7 +50,7 @@ export default function FooterComponent() {
             <MenuLink as={Link} to="/about">
               About us
             </MenuLink>
-            <MenuLink as={Link} to="/catalog">
+            <MenuLink as={Link} to="/feedback">
               Feedback
             </MenuLink>
             <MenuLink as={Link} to="/quiz/who">

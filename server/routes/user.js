@@ -2,6 +2,8 @@ const express = require("express");
 const { requireAuth } = require("./middleware");
 const { User, Product } = require("../database/schemas");
 const router = express.Router();
+const getImage = require("../api/getEtsy");
+
 const jwt = require("jsonwebtoken");
 module.exports = router;
 
@@ -33,7 +35,7 @@ router.get("/", verifyToken, (req, res) => {
   });
 });
 
-router.get("/favorites", verifyToken, (req, res) => {
+router.get("/favorites", verifyToken, async (req, res) => {
   jwt.verify(req.token, process.env.JWT_ACC_ACTIVATE, async (err, authData) => {
     if (err) {
       console.log("ERROR", err);
@@ -49,10 +51,23 @@ router.get("/favorites", verifyToken, (req, res) => {
       const matchingProducts = await Product.find({
         productId: { $in: findProductArray[0].wishlist },
       });
-      res.send(matchingProducts);
+
+      // Map each product to a Promise that resolves to the updated product
+      const updatedProducts = await Promise.all(
+        matchingProducts.map(async (product) => {
+          if (product.website === "Etsy") {
+            product.directImageSrc = await getImage(product.listingId);
+          }
+          return product;
+        })
+      );
+
+      // Send the response with the updated products
+      res.send(updatedProducts);
     }
   });
 });
+
 router.put("/favorites", verifyToken, (req, res) => {
   jwt.verify(req.token, process.env.JWT_ACC_ACTIVATE, async (err, authData) => {
     if (err) {

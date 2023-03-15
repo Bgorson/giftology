@@ -27,7 +27,9 @@ export default function WelcomePage() {
     <div>
       <Hero>
         <HeroContent>
-          <HeroTitle>{"Take the quiz to find the ideal gift"}</HeroTitle>
+          <HeroTitle>
+            {"Take the quiz and let Giftology take care of the rest for your"}
+          </HeroTitle>
           <HeroDescription>
             Check out our gift quiz and we’ll do the searching for you. All you
             need to know is who you’re shopping for and what they do for fun.

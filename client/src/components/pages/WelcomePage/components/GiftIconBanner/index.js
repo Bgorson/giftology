@@ -9,13 +9,13 @@ export default function GiftIconBanner() {
     <Container>
       <GiftInformation>
         <Icon src={conversation} />
-        <GiftText>Make profiles for your friends & loved ones</GiftText>
+        <GiftText>
+          Take the quiz and let Giftology take care of the rest for your
+        </GiftText>
       </GiftInformation>
       <GiftInformation>
         <Icon src={giftBox} />
-        <GiftText>
-          Take the quiz and let giftology take care of the rest for you
-        </GiftText>
+        <GiftText>Receive curated gift idea based on your responses</GiftText>
       </GiftInformation>
       <GiftInformation>
         <Icon src={profile} />

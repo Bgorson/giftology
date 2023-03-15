@@ -52,7 +52,7 @@ export default function GiftSpecialOccasions() {
           <StepContent>
             <StepHeader>Create profiles for your loved ones</StepHeader>
             <StepDescription>
-              Create profiles for your loved ones
+              Fine tune for their individual likes and dislikes
             </StepDescription>
           </StepContent>
         </StepMainContent>
@@ -66,8 +66,7 @@ export default function GiftSpecialOccasions() {
               Get notified when an event (birthday, anniversary..) is coming up
             </StepHeader>
             <StepDescription>
-              When a user creates a profile, they can set up notifications for
-              special occasions
+              We'll make sure you never miss a special occasion
             </StepDescription>
           </StepContent>
         </StepMainContent>
@@ -77,13 +76,8 @@ export default function GiftSpecialOccasions() {
         <StepMainContent>
           <Icon src={personalized_tile} />
           <StepContent>
-            <StepHeader>
-              Get weekly recommendations on randomized gifts
-            </StepHeader>
-            <StepDescription>
-              New gifts are added regularly, so you can always find something
-              new
-            </StepDescription>
+            <StepHeader>View top items</StepHeader>
+            <StepDescription>See our very best picks for gifts</StepDescription>
           </StepContent>
         </StepMainContent>
         <Icon size={"small"} src={checkmark} />
@@ -92,12 +86,10 @@ export default function GiftSpecialOccasions() {
         <StepMainContent>
           <Icon src={self_care_tile} />
           <StepContent>
-            <StepHeader>
-              Get products for people in your life right in your mail
-            </StepHeader>
+            <StepHeader>Receive updates when a new gift is added</StepHeader>
             <StepDescription>
-              You'll receive notifications about gifts you can buy for your
-              loved ones
+              We'll let you know when we have the perfect match for their
+              interests
             </StepDescription>
           </StepContent>
         </StepMainContent>

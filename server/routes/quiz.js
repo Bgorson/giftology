@@ -374,4 +374,12 @@ router.post("/", async (req, res) => {
   }
 });
 
+router.get("/etsyImages", async (req, res) => {
+  const listingId = req.query.listingId;
+  console.log("checking etsy", listingId);
+  const imageURL = await getImage(listingId);
+
+  res.send(imageURL || null);
+});
+
 module.exports = router;

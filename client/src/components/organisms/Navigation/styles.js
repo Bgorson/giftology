@@ -77,9 +77,74 @@ export const ActionItems = styled.div`
   padding: 23px 0 25px 0;
 
   @media (max-width: 768px) {
+    display: none;
     flex-direction: column;
     padding: 25px 0px;
     justify-content: left;
     align-self: flex-start;
   }
+`;
+export const HamburgerMenu = styled.div`
+  display: none;
+  @media (max-width: 768px) {
+    display: block;
+    position: relative;
+    width: 30px;
+    height: 25px;
+    margin-right: 15px;
+    cursor: pointer;
+    margin-bottom: 2em;
+
+    & span {
+      position: absolute;
+      width: 100%;
+      height: 3px;
+
+      background-color: #333;
+
+      border-radius: 3px;
+      transition: all 0.3s ease-in-out;
+    }
+    & span:nth-child(1) {
+      top: 0;
+      left: 0;
+    }
+    & span:nth-child(2) {
+      top: 50%;
+      transform: translateY(-50%);
+      left: 0;
+    }
+    & span:nth-child(3) {
+      bottom: 0;
+      left: 0;
+    }
+    &.open span:nth-child(1) {
+      top: 50%;
+      transform: translateY(-50%) rotate(45deg);
+    }
+    &.open span:nth-child(2) {
+      opacity: 0;
+    }
+    &.open span:nth-child(3) {
+      bottom: 50%;
+      transform: translateY(50%) rotate(-45deg);
+    }
+  }
+`;
+
+export const HamburgerIcon = styled.div`
+  width: 30px;
+  height: 3px;
+  background-color: #333;
+  margin: 6px 0;
+  @media (max-width: 768px) {
+    width: 30px;
+    height: 3px;
+    background-color: #333;
+    margin: 6px 0;
+  }
+`;
+
+export const MobileMenu = styled.div`
+  display: block;
 `;

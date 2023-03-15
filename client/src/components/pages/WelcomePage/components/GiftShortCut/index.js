@@ -11,7 +11,7 @@ export default function GiftShortCut({ routeChange }) {
   return (
     <Container>
       <CallToActionContainer>
-        <Header> Who 's Getting the Gift</Header>
+        <Header>Who are you shopping for?</Header>
         <ShortCutCollection>
           <ShortCut
             onClick={() => {
@@ -26,7 +26,7 @@ export default function GiftShortCut({ routeChange }) {
               routeChange("quiz/howMany", "coworker");
             }}
           >
-            Colleague
+            Coworker
           </ShortCut>
           <ShortCut
             onClick={() => {

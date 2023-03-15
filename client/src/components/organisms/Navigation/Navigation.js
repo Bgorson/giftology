@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect, useContext, useCallback } from "react";
 import PropTypes from "prop-types";
 import { Link, useHistory } from "react-router-dom";
 import ReactGA from "react-ga";
@@ -11,41 +11,49 @@ import {
   Container,
   NavItem,
   NavLink,
-  Title,
-  LogoNavItem,
   Logo,
   LogoText,
+  HamburgerMenu,
+  HamburgerIcon,
+  MobileMenu,
 } from "./styles.js";
 
-export default function Navigation({ pathname }) {
+function trackEvent(category, action, label) {
+  ReactGA.event({ category, action, label });
+}
+
+function Navigation({ pathname }) {
   const navigate = useHistory();
   const { isLoggedIn } = useContext(UserContext);
-  console.log("Navigation.js: isLoggedIn: ", isLoggedIn);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const handleMobileMenuClick = () => {
+    setIsMobileMenuOpen(!isMobileMenuOpen);
+  };
+  const handleLogoClick = useCallback(() => {
+    trackEvent("Navlink", "Clicked Logo", "Logo");
+    navigate.push("/");
+  }, [navigate]);
+
   return (
     <Navbar>
       <Container>
-        <Logo
-          onClick={() => {
-            ReactGA.event({
-              category: "Navlink",
-              action: "Clicked Logo",
-              label: "Logo",
-            });
-            navigate.push("/");
-          }}
-        >
+        <Logo onClick={handleLogoClick}>
           <LogoText>Giftology</LogoText>
         </Logo>
-        <ActionItems>
+        <HamburgerMenu
+          className={isMobileMenuOpen ? "open" : "closed"}
+          onClick={handleMobileMenuClick}
+        >
+          <span />
+          <span />
+          <span />
+        </HamburgerMenu>
+        <ActionItems isMobileMenuOpen={isMobileMenuOpen}>
           <NavItem>
             <NavLink
               as={Link}
               onClick={() => {
-                ReactGA.event({
-                  category: "Navlink",
-                  action: "Clicked Home",
-                  label: "Home",
-                });
+                trackEvent("Navlink", "Clicked Home", "Home");
               }}
               to="/"
             >
@@ -56,11 +64,7 @@ export default function Navigation({ pathname }) {
             <NavLink
               as={Link}
               onClick={() => {
-                ReactGA.event({
-                  category: "Navlink",
-                  action: "Clicked Quiz",
-                  label: "Quiz",
-                });
+                trackEvent("Navlink", "Clicked Quiz", "Quiz");
               }}
               to="/quiz/who"
             >
@@ -71,11 +75,7 @@ export default function Navigation({ pathname }) {
             <NavLink
               as={Link}
               onClick={() => {
-                ReactGA.event({
-                  category: "Feedback",
-                  action: "Clicked Feedback",
-                  label: "Feedback",
-                });
+                trackEvent("Feedback", "Clicked Feedback", "Feedback");
               }}
               to="/feedback"
             >
@@ -86,11 +86,7 @@ export default function Navigation({ pathname }) {
             <NavLink
               as={Link}
               onClick={() => {
-                ReactGA.event({
-                  category: "Navlink",
-                  action: "Clicked About",
-                  label: "About",
-                });
+                trackEvent("Navlink", "Clicked About", "About");
               }}
               to="/about"
             >
@@ -102,11 +98,7 @@ export default function Navigation({ pathname }) {
               <NavLink
                 as={Link}
                 onClick={() => {
-                  ReactGA.event({
-                    category: "Navlink",
-                    action: "Clicked Profile",
-                    label: "Profile",
-                  });
+                  trackEvent("Navlink", "Clicked Profile", "Profile");
                 }}
                 to="/profile"
               >
@@ -118,15 +110,79 @@ export default function Navigation({ pathname }) {
               </NavLink>
             )}
           </NavItem>
-          {/* <NavItem>
-            <a href="/auth/google">Sign In with Google</a>
-          </NavItem> */}
         </ActionItems>
+        {isMobileMenuOpen && (
+          <MobileMenu>
+            <NavItem>
+              <NavLink
+                as={Link}
+                onClick={() => {
+                  trackEvent("Navlink", "Clicked Home", "Home");
+                  setIsMobileMenuOpen(false);
+                }}
+                to="/"
+              >
+                Home
+              </NavLink>
+            </NavItem>
+            <NavItem>
+              <NavLink
+                as={Link}
+                onClick={() => {
+                  trackEvent("Navlink", "Clicked Quiz", "Quiz");
+                  setIsMobileMenuOpen(false);
+                }}
+                to="/quiz/who"
+              >
+                Take The Quiz
+              </NavLink>
+            </NavItem>
+            <NavItem>
+              <NavLink
+                as={Link}
+                onClick={() => {
+                  trackEvent("Feedback", "Clicked Feedback", "Feedback");
+                  setIsMobileMenuOpen(false);
+                }}
+                to="/feedback"
+              >
+                Feedback
+              </NavLink>
+            </NavItem>
+            <NavItem>
+              <NavLink
+                as={Link}
+                onClick={() => {
+                  trackEvent("Navlink", "Clicked About", "About");
+                  setIsMobileMenuOpen(false);
+                }}
+                to="/about"
+              >
+                About Us
+              </NavLink>
+            </NavItem>
+            <NavItem>
+              {isLoggedIn ? (
+                <NavLink
+                  as={Link}
+                  onClick={() => {
+                    trackEvent("Navlink", "Clicked Profile", "Profile");
+                    setIsMobileMenuOpen(false);
+                  }}
+                  to="/profile"
+                >
+                  Profile
+                </NavLink>
+              ) : (
+                <NavLink>
+                  <Login />
+                </NavLink>
+              )}
+            </NavItem>
+          </MobileMenu>
+        )}
       </Container>
     </Navbar>
   );
 }
-
-Navigation.propTypes = {
-  pathname: PropTypes.string.isRequired,
-};
+export default Navigation;
