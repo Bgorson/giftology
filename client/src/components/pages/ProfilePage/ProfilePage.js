@@ -46,16 +46,19 @@ export default function ProfilePage() {
     );
     widget.open();
   };
-
-  useEffect(() => {
+  const fetchUser = async () => {
     try {
-      getUser(token || localStorage.getItem("token")).then((data) => {
-        setProfileData(data);
-      });
+      const res = await getUser(token || localStorage.getItem("token"));
+      setProfileData(res);
     } catch (err) {
       console.log("ERROR", err);
       loggedOut();
+      window.location.href = "/";
     }
+  };
+
+  useEffect(() => {
+    fetchUser();
   }, [token]);
 
   const handleProfileDelete = (id) => {

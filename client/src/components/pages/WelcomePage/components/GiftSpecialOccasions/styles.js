@@ -42,30 +42,29 @@ font-size:16px;
 export const CreateAccountButton = styles.button`
 font-size: 16px;
 cursor: pointer;
-color: white;
-background-color: grey;
+color: black;
+background-color: white;
 padding: 16px 24px;
-border-radius: 1em;
+border-radius: 1.5em;
 border-color:grey;
 text-transform: uppercase;
 &:hover {
-  color: #44a2bb;
   background-color: black;
+    color: white;
 
 }
 `;
 export const TakeQuizButton = styles.button`
 font-size: 16px;
 cursor: pointer;
-color: white;
-background-color: black;
+color: black;
+background-color: white;
 padding: 16px 24px;
-border-radius: 1em;
+border-radius: 1.5em;
 text-transform: uppercase;
 &:hover {
-  color: #44a2bb;
-  background-color: grey;
-  color: white;
+  background-color: black;
+    color: white;
 
 }
 `;

@@ -32,7 +32,7 @@ export default function Main() {
         <Switch>
           <Route exact path="/" component={WelcomePage} />
           <Route path="/quiz" component={QuizPage} />
-          <Route path="/product/:id" component={ProductPage} />
+          <Route path="/product/:id/" component={ProductPage} />
           <Route path="/feedback" component={FeedbackPage} />
           <Route path="/about" component={AboutPage} />
           <Route path="/profile" component={ProfilePage} />

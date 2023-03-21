@@ -27,6 +27,7 @@ export default function ProductResult(props) {
   const [productResults, setProductResults] = React.useState(products);
   const [quizData, setQuizData] = React.useState(data?.quizData);
   const [isLoading, setIsLoading] = React.useState(false);
+  const [backupQuizId, setBackupQuizId] = React.useState(null);
   const location = useLocation();
   // TODO: Put a use effect to sort it all once
   const handleClickOpen = (product, isHighlighted) => {
@@ -45,18 +46,51 @@ export default function ProductResult(props) {
     setCurrentCardData(product);
     setOpen(true);
   };
+  useEffect(() => {
+    let backupQuizVal = localStorage.getItem("quizId");
+    if (backupQuizVal) {
+      setBackupQuizId(backupQuizVal);
+    }
+  }, []);
 
   const renderGiftBoxes = (products) => {
     return (
       <>
         {products[0] && (
-          <GiftBox handleCardClick={handleClickOpen} product={products[0]} />
+          <GiftBox
+            isFavorite={
+              quizData?.wishlist
+                ? quizData.wishlist.includes(products[0].productId)
+                : false
+            }
+            handleCardClick={handleClickOpen}
+            quizId={quizData?.id || backupQuizId}
+            product={products[0]}
+          />
         )}
         {products[1] && (
-          <GiftBox handleCardClick={handleClickOpen} product={products[1]} />
+          <GiftBox
+            isFavorite={
+              quizData?.wishlist
+                ? quizData.wishlist.includes(products[1].productId)
+                : false
+            }
+            handleCardClick={handleClickOpen}
+            quizId={quizData?.id || backupQuizId}
+            product={products[1]}
+          />
         )}
         {products[2] && (
-          <GiftBox handleCardClick={handleClickOpen} product={products[2]} />
+          <GiftBox
+            isFavorite={
+              quizData?.wishlist
+                ? quizData.wishlist.includes(products[2].productId)
+                : false
+            }
+            handleCardClick={handleClickOpen}
+            quizId={quizData?.id || backupQuizId}
+            product={products[2]}
+          />
         )}
       </>
     );
@@ -136,7 +170,7 @@ export default function ProductResult(props) {
             {productResults.map((product, index) =>
               index > 3 ? (
                 <ProductCardV2
-                  quizId={quizData?.id}
+                  quizId={quizData?.id || backupQuizId}
                   isFavorite={
                     quizData?.wishlist
                       ? quizData.wishlist.includes(product.productId)
@@ -155,7 +189,7 @@ export default function ProductResult(props) {
 
       {open && (
         <ScrollDialog
-          quizId={quizData?.id}
+          quizId={quizData?.id || backupQuizId}
           open={open}
           handleClickOpen={handleClickOpen}
           handleClose={handleClose}

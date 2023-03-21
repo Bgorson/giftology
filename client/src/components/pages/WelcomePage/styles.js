@@ -17,13 +17,14 @@ export const Hero = styled.div`
 export const HeroCallToAction = styled.button`
   font-size: 12px;
   cursor: pointer;
-  color: white;
-  background-color: black;
+  color: black;
+  background-color: white;
   padding: 16px 24px;
-  border-radius: 1em;
+  border-radius: 1.5em;
   text-transform: uppercase;
   &:hover {
-    color: #44a2bb;
+    background-color: black;
+    color: white;
   }
 `;
 export const HeroDescription = styled.p`

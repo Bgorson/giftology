@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useLocation } from "react-router-dom";
 import { getProducts } from "../../../api/getSingleProduct";
 import { addFavorites } from "../../../api/addFavorites.js";
 import { UserContext } from "../../../context/UserContext";
@@ -18,6 +18,9 @@ import {
 } from "./styles";
 export default function ProductPage() {
   let { id } = useParams();
+  const location = useLocation();
+  const queryParams = new URLSearchParams(location.search);
+  const quizId = queryParams.get("quizId");
   const { token } = React.useContext(UserContext);
 
   const [product, setProduct] = useState();
@@ -144,10 +147,17 @@ export default function ProductPage() {
                 })
               }
             >
-              Buy this now
+              Visit Retailer
             </FancyButton>
           </a>
-
+          {quizId && token && (
+            <FancyButton
+              disabled={!token}
+              onClick={() => addFavorites(product, quizId, token)}
+            >
+              Add to Wishlist
+            </FancyButton>
+          )}
           <ProductPrice>${product.productBasePrice}</ProductPrice>
         </ButtonContainer>
       </TextContainer>

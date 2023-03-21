@@ -63,7 +63,7 @@ export const FancyButton = styled.button`
   min-width: 280px;
   color: black;
   cursor: pointer;
-  border-radius: 1000px;
+  border-radius: 1.5em;
   padding: 10px 40px;
   font-size: 20px;
   ${(props) =>

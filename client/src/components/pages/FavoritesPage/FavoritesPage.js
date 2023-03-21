@@ -79,6 +79,7 @@ export default function FavoritesPage() {
       </ProductGrid>
       {open && productResults && (
         <ScrollDialog
+          quizId={quizId}
           open={open}
           handleClickOpen={handleClickOpen}
           handleClose={handleClose}

@@ -31,6 +31,7 @@ export const ProductDescriptionHeading = styled.h2`
 `;
 export const FancyButton = styled.button`
   background-color: inherit;
+  border-radius: 1.5em;
   white-space: nowrap;
   color: black;
   cursor: pointer;

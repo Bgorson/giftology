@@ -31,7 +31,6 @@ export default function ScrollDialog(props) {
   const { token } = React.useContext(UserContext);
 
   const [parsedLabText, setParsedLabText] = React.useState(null);
-
   let tags = [...product.tags_display];
   tags.forEach((tag, index) => {
     if (tag === null || tag === "null" || tag === "Null") {
@@ -61,7 +60,7 @@ export default function ScrollDialog(props) {
       tags[index] = " " + tag.charAt(0).toUpperCase() + tag.slice(1);
     }
   });
-  console.log("tags", tags);
+
   //Creates the availle Links
   const linkCreator = (link) => {
     let urlMatches = link.match(/[ID=](?=[ID=]).*?(?=\s)/gm);
@@ -75,20 +74,27 @@ export default function ScrollDialog(props) {
     return { url: urlMatches, text: textMatches };
   };
 
-  // Creates A tags for insertion
+  const extractLinks = (str) => {
+    const regex = /~~ID=“(\d+)” text=“(.*?)”~~/g;
+    let match = regex.exec(str);
+    let links = [];
 
-  const createATags = (matches) => {
-    let aTags = [];
-    matches.url.forEach((url, index) => {
-      let cleanUrl = url.replace(/['‘’"“”]/g, "");
-      let cleanText = matches.text[index].replace(/['‘’"“”]/g, "");
-      let newText1 = cleanText.replace(/text=/g, "");
-      let newText = newText1.replace(/\~~/g, "");
+    while (match !== null) {
+      let [_, url, linkText] = match;
+      links.push({ url: url, linkText: linkText });
+      match = regex.exec(str);
+    }
 
-      aTags.push(
-        `<a  target="_blank" href=.././product/${cleanUrl}> ${newText}</a>`
-      );
+    return links;
+  };
+
+  const createATags = (str, quizId) => {
+    const links = extractLinks(str);
+    const quizParam = quizId ? `?quizId=${quizId}` : "";
+    const aTags = links.map((link) => {
+      return `<a href=".././product/${link.url}${quizParam}" target="_blank">${link.linkText}</a>`;
     });
+
     return aTags;
   };
   const insertATags = (text, aTags) => {
@@ -102,10 +108,9 @@ export default function ScrollDialog(props) {
   React.useEffect(() => {
     if (product?.labResults) {
       // If there are links- parse them
-      let parse = linkCreator(product.labResults);
-      if (parse.url) {
-        let parsedMatches = linkCreator(product.labResults);
-        let aTagCreation = createATags(parsedMatches);
+      let parse = extractLinks(product.labResults);
+      if (parse.length > 0) {
+        let aTagCreation = createATags(product.labResults, quizId);
         setParsedLabText(insertATags(product.labResults, aTagCreation));
       } else {
         setParsedLabText(product.labResults);
@@ -180,7 +185,7 @@ export default function ScrollDialog(props) {
                       })
                     }
                   >
-                    Buy this now
+                    Visit Retailer
                   </FancyButton>
                 </a>
                 <FancyButton
@@ -237,7 +242,7 @@ export default function ScrollDialog(props) {
                       })
                     }
                   >
-                    Buy this now
+                    Visit Retailer
                   </FancyButton>
                 </a>
                 <FancyButton

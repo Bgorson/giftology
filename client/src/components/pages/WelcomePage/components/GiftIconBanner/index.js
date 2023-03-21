@@ -10,7 +10,7 @@ export default function GiftIconBanner() {
       <GiftInformation>
         <Icon src={conversation} />
         <GiftText>
-          Take the quiz and let Giftology take care of the rest for your
+          Take the quiz and let Giftology take care of the rest for you
         </GiftText>
       </GiftInformation>
       <GiftInformation>

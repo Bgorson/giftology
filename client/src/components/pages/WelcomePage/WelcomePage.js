@@ -28,7 +28,7 @@ export default function WelcomePage() {
       <Hero>
         <HeroContent>
           <HeroTitle>
-            {"Take the quiz and let Giftology take care of the rest for your"}
+            {"Take the quiz and let Giftology take care of the rest for you"}
           </HeroTitle>
           <HeroDescription>
             Check out our gift quiz and we’ll do the searching for you. All you

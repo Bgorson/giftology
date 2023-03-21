@@ -86,7 +86,7 @@ const CircleContainer = styled.div`
   }
 `;
 
-export default function ({ product, handleCardClick, id }) {
+export default function ({ product, handleCardClick, isFavorite, quizId }) {
   const temporaryTest = false;
   const { isLoggedIn } = useContext(UserContext);
   const [isOpen, setIsOpen] = useState(false);
@@ -125,6 +125,8 @@ export default function ({ product, handleCardClick, id }) {
 
       {!visible && (
         <ProductCard
+          isFavorite={isFavorite}
+          quizId={quizId}
           isHighlighted={true}
           handleCardClick={handleCardClick}
           product={product}

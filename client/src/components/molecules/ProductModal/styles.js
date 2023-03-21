@@ -56,6 +56,7 @@ export const ProductDescriptionHeading = styled.h2`
   font-weight: bold;
 `;
 export const FancyButton = styled.button`
+  border-radius: 1.5em;
   background-color: inherit;
   white-space: nowrap;
   color: black;

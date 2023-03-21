@@ -58,6 +58,8 @@ export default function ProfileTiles({
   };
   const navigateToQuizPage = (data) => {
     localStorage.setItem("quizResults", JSON.stringify(data));
+    localStorage.setItem("quizId", JSON.stringify(profileData.id));
+
     history.push("quiz/results");
   };
   const coWorkerTagTransform = (tags) => {
@@ -123,7 +125,11 @@ export default function ProfileTiles({
       </ImportantDateText>
 
       <ActionsContainer>
-        <TextLink onClick={() => navigateToQuizPage(profileData.quizResults)}>
+        <TextLink
+          onClick={() =>
+            navigateToQuizPage(profileData.quizResults, profileData.id)
+          }
+        >
           <Icon src={viewPastQuiz} />
           View Last Quiz
         </TextLink>
