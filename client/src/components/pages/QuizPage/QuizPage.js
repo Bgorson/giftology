@@ -241,17 +241,17 @@ const Quiz = () => {
         { message: "$50+", value: "50-999999" },
       ],
     },
-    {
-      id: "createAccount",
-      questionType: ["general", "coworker"],
+    // {
+    //   id: "createAccount",
+    //   questionType: ["general", "coworker"],
 
-      title: "Do you want to add a profile picture for this user?",
-      openWidget: true,
-      answers: [
-        { message: "Yes", value: true },
-        { message: "Not at this time", value: false },
-      ],
-    },
+    //   title: "Do you want to add a profile picture for this user?",
+    //   openWidget: true,
+    //   answers: [
+    //     { message: "Yes", value: true },
+    //     { message: "Not at this time", value: false },
+    //   ],
+    // },
     //   {
     //     id: 'results',
     //     title: '',

@@ -128,7 +128,10 @@ export default function ProfileTiles({
           onMouseEnter={onHover}
           onMouseLeave={onLeave}
           onClick={() => changeImage("next")}
-          src={createAccount || profile_test}
+          src={
+            createAccount ||
+            "https://res.cloudinary.com/deruncuzv/image/upload/v1679963321/Use_for_default_profile_image1_etrene.jpg"
+          }
         />
         <UpdateProfileContainer
           onClick={() => changeImage("next")}
