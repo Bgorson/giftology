@@ -24,6 +24,7 @@ export const MenuLink = styled.a`
   font-size: 14px;
   text-decoration: none;
   color: black;
+  cursor: pointer;
 `;
 export const MenuText = styled.p`
   line-height: 150%;

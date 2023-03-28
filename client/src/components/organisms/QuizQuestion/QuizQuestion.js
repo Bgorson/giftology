@@ -42,7 +42,27 @@ export default function QuizQuestion(props) {
   const [text, setText] = useState("");
 
   useEffect(() => {
+    if (id !== "results" && localStorage.getItem("preSelect")) {
+      const prefilled = JSON.parse(localStorage.getItem("preSelect")) || {};
+      if (prefilled) {
+        const preSelected = prefilled[id];
+        if (preSelected) {
+          if (isMulti) {
+            const updatedCheckedState = checkedState.map((item, index) =>
+              preSelected.includes(answers[index]?.value) ? true : item
+            );
+            setCheckedState(updatedCheckedState);
+          } else {
+            const updatedCheckedState = checkedState.map((item, index) =>
+              preSelected === answers[index]?.value ? true : item
+            );
+            setCheckedState(updatedCheckedState);
+          }
+        }
+      }
+    }
     // Skip questions that are not relevant to the user
+
     if (
       ((localStorage.getItem("forCoworkers") === "true" || isForCoworkers) &&
         !questionType.includes("coworker") &&
@@ -128,20 +148,28 @@ export default function QuizQuestion(props) {
               handleAdditionalData(answers);
             } else {
               if (id === "createAccount" && answers.message === "Yes") {
-                let widget = window.cloudinary.createUploadWidget(
-                  {
-                    cloudName: "deruncuzv",
-                    uploadPreset: "jedjicbi",
-                  },
-                  (error, result) => {
-                    if (!error && result && result.event === "success") {
-                      console.log(result.info.url);
-                      handleResponse(id, result.info.url, true);
-                      next();
-                    }
-                  }
-                );
-                widget.open();
+                // let widget = window.cloudinary.createUploadWidget(
+                //   {
+                //     cloudName: "deruncuzv",
+                //     uploadPreset: "jedjicbi",
+                //   },
+                //   (error, result) => {
+                //     if (!error && result && result.event === "success") {
+                //       console.log(result.info.url);
+                //       handleResponse(id, result.info.url, true);
+                //       next();
+                //     }
+                //   }
+                // );
+                // widget.open();
+                const arrayOfImages = [
+                  "https://res.cloudinary.com/deruncuzv/image/upload/v1679963321/Use_for_default_profile_image1_etrene.jpg",
+                  "https://res.cloudinary.com/deruncuzv/image/upload/v1679963313/Use_for_default_profile_image2_mhtngy.jpg",
+                  "https://res.cloudinary.com/deruncuzv/image/upload/v1679963312/Use_for_default_profile_image3_va1l7l.jpg",
+                ];
+                let randomImage = arrayOfImages[Math.floor(Math.random() * 6)];
+                handleResponse(id, randomImage, true);
+                next();
               } else {
                 handleResponse(id, answers);
                 next();

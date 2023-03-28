@@ -8,6 +8,7 @@ import ProfileTiles from "./components/ProfileTiles";
 import JoinCommunity from "../WelcomePage/components/JoinCommunity";
 import { removeProfile } from "../../../api/removeProfile";
 import { updateProfilePicture } from "../../../api/updateProfilePicture";
+import ReactGA from "react-ga";
 
 import {
   Container,
@@ -28,23 +29,42 @@ import {
 export default function ProfilePage() {
   const { token, loggedOut } = useContext(UserContext);
   const [profileData, setProfileData] = useState();
+  const arrayOfImages = [
+    "https://res.cloudinary.com/deruncuzv/image/upload/v1679963321/Use_for_default_profile_image1_etrene.jpg",
+    "https://res.cloudinary.com/deruncuzv/image/upload/v1679963313/Use_for_default_profile_image2_mhtngy.jpg",
+    "https://res.cloudinary.com/deruncuzv/image/upload/v1679963312/Use_for_default_profile_image3_va1l7l.jpg",
+  ];
 
-  const uploadNewImage = (id) => {
-    let widget = window.cloudinary.createUploadWidget(
-      {
-        cloudName: "deruncuzv",
-        uploadPreset: "jedjicbi",
-      },
-      (error, result) => {
-        if (!error && result && result.event === "success") {
-          console.log(result.info.url);
-          updateProfilePicture(id, result.info.url, token).then((data) => {
-            setProfileData(data);
-          });
-        }
-      }
-    );
-    widget.open();
+  // const uploadNewImage = (id) => {
+  //   let widget = window.cloudinary.createUploadWidget(
+  //     {
+  //       cloudName: "deruncuzv",
+  //       uploadPreset: "jedjicbi",
+  //     },
+  //     (error, result) => {
+  //       if (!error && result && result.event === "success") {
+  //         console.log(result.info.url);
+  //         updateProfilePicture(id, result.info.url, token).then((data) => {
+  //           setProfileData(data);
+  //         });
+  //       }
+  //     }
+  //   );
+  //   widget.open();
+  // };
+  const changeProfilePicture = (id, url) => {
+    ReactGA.event({
+      category: "Profile",
+      action: `Clicked ${url}`,
+      label: "ProfileButton",
+    });
+    updateProfilePicture(id, url, token).then((data) => {
+      setProfileData(data);
+    });
+    // let randomImage = arrayOfImages[Math.floor(Math.random() * 6)];
+    // updateProfilePicture(id, randomImage, token).then((data) => {
+    //   setProfileData(data);
+    // });
   };
   const fetchUser = async () => {
     try {
@@ -62,6 +82,12 @@ export default function ProfilePage() {
   }, [token]);
 
   const handleProfileDelete = (id) => {
+    ReactGA.event({
+      category: "Profile",
+      action: `Deleted Profile`,
+      label: "ProfileButton",
+    });
+
     removeProfile(id, token).then((data) => {
       setProfileData(data);
     });
@@ -79,7 +105,10 @@ export default function ProfilePage() {
             profileData.userData.length > 0 &&
             profileData.userData.map((data, index) => (
               <ProfileTiles
-                uploadNewImage={uploadNewImage}
+                key={index}
+                arrayOfImages={arrayOfImages}
+                changeProfilePicture={changeProfilePicture}
+                // uploadNewImage={uploadNewImage}
                 handleProfileDelete={handleProfileDelete}
                 profileData={data}
               />

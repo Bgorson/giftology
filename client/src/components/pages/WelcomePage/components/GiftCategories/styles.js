@@ -26,8 +26,15 @@ gap:20px;
      }
 `;
 export const Image = styles.img`
-width:100%;
+width:355px;
+height:355px;
+
+object-fit:cover;
+@media (max-width: 768px) {
+    width:100%;
+     }
 `;
+
 export const HeaderText = styles.h4`
 font-size:20px;
 margin:24px 0 8px 24px;
@@ -43,6 +50,7 @@ margin:auto;
 background:white;
 display:flex;
 flex-direction:column;
+cursor:pointer;
 
 
 `;

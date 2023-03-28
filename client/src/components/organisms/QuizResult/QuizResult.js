@@ -17,6 +17,7 @@ export default function QuizResult(props) {
       category: "Quiz Results",
       action: "Finished Quiz",
     });
+    localStorage.setItem("preSelect", "");
   }, []);
 
   const [productResults, setProductResults] = React.useState(null);

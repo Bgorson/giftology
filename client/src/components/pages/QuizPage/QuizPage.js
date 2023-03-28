@@ -16,7 +16,6 @@ const Quiz = () => {
   const [answers, setAnswers] = useState({});
   const [isForCoworkers, setIsForCoworkers] = useState(false);
   const [isCoworker, setIsCoworker] = useState(false);
-  console.log("Answers", answers);
 
   const [isForSelf, setIsForSelf] = useState(false);
   const [quizAge, setQuizAge] = useState(0);

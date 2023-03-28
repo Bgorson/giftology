@@ -6,6 +6,7 @@ import styled from "styled-components";
 import { UserContext } from "../../../context/UserContext";
 import ReactGA from "react-ga";
 import ScrollDialog from "../../molecules/ProductModal";
+
 const ProductGrid = styled.div`
   max-width: 1250px;
 
@@ -50,7 +51,12 @@ export default function FavoritesPage() {
   };
 
   const [productResults, setProductResults] = React.useState(null);
-
+  useEffect(() => {
+    ReactGA.event({
+      category: "Favorites Page",
+      action: "Visited Favorites Page",
+    });
+  }, []);
   useEffect(() => {
     if (token) {
       const productPromise = Promise.resolve(getFavorites(quizId, token));

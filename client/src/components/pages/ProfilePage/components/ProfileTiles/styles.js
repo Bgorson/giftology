@@ -9,6 +9,7 @@ display: flex;
 flex-direction: column;
 justify-content: space-between;
 text-align: center;
+position: ;
 
 `;
 export const ImageWrapper = styles.div`
@@ -23,16 +24,7 @@ max-width: 380x;
 width:100%;
 
 object-fit: cover;
-:hover{
-    opacity:0.5;
-    filter:blur(2px);
-}
-${(props) =>
-  props.imageHovered &&
-  css`
-    opacity: 0.5;
-    filter: blur(2px);
-  `}
+
 
 `;
 export const UpdateProfileContainer = styles.div`
@@ -43,14 +35,7 @@ position: absolute;
 display:none;
 top: 50%; 
 right: 35%;
-:hover{
-    display:block;
-}
-${(props) =>
-  props.imageHovered &&
-  css`
-    display: block;
-  `}
+
 
 
 `;
@@ -105,4 +90,33 @@ ${(props) =>
 export const Icon = styles.img`
 width: 13px;
 height: 16px;
+`;
+export const NextArrow = styles.button`
+position: absolute;
+top: 40%;
+right: -7%;
+transform: translateY(-50%);
+background-color: transparent;
+border: none;
+cursor: pointer;
+rotate: 90deg;
+@media(max-width: 768px){
+    display:none;
+}
+
+`;
+export const PreviousArrow = styles.button`
+position: absolute;
+top: 40%;
+left: -7%;
+transform: translateY(-50%);
+background-color: transparent;
+border: none;
+cursor: pointer;
+rotate: -90deg;
+@media(max-width: 768px){
+  display:none;
+}
+
+
 `;

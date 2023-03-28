@@ -15,6 +15,8 @@ import {
   UpdateProfileContainer,
   UpdateProfileText,
   ImageWrapper,
+  NextArrow,
+  PreviousArrow,
 } from "./styles";
 import { useHistory } from "react-router";
 
@@ -24,11 +26,15 @@ import { coworkerTagMap } from "../../../../../utils/coworkerTagMap";
 import viewPastQuiz from "../../../../../viewPastQuiz.png";
 import delete_profile from "../../../../../delete_profile.svg";
 import upload_icon from "../../../../../upload_icon.svg";
+import Arrow from "../../../../../arrow.png";
+import ReactGA from "react-ga";
 
 export default function ProfileTiles({
   profileData,
   handleProfileDelete,
   uploadNewImage,
+  changeProfilePicture,
+  arrayOfImages,
 }) {
   const [imageHovered, setImageHovered] = useState(false);
   const history = useHistory();
@@ -57,6 +63,12 @@ export default function ProfileTiles({
     setImageHovered(false);
   };
   const navigateToQuizPage = (data) => {
+    ReactGA.event({
+      category: "Profile",
+      action: `Navigated to quiz from profile, ${data.name}`,
+      label: "ProfileButton",
+    });
+
     localStorage.setItem("quizResults", JSON.stringify(data));
     localStorage.setItem("quizId", JSON.stringify(profileData.id));
 
@@ -79,28 +91,53 @@ export default function ProfileTiles({
       return "Name Not Entered";
     }
   }
+  const changeImage = (direction) => {
+    ReactGA.event({
+      category: "Profile",
+      action: `Changed profile image, ${name}`,
+      label: "ProfileButton",
+    });
+
+    if (direction === "next") {
+      const index = arrayOfImages.findIndex((image) => image === createAccount);
+      if (index === arrayOfImages.length - 1) {
+        changeProfilePicture(id, arrayOfImages[0]);
+      } else {
+        changeProfilePicture(id, arrayOfImages[index + 1]);
+      }
+    } else {
+      const index = arrayOfImages.findIndex((image) => image === createAccount);
+      if (index === 0) {
+        changeProfilePicture(id, arrayOfImages[arrayOfImages.length - 1]);
+      } else {
+        changeProfilePicture(id, arrayOfImages[index - 1]);
+      }
+    }
+  };
   return (
     <Container>
       <ImageWrapper>
+        <NextArrow onClick={() => changeImage("next")}>
+          <img src={Arrow} />
+        </NextArrow>
+        <PreviousArrow onClick={() => changeImage("previous")}>
+          <img src={Arrow} />
+        </PreviousArrow>
         <Image
           imageHovered={imageHovered}
           onMouseEnter={onHover}
           onMouseLeave={onLeave}
-          onClick={() => {
-            uploadNewImage(id);
-          }}
+          onClick={() => changeImage("next")}
           src={createAccount || profile_test}
         />
         <UpdateProfileContainer
-          onClick={() => {
-            uploadNewImage(id);
-          }}
+          onClick={() => changeImage("next")}
           onMouseEnter={onHover}
           onMouseLeave={onLeave}
           imageHovered={imageHovered}
         >
           <UpdateProfileImage src={upload_icon} />
-          <UpdateProfileText>Update Profile</UpdateProfileText>
+          <UpdateProfileText>Change Profile Picture</UpdateProfileText>
         </UpdateProfileContainer>
       </ImageWrapper>
 

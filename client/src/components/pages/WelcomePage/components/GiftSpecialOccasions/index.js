@@ -22,18 +22,27 @@ import personalized_tile from "../../../../../personalized_tile.png";
 import self_care_tile from "../../../../../self_care_tile.png";
 import checkmark from "../../../../../checkmark.svg";
 import { UserContext } from "../../../../../context/UserContext";
+import ReactGA from "react-ga";
 
 const clientId =
   "1009874905788-4eotoe38h0ppnmuv672ng5nccvd2sce0.apps.googleusercontent.com";
 export default function GiftSpecialOccasions() {
   let history = useHistory();
   const routeChange = () => {
+    ReactGA.event({
+      category: "User",
+      action: "Clicked on Take the Quiz from Home Page",
+    });
     let path = `/quiz`;
     history.push(path);
   };
   const { loggedIn } = useContext(UserContext);
 
   const onSuccess = async (res) => {
+    ReactGA.event({
+      category: "User",
+      action: "Clicked on Make an Account from Home Page",
+    });
     const response = await loginUser(res.tokenId);
     loggedIn({ token: response.token, email: response.user.email });
     localStorage.setItem("userEmail", response.user.email);

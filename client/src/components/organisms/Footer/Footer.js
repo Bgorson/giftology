@@ -28,19 +28,74 @@ export default function FooterComponent() {
       postToMailingList("unknown", email);
     }
   };
-
+  const startQuiz = (quizData) => {
+    localStorage.setItem("preSelect", JSON.stringify(quizData));
+    window.location.href = "/quiz";
+  };
   return (
     <Footer>
       <Menu>
         <MenuItem>
           <MenuHeader>Catalog</MenuHeader>
           <MenuGrid grid={true}>
-            <MenuLink to="/catalog">Personalized Gifts</MenuLink>
-            <MenuLink to="/catalog">Romantic Gifts</MenuLink>
-            <MenuLink to="/catalog">Experience Gifts</MenuLink>
-            <MenuLink to="/catalog">Jewelry</MenuLink>
-            <MenuLink to="/catalog">Date-night gifts</MenuLink>
-            <MenuLink to="/catalog">Self-Care gifts</MenuLink>
+            <MenuLink
+              onClick={() =>
+                startQuiz({
+                  hobbies: "artsAndCrafts",
+                  tags: ["artsy", "creative", "quirky"],
+                })
+              }
+            >
+              The Day Dreamer
+            </MenuLink>
+            <MenuLink
+              onClick={() =>
+                startQuiz({
+                  tags: ["delicious"],
+                  additionalTags: ["tea", "coffee"],
+                })
+              }
+            >
+              Sampler Packs
+            </MenuLink>
+            <MenuLink
+              onClick={() =>
+                startQuiz({
+                  additionalTags: ["cats", "dogs"],
+                })
+              }
+            >
+              Animal Lovers
+            </MenuLink>
+            <MenuLink
+              onClick={() =>
+                startQuiz({
+                  hobbies: "camping",
+                  additionalTags: ["outdoors", "travel"],
+                })
+              }
+            >
+              Adventurers
+            </MenuLink>
+            <MenuLink
+              onClick={() =>
+                startQuiz({
+                  hobbies: ["homeChef", "mixology"],
+                })
+              }
+            >
+              Entertainers
+            </MenuLink>
+            <MenuLink
+              onClick={() =>
+                startQuiz({
+                  tags: ["eco-friendly"],
+                  additionalTags: ["bathAndBody", "homeDecor"],
+                })
+              }
+            >
+              Self-Care
+            </MenuLink>
           </MenuGrid>
         </MenuItem>
 

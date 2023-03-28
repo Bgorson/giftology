@@ -16,10 +16,15 @@ import {
   HeroImage,
   Ellipse,
 } from "./styles";
+import ReactGA from "react-ga";
 
 export default function WelcomePage() {
   let history = useHistory();
   const routeChange = (route, queryParams) => {
+    ReactGA.event({
+      category: "User",
+      action: "Clicked on Take the Quiz from Home Page",
+    });
     let path = `/${route}${queryParams ? `?${queryParams}` : ""}`;
     history.push(path);
   };

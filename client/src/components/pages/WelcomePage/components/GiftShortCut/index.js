@@ -6,6 +6,7 @@ import {
   Container,
   CallToActionContainer,
 } from "./styles";
+import ReactGA from "react-ga";
 
 export default function GiftShortCut({ routeChange }) {
   return (
@@ -15,6 +16,10 @@ export default function GiftShortCut({ routeChange }) {
         <ShortCutCollection>
           <ShortCut
             onClick={() => {
+              ReactGA.event({
+                category: "User-ShortCut",
+                action: "Clicked on the Relative category",
+              });
               routeChange("quiz/name", "relative");
             }}
           >
@@ -23,6 +28,10 @@ export default function GiftShortCut({ routeChange }) {
 
           <ShortCut
             onClick={() => {
+              ReactGA.event({
+                category: "User-ShortCut",
+                action: "Clicked on the Coworker category",
+              });
               routeChange("quiz/howMany", "coworker");
             }}
           >
@@ -30,6 +39,10 @@ export default function GiftShortCut({ routeChange }) {
           </ShortCut>
           <ShortCut
             onClick={() => {
+              ReactGA.event({
+                category: "User-ShortCut",
+                action: "Clicked on the Myself category",
+              });
               routeChange("quiz/name", "myself");
             }}
           >
@@ -37,6 +50,10 @@ export default function GiftShortCut({ routeChange }) {
           </ShortCut>
           <ShortCut
             onClick={() => {
+              ReactGA.event({
+                category: "User-ShortCut",
+                action: "Clicked on the Friend category",
+              });
               routeChange("quiz/name", "friend");
             }}
           >
