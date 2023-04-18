@@ -135,6 +135,7 @@ export default function ProductCard({
               <FlavorText variant="body2" color="text.secondary">
                 ${product.productBasePrice}
               </FlavorText>
+              <FlavorText>Click To Learn More</FlavorText>
               {showScore && <FlavorText>SCORE:{product.score}</FlavorText>}
               {/* <FlavorText variant="body2" color="text.secondary">
                 {`Tags: ${tags}`}

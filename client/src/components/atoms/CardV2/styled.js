@@ -10,7 +10,7 @@ export const FlavorText = styled.p`
 export const CardContainer = styled.div`
   color: black;
   position: relative;
-  height: 500px;
+  height: 510px;
 
   cursor: pointer;
   color: black;
