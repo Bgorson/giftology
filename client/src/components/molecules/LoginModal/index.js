@@ -1,7 +1,8 @@
-import * as React from "react";
+import { useEffect } from "react";
 import Dialog from "@mui/material/Dialog";
 import Login from "../LoginButton";
 import CloseIcon from "../../../close.svg";
+import ReactGA from "react-ga";
 import {
   TextContainer,
   DesktopWrapper,
@@ -11,6 +12,12 @@ import {
 
 export default function LoginModal(props) {
   const { handleClose, open } = props;
+  useEffect(() => {
+    ReactGA.event({
+      category: "Login Modal",
+      action: "Login Modal Opened",
+    });
+  }, []);
   return (
     <Dialog
       disableScrollLock={true}
