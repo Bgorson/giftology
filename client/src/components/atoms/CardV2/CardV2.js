@@ -1,5 +1,6 @@
-import * as React from "react";
+import { useState, useContext } from "react";
 import Typography from "@mui/material/Typography";
+import LoginModal from "../../molecules/LoginModal";
 import {
   CardContainer,
   FlavorText,
@@ -24,7 +25,14 @@ export default function ProductCard({
   isFavorite,
   quizId,
 }) {
-  const { token } = React.useContext(UserContext);
+  const { token } = useContext(UserContext);
+  const [isOpen, setIsOpen] = useState(false);
+  const handleClickOpen = () => {
+    setIsOpen(true);
+  };
+  const handleClose = () => {
+    setIsOpen(false);
+  };
   const handleAddToFavorites = (product, quizId) => {
     if (isFavorite || filled) {
       removeFavorites(product, quizId, token);
@@ -34,7 +42,7 @@ export default function ProductCard({
       setFilled(true);
     }
   };
-  const [filled, setFilled] = React.useState(isFavorite);
+  const [filled, setFilled] = useState(isFavorite);
   let tags = [...product.tags_display];
   tags.forEach((tag, index) => {
     if (tag === null || tag === "null" || tag === "Null") {
@@ -85,19 +93,31 @@ export default function ProductCard({
   return (
     product && (
       <div>
+        {isOpen && (
+          <LoginModal
+            open={isOpen}
+            handleClickOpen={handleClickOpen}
+            handleClose={handleClose}
+          />
+        )}
         <CardContainer
           data-id={product.score}
           onClick={() => handleCardClick(product, isHighlighted)}
         >
-          {token && (
+          {
             <FavoriteContainer
               onClick={(e) => {
-                e.stopPropagation(), handleAddToFavorites(product, quizId);
+                e.stopPropagation();
+                if (token) {
+                  handleAddToFavorites(product, quizId);
+                } else {
+                  setIsOpen(true);
+                }
               }}
             >
               <AddToFavorites filled={filled} />
             </FavoriteContainer>
-          )}
+          }
           <ImageWrapper>
             <Image alt={product.productName} src={finalImage} />
           </ImageWrapper>

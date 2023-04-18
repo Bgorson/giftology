@@ -1,6 +1,8 @@
 import React, { useContext } from "react";
 import styled from "styled-components";
 import { GoogleLogin } from "react-google-login";
+import GoogleButton from "react-google-button";
+
 import { loginUser } from "../../../api/login";
 const clientId =
   "1009874905788-4eotoe38h0ppnmuv672ng5nccvd2sce0.apps.googleusercontent.com";
@@ -25,7 +27,7 @@ const CustomButton = styled.a`
   }
 `;
 
-function Login({ modalAction }) {
+function Login({ modalAction, renderButton }) {
   const { loggedIn } = useContext(UserContext);
 
   const onSuccess = async (res) => {
@@ -50,9 +52,13 @@ function Login({ modalAction }) {
         onSuccess={onSuccess}
         onFailure={onFailure}
         cookiePolicy={"single_host_origin"}
-        render={(renderProps) => (
-          <CustomButton onClick={renderProps.onClick}>Login</CustomButton>
-        )}
+        render={(renderProps) =>
+          renderButton ? (
+            <GoogleButton onClick={renderProps.onClick} />
+          ) : (
+            <CustomButton onClick={renderProps.onClick}>Login</CustomButton>
+          )
+        }
       />
     </div>
   );

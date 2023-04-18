@@ -1,5 +1,6 @@
-import * as React from "react";
+import { useState, useEffect, useContext } from "react";
 import Dialog from "@mui/material/Dialog";
+import LoginModal from "../LoginModal";
 import DialogActions from "@mui/material/DialogActions";
 import CloseIcon from "../../../close.svg";
 import DialogContent from "@mui/material/DialogContent";
@@ -27,10 +28,16 @@ import ReactGA from "react-ga";
 
 export default function ScrollDialog(props) {
   const { product, handleClose, quizId } = props;
-  const [scroll, setScroll] = React.useState("paper");
-  const { token } = React.useContext(UserContext);
-
-  const [parsedLabText, setParsedLabText] = React.useState(null);
+  const [scroll, setScroll] = useState("paper");
+  const { token } = useContext(UserContext);
+  const [isOpen, setIsOpen] = useState(false);
+  const handleClickOpen = () => {
+    setIsOpen(true);
+  };
+  const handleModalClose = () => {
+    setIsOpen(false);
+  };
+  const [parsedLabText, setParsedLabText] = useState(null);
   let tags = [...product.tags_display];
   tags.forEach((tag, index) => {
     if (tag === null || tag === "null" || tag === "Null") {
@@ -105,7 +112,7 @@ export default function ScrollDialog(props) {
     return newText;
   };
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (product?.labResults) {
       // If there are links- parse them
       let parse = extractLinks(product.labResults);
@@ -139,6 +146,13 @@ export default function ScrollDialog(props) {
         aria-labelledby="scroll-dialog-title"
         aria-describedby="scroll-dialog-description"
       >
+        {isOpen && (
+          <LoginModal
+            open={isOpen}
+            handleClickOpen={handleClickOpen}
+            handleClose={handleModalClose}
+          />
+        )}
         <ModalClose onClick={() => handleClose()} src={CloseIcon} />
 
         {/* <DialogTitle id="scroll-dialog-title">{product.productName}</DialogTitle> */}
@@ -189,8 +203,11 @@ export default function ScrollDialog(props) {
                   </FancyButton>
                 </a>
                 <FancyButton
-                  disabled={!token}
-                  onClick={() => addFavorites(product, quizId, token)}
+                  onClick={() =>
+                    token
+                      ? addFavorites(product, quizId, token)
+                      : setIsOpen(true)
+                  }
                 >
                   Add to Wishlist
                 </FancyButton>
@@ -246,8 +263,11 @@ export default function ScrollDialog(props) {
                   </FancyButton>
                 </a>
                 <FancyButton
-                  disabled={!token}
-                  onClick={() => addFavorites(product, quizId, token)}
+                  onClick={() =>
+                    token
+                      ? addFavorites(product, quizId, token)
+                      : setIsOpen(true)
+                  }
                 >
                   Add to Wishlist
                 </FancyButton>

@@ -22,7 +22,13 @@ export default function ProductPage() {
   const queryParams = new URLSearchParams(location.search);
   const quizId = queryParams.get("quizId");
   const { token } = React.useContext(UserContext);
-
+  const [isOpen, setIsOpen] = useState(false);
+  const handleClickOpen = () => {
+    setIsOpen(true);
+  };
+  const handleClose = () => {
+    setIsOpen(false);
+  };
   const [product, setProduct] = useState();
   const [tags, setTags] = useState();
   const [error, setError] = useState(false);
@@ -118,6 +124,13 @@ export default function ProductPage() {
   }, []);
   return product ? (
     <ProductContainer>
+      {isOpen && (
+        <LoginModal
+          open={isOpen}
+          handleClickOpen={handleClickOpen}
+          handleClose={handleClose}
+        />
+      )}
       <Image src={product.directImageSrc} />
 
       <TextContainer>
@@ -150,10 +163,11 @@ export default function ProductPage() {
               Visit Retailer
             </FancyButton>
           </a>
-          {quizId && token && (
+          {quizId && (
             <FancyButton
-              disabled={!token}
-              onClick={() => addFavorites(product, quizId, token)}
+              onClick={() =>
+                token ? addFavorites(product, quizId, token) : setIsOpen(true)
+              }
             >
               Add to Wishlist
             </FancyButton>

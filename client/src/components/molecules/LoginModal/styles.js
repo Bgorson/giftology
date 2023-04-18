@@ -3,6 +3,7 @@ import styled from "styled-components";
 export const TextContainer = styled.div`
   display: flex;
   flex-direction: column;
+  align-items: center;
   gap: 1em;
   font-size: 16px;
   margin-left: 2em;
@@ -29,7 +30,9 @@ export const ProductTags = styled.div``;
 export const Button = styled.button``;
 
 export const DesktopWrapper = styled.div`
-  display: block;
+  display: flex;
+  padding: 20px;
+  flex-direction: column;
 `;
 
 export const ProductDescriptionHeading = styled.h2`
@@ -69,8 +72,7 @@ export const ModalClose = styled.img`
   width: 20px;
   height: 20px;
   cursor: pointer;
-  margin-left: auto;
-  align-self: center;
+  align-self: end;
 `;
 export const ModalHeading = styled.div`
   display: flex;
