@@ -1,27 +1,41 @@
 const { default: axios } = require("axios");
 const axiosThrottle = require("axios-request-throttle");
+const https = require("https");
+const agent = new https.Agent({
+  rejectUnauthorized: false,
+});
 axiosThrottle.use(axios, { requestsPerSecond: 15 });
 
 require("dotenv").config();
 
 const apiKey = process.env.ETSY;
-//turn this into a get function that works
-//To test, get this activated on a route
-// The logic being if the  website is Etsy- run it through the etst fetcher and add it as a property of the products
-const getEstyProduct = async (listingID) => {
+
+const getEtsyProduct = async (listingID) => {
   try {
-    return await axios.get(
-      `https://openapi.etsy.com/v2/listings/${listingID}?api_key=${apiKey}&includes=MainImage`
+    const response = await axios.get(
+      `https://api.etsy.com/v3/application/listings/${listingID}&includes=images`,
+      {
+        httpsAgent: agent,
+        headers: {
+          "x-api-key": `${apiKey}`,
+        },
+      }
     );
+    return response.data;
   } catch (error) {
     console.error(error);
+    return null;
   }
 };
 
 const getImage = async (id) => {
-  const product = await getEstyProduct(id);
-  if (product?.data?.results[0].MainImage) {
-    return product.data.results[0].MainImage.url_fullxfull;
-  } else console.log("Not found");
+  const product = await getEtsyProduct(id);
+  if (product && product.images && product.images[0]) {
+    return product.images[0].url_fullxfull;
+  } else {
+    console.log("Not found");
+    return null;
+  }
 };
+
 module.exports = getImage;
