@@ -12,6 +12,12 @@ import {
 
 export default function LoginModal(props) {
   const { handleClose, open } = props;
+
+  const modalAction = () => {
+    //reload page
+    window.location.reload();
+    handleClose();
+  };
   useEffect(() => {
     ReactGA.event({
       category: "Login Modal",
@@ -30,7 +36,7 @@ export default function LoginModal(props) {
         <ModalClose onClick={() => handleClose()} src={CloseIcon} />
         <TextContainer>
           <ModalHeading>Login to save your favorites!</ModalHeading>
-          <Login renderButton={true} modalAction={handleClose} />
+          <Login renderButton={true} modalAction={modalAction} />
         </TextContainer>
       </DesktopWrapper>
     </Dialog>
