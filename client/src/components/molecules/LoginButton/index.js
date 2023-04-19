@@ -34,6 +34,9 @@ function Login({ modalAction, renderButton }) {
     const response = await loginUser(res.tokenId);
     loggedIn({ token: response.token, email: response.user.email });
     localStorage.setItem("userEmail", response.user.email);
+    if (window.location.pathname === "/quiz/results") {
+      window.location.reload();
+    }
 
     if (modalAction) {
       modalAction();
