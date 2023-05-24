@@ -14,6 +14,7 @@ import Portal from "../../pages/Portal";
 import Product from "../../pages/Portal/Product";
 import Navigation from "../../organisms/Navigation";
 import Footer from "../../organisms/Footer";
+import DemoPage from "../../pages/DemoPage";
 
 import { Container, MainContainer } from "./styles";
 import "./index.css";
@@ -36,6 +37,7 @@ export default function Main() {
           <Route path="/feedback" component={FeedbackPage} />
           <Route path="/about" component={AboutPage} />
           <Route path="/profile" component={ProfilePage} />
+          <Route path="/demopage" component={DemoPage} />
           <Route
             path="/favorites/:quizId"
             render={(props) => <FavoritesPage {...props} />}
