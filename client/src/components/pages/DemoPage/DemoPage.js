@@ -120,7 +120,11 @@ export default function DemoPage() {
             e.preventDefault();
             postGPT(prompt).then((res) => {
               setIsLoading(false);
-              setResponse(res);
+              if (res) {
+                setResponse(res);
+              } else {
+                setResponse({ message: { content: "No response from API" } });
+              }
             });
           }}
         >

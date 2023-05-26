@@ -12,26 +12,30 @@ const postGPT = async ({ who, name, age, occasion, hobbies, type, tags }) => {
     ", "
   )} for ${occasion}. Output it in this format: [Product Name] (ID: [Product ID]) - [Product Description]`;
 
-  const configuration = new Configuration({
-    apiKey: process.env.OPENAI_API_KEY,
-  });
-  const openai = new OpenAIApi(configuration);
+  try {
+    const configuration = new Configuration({
+      apiKey: process.env.OPENAI_API_KEY,
+    });
+    const openai = new OpenAIApi(configuration);
 
-  const completion = await openai.createChatCompletion(
-    {
-      model: "gpt-3.5-turbo",
-      messages: [
-        { role: "user", content: "I'm trying to pick out a perfect gift" },
-      ],
-      messages: [{ role: "user", content: prompt }],
-    },
-    {
-      httpsAgent: agent,
-      headers: {
-        "Content-Type": "application/json",
+    const completion = await openai.createChatCompletion(
+      {
+        model: "gpt-3.5-turbo",
+        messages: [
+          { role: "user", content: "I'm trying to pick out a perfect gift" },
+        ],
+        messages: [{ role: "user", content: prompt }],
       },
-    }
-  );
-  return completion.data.choices[0];
+      {
+        httpsAgent: agent,
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    return completion.data.choices[0];
+  } catch (err) {
+    return err;
+  }
 };
 module.exports = postGPT;
