@@ -5,7 +5,7 @@ const agent = new https.Agent({
 });
 
 const postGPT = async ({ who, name, age, occasion, hobbies, type, tags }) => {
-  const prompt = `Give me a list of 5 Amazon Products and their IDs that would be a good gift for this kind of person:
+  const prompt = `Give me a list of 6 Amazon Products and their IDs that would be a good gift for this kind of person:
   between the ages of ${age}  and likes ${hobbies.join(
     ", "
   )}, and is ${type.join(", ")}, and likes ${tags.join(
