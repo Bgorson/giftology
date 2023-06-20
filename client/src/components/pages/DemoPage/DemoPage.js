@@ -37,6 +37,11 @@ export default function DemoPage() {
   const [response, setResponse] = useState("");
   const [isLoading, setIsLoading] = React.useState(false);
 
+  const handleFetchGPTResults = ({ moreLikeThis, lessLikeThis }) => {
+    console.log("Get more like this", moreLikeThis);
+    console.log("Get less like this", lessLikeThis);
+    return postGPT({ moreLikeThis, lessLikeThis });
+  };
   const typeMap = [
     { message: "Essential", value: "essentials" },
     { message: "Interesting and Fun", value: "interestingAndFun" },
@@ -160,7 +165,10 @@ export default function DemoPage() {
         {queryLoading ? (
           <h1>Loading...</h1>
         ) : (
-          <ProductSwipeContainer data={data} />
+          <ProductSwipeContainer
+            handleFetchGPTResults={handleFetchGPTResults}
+            data={data}
+          />
         )}
       </div>
     </>

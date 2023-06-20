@@ -1,5 +1,5 @@
 import TinderCard from "react-tinder-card";
-import React, { useState, useRef, useMemo } from "react";
+import React, { useState, useRef, useMemo, useEffect } from "react";
 import { Audio } from "react-loader-spinner";
 import styled, { keyframes } from "styled-components";
 
@@ -44,10 +44,27 @@ const InfoText = styled.h2`
   animation-duration: 800ms;
 `;
 
-function ProductSwipeContainer({ data }) {
+function ProductSwipeContainer({ data: originalData, handleFetchGPTResults }) {
+  const [data, setData] = useState(originalData);
+  console.log("OG", originalData);
   const [currentIndex, setCurrentIndex] = useState(data.length - 1);
   const [lastDirection, setLastDirection] = useState();
-
+  const [isFetching, setIsFetching] = useState(false);
+  const [moreLikeThis, setMoreLikeThis] = useState([]);
+  const [lessLikeThis, setLessLikeThis] = useState([]);
+  const formatGPTResponse = (res) => {
+    const responseTemplate = {
+      productName: "",
+      directImageSrc: "",
+      productUrl: "",
+      productDescription: "",
+      productPrice: "",
+      productRating: "",
+      productReviews: "",
+      productCategory: "",
+      productID: "",
+    };
+  };
   // used for outOfFrame closure
   const currentIndexRef = useRef(currentIndex);
 
@@ -64,12 +81,27 @@ function ProductSwipeContainer({ data }) {
     currentIndexRef.current = val;
   };
 
-  const canGoBack = currentIndex < data.length - 1;
+  // const canGoBack = currentIndex < data.length - 1;
 
   const canSwipe = currentIndex >= 0;
 
   // set last direction and decrease current index
   const swiped = (direction, nameToDelete, index) => {
+    console.log(currentIndex);
+    console.log("swiped", direction);
+    if (direction === "left") {
+      setLessLikeThis([...lessLikeThis, nameToDelete]);
+    } else if (direction === "right") {
+      setMoreLikeThis([...moreLikeThis, nameToDelete]);
+    }
+    if (currentIndex < 50 && !isFetching) {
+      setIsFetching(true);
+      handleFetchGPTResults({ moreLikeThis, lessLikeThis }).then((res) => {
+        console.log("res", res);
+        setData([...data, ...res]);
+        setIsFetching(false);
+      });
+    }
     setLastDirection(direction);
     updateCurrentIndex(index - 1);
   };
@@ -87,14 +119,6 @@ function ProductSwipeContainer({ data }) {
     if (canSwipe && currentIndex < data.length) {
       await childRefs[currentIndex].current.swipe(dir); // Swipe the card!
     }
-  };
-
-  // increase current index and show card
-  const goBack = async () => {
-    if (!canGoBack) return;
-    const newIndex = currentIndex + 1;
-    updateCurrentIndex(newIndex);
-    await childRefs[newIndex].current.restoreCard();
   };
 
   return (
@@ -131,12 +155,12 @@ function ProductSwipeContainer({ data }) {
           >
             Swipe left!
           </button>
-          <button
+          {/* <button
             style={{ backgroundColor: !canGoBack && "#c3c4d3" }}
             onClick={() => goBack()}
           >
             Undo swipe!
-          </button>
+          </button> */}
           <button
             style={{ backgroundColor: !canSwipe && "#c3c4d3" }}
             onClick={() => swipe("right")}
