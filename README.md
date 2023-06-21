@@ -16,3 +16,12 @@ If duplicate quiz detected, ask user if they want to create a new quiz or update
 Add heart icon so user can favorite products. When a product is favorited, make a put request to add it to the array for that quiz section
 
 Once I'm able to add and remove favorites, have a button to show all the favorites of a quiz. Make a route that receives the ID of the quiz and returns all the favorites of that quiz
+
+
+TODO:
+Build out the tinder style swipe feature for the products
+This is fed by 10 matching products from the quiz
+Once thsoe 10 come in- make the 10 requests from Chat GPT
+Once 10 responses come in (likes or dislikes)- record them 
+Send a request based off those 10 responses
+Loop it!
