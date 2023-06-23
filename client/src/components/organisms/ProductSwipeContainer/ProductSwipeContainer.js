@@ -1,4 +1,3 @@
-import TinderCard from "react-tinder-card";
 import React, { useState, useRef, useMemo, useEffect } from "react";
 import { Audio } from "react-loader-spinner";
 import styled, { keyframes } from "styled-components";
@@ -8,33 +7,24 @@ const CardContainer = styled.div`
   max-width: 260px;
   height: 300px;
 `;
-const Card = styled.div`
-  position: relative;
-  background-color: #fff;
-  color: salmon;
-  font-size: 20px;
-  width: 80vw;
-  max-width: 260px;
-  height: 300px;
-
-  background-size: cover;
-  background-position: center;
-  background-image: url(${(props) => props.url});
-`;
-
-const StyledTinderCard = styled(TinderCard)`
-  position: absolute;
-`;
 const popUpAnimation = keyframes`
-  0%   { transform: scale(1,1) }
-  10%  { transform: scale(1.1,1.1) }
-  30%  { transform: scale(.9,.9) }
-  50%  { transform: scale(1,1) }
-  57%  { transform: scale(1,1) }
-  64%  { transform: scale(1,1) }
-  100% { transform: scale(1,1) }
+0% {
+  transform: translateX(0);
+  opacity: 1;
+}
+100% {
+  transform: translateX(100%);
+  opacity: 0;
+}
 }
 `;
+
+const StyledTinderCard = styled.div`
+  animation: ${(props) => (props.animate && popUpAnimation) || "none"};
+  animation-duration: 800ms;
+  position: absolute;
+`;
+
 const InfoText = styled.h2`
   width: 100%;
   justify-content: center;
@@ -46,7 +36,8 @@ const InfoText = styled.h2`
 
 function ProductSwipeContainer({ data: originalData, handleFetchGPTResults }) {
   const [data, setData] = useState(originalData);
-  console.log("OG", originalData);
+  const [animateStates, setAnimateStates] = useState([]);
+
   const [currentIndex, setCurrentIndex] = useState(data.length - 1);
   const [lastDirection, setLastDirection] = useState();
   const [isFetching, setIsFetching] = useState(false);
@@ -66,20 +57,6 @@ function ProductSwipeContainer({ data: originalData, handleFetchGPTResults }) {
     };
   };
   // used for outOfFrame closure
-  const currentIndexRef = useRef(currentIndex);
-
-  const childRefs = useMemo(
-    () =>
-      Array(data.length)
-        .fill(0)
-        .map((i) => React.createRef()),
-    []
-  );
-
-  const updateCurrentIndex = (val) => {
-    setCurrentIndex(val);
-    currentIndexRef.current = val;
-  };
 
   // const canGoBack = currentIndex < data.length - 1;
 
@@ -96,29 +73,29 @@ function ProductSwipeContainer({ data: originalData, handleFetchGPTResults }) {
     }
     if (currentIndex < 50 && !isFetching) {
       setIsFetching(true);
+      setMoreLikeThis([]);
+      setLessLikeThis([]);
       handleFetchGPTResults({ moreLikeThis, lessLikeThis }).then((res) => {
-        console.log("res", res);
-        setData([...data, ...res]);
+        setData(res.concat(data));
+        // set index to previous index plus the length of the new data
+        // setCurrentIndex(currentIndex + res.length);
+        // setData([...data, ...res]);
         setIsFetching(false);
       });
     }
     setLastDirection(direction);
-    updateCurrentIndex(index - 1);
+    setCurrentIndex(index - 1);
   };
 
-  const outOfFrame = (name, idx) => {
-    console.log(`${name} (${idx}) left the screen!`, currentIndexRef.current);
-    // handle the case in which go back is pressed before card goes outOfFrame
-    currentIndexRef.current >= idx && childRefs[idx].current.restoreCard();
-    // TODO: when quickly swipe and restore multiple times the same card,
-    // it happens multiple outOfFrame events are queued and the card disappear
-    // during latest swipes. Only the last outOfFrame event should be considered valid
+  const swipe = async (dir, currentIndex) => {
+    console.log("Swiped this card: ", data[currentIndex]);
+    console.log("in this direction: ", dir);
   };
 
-  const swipe = async (dir) => {
-    if (canSwipe && currentIndex < data.length) {
-      await childRefs[currentIndex].current.swipe(dir); // Swipe the card!
-    }
+  const handleButtonClick = (index) => {
+    const updatedStates = [...animateStates];
+    updatedStates[index] = true;
+    setAnimateStates(updatedStates);
   };
 
   return (
@@ -126,18 +103,11 @@ function ProductSwipeContainer({ data: originalData, handleFetchGPTResults }) {
       <>
         <h1>React Tinder Card</h1>
         <CardContainer>
-          {data.map((character, index) => (
+          {data.map((product) => (
             <StyledTinderCard
-              ref={childRefs[index]}
-              className="swipe"
-              key={character.productName}
-              onSwipe={(dir) => swiped(dir, character.productName, index)}
-              onCardLeftScreen={() => outOfFrame(character.productName, index)}
-            >
-              <Card url={character.directImageSrc}>
-                <h3>{character.productName}</h3>
-              </Card>
-            </StyledTinderCard>
+              animate={animateStates[index]}
+              key={product.productName}
+            />
           ))}
         </CardContainer>
 

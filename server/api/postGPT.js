@@ -53,8 +53,11 @@ const postGPT = async ({
       }
     );
     if (moreLikeThis.length > 0 || lessLikeThis.length > 0) {
-      console.log("completion", completion);
-      return completion.data.choices[0].message.content.split(",").trim();
+      console.log(completion.data.choices[0].message.content.split(","));
+      const response = completion.data.choices[0].message.content.split(",");
+      return response.map((item) => {
+        return item.trim();
+      });
     } else {
       return completion.data.choices[0];
     }

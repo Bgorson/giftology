@@ -37,10 +37,15 @@ export default function DemoPage() {
   const [response, setResponse] = useState("");
   const [isLoading, setIsLoading] = React.useState(false);
 
-  const handleFetchGPTResults = ({ moreLikeThis, lessLikeThis }) => {
+  const handleFetchGPTResults = async ({ moreLikeThis, lessLikeThis }) => {
     console.log("Get more like this", moreLikeThis);
     console.log("Get less like this", lessLikeThis);
-    return postGPT({ moreLikeThis, lessLikeThis });
+    const { products, gptChoices } = await postGPT({
+      moreLikeThis,
+      lessLikeThis,
+    });
+    console.log("What chatGPT wants to send", gptChoices);
+    return products;
   };
   const typeMap = [
     { message: "Essential", value: "essentials" },
