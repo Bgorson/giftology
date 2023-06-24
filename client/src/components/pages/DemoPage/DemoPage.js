@@ -4,49 +4,17 @@ import { hobbyMap } from "../../../utils/hobbyMap";
 import { Audio } from "react-loader-spinner";
 import { postAllQuizResults } from "../../../api/allQuiz";
 import ProductSwipeContainer from "../../organisms/ProductSwipeContainer/ProductSwipeContainer";
-import { useQuery } from "@tanstack/react-query";
 
 export default function DemoPage() {
-  const quizPayload = {
-    who: "myself",
-    name: "someone",
-    age: "21-44",
-    occasion: "holiday",
-    hobbies: ["healthAndWellness", "outdoorGames"],
-    type: ["thoughtful"],
-    tags: ["efficient", "handy", "nerdy", "tea", "homeDecor", "dogs"],
-  };
-
-  const fetchExampleData = (quizPayload) => async () => {
-    const response = await postAllQuizResults(quizPayload, "");
-    return response.products;
-  };
-  const {
-    data,
-    isLoading: queryLoading,
-    error,
-  } = useQuery(["exampleQuery"], fetchExampleData(quizPayload));
-
-  const [prompt, setPrompt] = useState({
-    age: "",
-    occassion: "",
-    hobbies: [],
-    type: [],
-    tags: [],
-  });
-  const [response, setResponse] = useState("");
-  const [isLoading, setIsLoading] = React.useState(false);
-
-  const handleFetchGPTResults = async ({ moreLikeThis, lessLikeThis }) => {
-    console.log("Get more like this", moreLikeThis);
-    console.log("Get less like this", lessLikeThis);
-    const { products, gptChoices } = await postGPT({
-      moreLikeThis,
-      lessLikeThis,
-    });
-    console.log("What chatGPT wants to send", gptChoices);
-    return products;
-  };
+  // const quizPayload = {
+  //   who: "myself",
+  //   name: "someone",
+  //   age: "21-44",
+  //   occasion: "holiday",
+  //   hobbies: ["healthAndWellness", "outdoorGames"],
+  //   type: ["thoughtful"],
+  //   tags: ["efficient", "handy", "nerdy", "tea", "homeDecor", "dogs"],
+  // };
   const typeMap = [
     { message: "Essential", value: "essentials" },
     { message: "Interesting and Fun", value: "interestingAndFun" },
@@ -67,6 +35,96 @@ export default function DemoPage() {
     { message: "Nerdy", value: "nerdy" },
     { message: "Trendy", value: "trendy" },
   ];
+  const handleQueryFetch = async () => {
+    setIsLoading(true);
+    setResponse("");
+
+    try {
+      const quizPayload = { ...prompt };
+
+      quizPayload.hobbies = quizPayload.hobbies.map((hobby) => {
+        const mapItem = hobbyMap.find((item) => item.message === hobby);
+        return mapItem ? mapItem.value : null;
+      });
+
+      quizPayload.type = quizPayload.type.map((type) => {
+        const mapItem = typeMap.find((item) => item.message === type);
+        return mapItem ? mapItem.value : null;
+      });
+
+      quizPayload.tags = quizPayload.tags.map((tag) => {
+        const mapItem = tagsMap.find((item) => item.message === tag);
+        return mapItem ? mapItem.value : null;
+      });
+
+      const response = await postAllQuizResults(quizPayload, "");
+
+      if (response) {
+        setResponse(response.products);
+      } else {
+        setResponse({
+          message: { content: "No response from API" },
+        });
+      }
+
+      setIsLoading(false);
+    } catch (error) {
+      console.log("Error:", error.message);
+      setIsLoading(false);
+      setResponse({
+        message: { content: "Error occurred while fetching data" },
+      });
+    }
+  };
+
+  const [prompt, setPrompt] = useState({
+    who: "myself",
+    age: "",
+    occassion: "any",
+    hobbies: [],
+    type: [],
+    tags: [],
+  });
+
+  const [response, setResponse] = useState("");
+  const [isLoading, setIsLoading] = React.useState(false);
+  const [requestController, setRequestController] = useState(null); // State for the AbortController
+
+  useEffect(() => {
+    // Cleanup function to cancel the request when the component unmounts
+    return () => {
+      if (requestController) {
+        requestController.abort();
+      }
+    };
+  }, []);
+
+  const handleFetchGPTResults = async ({ moreLikeThis, lessLikeThis }) => {
+    const abortController = new AbortController();
+    setRequestController(abortController); // Update the AbortController instance in state
+
+    try {
+      const { products, gptChoices } = await postGPT(
+        {
+          moreLikeThis,
+          lessLikeThis,
+        },
+        abortController.signal
+      );
+      const transformedArray = gptChoices.map((productName) => {
+        return { productName: productName.replace(/\s*\.$/, "") };
+      });
+      return transformedArray;
+    } catch (error) {
+      if (error.name === "AbortError") {
+        console.log("Request canceled:", error.message);
+      } else {
+        console.log("Error:", error.message);
+      }
+      throw error; // Rethrow the error to propagate it to the caller if needed
+    }
+  };
+
   const handleHobbiesChange = (e) => {
     const selectedOptions = Array.from(
       e.target.selectedOptions,
@@ -109,12 +167,12 @@ export default function DemoPage() {
             setPrompt({ ...prompt, age: e.target.value });
           }}
         />
-        <label>OCCASSION</label>
+        {/* <label>OCCASSION</label>
         <input
           onChange={(e) => {
             setPrompt({ ...prompt, occassion: e.target.value });
           }}
-        />
+        /> */}
         <label>HOBBIES</label>
         <select multiple onChange={handleHobbiesChange}>
           {hobbyMap.map((hobby) => (
@@ -140,10 +198,10 @@ export default function DemoPage() {
           ))}
         </select>
 
-        <h2>Response</h2>
+        {/* <h2>Response</h2>
         {response && (
           <p style={{ whiteSpace: "pre-line" }}>{response.message.content}</p>
-        )}
+        )} */}
         {isLoading ? (
           <Audio />
         ) : (
@@ -152,14 +210,7 @@ export default function DemoPage() {
               setIsLoading(true);
               setResponse("");
               e.preventDefault();
-              postGPT(prompt).then((res) => {
-                setIsLoading(false);
-                if (res) {
-                  setResponse(res);
-                } else {
-                  setResponse({ message: { content: "No response from API" } });
-                }
-              });
+              handleQueryFetch();
             }}
           >
             SUBMIT
@@ -167,12 +218,14 @@ export default function DemoPage() {
         )}
       </div>
       <div style={{ width: "100%", display: "flex", justifyContent: "center" }}>
-        {queryLoading ? (
+        {isLoading ? (
           <h1>Loading...</h1>
         ) : (
           <ProductSwipeContainer
             handleFetchGPTResults={handleFetchGPTResults}
-            data={data}
+            data={response}
+            requestController={requestController}
+            setRequestController={setRequestController}
           />
         )}
       </div>

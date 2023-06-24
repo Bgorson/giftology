@@ -74,6 +74,7 @@ const calculateScoreForAll = async (filteredProducts, quizResults) => {
       hArray = [];
     }
     let oArray = product.occasion;
+
     if (oArray == null) {
       oArray = [];
     }
@@ -97,11 +98,13 @@ const calculateScoreForAll = async (filteredProducts, quizResults) => {
     }
 
     // SCORING OCCASIONS
-    if (lowerCaseOc.includes(quizResults.occasion.toLowerCase())) {
-      // console.log('product name', product.productName);
-      // console.log('matching hobby', product.productName);
+    if (lowerCaseOc.length > 0) {
+      if (lowerCaseOc.includes(quizResults?.occasion?.toLowerCase())) {
+        // console.log('product name', product.productName);
+        // console.log('matching hobby', product.productName);
 
-      score = score + 1;
+        score = score + 1;
+      }
     }
 
     // SCORING TAGS

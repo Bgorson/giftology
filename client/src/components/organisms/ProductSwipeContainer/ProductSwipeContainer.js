@@ -3,8 +3,7 @@ import { Audio } from "react-loader-spinner";
 import styled, { keyframes } from "styled-components";
 
 const CardContainer = styled.div`
-  width: 90vw;
-  max-width: 260px;
+  max-width: 300px;
   height: 300px;
 `;
 const popUpAnimation = keyframes`
@@ -18,8 +17,13 @@ const popUpAnimation = keyframes`
 }
 }
 `;
-
+const ButtonContainer = styled.div`
+  margin-top: 5em;
+`;
 const StyledTinderCard = styled.div`
+  background-color: white;
+  width: 300px;
+  height: 300px;
   animation: ${(props) => (props.animate && popUpAnimation) || "none"};
   animation-duration: 800ms;
   position: absolute;
@@ -34,12 +38,29 @@ const InfoText = styled.h2`
   animation-duration: 800ms;
 `;
 
-function ProductSwipeContainer({ data: originalData, handleFetchGPTResults }) {
-  const [data, setData] = useState(originalData);
-  const [animateStates, setAnimateStates] = useState([]);
+const MainImage = styled.img`
+  width: 100%;
+  height: 100%;
+  width: 300px;
+  height: 300px;
+  object-fit: cover;
+`;
 
+function ProductSwipeContainer({
+  data: originalData,
+  handleFetchGPTResults,
+  requestController,
+}) {
+  console.log("CONTROLLER", requestController);
+
+  const [data, setData] = useState(originalData);
+  const [altData, setAltData] = useState([]);
+  console.log("data", data);
+  console.log("alt", altData);
+  const [activeStack, setActiveStack] = useState("main");
+  const [animateStates, setAnimateStates] = useState([]);
+  const [totalSwiped, setTotalSwiped] = useState(0);
   const [currentIndex, setCurrentIndex] = useState(data.length - 1);
-  const [lastDirection, setLastDirection] = useState();
   const [isFetching, setIsFetching] = useState(false);
   const [moreLikeThis, setMoreLikeThis] = useState([]);
   const [lessLikeThis, setLessLikeThis] = useState([]);
@@ -56,46 +77,71 @@ function ProductSwipeContainer({ data: originalData, handleFetchGPTResults }) {
       productID: "",
     };
   };
-  // used for outOfFrame closure
+  useEffect(() => {
+    if (data.length <= 0 && activeStack === "main") {
+      setActiveStack("alt");
+      setCurrentIndex(altData.length - 1);
+    } else if (altData.length <= 0 && activeStack === "alt") {
+      setActiveStack("main");
+      setCurrentIndex(data.length - 1);
+    }
+    console.log("ACTIVE STACK", activeStack);
+  }, [data, altData]);
 
   // const canGoBack = currentIndex < data.length - 1;
 
   const canSwipe = currentIndex >= 0;
 
-  // set last direction and decrease current index
-  const swiped = (direction, nameToDelete, index) => {
-    console.log(currentIndex);
-    console.log("swiped", direction);
-    if (direction === "left") {
-      setLessLikeThis([...lessLikeThis, nameToDelete]);
-    } else if (direction === "right") {
-      setMoreLikeThis([...moreLikeThis, nameToDelete]);
+  const swipe = async (dir, currentIndex, stack) => {
+    setTotalSwiped(totalSwiped + 1);
+    if (stack === "main") {
+      if (dir === "left") {
+        setLessLikeThis([...lessLikeThis, data[currentIndex]?.productName]);
+      } else if (dir === "right") {
+        setMoreLikeThis([...moreLikeThis, data[currentIndex]?.productName]);
+      }
+      const updatedData = data.slice(0, -1);
+      setData(updatedData);
+      setCurrentIndex(currentIndex - 1);
+      if (data.length <= 1) {
+        requestController.abort();
+        return;
+      }
+      if (totalSwiped > 5 && !isFetching) {
+        setTotalSwiped(0);
+        setIsFetching(true);
+        setMoreLikeThis([]);
+        setLessLikeThis([]);
+        handleFetchGPTResults({ moreLikeThis, lessLikeThis }).then((res) => {
+          setAltData([...altData, ...res]);
+          setIsFetching(false);
+        });
+      }
+    } else if (stack === "alt") {
+      if (dir === "left") {
+        setLessLikeThis([...lessLikeThis, altData[currentIndex]?.productName]);
+      } else if (dir === "right") {
+        setMoreLikeThis([...moreLikeThis, altData[currentIndex]?.productName]);
+      }
+      //remove last item from altData
+      const updatedAltData = altData.slice(0, -1);
+      setAltData(updatedAltData);
+      setCurrentIndex(currentIndex - 1);
+      if (altData.length <= 1) {
+        requestController.abort();
+        return;
+      }
+      if (totalSwiped > 5 && !isFetching) {
+        setTotalSwiped(0);
+        setIsFetching(true);
+        setMoreLikeThis([]);
+        setLessLikeThis([]);
+        handleFetchGPTResults({ moreLikeThis, lessLikeThis }).then((res) => {
+          setData([...data, ...res]);
+          setIsFetching(false);
+        });
+      }
     }
-    if (currentIndex < 50 && !isFetching) {
-      setIsFetching(true);
-      setMoreLikeThis([]);
-      setLessLikeThis([]);
-      handleFetchGPTResults({ moreLikeThis, lessLikeThis }).then((res) => {
-        setData(res.concat(data));
-        // set index to previous index plus the length of the new data
-        // setCurrentIndex(currentIndex + res.length);
-        // setData([...data, ...res]);
-        setIsFetching(false);
-      });
-    }
-    setLastDirection(direction);
-    setCurrentIndex(index - 1);
-  };
-
-  const swipe = async (dir, currentIndex) => {
-    console.log("Swiped this card: ", data[currentIndex]);
-    console.log("in this direction: ", dir);
-  };
-
-  const handleButtonClick = (index) => {
-    const updatedStates = [...animateStates];
-    updatedStates[index] = true;
-    setAnimateStates(updatedStates);
   };
 
   return (
@@ -103,41 +149,58 @@ function ProductSwipeContainer({ data: originalData, handleFetchGPTResults }) {
       <>
         <h1>React Tinder Card</h1>
         <CardContainer>
-          {data.map((product) => (
-            <StyledTinderCard
-              animate={animateStates[index]}
-              key={product.productName}
-            />
-          ))}
+          {data.length > 0 &&
+            activeStack === "main" &&
+            data.map((product, index) => (
+              <StyledTinderCard
+                animate={animateStates[index]}
+                key={product.productName}
+              >
+                {product.directImageSrc ? (
+                  <>
+                    <p>{product.productName}</p>
+
+                    <MainImage src={product.directImageSrc} />
+                  </>
+                ) : (
+                  <p>{product.productName}</p>
+                )}
+              </StyledTinderCard>
+            ))}
+          {altData.length > 0 &&
+            activeStack === "alt" &&
+            altData.map((product, index) => (
+              <StyledTinderCard
+                animate={animateStates[index]}
+                key={`${product.productName} ${Math.random()}`}
+              >
+                {product.directImageSrc ? (
+                  <>
+                    <p>{product.productName}</p>
+
+                    <MainImage src={product.directImageSrc} />
+                  </>
+                ) : (
+                  <p>{product.productName}</p>
+                )}
+              </StyledTinderCard>
+            ))}
         </CardContainer>
 
-        {lastDirection ? (
-          <InfoText>You swiped {lastDirection}</InfoText>
-        ) : (
-          <InfoText>
-            Swipe a card or press a button to get Restore Card button visible!
-          </InfoText>
-        )}
-        <div className="buttons">
+        <ButtonContainer>
           <button
             style={{ backgroundColor: !canSwipe && "#c3c4d3" }}
-            onClick={() => swipe("left")}
+            onClick={() => swipe("left", currentIndex, activeStack)}
           >
             Swipe left!
           </button>
-          {/* <button
-            style={{ backgroundColor: !canGoBack && "#c3c4d3" }}
-            onClick={() => goBack()}
-          >
-            Undo swipe!
-          </button> */}
           <button
             style={{ backgroundColor: !canSwipe && "#c3c4d3" }}
-            onClick={() => swipe("right")}
+            onClick={() => swipe("right", currentIndex, activeStack)}
           >
             Swipe right!
           </button>
-        </div>
+        </ButtonContainer>
       </>
     </div>
   );

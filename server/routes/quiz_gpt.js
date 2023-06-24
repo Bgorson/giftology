@@ -36,7 +36,7 @@ const productMock = [
 router.post("/", async (req, res) => {
   try {
     const chatGPTResponse = await postGPT(req.body);
-    const getAmazonAffiliateLinkResponse = await getAffiliateInformation();
+    // const getAmazonAffiliateLinkResponse = await getAffiliateInformation();
     res.send({ products: productMock, gptChoices: chatGPTResponse });
   } catch (err) {
     res.send("err");
