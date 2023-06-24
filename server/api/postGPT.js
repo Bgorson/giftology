@@ -14,18 +14,22 @@ const postGPT = async ({
   tags,
   moreLikeThis,
   lessLikeThis,
+  isFirstMessage,
 }) => {
   let prompt = "";
   if (moreLikeThis.length > 0 || lessLikeThis.length > 0) {
-    prompt = `Based off my last request and that my user likes ${hobbies.join(
-      ", "
-    )}, likes ${tags.join(
-      ", "
-    )} and is between the ages of ${age}, give me more products like ${moreLikeThis.join(
+    const intro = isFirstMessage
+      ? `Remember that I'm trying to get a gift for someone who likes ${hobbies.join(
+          ", "
+        )} and is ${type.join(", ")} and likes ${tags.join(
+          ", "
+        )} for ${occasion}. Please `
+      : `Based off my last request and what I told you to remember, `;
+    prompt = `${intro}, give me more products like ${moreLikeThis.join(
       ","
     )}, and less products like ${lessLikeThis.join(
       ","
-    )}. Please show me just the product name seperated by commas`;
+    )}. Please show me just the product name seperated by commas like this: "Product, Product, Product". No repeats from earlier`;
   } else {
     prompt = `Give me a list of 6 Amazon Products and their IDs that would be a good gift for this kind of person:
     between the ages of ${age}  and likes ${hobbies.join(
@@ -34,6 +38,7 @@ const postGPT = async ({
       ", "
     )} for ${occasion}. Output it in this format: [Product Name] (ID: [Product ID]) - [Product Description]`;
   }
+  console.log("PROMMPT", prompt);
 
   try {
     const configuration = new Configuration({

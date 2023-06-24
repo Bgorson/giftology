@@ -88,6 +88,7 @@ export default function DemoPage() {
     type: [],
     tags: [],
   });
+  const [isFirstMessage, setIsFirstMessage] = useState(true);
 
   const [response, setResponse] = useState("");
   const [isLoading, setIsLoading] = React.useState(false);
@@ -105,16 +106,18 @@ export default function DemoPage() {
   const handleFetchGPTResults = async ({ moreLikeThis, lessLikeThis }) => {
     const abortController = new AbortController();
     setRequestController(abortController); // Update the AbortController instance in state
-
     try {
       const { products, gptChoices } = await postGPT(
         {
           moreLikeThis,
           lessLikeThis,
+          isFirstMessage,
           ...prompt,
         },
         abortController.signal
       );
+      setIsFirstMessage(false);
+
       const transformedArray = gptChoices.map((productName) => {
         return { productName: productName.replace(/\s*\.$/, "") };
       });
