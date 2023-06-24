@@ -17,7 +17,11 @@ const postGPT = async ({
 }) => {
   let prompt = "";
   if (moreLikeThis.length > 0 || lessLikeThis.length > 0) {
-    prompt = `Based off my last request, give me more products like ${moreLikeThis.join(
+    prompt = `Based off my last request and that my user likes ${hobbies.join(
+      ", "
+    )}, likes ${tags.join(
+      ", "
+    )} and is between the ages of ${age}, give me more products like ${moreLikeThis.join(
       ","
     )}, and less products like ${lessLikeThis.join(
       ","

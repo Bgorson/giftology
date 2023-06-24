@@ -111,6 +111,7 @@ export default function DemoPage() {
         {
           moreLikeThis,
           lessLikeThis,
+          ...prompt,
         },
         abortController.signal
       );

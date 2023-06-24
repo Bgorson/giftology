@@ -113,9 +113,9 @@ function ProductSwipeContainer({
       }
     } else if (stack === "alt") {
       if (dir === "left") {
-        setLessLikeThis([...lessLikeThis, product.productName]);
+        setLessLikeThis([...lessLikeThis, currentProduct]);
       } else if (dir === "right") {
-        setMoreLikeThis([...moreLikeThis, product.productName]);
+        setMoreLikeThis([...moreLikeThis, currentProduct]);
       }
       //remove last item from altData
       // const updatedAltData = altData.slice(0, -1);
