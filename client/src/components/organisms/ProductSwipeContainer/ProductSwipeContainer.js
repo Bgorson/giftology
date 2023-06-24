@@ -17,32 +17,26 @@ const popUpAnimation = keyframes`
 }
 }
 `;
-const ButtonContainer = styled.div`
-  margin-top: 5em;
-`;
+const ButtonContainer = styled.div``;
 const StyledTinderCard = styled.div`
   background-color: white;
   width: 300px;
   height: 300px;
+  max-width: 300px;
+  max-height: 300px;
   animation: ${(props) => (props.animate && popUpAnimation) || "none"};
   animation-duration: 800ms;
   position: absolute;
 `;
 
 const InfoText = styled.h2`
-  width: 100%;
-  justify-content: center;
-  display: flex;
-  color: red;
-  animation-name: popUpAnimation;
-  animation-duration: 800ms;
+  margin: 0;
 `;
 
 const MainImage = styled.img`
   width: 100%;
-  height: 100%;
-  width: 300px;
-  height: 300px;
+  height: 200px;
+  max-height: 200px;
   object-fit: cover;
 `;
 
@@ -92,22 +86,22 @@ function ProductSwipeContainer({
 
   const canSwipe = currentIndex >= 0;
 
-  const swipe = async (dir, currentIndex, stack) => {
+  const swipe = async (dir, currentProduct, stack) => {
     setTotalSwiped(totalSwiped + 1);
     if (stack === "main") {
       if (dir === "left") {
-        setLessLikeThis([...lessLikeThis, data[currentIndex]?.productName]);
+        setLessLikeThis([...lessLikeThis, currentProduct]);
       } else if (dir === "right") {
-        setMoreLikeThis([...moreLikeThis, data[currentIndex]?.productName]);
+        setMoreLikeThis([...moreLikeThis, currentProduct]);
       }
-      const updatedData = data.slice(0, -1);
-      setData(updatedData);
+      // const updatedData = data.slice(0, -1);
+      setData(data.slice(1));
       setCurrentIndex(currentIndex - 1);
       if (data.length <= 1) {
         requestController.abort();
         return;
       }
-      if (totalSwiped > 5 && !isFetching) {
+      if (totalSwiped > 2 && !isFetching) {
         setTotalSwiped(0);
         setIsFetching(true);
         setMoreLikeThis([]);
@@ -119,19 +113,19 @@ function ProductSwipeContainer({
       }
     } else if (stack === "alt") {
       if (dir === "left") {
-        setLessLikeThis([...lessLikeThis, altData[currentIndex]?.productName]);
+        setLessLikeThis([...lessLikeThis, product.productName]);
       } else if (dir === "right") {
-        setMoreLikeThis([...moreLikeThis, altData[currentIndex]?.productName]);
+        setMoreLikeThis([...moreLikeThis, product.productName]);
       }
       //remove last item from altData
-      const updatedAltData = altData.slice(0, -1);
-      setAltData(updatedAltData);
+      // const updatedAltData = altData.slice(0, -1);
+      setAltData(altData.slice(1));
       setCurrentIndex(currentIndex - 1);
       if (altData.length <= 1) {
         requestController.abort();
         return;
       }
-      if (totalSwiped > 5 && !isFetching) {
+      if (totalSwiped > 2 && !isFetching) {
         setTotalSwiped(0);
         setIsFetching(true);
         setMoreLikeThis([]);
@@ -151,56 +145,83 @@ function ProductSwipeContainer({
         <CardContainer>
           {data.length > 0 &&
             activeStack === "main" &&
-            data.map((product, index) => (
-              <StyledTinderCard
-                animate={animateStates[index]}
-                key={product.productName}
-              >
-                {product.directImageSrc ? (
-                  <>
-                    <p>{product.productName}</p>
+            data
+              .map((product, index) => (
+                <StyledTinderCard
+                  animate={animateStates[index]}
+                  key={product.productName}
+                >
+                  {product.directImageSrc ? (
+                    <>
+                      <p>{product.productName}</p>
 
-                    <MainImage src={product.directImageSrc} />
-                  </>
-                ) : (
-                  <p>{product.productName}</p>
-                )}
-              </StyledTinderCard>
-            ))}
+                      <MainImage src={product.directImageSrc} />
+                    </>
+                  ) : (
+                    <p>{product.productName}</p>
+                  )}
+
+                  <ButtonContainer>
+                    <button
+                      style={{ backgroundColor: !canSwipe && "#c3c4d3" }}
+                      onClick={() =>
+                        swipe("left", product.productName, activeStack)
+                      }
+                    >
+                      Swipe left!
+                    </button>
+                    <button
+                      style={{ backgroundColor: !canSwipe && "#c3c4d3" }}
+                      onClick={() =>
+                        swipe("right", product.productName, activeStack)
+                      }
+                    >
+                      Swipe right!
+                    </button>
+                  </ButtonContainer>
+                </StyledTinderCard>
+              ))
+              .reverse()}
           {altData.length > 0 &&
             activeStack === "alt" &&
-            altData.map((product, index) => (
-              <StyledTinderCard
-                animate={animateStates[index]}
-                key={`${product.productName} ${Math.random()}`}
-              >
-                {product.directImageSrc ? (
-                  <>
+            altData
+              .map((product, index) => (
+                <StyledTinderCard
+                  animate={animateStates[index]}
+                  key={`${product.productName} ${Math.random()}`}
+                >
+                  {product.directImageSrc ? (
+                    <>
+                      <p>{product.productName}</p>
+
+                      <MainImage src={product.directImageSrc} />
+                    </>
+                  ) : (
                     <p>{product.productName}</p>
+                  )}
 
-                    <MainImage src={product.directImageSrc} />
-                  </>
-                ) : (
-                  <p>{product.productName}</p>
-                )}
-              </StyledTinderCard>
-            ))}
+                  <ButtonContainer>
+                    <button
+                      style={{ backgroundColor: !canSwipe && "#c3c4d3" }}
+                      onClick={() =>
+                        swipe("left", product.productName, activeStack)
+                      }
+                    >
+                      Swipe left!
+                    </button>
+                    <button
+                      style={{ backgroundColor: !canSwipe && "#c3c4d3" }}
+                      onClick={() =>
+                        swipe("right", product.productName, activeStack)
+                      }
+                    >
+                      Swipe right!
+                    </button>
+                  </ButtonContainer>
+                </StyledTinderCard>
+              ))
+              .reverse()}
         </CardContainer>
-
-        <ButtonContainer>
-          <button
-            style={{ backgroundColor: !canSwipe && "#c3c4d3" }}
-            onClick={() => swipe("left", currentIndex, activeStack)}
-          >
-            Swipe left!
-          </button>
-          <button
-            style={{ backgroundColor: !canSwipe && "#c3c4d3" }}
-            onClick={() => swipe("right", currentIndex, activeStack)}
-          >
-            Swipe right!
-          </button>
-        </ButtonContainer>
       </>
     </div>
   );

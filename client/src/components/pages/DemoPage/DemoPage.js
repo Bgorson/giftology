@@ -60,7 +60,10 @@ export default function DemoPage() {
       const response = await postAllQuizResults(quizPayload, "");
 
       if (response) {
-        setResponse(response.products);
+        let topProducts = response.products.filter(
+          (product) => product.score > 0
+        );
+        setResponse(topProducts);
       } else {
         setResponse({
           message: { content: "No response from API" },
@@ -217,7 +220,14 @@ export default function DemoPage() {
           </button>
         )}
       </div>
-      <div style={{ width: "100%", display: "flex", justifyContent: "center" }}>
+      <div
+        style={{
+          width: "100%",
+          display: "flex",
+          justifyContent: "center",
+          marginBottom: "10em",
+        }}
+      >
         {isLoading ? (
           <h1>Loading...</h1>
         ) : (
