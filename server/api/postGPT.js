@@ -24,7 +24,7 @@ const postGPT = async ({
         )} and is ${type.join(", ")} and likes ${tags.join(
           ", "
         )} for ${occasion}. Please `
-      : `Based off my last request and what I told you to remember, `;
+      : `Based off my last request and what I told you to remember`;
     prompt = `${intro}, give me more products like ${moreLikeThis.join(
       ","
     )}, and less products like ${lessLikeThis.join(
@@ -45,33 +45,44 @@ const postGPT = async ({
       apiKey: process.env.OPENAI_API_KEY,
     });
     const openai = new OpenAIApi(configuration);
-
-    const completion = await openai.createChatCompletion(
-      {
-        model: "gpt-3.5-turbo",
-        messages: [
-          { role: "user", content: "I'm trying to pick out a perfect gift" },
-        ],
-        messages: [{ role: "user", content: prompt }],
-      },
-      {
-        httpsAgent: agent,
-        headers: {
-          "Content-Type": "application/json",
+    try {
+      const completion = await openai.createChatCompletion(
+        {
+          model: "gpt-3.5-turbo",
+          temperature: 0,
+          frequency_penalty: 1,
+          presence_penalty: 0.2,
+          messages: [
+            {
+              role: "system",
+              content: `The following is a conversation with an Amazon Gift Finder Bot. The bot only responds with a list of responses seperated by commas. No extra comments.`,
+            },
+            { role: "user", content: prompt },
+          ],
         },
+        {
+          httpsAgent: agent,
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      if (moreLikeThis.length > 0 || lessLikeThis.length > 0) {
+        console.log(completion.data.choices[0].message.content.split(","));
+        const response = completion.data.choices[0].message.content.split(",");
+        return response.map((item) => {
+          return item.trim();
+        });
+      } else {
+        return completion.data.choices[0];
       }
-    );
-    if (moreLikeThis.length > 0 || lessLikeThis.length > 0) {
-      console.log(completion.data.choices[0].message.content.split(","));
-      const response = completion.data.choices[0].message.content.split(",");
-      return response.map((item) => {
-        return item.trim();
-      });
-    } else {
-      return completion.data.choices[0];
+    } catch (error) {
+      console.log("Error:", error.message);
+      return null;
     }
-  } catch (err) {
-    return err;
+  } catch (error) {
+    console.log("Error:", error.message);
+    return null;
   }
 };
 module.exports = postGPT;
