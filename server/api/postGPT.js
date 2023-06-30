@@ -57,11 +57,16 @@ const postGPT = async ({
           model: "gpt-3.5-turbo",
           temperature: 0,
           frequency_penalty: 1,
-          presence_penalty: 0.2,
+          presence_penalty: 0,
           messages: [
+            // {
+            //   role: "system",
+            //   content: `The following is a conversation with an Amazon Gift Finder Bot. The bot only responds with a list of responses seperated by commas. No extra comments.`,
+            // },
             {
-              role: "system",
-              content: `The following is a conversation with an Amazon Gift Finder Bot. The bot only responds with a list of responses seperated by commas. No extra comments.`,
+              role: "user",
+              content:
+                "I am looking for a gift for someone and only want your response to be the list of product names seperated by commas with no additional information or numbers. Output it in this format: 'Product, Product, Product'",
             },
             { role: "user", content: prompt },
           ],
