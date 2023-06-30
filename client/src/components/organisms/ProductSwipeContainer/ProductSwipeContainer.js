@@ -3,8 +3,8 @@ import { Audio } from "react-loader-spinner";
 import styled, { keyframes } from "styled-components";
 
 const CardContainer = styled.div`
-  max-width: 300px;
-  height: 300px;
+  display: flex;
+  flex-wrap: wrap;
 `;
 const popUpAnimation = keyframes`
 0% {
@@ -26,7 +26,6 @@ const StyledTinderCard = styled.div`
   max-height: 300px;
   animation: ${(props) => (props.animate && popUpAnimation) || "none"};
   animation-duration: 800ms;
-  position: absolute;
 `;
 
 const InfoText = styled.h2`
@@ -81,6 +80,14 @@ function ProductSwipeContainer({
     }
     console.log("ACTIVE STACK", activeStack);
   }, [data, altData]);
+
+  useEffect(() => {
+    handleFetchGPTResults({ moreLikeThis, lessLikeThis }).then((res) => {
+      console.log("RES", res);
+      setData([...data, ...res]);
+      setIsFetching(false);
+    });
+  }, []);
 
   // const canGoBack = currentIndex < data.length - 1;
 
@@ -160,7 +167,7 @@ function ProductSwipeContainer({
                   ) : (
                     <p>{product.productName}</p>
                   )}
-
+                  {/* 
                   <ButtonContainer>
                     <button
                       style={{ backgroundColor: !canSwipe && "#c3c4d3" }}
@@ -178,7 +185,7 @@ function ProductSwipeContainer({
                     >
                       Swipe right!
                     </button>
-                  </ButtonContainer>
+                  </ButtonContainer> */}
                 </StyledTinderCard>
               ))
               .reverse()}
