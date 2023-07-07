@@ -2,6 +2,7 @@ const express = require("express");
 const postGPT = require("../api/postGPT");
 const getAffiliateInformation = require("../api/getAmazonAffiliateLink");
 const router = express.Router();
+const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
 const productMock = [
   {
@@ -36,21 +37,34 @@ const productMock = [
 router.post("/", async (req, res) => {
   try {
     const chatGPTResponse = await postGPT(req.body);
+    let affiliateResponses = [];
     // const getAmazonAffiliateLinkResponse = await getAffiliateInformation();
-    res.send({ products: productMock, gptChoices: chatGPTResponse });
-  } catch (err) {
-    res.send("err");
-  }
-});
-router.post("/amazon", async (req, res) => {
-  try {
-    const amazonResponse = await getAffiliateInformation(req.body);
+    for (const product of chatGPTResponse) {
+      affiliateResponses.push(
+        await getAffiliateInformation({ productName: product })
+      );
+      await delay(400);
+    }
+    // const singleResponse = await getAffiliateInformation({
+    //   productName: chatGPTResponse[0],
+    // });
+    // console.log("response", singleResponse);
+    // console.log("AMAZON RESPONSE", amazonResponse);
 
-    // res.send(amazonResponse);
-    res.send(productMock);
+    res.send({ gptChoices: affiliateResponses });
   } catch (err) {
     res.send("err");
   }
 });
+// router.post("/amazon", async (req, res) => {
+//   try {
+//     const amazonResponse = await getAffiliateInformation(req.body);
+
+//     res.send(amazonResponse);
+//     // res.send(productMock);
+//   } catch (err) {
+//     res.send("err");
+//   }
+// });
 
 module.exports = router;

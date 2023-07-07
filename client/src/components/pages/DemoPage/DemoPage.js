@@ -107,7 +107,7 @@ export default function DemoPage() {
     const abortController = new AbortController();
     setRequestController(abortController); // Update the AbortController instance in state
     try {
-      const { products, gptChoices } = await postGPT(
+      const { gptChoices } = await postGPT(
         {
           moreLikeThis,
           lessLikeThis,
@@ -118,10 +118,10 @@ export default function DemoPage() {
       );
       setIsFirstMessage(false);
 
-      const transformedArray = gptChoices.map((productName) => {
-        return { productName: productName.replace(/\s*\.$/, "") };
-      });
-      return transformedArray;
+      // const transformedArray = gptChoices.map((productName) => {
+      //   return { productName: productName.replace(/\s*\.$/, "") };
+      // });
+      return gptChoices;
     } catch (error) {
       if (error.name === "AbortError") {
         console.log("Request canceled:", error.message);

@@ -153,21 +153,25 @@ function ProductSwipeContainer({
           {data.length > 0 &&
             activeStack === "main" &&
             data
-              .map((product, index) => (
-                <StyledTinderCard
-                  animate={animateStates[index]}
-                  key={product.productName}
-                >
-                  {product.directImageSrc ? (
-                    <>
-                      <p>{product.productName}</p>
+              .map(
+                (product, index) =>
+                  product.productName && (
+                    <StyledTinderCard
+                      animate={animateStates[index]}
+                      key={product.productName}
+                    >
+                      {product.directImageSrc ? (
+                        <>
+                          <p>{product.productName}</p>
 
-                      <MainImage src={product.directImageSrc} />
-                    </>
-                  ) : (
-                    <p>{product.productName}</p>
-                  )}
-                  {/* 
+                          <a target="_blank" href={product?.link}>
+                            <MainImage src={product.directImageSrc} />
+                          </a>
+                        </>
+                      ) : (
+                        <p>{product.productName}</p>
+                      )}
+                      {/* 
                   <ButtonContainer>
                     <button
                       style={{ backgroundColor: !canSwipe && "#c3c4d3" }}
@@ -186,8 +190,9 @@ function ProductSwipeContainer({
                       Swipe right!
                     </button>
                   </ButtonContainer> */}
-                </StyledTinderCard>
-              ))
+                    </StyledTinderCard>
+                  )
+              )
               .reverse()}
           {altData.length > 0 &&
             activeStack === "alt" &&
