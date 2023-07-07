@@ -88,8 +88,7 @@ export default function DemoPage() {
     type: [],
     tags: [],
   });
-  const [isFirstMessage, setIsFirstMessage] = useState(true);
-
+  const [GPTResults, setGPTResults] = useState([]); // State for the results from the API
   const [response, setResponse] = useState("");
   const [isLoading, setIsLoading] = React.useState(false);
   const [requestController, setRequestController] = useState(null); // State for the AbortController
@@ -103,25 +102,21 @@ export default function DemoPage() {
     };
   }, []);
 
-  const handleFetchGPTResults = async ({ moreLikeThis, lessLikeThis }) => {
+  const handleFetchGPTResults = async () => {
     const abortController = new AbortController();
     setRequestController(abortController); // Update the AbortController instance in state
     try {
       const { gptChoices } = await postGPT(
         {
-          moreLikeThis,
-          lessLikeThis,
-          isFirstMessage,
           ...prompt,
         },
         abortController.signal
       );
-      setIsFirstMessage(false);
 
       // const transformedArray = gptChoices.map((productName) => {
       //   return { productName: productName.replace(/\s*\.$/, "") };
       // });
-      return gptChoices;
+      setGPTResults(gptChoices);
     } catch (error) {
       if (error.name === "AbortError") {
         console.log("Request canceled:", error.message);
@@ -218,6 +213,7 @@ export default function DemoPage() {
               setResponse("");
               e.preventDefault();
               handleQueryFetch();
+              handleFetchGPTResults();
             }}
           >
             SUBMIT
@@ -236,7 +232,7 @@ export default function DemoPage() {
           <h1>Loading...</h1>
         ) : (
           <ProductSwipeContainer
-            handleFetchGPTResults={handleFetchGPTResults}
+            GPTResults={GPTResults}
             data={response}
             requestController={requestController}
             setRequestController={setRequestController}

@@ -23,7 +23,7 @@ const getAffiliateInformation = async ({ productName }) => {
     SearchIndex: "All",
     ItemCount: 2,
     Resources: [
-      "Images.Primary.Medium",
+      "Images.Primary.Large",
       "ItemInfo.Title",
       "Offers.Listings.Price",
     ],
@@ -38,11 +38,12 @@ const getAffiliateInformation = async ({ productName }) => {
 
     return {
       productName: response.SearchResult.Items[0].ItemInfo.Title.DisplayValue,
-      directImageSrc: response.SearchResult.Items[0].Images.Primary.Medium.URL,
+      directImageSrc: response.SearchResult.Items[0].Images.Primary.Large.URL,
       link: response.SearchResult.Items[0].DetailPageURL,
+      price:
+        response.SearchResult.Items[0].Offers.Listings[0].Price.DisplayAmount,
     };
   } catch (error) {
-    console.log(error); // Handle the error.
     return error;
   }
 };
