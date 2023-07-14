@@ -34,6 +34,20 @@ export default function DemoPage() {
     { message: "Classy", value: "classy" },
     { message: "Nerdy", value: "nerdy" },
     { message: "Trendy", value: "trendy" },
+    { message: "Indoors", value: "indoors" },
+    { message: "Outdoors", value: "outdoors" },
+    { message: "Travel", value: "travel" },
+    { message: "Coffee", value: "coffee" },
+    { message: "Tea", value: "tea" },
+    { message: "Alcohol", value: "alcohol" },
+    { message: "Bath & Body", value: "bathAndBody" },
+    { message: "Home Decor", value: "homeDecor" },
+    { message: "Home Office", value: "homeOffice" },
+    { message: "Cats", value: "cats" },
+    { message: "Dogs", value: "dogs" },
+    { message: "Books", value: "books" },
+    { message: "Music", value: "music" },
+    { message: "Technology", value: "technology" },
   ];
   const handleQueryFetch = async () => {
     setIsLoading(true);
