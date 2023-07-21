@@ -17,7 +17,10 @@ import {
   ButtonContainer,
   FancyButton,
   ProductPrice,
+  CardBackContainer,
+  CardBackContentContainer,
   Tag,
+  BadgeContainer,
 } from "./styled";
 import { UserContext } from "../../../context/UserContext";
 import placeHolder from "../../../placeholder.jpeg";
@@ -157,7 +160,7 @@ export default function ProductCard({
             handleClose={handleClose}
           />
         )}
-        <ReactCardFlip isFlipped={isFlipped} flipDirection="vertical">
+        <ReactCardFlip isFlipped={isFlipped} flipDirection="horizontal">
           <CardContainer
             data-id={product.score}
             onClick={(e) => handleClick(e)}
@@ -183,7 +186,7 @@ export default function ProductCard({
 
             <CardContentContainer>
               <Typography
-                style={{ textAlign: "left" }}
+                style={{ margin: 0 }}
                 gutterBottom
                 variant="h6"
                 component="div"
@@ -194,7 +197,7 @@ export default function ProductCard({
                 <FlavorText variant="body2" color="text.secondary">
                   ${product.productBasePrice}
                 </FlavorText>
-                <FlavorText>Click To Learn More</FlavorText>
+                {/* <FlavorText>Click To Learn More</FlavorText> */}
                 {showScore && <FlavorText>SCORE:{product.score}</FlavorText>}
                 {/* <FlavorText variant="body2" color="text.secondary">
                 {`Tags: ${tags}`}
@@ -205,18 +208,62 @@ export default function ProductCard({
             {product.score}
           </Typography> */}
               {product?.product_card_banner && (
-                <Badge text={product.product_card_banner} />
+                <BadgeContainer>
+                  <Badge text={product.product_card_banner} />
+                </BadgeContainer>
               )}
             </CardContentContainer>
+            <ButtonContainer>
+              <div>
+                <FancyButton
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    if (token) {
+                      handleAddToFavorites(product, quizId);
+                    } else {
+                      setIsOpen(true);
+                    }
+                  }}
+                  // onClick={(e) =>
+                  //   e.stopPropagation() && token
+                  //     ? addFavorites(product, quizId, token)
+                  //     : setIsOpen(true)
+                  // }
+                >
+                  Add to Wishlist
+                </FancyButton>
+                <a href={product.link} target="_blank">
+                  <FancyButton
+                    isPurchase={true}
+                    onClick={() =>
+                      ReactGA.event({
+                        category: "Retailer Visited",
+                        action: product.productName,
+                        label: "Home",
+                      })
+                    }
+                  >
+                    Visit Retailer
+                  </FancyButton>
+                </a>
+              </div>
+
+              <FancyButton>Info</FancyButton>
+
+              {/* <ProductPrice>${product.productBasePrice}</ProductPrice> */}
+            </ButtonContainer>
           </CardContainer>
-          <div>
-            <div onClick={(e) => handleClick(e)}>
+          <CardBackContainer onClick={(e) => handleClick(e)}>
+            <CardBackContentContainer onClick={(e) => handleClick(e)}>
               <ProductDescriptionHeading>
                 Who do we like this for?
               </ProductDescriptionHeading>
               <ProductDescription>{product.flavorText}</ProductDescription>
               {product.labResults ? (
-                <div dangerouslySetInnerHTML={{ __html: parsedLabText }} />
+                <div
+                  style={{ fontSize: "16px" }}
+                  dangerouslySetInnerHTML={{ __html: parsedLabText }}
+                />
               ) : null}
               <ProductTags>
                 {tags &&
@@ -224,33 +271,8 @@ export default function ProductCard({
                     return <Tag key={index}>{tag}</Tag>;
                   })}
               </ProductTags>
-            </div>
-
-            <ButtonContainer>
-              <a href={product.link} target="_blank">
-                <FancyButton
-                  isPurchase={true}
-                  onClick={() =>
-                    ReactGA.event({
-                      category: "Retailer Visited",
-                      action: product.productName,
-                      label: "Home",
-                    })
-                  }
-                >
-                  Visit Retailer
-                </FancyButton>
-              </a>
-              <FancyButton
-                onClick={() =>
-                  token ? addFavorites(product, quizId, token) : setIsOpen(true)
-                }
-              >
-                Add to Wishlist
-              </FancyButton>
-              {/* <ProductPrice>${product.productBasePrice}</ProductPrice> */}
-            </ButtonContainer>
-          </div>
+            </CardBackContentContainer>
+          </CardBackContainer>
         </ReactCardFlip>
       </div>
     )
