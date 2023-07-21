@@ -172,12 +172,14 @@ export const ModalMain = styled.section`
   }
 `;
 export const ButtonContainer = styled.div`
+  width: 100%;
   display: flex;
   gap: 1em;
   flex-direction: row;
   align-items: center;
   margin-top: auto;
   padding-bottom: 2em;
+  flex-wrap: wrap;
   @media (max-width: 768px) {
     flex-direction: column;
   }

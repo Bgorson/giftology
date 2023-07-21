@@ -1,4 +1,6 @@
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
+import ReactCardFlip from "react-card-flip";
+import ReactGA from "react-ga";
 import Typography from "@mui/material/Typography";
 import LoginModal from "../../molecules/LoginModal";
 import {
@@ -9,6 +11,13 @@ import {
   SubTextContainer,
   FavoriteContainer,
   Image,
+  ProductTags,
+  ProductDescription,
+  ProductDescriptionHeading,
+  ButtonContainer,
+  FancyButton,
+  ProductPrice,
+  Tag,
 } from "./styled";
 import { UserContext } from "../../../context/UserContext";
 import placeHolder from "../../../placeholder.jpeg";
@@ -25,13 +34,61 @@ export default function ProductCard({
   isFavorite,
   quizId,
 }) {
+  const extractLinks = (str) => {
+    const regex = /~~ID=“(\d+)” text=“(.*?)”~~/g;
+    let match = regex.exec(str);
+    let links = [];
+
+    while (match !== null) {
+      let [_, url, linkText] = match;
+      links.push({ url: url, linkText: linkText });
+      match = regex.exec(str);
+    }
+
+    return links;
+  };
+
+  const createATags = (str, quizId) => {
+    const links = extractLinks(str);
+    const quizParam = quizId ? `?quizId=${quizId}` : "";
+    const aTags = links.map((link) => {
+      return `<a href=".././product/${link.url}${quizParam}" target="_blank">${link.linkText}</a>`;
+    });
+
+    return aTags;
+  };
+  const insertATags = (text, aTags) => {
+    let newText = text;
+    aTags.forEach((tag) => {
+      newText = newText.replace(/~~.*~~/, tag);
+    });
+    return newText;
+  };
   const { token } = useContext(UserContext);
   const [isOpen, setIsOpen] = useState(false);
+  const [isFlipped, setIsFlipped] = useState(false);
+  const [parsedLabText, setParsedLabText] = useState(null);
+  useEffect(() => {
+    if (product?.labResults) {
+      // If there are links- parse them
+      let parse = extractLinks(product.labResults);
+      if (parse.length > 0) {
+        let aTagCreation = createATags(product.labResults, quizId);
+        setParsedLabText(insertATags(product.labResults, aTagCreation));
+      } else {
+        setParsedLabText(product.labResults);
+      }
+    }
+  }, []);
   const handleClickOpen = () => {
     setIsOpen(true);
   };
   const handleClose = () => {
     setIsOpen(false);
+  };
+  const handleClick = (e) => {
+    // e.preventDefault();
+    setIsFlipped(!isFlipped);
   };
   const handleAddToFavorites = (product, quizId) => {
     if (isFavorite || filled) {
@@ -100,56 +157,101 @@ export default function ProductCard({
             handleClose={handleClose}
           />
         )}
-        <CardContainer
-          data-id={product.score}
-          onClick={() => handleCardClick(product, isHighlighted)}
-        >
-          {
-            <FavoriteContainer
-              onClick={(e) => {
-                e.stopPropagation();
-                if (token) {
-                  handleAddToFavorites(product, quizId);
-                } else {
-                  setIsOpen(true);
-                }
-              }}
-            >
-              <AddToFavorites filled={filled} />
-            </FavoriteContainer>
-          }
-          <ImageWrapper>
-            <Image alt={product.productName} src={finalImage} />
-          </ImageWrapper>
+        <ReactCardFlip isFlipped={isFlipped} flipDirection="vertical">
+          <CardContainer
+            data-id={product.score}
+            onClick={(e) => handleClick(e)}
+            // onClick={() => handleCardClick(product, isHighlighted)}
+          >
+            {
+              <FavoriteContainer
+                onClick={(e) => {
+                  e.stopPropagation();
+                  if (token) {
+                    handleAddToFavorites(product, quizId);
+                  } else {
+                    setIsOpen(true);
+                  }
+                }}
+              >
+                <AddToFavorites filled={filled} />
+              </FavoriteContainer>
+            }
+            <ImageWrapper>
+              <Image alt={product.productName} src={finalImage} />
+            </ImageWrapper>
 
-          <CardContentContainer>
-            <Typography
-              style={{ textAlign: "left" }}
-              gutterBottom
-              variant="h6"
-              component="div"
-            >
-              {product.productName}
-            </Typography>
-            <SubTextContainer>
-              <FlavorText variant="body2" color="text.secondary">
-                ${product.productBasePrice}
-              </FlavorText>
-              <FlavorText>Click To Learn More</FlavorText>
-              {showScore && <FlavorText>SCORE:{product.score}</FlavorText>}
-              {/* <FlavorText variant="body2" color="text.secondary">
+            <CardContentContainer>
+              <Typography
+                style={{ textAlign: "left" }}
+                gutterBottom
+                variant="h6"
+                component="div"
+              >
+                {product.productName}
+              </Typography>
+              <SubTextContainer>
+                <FlavorText variant="body2" color="text.secondary">
+                  ${product.productBasePrice}
+                </FlavorText>
+                <FlavorText>Click To Learn More</FlavorText>
+                {showScore && <FlavorText>SCORE:{product.score}</FlavorText>}
+                {/* <FlavorText variant="body2" color="text.secondary">
                 {`Tags: ${tags}`}
               </FlavorText> */}
-            </SubTextContainer>
+              </SubTextContainer>
 
-            {/* <Typography variant="body2" color="text.secondary">
+              {/* <Typography variant="body2" color="text.secondary">
             {product.score}
           </Typography> */}
-            {product?.product_card_banner && (
-              <Badge text={product.product_card_banner} />
-            )}
-          </CardContentContainer>
-        </CardContainer>
+              {product?.product_card_banner && (
+                <Badge text={product.product_card_banner} />
+              )}
+            </CardContentContainer>
+          </CardContainer>
+          <div>
+            <div onClick={(e) => handleClick(e)}>
+              <ProductDescriptionHeading>
+                Who do we like this for?
+              </ProductDescriptionHeading>
+              <ProductDescription>{product.flavorText}</ProductDescription>
+              {product.labResults ? (
+                <div dangerouslySetInnerHTML={{ __html: parsedLabText }} />
+              ) : null}
+              <ProductTags>
+                {tags &&
+                  tags.map((tag, index) => {
+                    return <Tag key={index}>{tag}</Tag>;
+                  })}
+              </ProductTags>
+            </div>
+
+            <ButtonContainer>
+              <a href={product.link} target="_blank">
+                <FancyButton
+                  isPurchase={true}
+                  onClick={() =>
+                    ReactGA.event({
+                      category: "Retailer Visited",
+                      action: product.productName,
+                      label: "Home",
+                    })
+                  }
+                >
+                  Visit Retailer
+                </FancyButton>
+              </a>
+              <FancyButton
+                onClick={() =>
+                  token ? addFavorites(product, quizId, token) : setIsOpen(true)
+                }
+              >
+                Add to Wishlist
+              </FancyButton>
+              {/* <ProductPrice>${product.productBasePrice}</ProductPrice> */}
+            </ButtonContainer>
+          </div>
+        </ReactCardFlip>
       </div>
     )
   );
