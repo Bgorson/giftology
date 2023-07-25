@@ -269,7 +269,9 @@ export default function ProductCard({
                   <div
                     style={{ fontSize: "16px" }}
                     dangerouslySetInnerHTML={{
-                      __html: parsedLabText.replace("Lab Results: ", ""),
+                      __html: parsedLabText
+                        ? parsedLabText.replace("Lab Results: ", "")
+                        : "",
                     }}
                   />
                 </>
