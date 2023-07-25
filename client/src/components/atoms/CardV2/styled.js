@@ -46,7 +46,6 @@ export const CardBackContentContainer = styled.div`
 
 export const ImageWrapper = styled.div`
   height: 350px;
-  background-color: #f5f5f5;
   @media (max-width: 768px) {
     border: none;
   }
@@ -92,35 +91,28 @@ export const ProductDescriptionHeading = styled.h2`
   font-weight: bold;
 `;
 export const ProductDescription = styled.p`
-  font-size: 18px;
+  font-size: 16px;
 `;
 export const ProductTags = styled.div`
-  display: flex;
-  padding-top: 16px;
-  flex-wrap: wrap;
-  gap: 1em;
   @media (max-width: 768px) {
     flex-direction: column;
-    padding-bottom: 2em;
   }
 `;
-export const Tag = styled.div`
-  border: 1px solid grey;
-  width: fit-content;
-  padding: 12px 20px;
+export const Tag = styled.p`
+  margin-top: 0;
 `;
 export const ButtonContainer = styled.div`
   margin: auto;
   width: 100%;
+  text-align: center;
+`;
+export const TopButtonContainer = styled.div`
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  @media (max-width: 768px) {
-    justify-content: space-between;
-  }
+  justify-content: center;
 `;
 export const FancyButton = styled.button`
   border-radius: 1.5em;
+  width: 150px;
   background-color: inherit;
   white-space: nowrap;
   margin: 10px 10px 0 0;
@@ -128,6 +120,7 @@ export const FancyButton = styled.button`
   cursor: pointer;
   padding: 6px 12px;
   font-size: 16px;
+  border: 1px solid black;
 
   &:focus {
   }
@@ -138,8 +131,6 @@ export const FancyButton = styled.button`
   }
 
   &:hover {
-    background-color: #44a2bb;
-    color: white;
   }
 
   ${(props) =>

@@ -21,6 +21,7 @@ import {
   CardBackContentContainer,
   Tag,
   BadgeContainer,
+  TopButtonContainer,
 } from "./styled";
 import { UserContext } from "../../../context/UserContext";
 import placeHolder from "../../../placeholder.jpeg";
@@ -214,10 +215,11 @@ export default function ProductCard({
               )}
             </CardContentContainer>
             <ButtonContainer>
-              <div>
+              <TopButtonContainer>
                 <FancyButton
                   onClick={(e) => {
                     e.stopPropagation();
+                    e.preventDefault();
                     if (token) {
                       handleAddToFavorites(product, quizId);
                     } else {
@@ -230,7 +232,7 @@ export default function ProductCard({
                   //     : setIsOpen(true)
                   // }
                 >
-                  Add to Wishlist
+                  {!filled ? `Add to Favorites` : `Remove Favorite`}
                 </FancyButton>
                 <a href={product.link} target="_blank">
                   <FancyButton
@@ -246,7 +248,7 @@ export default function ProductCard({
                     Visit Retailer
                   </FancyButton>
                 </a>
-              </div>
+              </TopButtonContainer>
 
               <FancyButton>Info</FancyButton>
 
@@ -260,17 +262,23 @@ export default function ProductCard({
               </ProductDescriptionHeading>
               <ProductDescription>{product.flavorText}</ProductDescription>
               {product.labResults ? (
-                <div
-                  style={{ fontSize: "16px" }}
-                  dangerouslySetInnerHTML={{ __html: parsedLabText }}
-                />
+                <>
+                  <ProductDescriptionHeading>
+                    Lab Results
+                  </ProductDescriptionHeading>
+                  <div
+                    style={{ fontSize: "16px" }}
+                    dangerouslySetInnerHTML={{
+                      __html: parsedLabText.replace("Lab Results: ", ""),
+                    }}
+                  />
+                </>
               ) : null}
-              <ProductTags>
-                {tags &&
-                  tags.map((tag, index) => {
-                    return <Tag key={index}>{tag}</Tag>;
-                  })}
-              </ProductTags>
+              <ProductDescriptionHeading>Tags</ProductDescriptionHeading>
+              {tags && <Tag>{tags.join(",")}</Tag>}
+              <ButtonContainer>
+                <FancyButton>Back</FancyButton>
+              </ButtonContainer>
             </CardBackContentContainer>
           </CardBackContainer>
         </ReactCardFlip>
