@@ -72,7 +72,7 @@ export const ProductGrid = styled.div`
   grid-gap: 2em;
   @media (max-width: 768px) {
     justify-content: center;
-    width: 75%;
+    width: 85%;
     padding: 0;
   }
   ${(props) =>

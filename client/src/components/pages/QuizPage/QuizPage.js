@@ -169,17 +169,17 @@ const Quiz = () => {
       isMulti: true,
       answers: hobbyMap,
     },
-    {
-      id: "type",
-      title: "You're looking for items that are: ",
-      questionType: ["general"],
-      isMulti: true,
-      answers: [
-        { message: "Essential", value: "essentials" },
-        { message: "Interesting and Fun", value: "interestingAndFun" },
-        { message: "Thoughtful", value: "thoughtful" },
-      ],
-    },
+    // {
+    //   id: "type",
+    //   title: "You're looking for items that are: ",
+    //   questionType: ["general"],
+    //   isMulti: true,
+    //   answers: [
+    //     { message: "Essential", value: "essentials" },
+    //     { message: "Interesting and Fun", value: "interestingAndFun" },
+    //     { message: "Thoughtful", value: "thoughtful" },
+    //   ],
+    // },
     {
       id: "tags",
       title: `Describe ${isForSelf ? "your" : "their"} personality`,

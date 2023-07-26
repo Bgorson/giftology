@@ -225,7 +225,7 @@ router.post("/allProducts", async (req, res) => {
       const minAge = parseInt(quizResults.age.split("-")[0]);
       const maxAge = parseInt(quizResults.age.split("-")[1]);
       // This is the types we want to show
-      const giftTypeArray = quizResults.type;
+      const giftTypeArray = quizResults?.type || [];
       let typeAndAgeFiltered = [];
       retriveProducts().then((allProducts) => {
         // console.log('everything', allProducts);
