@@ -109,13 +109,14 @@ export const ButtonContainer = styled.div`
 export const TopButtonContainer = styled.div`
   display: flex;
   justify-content: center;
+  gap: 5px;
 `;
 export const FancyButton = styled.button`
   border-radius: 1.5em;
   width: 150px;
   background-color: inherit;
   white-space: nowrap;
-  margin: 10px 10px 0 0;
+  margin: 10px 0 0 0;
   color: black;
   cursor: pointer;
   padding: 6px 12px;

@@ -7,8 +7,8 @@ import { Route } from "react-router-dom";
 import { hobbyMap } from "../../../utils/hobbyMap";
 import { coworkerTagMap } from "../../../utils/coworkerTagMap";
 
-const totalCoWorkerQuestions = 6;
-const totalGeneralQuestions = 9;
+const totalCoWorkerQuestions = 5;
+const totalGeneralQuestions = 7;
 
 const Quiz = () => {
   const location = useLocation();
