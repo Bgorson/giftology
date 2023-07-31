@@ -1,6 +1,8 @@
 import { useState, useContext, useEffect } from "react";
 import Typography from "@mui/material/Typography";
 import Robot from "../../../../src/robot.png";
+import ReactGA from "react-ga";
+
 import { postAmazonProductInfo } from "../../../api/postAmazonProductInfo";
 import {
   CardContainer,
@@ -24,6 +26,10 @@ export default function ProductCard({ GPTResults }) {
           const response = await postAmazonProductInfo(productName);
           if (response.status !== 429 && response.productName) {
             setAmazonProducts((prev) => [...prev, response]);
+            ReactGA.event({
+              category: "AI item Loaded",
+              action: response.productName,
+            });
           }
         } catch (error) {
           console.log(error);
@@ -36,6 +42,7 @@ export default function ProductCard({ GPTResults }) {
 
     fetchProduct();
   }, []);
+
   return amazonProducts.length >= 3 ? (
     amazonProducts.map((product, index) => (
       <CardContainer
@@ -43,6 +50,12 @@ export default function ProductCard({ GPTResults }) {
         href={product.link}
         target="_blank"
         data-id={product?.score}
+        onClick={() => {
+          ReactGA.event({
+            category: "AI item Selected",
+            action: product.productName,
+          });
+        }}
       >
         <ImageWrapper>
           <Image alt={product?.productName} src={product.directImageSrc} />
