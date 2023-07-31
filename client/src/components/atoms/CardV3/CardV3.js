@@ -17,33 +17,41 @@ import {
 
 export default function ProductCard({ GPTResults }) {
   const [amazonProducts, setAmazonProducts] = useState([]);
-
+  const [error, setError] = useState(null);
   useEffect(() => {
     const fetchProduct = async () => {
-      for (let i = 0; i < 3; i++) {
-        const productName = GPTResults[i];
-        try {
-          const response = await postAmazonProductInfo(productName);
-          if (response.status !== 429 && response.productName) {
-            setAmazonProducts((prev) => [...prev, response]);
-            ReactGA.event({
-              category: "AI item Loaded",
-              action: response.productName,
-            });
+      if (GPTResults?.length >= 3) {
+        for (let i = 0; i < 3; i++) {
+          const productName = GPTResults[i];
+          try {
+            const response = await postAmazonProductInfo(productName);
+            if (response.status !== 429 && response.productName) {
+              setAmazonProducts((prev) => [...prev, response]);
+              ReactGA.event({
+                category: "AI item Loaded",
+                action: response.productName,
+              });
+            }
+          } catch (error) {
+            console.log(error);
           }
-        } catch (error) {
-          console.log(error);
-        }
 
-        // Introduce a delay between each request (e.g., 1 second)
-        await new Promise((resolve) => setTimeout(resolve, 1100));
+          // Introduce a delay between each request (e.g., 1 second)
+          await new Promise((resolve) => setTimeout(resolve, 1100));
+        }
+      } else {
+        setError("No AI Results found");
       }
     };
 
     fetchProduct();
   }, []);
 
-  return amazonProducts.length >= 3 ? (
+  useEffect(() => {
+    console.log(amazonProducts);
+  }, [amazonProducts]);
+
+  return amazonProducts?.length >= 3 ? (
     amazonProducts.map((product, index) => (
       <CardContainer
         key={index + product.productName}
@@ -79,6 +87,29 @@ export default function ProductCard({ GPTResults }) {
         </CardContentContainer>
       </CardContainer>
     ))
+  ) : error ? (
+    <CardContainer>
+      <ImageWrapper>
+        <Image alt={"AI loading"} src={Robot} />
+      </ImageWrapper>
+
+      <CardContentContainer>
+        <Typography
+          style={{ textAlign: "left" }}
+          gutterBottom
+          variant="h6"
+          component="div"
+        >
+          {error ? error : "AI is loading..."}
+        </Typography>
+        <SubTextContainer>
+          <FlavorText variant="body2" color="text.secondary">
+            {error ? error : "Our AI is calculating a gift for you"}
+          </FlavorText>
+          {/* <FlavorText>Click here to Purchase</FlavorText> */}
+        </SubTextContainer>
+      </CardContentContainer>
+    </CardContainer>
   ) : (
     <>
       <CardContainer>
@@ -93,11 +124,11 @@ export default function ProductCard({ GPTResults }) {
             variant="h6"
             component="div"
           >
-            {"AI is loading..."}
+            {error ? error : "AI is loading..."}
           </Typography>
           <SubTextContainer>
             <FlavorText variant="body2" color="text.secondary">
-              {"Our AI is calculating a gift for you"}
+              {error ? error : "Our AI is calculating a gift for you"}
             </FlavorText>
             {/* <FlavorText>Click here to Purchase</FlavorText> */}
           </SubTextContainer>
@@ -115,11 +146,11 @@ export default function ProductCard({ GPTResults }) {
             variant="h6"
             component="div"
           >
-            {"AI is loading..."}
+            {error ? error : "AI is loading..."}
           </Typography>
           <SubTextContainer>
             <FlavorText variant="body2" color="text.secondary">
-              {"Our AI is calculating a gift for you"}
+              {error ? error : "Our AI is calculating a gift for you"}
             </FlavorText>
             {/* <FlavorText>Click here to Purchase</FlavorText> */}
           </SubTextContainer>
@@ -137,11 +168,11 @@ export default function ProductCard({ GPTResults }) {
             variant="h6"
             component="div"
           >
-            {"AI is loading..."}
+            {error ? error : "AI is loading..."}
           </Typography>
           <SubTextContainer>
             <FlavorText variant="body2" color="text.secondary">
-              {"Our AI is calculating a gift for you"}
+              {error ? error : "Our AI is calculating a gift for you"}
             </FlavorText>
             {/* <FlavorText>Click here to Purchase</FlavorText> */}
           </SubTextContainer>
