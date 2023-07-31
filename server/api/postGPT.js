@@ -17,11 +17,11 @@ const postGPT = async ({
   isFirstMessage,
 }) => {
   let prompt = "";
-  prompt = `List 50 Amazon products that would be a good gift for someone between the ages of ${age}, who likes  ${
-    hobbies ? hobbies.join(`, `) : ""
-  }. Include gifts that are related to their interests in  ${
-    hobbies ? hobbies.join(`, `) : ""
-  }. Make sure the list includes a variety of products beyond just one hobby and ideally involve all of their interests. Output the list in this format: 'Product, Product, Product' No Headers of what category.
+  prompt = `List 3 special Amazon products that would be a good gift for someone ${
+    tags ? `that is ${tags.join(", ")}` : ""
+  } between the ages of ${age}, who likes  ${
+    hobbies ? hobbies.join(`, `) : "anything"
+  }. Make sure the list includes a variety of products beyond just one hobby and ideally incorporates all of their interests. If you can't think of anything- just pick 3 unique gifts. Output the list in this format: 'Product, Product, Product' No Headers of what category.
   `;
 
   console.log("PROMMPT", prompt);
