@@ -18,12 +18,12 @@ import {
 export default function ProductCard({ GPTResults }) {
   const [amazonProducts, setAmazonProducts] = useState([]);
   const [error, setError] = useState(null);
-  const [loading, setLoading] = useState(false);
+  const [firstLoad, setFirstLoad] = useState(false);
   console.log("to search for:", GPTResults)
   useEffect(() => {
     const fetchProduct = async () => {
-      if (GPTResults?.length >= 0 && !loading) {
-        setLoading(true);
+      if (GPTResults?.length >= 0 && !firstLoad) {
+        setFirstLoad(true);
         for (let i = 0; i < GPTResults.length; i++) {
           const productName = GPTResults[i].trim();
           try {
@@ -43,7 +43,6 @@ export default function ProductCard({ GPTResults }) {
           // Introduce a delay between each request (e.g., 1 second)
           await new Promise((resolve) => setTimeout(resolve, 1100));
         }
-        setLoading(false);
       } 
       else if (!isLoading){
         setError("No AI Results found");
