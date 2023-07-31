@@ -52,7 +52,7 @@ let formattedHobbies = [...hobbies];
   formattedHobbies.forEach((hobby, index) => {
     if (hobby === "artsAndCrafts") {
       formattedHobbies[index] = "Arts And Crafts";
-    } else if (hobby === "healthAndWeboardGamesllness") {
+    } else if (hobby === "healthAndWellness") {
       formattedHobbies[index] = "Health And Wellness";
     } else if (hobby === "boardGames") {
       formattedHobbies[index] = "Board Games";
@@ -71,7 +71,7 @@ let formattedHobbies = [...hobbies];
   }. Make sure the list includes a variety of products beyond just one hobby and ideally incorporates all of their interests and is age appropriate. If you can't think of anything- just pick 3 unique gifts. Output the list in this format: 'Product, Product, Product' No Headers of what category.
   `;
 
-  console.log("PROMMPT", prompt);
+  console.log("PROMPT", prompt);
 
   try {
     const configuration = new Configuration({
@@ -82,7 +82,7 @@ let formattedHobbies = [...hobbies];
       const completion = await openai.createChatCompletion(
         {
           model: "gpt-3.5-turbo",
-          temperature: 0,
+          temperature: 1,
           frequency_penalty: 1,
           presence_penalty: 0,
           messages: [

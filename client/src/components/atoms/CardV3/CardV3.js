@@ -58,6 +58,8 @@ export default function ProductCard({ GPTResults }) {
 
   return amazonProducts?.length >= 3 ? (
     amazonProducts.map((product, index) => (
+      // only display the first 3
+      index < 3 && (
       <CardContainer
         key={index + product.productName}
         href={product.link}
@@ -91,7 +93,7 @@ export default function ProductCard({ GPTResults }) {
           </SubTextContainer>
         </CardContentContainer>
       </CardContainer>
-    ))
+    )))
   ) : error ? (
     <CardContainer>
       <ImageWrapper>

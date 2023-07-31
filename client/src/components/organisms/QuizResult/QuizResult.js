@@ -79,7 +79,7 @@ export default function QuizResult(props) {
     postGPT(quizAnswers).then((res) => {
       setChatGPTProducts(res);
     });
-  }, [quizData]);
+  }, []);
   return (
     <React.Fragment>
       <TopContainer>
