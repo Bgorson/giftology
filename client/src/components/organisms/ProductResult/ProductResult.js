@@ -3,10 +3,11 @@ import { useLocation } from "react-router-dom";
 import GiftBox from "../../../components/GiftBox/GiftBox";
 import ScrollDialog from "../../molecules/ProductModal";
 import ProductCardV2 from "../../atoms/CardV2/CardV2";
+import ChatGPTCard from "../../atoms/CardV3/CardV3";
+
 import { postAllQuizResults } from "../../../api/allQuiz";
 import { Audio } from "react-loader-spinner";
 import { UserContext } from "../../../context/UserContext";
-
 import {
   ProductGrid,
   Filter,
@@ -18,7 +19,7 @@ import {
 import ReactGA from "react-ga";
 
 export default function ProductResult(props) {
-  const { data, results } = props;
+  const { data, results, chatGPTResponses } = props;
   const { email } = useContext(UserContext);
   const { products } = data;
   const [currentCardData, setCurrentCardData] = React.useState(null);
@@ -46,6 +47,7 @@ export default function ProductResult(props) {
     setCurrentCardData(product);
     setOpen(true);
   };
+
   useEffect(() => {
     let backupQuizVal = localStorage.getItem("quizId");
     if (backupQuizVal) {
@@ -165,10 +167,12 @@ export default function ProductResult(props) {
       {!isLoading && (
         <>
           <ProductGrid blurred={open}>
-            {renderGiftBoxes(productResults)}
+            {/* {renderGiftBoxes(productResults)} */}
+            <ChatGPTCard GPTResults={chatGPTResponses?.gptChoices} />
 
-            {productResults.map((product, index) =>
-              index > 3 ? (
+            {productResults.map(
+              (product, index) => (
+                // index > 3 ? (
                 <ProductCardV2
                   quizId={quizData?.id || backupQuizId}
                   isFavorite={
@@ -181,7 +185,8 @@ export default function ProductResult(props) {
                   handleCardClick={handleClickOpen}
                   product={product}
                 />
-              ) : null
+              )
+              // ) : null
             )}
           </ProductGrid>
         </>

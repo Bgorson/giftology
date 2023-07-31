@@ -1,11 +1,13 @@
 import React, { useState, useContext } from "react";
 import { Audio } from "react-loader-spinner";
+import { postGPT } from "../../../api/gpt";
 
 import { postAllQuizResults } from "../../../api/allQuiz";
 import { Disclosure, TopContainer, Title, LoaderContainer } from "./styles";
 import ProductResult from "../../organisms/ProductResult/ProductResult";
 import ReactGA from "react-ga";
 import { UserContext } from "../../../context/UserContext";
+import { useEffect } from "react";
 
 export default function QuizResult(props) {
   const { results } = props;
@@ -22,7 +24,7 @@ export default function QuizResult(props) {
 
   const [productResults, setProductResults] = React.useState(null);
   const [quizData, setQuizData] = React.useState(null);
-
+  const [chatGPTProducts, setChatGPTProducts] = React.useState(null);
   React.useEffect(() => {
     if (Object.keys(results).length === 0) {
       const storedResults = localStorage.getItem("quizResults");
@@ -65,6 +67,14 @@ export default function QuizResult(props) {
       });
     }
   }, []);
+
+  useEffect(() => {
+    const storedResults = localStorage.getItem("quizResults");
+    let quizAnswers = JSON.parse(storedResults) || results;
+    postGPT(quizAnswers).then((res) => {
+      setChatGPTProducts(res);
+    });
+  }, [quizData]);
   return (
     <React.Fragment>
       <TopContainer>
@@ -88,6 +98,7 @@ export default function QuizResult(props) {
           quizData={quizData}
           results={results}
           data={productResults}
+          chatGPTResponses={chatGPTProducts}
         />
       )}
     </React.Fragment>

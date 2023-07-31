@@ -1,5 +1,6 @@
 import { useState, useContext, useEffect } from "react";
 import Typography from "@mui/material/Typography";
+import Robot from "../../../../src/robot.png";
 import { postAmazonProductInfo } from "../../../api/postAmazonProductInfo";
 import {
   CardContainer,
@@ -13,12 +14,11 @@ import {
 // import Badge from "./Badge";
 
 export default function ProductCard({ GPTResults }) {
-  console.log("PRODUCT", GPTResults);
   const [amazonProducts, setAmazonProducts] = useState([]);
 
   useEffect(() => {
     const fetchProduct = async () => {
-      for (let i = 0; i < GPTResults.length; i++) {
+      for (let i = 0; i < 3; i++) {
         const productName = GPTResults[i];
         try {
           const response = await postAmazonProductInfo(productName);
@@ -36,8 +36,7 @@ export default function ProductCard({ GPTResults }) {
 
     fetchProduct();
   }, []);
-  return (
-    amazonProducts.length > 0 &&
+  return amazonProducts.length >= 3 ? (
     amazonProducts.map((product, index) => (
       <CardContainer
         key={index + product.productName}
@@ -62,10 +61,79 @@ export default function ProductCard({ GPTResults }) {
             <FlavorText variant="body2" color="text.secondary">
               {product.price}
             </FlavorText>
-            <FlavorText>Click To Learn More</FlavorText>
+            <FlavorText>Click To Purchase!</FlavorText>
           </SubTextContainer>
         </CardContentContainer>
       </CardContainer>
     ))
+  ) : (
+    <>
+      <CardContainer>
+        <ImageWrapper>
+          <Image alt={"AI loading"} src={Robot} />
+        </ImageWrapper>
+
+        <CardContentContainer>
+          <Typography
+            style={{ textAlign: "left" }}
+            gutterBottom
+            variant="h6"
+            component="div"
+          >
+            {"AI is loading..."}
+          </Typography>
+          <SubTextContainer>
+            <FlavorText variant="body2" color="text.secondary">
+              {"Our AI is calculating a gift for you"}
+            </FlavorText>
+            {/* <FlavorText>Click here to Purchase</FlavorText> */}
+          </SubTextContainer>
+        </CardContentContainer>
+      </CardContainer>
+      <CardContainer>
+        <ImageWrapper>
+          <Image alt={"AI loading"} src={Robot} />
+        </ImageWrapper>
+
+        <CardContentContainer>
+          <Typography
+            style={{ textAlign: "left" }}
+            gutterBottom
+            variant="h6"
+            component="div"
+          >
+            {"AI is loading..."}
+          </Typography>
+          <SubTextContainer>
+            <FlavorText variant="body2" color="text.secondary">
+              {"Our AI is calculating a gift for you"}
+            </FlavorText>
+            {/* <FlavorText>Click here to Purchase</FlavorText> */}
+          </SubTextContainer>
+        </CardContentContainer>
+      </CardContainer>
+      <CardContainer>
+        <ImageWrapper>
+          <Image alt={"AI loading"} src={Robot} />
+        </ImageWrapper>
+
+        <CardContentContainer>
+          <Typography
+            style={{ textAlign: "left" }}
+            gutterBottom
+            variant="h6"
+            component="div"
+          >
+            {"AI is loading..."}
+          </Typography>
+          <SubTextContainer>
+            <FlavorText variant="body2" color="text.secondary">
+              {"Our AI is calculating a gift for you"}
+            </FlavorText>
+            {/* <FlavorText>Click here to Purchase</FlavorText> */}
+          </SubTextContainer>
+        </CardContentContainer>
+      </CardContainer>
+    </>
   );
 }
