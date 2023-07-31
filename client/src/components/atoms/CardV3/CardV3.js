@@ -1,7 +1,7 @@
 import { useState, useContext, useEffect } from "react";
 import Typography from "@mui/material/Typography";
 import Robot from "../../../../src/robot.png";
-import ReactGA from "react-ga";
+import ReactGA, { set } from "react-ga";
 
 import { postAmazonProductInfo } from "../../../api/postAmazonProductInfo";
 import {
@@ -18,11 +18,12 @@ import {
 export default function ProductCard({ GPTResults }) {
   const [amazonProducts, setAmazonProducts] = useState([]);
   const [error, setError] = useState(null);
-
+  const [loading, setLoading] = useState(false);
   console.log("to search for:", GPTResults)
   useEffect(() => {
     const fetchProduct = async () => {
-      if (GPTResults?.length >= 3 && amazonProducts.length === 0) {
+      if (GPTResults?.length >= 3 && !loading) {
+        setLoading(true);
         for (let i = 0; i < 3; i++) {
           const productName = GPTResults[i].trim();
           try {
@@ -42,12 +43,10 @@ export default function ProductCard({ GPTResults }) {
           // Introduce a delay between each request (e.g., 1 second)
           await new Promise((resolve) => setTimeout(resolve, 1100));
         }
+        setLoading(false);
       } 
-      else if (amazonProducts== 'No AI Results found'){
+      else if (!isLoading){
         setError("No AI Results found");
-      }
-      else {
-        return
       }
     };
 
