@@ -18,11 +18,12 @@ import {
 export default function ProductCard({ GPTResults }) {
   const [amazonProducts, setAmazonProducts] = useState([]);
   const [error, setError] = useState(null);
+  console.log("to search for:", GPTResults)
   useEffect(() => {
     const fetchProduct = async () => {
       if (GPTResults?.length >= 3) {
         for (let i = 0; i < 3; i++) {
-          const productName = GPTResults[i];
+          const productName = GPTResults[i].trim();
           try {
             const response = await postAmazonProductInfo(productName);
             if (response.status !== 429 && response.productName) {
