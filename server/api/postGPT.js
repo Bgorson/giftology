@@ -3,6 +3,16 @@ const https = require("https");
 const agent = new https.Agent({
   rejectUnauthorized: false,
 });
+const ageMap = {
+  '0-2': 'an Infant',
+  '3-5': 'a Toddler',
+  '6-11': 'a Child',
+  '12-20': 'a Teen',
+  '21-44': 'an Adult',
+  '45-65': 'a Senior',
+  '65-100': 'an Elderly Adult'
+}
+
 
 const postGPT = async ({
   who,
@@ -16,12 +26,49 @@ const postGPT = async ({
   lessLikeThis,
   isFirstMessage,
 }) => {
+  const ageRange = ageMap[age];
+  let formattedTags = [...tags];
+  formattedTags.forEach((tag, index) => {
+
+     if (tag === "healthNut") {
+      formattedTags[index] = "Health Nut";
+    } else if (tag === "MustOwn") {
+      formattedTags[index] = "Must Own";
+    }  else if (tag === "boardGames") {
+      formattedTags[index] = "Board Games";
+    } else if (tag === "bathAndBody") {
+      formattedTags[index] = " Bath And Body";
+    } else if (tag === "justForFun") {
+      formattedTags[index] = " Just For Fun";
+    } else if (tag === "artsAndCrafts") {
+      formattedTags[index] = " Arts And Crafts";
+    } else if (tag === "samplerkits") {
+      formattedTags[index] = " Sampler Kits";
+    } else {
+      formattedTags[index] = " " + tag.charAt(0).toUpperCase() + tag.slice(1);
+    }
+  });
+let formattedHobbies = [...hobbies];
+  formattedHobbies.forEach((hobby, index) => {
+    if (hobby === "artsAndCrafts") {
+      formattedHobbies[index] = "Arts And Crafts";
+    } else if (hobby === "healthAndWeboardGamesllness") {
+      formattedHobbies[index] = "Health And Wellness";
+    } else if (hobby === "boardGames") {
+      formattedHobbies[index] = "Board Games";
+    } else if (hobby === "mixology") {
+      formattedHobbies[index] = "Home Chef/Cooking";
+    } else if (hobby === "homeChef") {
+      formattedHobbies[index] = "Mixology/Alcohol";
+    }
+  });
+
   let prompt = "";
-  prompt = `List 3 special Amazon products that would be a good gift for someone ${
-    tags ? `that is ${tags.join(", ")}` : ""
-  } between the ages of ${age}, who likes  ${
-    hobbies ? hobbies.join(`, `) : "anything"
-  }. Make sure the list includes a variety of products beyond just one hobby and ideally incorporates all of their interests. If you can't think of anything- just pick 3 unique gifts. Output the list in this format: 'Product, Product, Product' No Headers of what category.
+  prompt = `List 3 special Amazon products that would be a good gift for ${ageRange} ${
+    formattedTags ? `that is ${formattedTags.join(", ")}` : ""
+  }, who likes  ${
+    formattedHobbies ? formattedHobbies.join(`, `) : "anything"
+  }. Make sure the list includes a variety of products beyond just one hobby and ideally incorporates all of their interests and is age appropriate. If you can't think of anything- just pick 3 unique gifts. Output the list in this format: 'Product, Product, Product' No Headers of what category.
   `;
 
   console.log("PROMMPT", prompt);
