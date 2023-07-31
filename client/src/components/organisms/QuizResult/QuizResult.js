@@ -69,8 +69,13 @@ export default function QuizResult(props) {
   }, []);
 
   useEffect(() => {
-    const storedResults = localStorage.getItem("quizResults");
-    let quizAnswers = JSON.parse(storedResults) || results;
+    let quizAnswers;
+    if (Object.keys(results).length !== 0) {
+      quizAnswers = results;
+    } else {
+      quizAnswers = JSON.parse(localStorage.getItem("quizResults")) || {};
+    }
+
     postGPT(quizAnswers).then((res) => {
       setChatGPTProducts(res);
     });
