@@ -3,7 +3,7 @@ import { Audio } from "react-loader-spinner";
 import { postGPT } from "../../../api/gpt";
 
 import { postAllQuizResults } from "../../../api/allQuiz";
-import { Disclosure, TopContainer, Title, LoaderContainer } from "./styles";
+import { Disclosure, TopContainer, Title, ResultInfo, LoaderContainer } from "./styles";
 import ProductResult from "../../organisms/ProductResult/ProductResult";
 import ReactGA from "react-ga";
 import { UserContext } from "../../../context/UserContext";
@@ -13,7 +13,6 @@ export default function QuizResult(props) {
   const { results } = props;
   const [isLoading, setIsLoading] = useState(true);
   const { email } = useContext(UserContext);
-
   React.useEffect(() => {
     ReactGA.event({
       category: "Quiz Results",
@@ -83,6 +82,12 @@ export default function QuizResult(props) {
   return (
     <React.Fragment>
       <TopContainer>
+        <Title>
+          Results
+        </Title>
+        {/* <ResultInfo>
+        {`Here are gift suggestions for someone aged ${quizData.quizResults.age} who enjoys camping and outdoor games, and has interests in coffee, tea, and dogs. Be sure to add items to your wishlist, and create a profile so you can visit again and again!`}
+        </ResultInfo> */}
         <Disclosure>
           Affiliate Disclosure: We may receive a commission on purchases made
           through the links on this page.
@@ -90,7 +95,7 @@ export default function QuizResult(props) {
         {/* <Link href={'https://forms.gle/sxP2CcBVmMaukWt68'} target={'_blank'}>
           Please complete this survey and give us some feedback!
         </Link> */}
-        <Title>RESULTS</Title>
+        {/* <Title>RESULTS</Title> */}
       </TopContainer>
       {isLoading && (
         <LoaderContainer>
