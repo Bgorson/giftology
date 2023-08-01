@@ -25,6 +25,7 @@ const postGPT = async ({
   moreLikeThis,
   lessLikeThis,
   isFirstMessage,
+  demo
 }) => {
   const ageRange = ageMap[age];
   let formattedTags = [...tags];
@@ -64,11 +65,11 @@ let formattedHobbies = [...hobbies];
   });
 
   let prompt = "";
-  prompt = `List 3 special Amazon products that would be a good gift for ${ageRange} ${
+  prompt = `List ${demo ? `10` : `3`} special Amazon products that would be a good gift for ${ageRange} ${
     formattedTags ? `that is ${formattedTags.join(", ")}` : ""
   }, who likes  ${
     formattedHobbies ? formattedHobbies.join(`, `) : "anything"
-  }. Make sure the list includes a variety of products beyond just one hobby and ideally incorporates all of their interests and is age appropriate. If you can't think of anything- just pick 3 unique gifts. Output the list in this format: 'Product, Product, Product' No Headers of what category.
+  }. Make sure the list includes a variety of products beyond just one hobby and ideally incorporates all of their interests and is age appropriate. If you can't think of anything- just pick ${demo ? `10` : `3`} unique gifts. Output the list in this format: 'Product, Product, Product' No Headers of what category.
   `;
 
   console.log("PROMPT", prompt);

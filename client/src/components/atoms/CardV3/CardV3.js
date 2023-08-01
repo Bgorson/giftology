@@ -15,7 +15,7 @@ import {
 
 // import Badge from "./Badge";
 
-export default function ProductCard({ GPTResults }) {
+export default function ProductCard({ GPTResults, demo}) {
   const [amazonProducts, setAmazonProducts] = useState([]);
   const [error, setError] = useState(null);
   const [firstLoad, setFirstLoad] = useState(false);
@@ -59,7 +59,7 @@ export default function ProductCard({ GPTResults }) {
   return amazonProducts?.length >= 3 ? (
     amazonProducts.map((product, index) => (
       // only display the first 3
-      index < 3 && (
+      (index < 3 || demo)  && (
       <CardContainer
         key={index + product.productName}
         href={product.link}

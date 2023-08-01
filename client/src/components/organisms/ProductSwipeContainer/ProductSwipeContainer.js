@@ -67,7 +67,7 @@ function ProductSwipeContainer({ data: originalData, GPTResults }) {
                   </StyledTinderCard>
                 )
             )}
-          {GPTResults && <Card GPTResults={GPTResults} />}
+          {GPTResults && <Card demo={true} GPTResults={GPTResults} />}
         </CardContainer>
       </>
     </div>

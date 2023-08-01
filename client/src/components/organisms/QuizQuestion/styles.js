@@ -85,11 +85,12 @@ export const FancyButton = styled.button`
   }
   &:active {
   }
-
+@media (min-width: 900px) {
   &:hover {
     background-color: black;
     color: white;
   }
+}
   ${(props) =>
     props.isMulti &&
     css`

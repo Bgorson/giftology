@@ -123,6 +123,7 @@ export default function DemoPage() {
       const { gptChoices } = await postGPT(
         {
           ...prompt,
+          demo:true
         },
         abortController.signal
       );
