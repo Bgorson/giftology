@@ -30,9 +30,7 @@ width:355px;
 height:355px;
 
 object-fit:cover;
-@media (max-width: 768px) {
-    width:100%;
-     }
+
 `;
 
 export const HeaderText = styles.h4`

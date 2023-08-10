@@ -10,15 +10,15 @@ import {
   TileText,
   InnerContainer,
 } from "./styles";
-import personalized_tile from "../../../../../personalized_tile.png";
-import romantic_tile from "../../../../../romantic_tile.png";
-import date_night_tile from "../../../../../date_night_tile.png";
-import experience_tile from "../../../../../experience_tile.png";
+import personalized_tile from "../../../../../personalized_tile.webp";
+import romantic_tile from "../../../../../romantic_tile.webp";
+import date_night_tile from "../../../../../date_night_tile.webp";
+import experience_tile from "../../../../../experience_tile.webp";
 import jewelry_tile from "../../../../../jewelry_tile.png";
 import self_care_tile from "../../../../../self_care_tile.png";
-import Gifts_for_Adventurers from "../../../../../Gifts_for_Adventurers.jpeg";
-import Gifts_for_Entertainers from "../../../../../Gifts_for_Entertainers.jpeg";
-import Gifts_for_the_Day_Dreamer from "../../../../../Gifts_for_the_Day_Dreamer.jpeg";
+import Gifts_for_Adventurers from "../../../../../Gifts_for_Adventurers.webp";
+import Gifts_for_Entertainers from "../../../../../Gifts_for_Entertainers.webp";
+import Gifts_for_the_Day_Dreamer from "../../../../../Gifts_for_the_Day_Dreamer.webp";
 import ReactGA from "react-ga";
 
 export default function GiftCategories() {
@@ -45,7 +45,7 @@ export default function GiftCategories() {
                   });
               }}
             >
-              <Image src={Gifts_for_the_Day_Dreamer} />
+              <Image oading= "lazy" src={Gifts_for_the_Day_Dreamer} />
               <HeaderText>Gifts for the Day Dreamer</HeaderText>
               <Description>Unleash their creative side</Description>
             </TileText>

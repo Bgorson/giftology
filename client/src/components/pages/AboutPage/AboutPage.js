@@ -1,6 +1,6 @@
 import React from "react";
-import about1 from "../../../about1.png";
-import about2 from "../../../about2.png";
+import about1 from "../../../about1.webp";
+import about2 from "../../../about2.webp";
 
 import {
   Container,

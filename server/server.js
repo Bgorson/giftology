@@ -12,7 +12,7 @@ const routes = require('./routes/index');
 const port = process.env.PORT;
 const app = express();
 if (process.env.NODE_ENV === 'production') {
-  app.use(express.static(path.join(__dirname, '../client/build')));
+  app.use(express.static(path.join(__dirname, '../client/build')), { maxAge: '30d' });
 }
 const sess = {
   secret: 'Super secret secret',

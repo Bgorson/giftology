@@ -20,7 +20,7 @@ import {
 } from "./styles";
 import { useHistory } from "react-router";
 
-import profile_test from "../../../../../profile_test.png";
+import profile_test from "../../../../../profile_test.webp";
 import { hobbyMap } from "../../../../../utils/hobbyMap";
 import { coworkerTagMap } from "../../../../../utils/coworkerTagMap";
 import viewPastQuiz from "../../../../../viewPastQuiz.png";

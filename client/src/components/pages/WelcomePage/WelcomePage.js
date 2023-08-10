@@ -1,7 +1,7 @@
 import React from "react";
 import { useHistory } from "react-router-dom";
-import backgroundHomeImage from "../../../backgroundHomeImage.png";
-import ellipse from "../../../ellipse.png";
+import backgroundHomeImage from "../../../backgroundHomeImage.webp";
+import ellipse from "../../../ellipse.webp";
 import GiftShortCut from "./components/GiftShortCut";
 import GiftIconBanner from "./components/GiftIconBanner";
 import GiftCategories from "./components/GiftCategories";

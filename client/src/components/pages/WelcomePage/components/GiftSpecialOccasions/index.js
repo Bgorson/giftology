@@ -16,9 +16,9 @@ import {
 } from "./styles";
 import { GoogleLogin } from "react-google-login";
 import { loginUser } from "../../../../../api/login";
-import experience_tile from "../../../../../experience_tile.png";
-import backgroundHomeImage from "../../../../../backgroundHomeImage.png";
-import personalized_tile from "../../../../../personalized_tile.png";
+import experience_tile from "../../../../../experience_tile.webp";
+import backgroundHomeImage from "../../../../../backgroundHomeImage.webp";
+import personalized_tile from "../../../../../personalized_tile.webp";
 import self_care_tile from "../../../../../self_care_tile.png";
 import checkmark from "../../../../../checkmark.svg";
 import { UserContext } from "../../../../../context/UserContext";
