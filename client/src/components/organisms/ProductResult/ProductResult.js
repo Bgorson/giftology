@@ -170,24 +170,25 @@ export default function ProductResult(props) {
             {/* {renderGiftBoxes(productResults)} */}
             <ChatGPTCard GPTResults={chatGPTResponses?.gptChoices} />
 
-            {productResults.map(
-              (product, index) => (
-                // index > 3 ? (
-                <ProductCardV2
-                  quizId={quizData?.id || backupQuizId}
-                  isFavorite={
-                    quizData?.wishlist
-                      ? quizData.wishlist.includes(product.productId)
-                      : false
-                  }
-                  showScore={location.search ? true : false}
-                  key={`${index}-${product.productId}`}
-                  handleCardClick={handleClickOpen}
-                  product={product}
-                />
-              )
-              // ) : null
-            )}
+            {productResults?.length > 1 &&
+              productResults.map(
+                (product, index) => (
+                  // index > 3 ? (
+                  <ProductCardV2
+                    quizId={quizData?.id || backupQuizId}
+                    isFavorite={
+                      quizData?.wishlist
+                        ? quizData.wishlist.includes(product.productId)
+                        : false
+                    }
+                    showScore={location.search ? true : false}
+                    key={`${index}-${product.productId}`}
+                    handleCardClick={handleClickOpen}
+                    product={product}
+                  />
+                )
+                // ) : null
+              )}
           </ProductGrid>
         </>
       )}
