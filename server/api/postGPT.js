@@ -22,6 +22,7 @@ const postGPT = async ({
   hobbies,
   type,
   tags,
+  gender,
   moreLikeThis,
   lessLikeThis,
   isFirstMessage,
@@ -65,7 +66,7 @@ let formattedHobbies = [...hobbies];
   });
 
   let prompt = "";
-  prompt = `List ${demo ? `10` : `3`} special Amazon products that would be a good gift for ${ageRange} ${
+  prompt = `List ${demo ? `10` : `3`} special Amazon products that would be a good gift for ${ageRange} ${gender} ${
     formattedTags ? `that is ${formattedTags.join(", ")}` : ""
   }, who likes  ${
     formattedHobbies ? formattedHobbies.join(`, `) : "anything"

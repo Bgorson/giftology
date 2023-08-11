@@ -1,20 +1,21 @@
 import React, { useState, Fragment, useEffect } from "react";
-
+import DatePicker from "react-datepicker";
 import AgeSlider from "../../atoms/Slider/AgeSlider";
 import QuizResult from "../QuizResult/QuizResult";
 import ReactGA from "react-ga";
+import "react-datepicker/dist/react-datepicker.css";
 
 import {
   Container,
   ButtonContainer,
   FancyButton,
-  DateInput,
   Title,
   InputName,
   ProgressBar,
   QuizHeader,
   Progress,
   ProgressFill,
+  DateContainer
 } from "./styles.js";
 
 export default function QuizQuestion(props) {
@@ -40,7 +41,7 @@ export default function QuizQuestion(props) {
     new Array(answers.length).fill(false)
   );
   const [text, setText] = useState("");
-
+  const dateFormat = 'MM/dd';
   useEffect(() => {
     if (id !== "results" && localStorage.getItem("preSelect")) {
       const prefilled = JSON.parse(localStorage.getItem("preSelect")) || {};
@@ -66,7 +67,7 @@ export default function QuizQuestion(props) {
     if (
       ((localStorage.getItem("forCoworkers") === "true" || isForCoworkers) &&
         !questionType.includes("coworker") &&
-        id !== "results") ||
+        id !== "results" &&id=='gender') ||
       ((localStorage.getItem("forCoworkers") === "false" || !isForCoworkers) &&
         questionType.includes("coworker") &&
         questionType.length === 1)
@@ -77,10 +78,9 @@ export default function QuizQuestion(props) {
   const [age, setAge] = useState(30);
   const [date, setDate] = useState("");
   const [placeholder, setPlaceholder] = useState("MM/DD/YYYY");
-
+  const [selectedAnswer, setSelectedAnswer] = useState("");
   const [additionalMainAnswer, setAdditionalMainAnswer] = useState("");
   const [showAdditionalField, setShowAdditionalField] = useState(false);
-
   const handleAgeValue = (e) => {
     setAge(e);
   };
@@ -145,6 +145,7 @@ export default function QuizQuestion(props) {
               hasAdditionalField &&
               (answers.value === "anniversary" || answers.value === "birthday")
             ) {
+              setSelectedAnswer(answers.value)
               handleAdditionalData(answers);
             } else {
               if (id === "createAccount" && answers.message === "Yes") {
@@ -246,14 +247,26 @@ export default function QuizQuestion(props) {
         ) : null}
         {showAdditionalField && (
           <Fragment>
+            <DateContainer>
+
+            <p>{`Whats the ${selectedAnswer} date this year?`}</p>
+                <DatePicker selected={date} onChange={(date) => setDate(date)}
+                      showMonthDropdown
+                      placeholderText="Select Date"
+                      dateFormat={dateFormat}
+                />
+            </DateContainer>
+
+{/* 
             <DateInput
               placeholder={placeholder}
               onChange={(e) => {
                 setPlaceholder(e.target.value);
                 setDate(e.target.value);
               }}
+              
               type="date"
-            />
+            /> */}
             <ButtonContainer>
               <FancyButton
                 isSubmit={true}

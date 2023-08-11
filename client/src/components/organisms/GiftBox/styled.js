@@ -57,6 +57,7 @@ export const Click = styled.input`
 export const Gift = styled.div`
   position: relative;
   width: 150px;
+  border-radius: 25px;
   height: 100px;
   background-color: #e9c46a;
   &:before {
@@ -70,6 +71,7 @@ export const Gift = styled.div`
   &:after {
     content: '';
     position: absolute;
+    
     box-shadow: inset 0 10px rgba(0, 0, 0, 0.3);
     width: 150px;
     height: 100px;

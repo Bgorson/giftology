@@ -7,6 +7,8 @@ export const FlavorText = styled.p`
 `;
 
 export const CardContainer = styled.div`
+border-radius: 25px;
+
   color: black;
   position: relative;
   height: 510px;
@@ -162,6 +164,7 @@ export const ProductPrice = styled.div`
 `;
 
 export const CardBackContainer = styled.div`
+border-radius: 25px;
   color: black;
   position: relative;
   height: 510px;

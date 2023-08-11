@@ -8,7 +8,7 @@ import { hobbyMap } from "../../../utils/hobbyMap";
 import { coworkerTagMap } from "../../../utils/coworkerTagMap";
 
 const totalCoWorkerQuestions = 5;
-const totalGeneralQuestions = 7;
+const totalGeneralQuestions = 8;
 
 const Quiz = () => {
   const location = useLocation();
@@ -16,8 +16,10 @@ const Quiz = () => {
   const [answers, setAnswers] = useState({});
   const [isForCoworkers, setIsForCoworkers] = useState(false);
   const [isCoworker, setIsCoworker] = useState(false);
+  const [isAdult, setIsAdult] = useState(false);
 
   const [isForSelf, setIsForSelf] = useState(false);
+  console.log(" FOR me?", isForSelf)
   const [quizAge, setQuizAge] = useState(0);
   const [currentStepNumber, setCurrentStepNumber] = useState(1);
   const [totalStepNumber, setTotalStepNumber] = useState(totalGeneralQuestions);
@@ -26,6 +28,7 @@ const Quiz = () => {
       setAnswers({ ...answers, who: location.search.slice(1) });
       localStorage.setItem("forCoworkers", false);
       setIsForCoworkers(false);
+
 
       if (location.search.slice(1) === "myself") {
         setIsForSelf(true);
@@ -39,6 +42,7 @@ const Quiz = () => {
     if (location.pathname === "/quiz/who") {
       setCurrentStepNumber(1);
       setTotalStepNumber(totalGeneralQuestions);
+      setIsAdult(false)
     }
   }, [location]);
 
@@ -53,15 +57,32 @@ const Quiz = () => {
     if (id === "who" && response.value === "myself") {
       setIsForSelf(true);
     }
+
     if (id === "who") {
       localStorage.setItem("forCoworkers", false);
       setIsForCoworkers(false);
       setTotalStepNumber(totalGeneralQuestions);
+      if (response.value !=='myself'){
+        setIsForSelf(false)
+      }
+      
     }
     if (id === "who" && response.value === "coworker") {
       localStorage.setItem("forCoworkers", true);
       setIsForCoworkers(true);
+      setIsCoworker(true);
       setTotalStepNumber(totalCoWorkerQuestions);
+    }
+    else {
+    localStorage.setItem("forCoworkers", false);
+    setIsForCoworkers(false);
+    setIsCoworker(false);
+    setTotalStepNumber(totalGeneralQuestions);
+    }
+    if (id === "who" && response.value === "spouse") 
+    {
+      setIsAdult(true);
+      setIsCoworker(false)
     }
 
     if (id === "howMany" && response.value === "1") {
@@ -72,6 +93,9 @@ const Quiz = () => {
     }
     if (id === "age") {
       setQuizAge(response);
+      if (response.value === "21-44" || response.value === "45-65"|| response.value === "65-100") {
+        setIsAdult(true);
+      }
     }
     if (id === "price") {
       answers["age"] = "21-44";
@@ -107,6 +131,20 @@ const Quiz = () => {
         { message: "Coworker", value: "coworker" },
         { message: "Relative", value: "relative" },
         { message: "Friend", value: "friend" },
+        { message: "Spouse", value: "spouse" },
+
+      ],
+    },
+    {
+      id: "gender",
+      title: `${isForSelf ? `What is your gender`: `What is the gender of the person you are shopping for?`}`,
+      questionType: ["general"],
+      answers: [
+        { message: "Male", value: "male" },
+        { message: "Female", value: "female" },
+        { message: "Non-Binary", value: "nonBinary" },
+        { message: "Transgender", value: "transgender" },
+
       ],
     },
     {
@@ -140,10 +178,10 @@ const Quiz = () => {
       title: `How old are ${isForSelf ? "you" : "they"}?`,
       questionType: ["general"],
       answers: [
-        !isCoworker && { message: "0-2", value: "0-2" },
-        !isCoworker && { message: "3-5", value: "3-5" },
-        !isCoworker && { message: "6-11", value: "6-11" },
-        { message: "12-20", value: "12-20" },
+        !isCoworker && !isAdult&& { message: "0-2", value: "0-2" },
+        !isCoworker && !isAdult&& { message: "3-5", value: "3-5" },
+        !isCoworker && !isAdult&& { message: "6-11", value: "6-11" },
+        !isAdult && { message: "12-20", value: "12-20" },
         { message: "21-44", value: "21-44" },
         { message: "45-65", value: "45-65" },
         { message: "65+", value: "65-100" },
@@ -152,6 +190,7 @@ const Quiz = () => {
     {
       id: "occasion",
       title: "What is the Occasion?",
+      hasAdditionalField:true,
       questionType: ["general", "coworker"],
       answers: [
         { message: "Anniversary", value: "anniversary" },
@@ -160,7 +199,6 @@ const Quiz = () => {
         { message: "White Elephant", value: "whiteElephant" },
         { message: "Who Needs An Occasion?", value: "any" },
       ],
-      // hasAdditionalField: 'date',
     },
     {
       id: "hobbies",
@@ -265,8 +303,7 @@ const Quiz = () => {
       answers: [""],
     },
   ];
-  if (isForCoworkers) {
-  }
+
 
   return (
     <>
