@@ -31,7 +31,7 @@ export const ButtonContainer = styled.div`
   display: flex;
   gap: 1.5em;
   flex-wrap: wrap;
-  width:33%;
+  max-width: 900px;
   justify-content: center;
   @media (max-width: 768px) {
     width: 98%;
@@ -59,12 +59,12 @@ export const Title = styled.h1`
 `;
 /* CSS */
 export const FancyButton = styled.button`
-background:rgb(239, 239, 239);
   white-space: nowrap;
+  min-width: 280px;
   color: black;
   cursor: pointer;
   border-radius: 1.5em;
-  padding: 5px 15px;
+  padding: 10px 40px;
   font-size: 20px;
   ${(props) =>
     (props.checked || props.customBackground) &&
@@ -134,10 +134,6 @@ export const FancyText = styled.div`
     `}
 `;
 
-export const DateContainer= styled.div`
-margin:1em;
-`
-
 export const FancyLabel = styled.label`
   display: flex;
   align-items: center;
@@ -204,7 +200,7 @@ export const DateInput = styled.input`
   display: block;
   min-height: 1.2em;
   ${(props) =>
-    props.placeholder === "MM/DD" &&
+    props.placeholder === "MM/DD/YYYY" &&
     css`
       :before {
         width: 100%;

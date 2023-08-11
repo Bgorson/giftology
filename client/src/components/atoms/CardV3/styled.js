@@ -11,7 +11,7 @@ export const CardContainer = styled.a`
   color: black;
   position: relative;
   height: 510px;
-  border-radius: 25px;
+
   cursor: pointer;
   color: black;
   &:hover {
