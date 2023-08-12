@@ -41,6 +41,7 @@ export const CardContentContainer = styled.div`
 export const ImageWrapper = styled.div`
   height: 350px;
   width: 300px;
+  border-radius: 25px 25px 0 0;
 
   background-color: #f5f5f5;
   @media (max-width: 768px) {

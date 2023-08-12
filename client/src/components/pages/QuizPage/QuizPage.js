@@ -142,8 +142,8 @@ const Quiz = () => {
       answers: [
         { message: "Male", value: "male" },
         { message: "Female", value: "female" },
-        { message: "Non-Binary", value: "nonBinary" },
-        { message: "Transgender", value: "transgender" },
+        { message: "Other", value: "other" },
+        { message: "Rather Not Say", value: "ratherNot" },
 
       ],
     },

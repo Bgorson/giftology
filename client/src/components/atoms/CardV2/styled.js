@@ -48,6 +48,7 @@ export const CardBackContentContainer = styled.div`
 
 export const ImageWrapper = styled.div`
   height: 350px;
+  border-radius: 25px 25px 0 0;
   @media (max-width: 768px) {
     border: none;
   }
@@ -87,6 +88,8 @@ export const FavoriteContainer = styled.div`
 
 export const Image = styled.img`
   width: 100%;
+  border-radius: 25px 25px 0 0;
+
 `;
 export const ProductDescriptionHeading = styled.h2`
   font-size: 16px;
