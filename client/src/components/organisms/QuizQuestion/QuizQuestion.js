@@ -2,7 +2,7 @@ import React, { useState, Fragment, useEffect } from "react";
 import DatePicker from "react-datepicker";
 import AgeSlider from "../../atoms/Slider/AgeSlider";
 import QuizResult from "../QuizResult/QuizResult";
-import ReactGA from "react-ga";
+import ReactGA from "react-ga4";
 import "react-datepicker/dist/react-datepicker.css";
 
 import {
@@ -15,7 +15,7 @@ import {
   QuizHeader,
   Progress,
   ProgressFill,
-  DateContainer
+  DateContainer,
 } from "./styles.js";
 
 export default function QuizQuestion(props) {
@@ -41,7 +41,7 @@ export default function QuizQuestion(props) {
     new Array(answers.length).fill(false)
   );
   const [text, setText] = useState("");
-  const dateFormat = 'MM/dd';
+  const dateFormat = "MM/dd";
   useEffect(() => {
     if (id !== "results" && localStorage.getItem("preSelect")) {
       const prefilled = JSON.parse(localStorage.getItem("preSelect")) || {};
@@ -67,7 +67,8 @@ export default function QuizQuestion(props) {
     if (
       ((localStorage.getItem("forCoworkers") === "true" || isForCoworkers) &&
         !questionType.includes("coworker") &&
-        id !== "results" &&id=='gender') ||
+        id !== "results" &&
+        id == "gender") ||
       ((localStorage.getItem("forCoworkers") === "false" || !isForCoworkers) &&
         questionType.includes("coworker") &&
         questionType.length === 1)
@@ -145,7 +146,7 @@ export default function QuizQuestion(props) {
               hasAdditionalField &&
               (answers.value === "anniversary" || answers.value === "birthday")
             ) {
-              setSelectedAnswer(answers.value)
+              setSelectedAnswer(answers.value);
               handleAdditionalData(answers);
             } else {
               if (id === "createAccount" && answers.message === "Yes") {
@@ -248,16 +249,17 @@ export default function QuizQuestion(props) {
         {showAdditionalField && (
           <Fragment>
             <DateContainer>
-
-            <p>{`Whats the ${selectedAnswer} date this year?`}</p>
-                <DatePicker selected={date} onChange={(date) => setDate(date)}
-                      showMonthDropdown
-                      placeholderText="Select Date"
-                      dateFormat={dateFormat}
-                />
+              <p>{`Whats the ${selectedAnswer} date this year?`}</p>
+              <DatePicker
+                selected={date}
+                onChange={(date) => setDate(date)}
+                showMonthDropdown
+                placeholderText="Select Date"
+                dateFormat={dateFormat}
+              />
             </DateContainer>
 
-{/* 
+            {/* 
             <DateInput
               placeholder={placeholder}
               onChange={(e) => {

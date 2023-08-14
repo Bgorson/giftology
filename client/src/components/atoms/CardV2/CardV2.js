@@ -1,6 +1,6 @@
 import { useState, useContext, useEffect } from "react";
 import ReactCardFlip from "react-card-flip";
-import ReactGA from "react-ga";
+import ReactGA from "react-ga4";
 import Typography from "@mui/material/Typography";
 import LoginModal from "../../molecules/LoginModal";
 import {

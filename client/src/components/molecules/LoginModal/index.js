@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import Dialog from "@mui/material/Dialog";
 import Login from "../LoginButton";
 import CloseIcon from "../../../close.svg";
-import ReactGA from "react-ga";
+import ReactGA from "react-ga4";
 import {
   TextContainer,
   DesktopWrapper,

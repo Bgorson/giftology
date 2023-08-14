@@ -16,7 +16,7 @@ import {
   FilterOption,
   LoaderContainer,
 } from "./styled";
-import ReactGA from "react-ga";
+import ReactGA from "react-ga4";
 
 export default function ProductResult(props) {
   const { data, results, chatGPTResponses } = props;
@@ -127,7 +127,6 @@ export default function ProductResult(props) {
 
   const { categoryScores = [] } = data;
   // if (products.length > 0 && categoryScores.length > 0) {
-  ReactGA.pageview("Product Result Viewed");
 
   // Should just be able to go through available categories
   // and display products and names

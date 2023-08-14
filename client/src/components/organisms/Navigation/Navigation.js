@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext, useCallback } from "react";
 import PropTypes from "prop-types";
 import { Link, useHistory } from "react-router-dom";
-import ReactGA from "react-ga";
+import ReactGA from "react-ga4";
 import Login from "../../molecules/LoginButton";
 
 import { UserContext } from "../../../context/UserContext";

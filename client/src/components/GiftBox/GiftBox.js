@@ -1,6 +1,6 @@
 import React, { useState, useContext } from "react";
 import styled, { css, keyframes } from "styled-components";
-import ReactGA from "react-ga";
+import ReactGA from "react-ga4";
 
 import Badge from "../atoms/CardV2/Badge";
 import LoginModal from "../molecules/LoginModal";

@@ -8,7 +8,7 @@ import ProfileTiles from "./components/ProfileTiles";
 import JoinCommunity from "../WelcomePage/components/JoinCommunity";
 import { removeProfile } from "../../../api/removeProfile";
 import { updateProfilePicture } from "../../../api/updateProfilePicture";
-import ReactGA from "react-ga";
+import ReactGA from "react-ga4";
 
 import {
   Container,

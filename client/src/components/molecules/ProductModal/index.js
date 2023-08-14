@@ -24,7 +24,7 @@ import {
   ButtonContainer,
   Tag,
 } from "./styles";
-import ReactGA from "react-ga";
+import ReactGA from "react-ga4";
 
 export default function ScrollDialog(props) {
   const { product, handleClose, quizId } = props;

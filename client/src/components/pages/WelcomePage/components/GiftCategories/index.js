@@ -19,7 +19,7 @@ import self_care_tile from "../../../../../self_care_tile.png";
 import Gifts_for_Adventurers from "../../../../../Gifts_for_Adventurers.webp";
 import Gifts_for_Entertainers from "../../../../../Gifts_for_Entertainers.webp";
 import Gifts_for_the_Day_Dreamer from "../../../../../Gifts_for_the_Day_Dreamer.webp";
-import ReactGA from "react-ga";
+import ReactGA from "react-ga4";
 
 export default function GiftCategories() {
   const startQuiz = (quizData) => {
@@ -45,7 +45,7 @@ export default function GiftCategories() {
                   });
               }}
             >
-              <Image oading= "lazy" src={Gifts_for_the_Day_Dreamer} />
+              <Image oading="lazy" src={Gifts_for_the_Day_Dreamer} />
               <HeaderText>Gifts for the Day Dreamer</HeaderText>
               <Description>Unleash their creative side</Description>
             </TileText>

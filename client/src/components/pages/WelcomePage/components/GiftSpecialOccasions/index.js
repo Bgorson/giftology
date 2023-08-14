@@ -22,7 +22,7 @@ import personalized_tile from "../../../../../personalized_tile.webp";
 import self_care_tile from "../../../../../self_care_tile.png";
 import checkmark from "../../../../../checkmark.svg";
 import { UserContext } from "../../../../../context/UserContext";
-import ReactGA from "react-ga";
+import ReactGA from "react-ga4";
 
 const clientId =
   "1009874905788-4eotoe38h0ppnmuv672ng5nccvd2sce0.apps.googleusercontent.com";

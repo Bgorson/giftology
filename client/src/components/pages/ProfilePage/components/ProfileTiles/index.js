@@ -27,7 +27,7 @@ import viewPastQuiz from "../../../../../viewPastQuiz.png";
 import delete_profile from "../../../../../delete_profile.svg";
 import upload_icon from "../../../../../upload_icon.svg";
 import Arrow from "../../../../../arrow.png";
-import ReactGA from "react-ga";
+import ReactGA from "react-ga4";
 
 export default function ProfileTiles({
   profileData,

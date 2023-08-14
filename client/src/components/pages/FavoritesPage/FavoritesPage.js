@@ -4,7 +4,7 @@ import { useParams } from "react-router-dom";
 import { getFavorites } from "../../../api/getFavorites";
 import styled from "styled-components";
 import { UserContext } from "../../../context/UserContext";
-import ReactGA from "react-ga";
+import ReactGA from "react-ga4";
 import ScrollDialog from "../../molecules/ProductModal";
 
 const ProductGrid = styled.div`

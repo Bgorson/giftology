@@ -3,9 +3,15 @@ import { Audio } from "react-loader-spinner";
 import { postGPT } from "../../../api/gpt";
 
 import { postAllQuizResults } from "../../../api/allQuiz";
-import { Disclosure, TopContainer, Title, ResultInfo, LoaderContainer } from "./styles";
+import {
+  Disclosure,
+  TopContainer,
+  Title,
+  ResultInfo,
+  LoaderContainer,
+} from "./styles";
 import ProductResult from "../../organisms/ProductResult/ProductResult";
-import ReactGA from "react-ga";
+import ReactGA from "react-ga4";
 import { UserContext } from "../../../context/UserContext";
 import { useEffect } from "react";
 
@@ -82,9 +88,7 @@ export default function QuizResult(props) {
   return (
     <React.Fragment>
       <TopContainer>
-        <Title>
-          Results
-        </Title>
+        <Title>Results</Title>
         {/* <ResultInfo>
         {`Here are gift suggestions for someone aged ${quizData.quizResults.age} who enjoys camping and outdoor games, and has interests in coffee, tea, and dogs. Be sure to add items to your wishlist, and create a profile so you can visit again and again!`}
         </ResultInfo> */}

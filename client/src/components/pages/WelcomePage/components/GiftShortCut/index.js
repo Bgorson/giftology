@@ -6,7 +6,7 @@ import {
   Container,
   CallToActionContainer,
 } from "./styles";
-import ReactGA from "react-ga";
+import ReactGA from "react-ga4";
 
 export default function GiftShortCut({ routeChange }) {
   return (

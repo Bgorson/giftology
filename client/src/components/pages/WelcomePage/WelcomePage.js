@@ -16,7 +16,7 @@ import {
   HeroImage,
   Ellipse,
 } from "./styles";
-import ReactGA from "react-ga";
+import ReactGA from "react-ga4";
 
 export default function WelcomePage() {
   let history = useHistory();

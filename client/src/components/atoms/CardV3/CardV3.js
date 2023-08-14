@@ -1,7 +1,7 @@
 import { useState, useContext, useEffect } from "react";
 import Typography from "@mui/material/Typography";
 import Robot from "../../../../src/robot.png";
-import ReactGA, { set } from "react-ga";
+import ReactGA, { set } from "react-ga4";
 
 import { postAmazonProductInfo } from "../../../api/postAmazonProductInfo";
 import {
@@ -15,11 +15,11 @@ import {
 
 // import Badge from "./Badge";
 
-export default function ProductCard({ GPTResults, demo}) {
+export default function ProductCard({ GPTResults, demo }) {
   const [amazonProducts, setAmazonProducts] = useState([]);
   const [error, setError] = useState(null);
   const [firstLoad, setFirstLoad] = useState(false);
-  console.log("to search for:", GPTResults)
+  console.log("to search for:", GPTResults);
   useEffect(() => {
     const fetchProduct = async () => {
       if (GPTResults?.length >= 0 && !firstLoad) {
@@ -36,15 +36,14 @@ export default function ProductCard({ GPTResults, demo}) {
               });
             }
           } catch (error) {
-            setAmazonProducts("No AI Results found")
+            setAmazonProducts("No AI Results found");
             console.log(error);
           }
 
           // Introduce a delay between each request (e.g., 1 second)
           await new Promise((resolve) => setTimeout(resolve, 1100));
         }
-      } 
-      else if (!isLoading){
+      } else if (!isLoading) {
         setError("No AI Results found");
       }
     };
@@ -57,43 +56,45 @@ export default function ProductCard({ GPTResults, demo}) {
   }, [amazonProducts]);
 
   return amazonProducts?.length >= 3 ? (
-    amazonProducts.map((product, index) => (
-      // only display the first 3
-      (index < 3 || demo)  && (
-      <CardContainer
-        key={index + product.productName}
-        href={product.link}
-        target="_blank"
-        data-id={product?.score}
-        onClick={() => {
-          ReactGA.event({
-            category: "AI item Selected",
-            action: product.productName,
-          });
-        }}
-      >
-        <ImageWrapper>
-          <Image alt={product?.productName} src={product.directImageSrc} />
-        </ImageWrapper>
-
-        <CardContentContainer>
-          <Typography
-            style={{ textAlign: "left" }}
-            gutterBottom
-            variant="h6"
-            component="div"
+    amazonProducts.map(
+      (product, index) =>
+        // only display the first 3
+        (index < 3 || demo) && (
+          <CardContainer
+            key={index + product.productName}
+            href={product.link}
+            target="_blank"
+            data-id={product?.score}
+            onClick={() => {
+              ReactGA.event({
+                category: "AI item Selected",
+                action: product.productName,
+              });
+            }}
           >
-            {product.productName}
-          </Typography>
-          <SubTextContainer>
-            <FlavorText variant="body2" color="text.secondary">
-              {product.price}
-            </FlavorText>
-            <FlavorText>Click To Purchase!</FlavorText>
-          </SubTextContainer>
-        </CardContentContainer>
-      </CardContainer>
-    )))
+            <ImageWrapper>
+              <Image alt={product?.productName} src={product.directImageSrc} />
+            </ImageWrapper>
+
+            <CardContentContainer>
+              <Typography
+                style={{ textAlign: "left" }}
+                gutterBottom
+                variant="h6"
+                component="div"
+              >
+                {product.productName}
+              </Typography>
+              <SubTextContainer>
+                <FlavorText variant="body2" color="text.secondary">
+                  {product.price}
+                </FlavorText>
+                <FlavorText>Click To Purchase!</FlavorText>
+              </SubTextContainer>
+            </CardContentContainer>
+          </CardContainer>
+        )
+    )
   ) : error ? (
     <CardContainer>
       <ImageWrapper>
