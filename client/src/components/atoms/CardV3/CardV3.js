@@ -43,8 +43,6 @@ export default function ProductCard({ GPTResults, demo }) {
           // Introduce a delay between each request (e.g., 1 second)
           await new Promise((resolve) => setTimeout(resolve, 1100));
         }
-      } else if (!isLoading) {
-        setError("No AI Results found");
       }
     };
 
@@ -69,6 +67,11 @@ export default function ProductCard({ GPTResults, demo }) {
               ReactGA.event({
                 category: "AI item Selected",
                 action: product.productName,
+              });
+              ReactGA.event({
+                category: "Retailer Visited",
+                action: product.productName,
+                label: "Home",
               });
             }}
           >
