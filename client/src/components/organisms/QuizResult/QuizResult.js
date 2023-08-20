@@ -85,15 +85,18 @@ export default function QuizResult(props) {
       setChatGPTProducts(res);
     });
   }, []);
-  
-  let formattedTags = quizData?.quizResults ?  [...quizData.quizResults.tags]: results?.tags?  [...results.tags] :[];
-  formattedTags.forEach((tag, index) => {
 
-     if (tag === "healthNut") {
+  let formattedTags = quizData?.quizResults
+    ? [...quizData.quizResults.tags]
+    : results?.tags
+    ? [...results.tags]
+    : [];
+  formattedTags.forEach((tag, index) => {
+    if (tag === "healthNut") {
       formattedTags[index] = "Health Nut";
     } else if (tag === "MustOwn") {
       formattedTags[index] = "Must Own";
-    }  else if (tag === "boardGames") {
+    } else if (tag === "boardGames") {
       formattedTags[index] = "Board Games";
     } else if (tag === "bathAndBody") {
       formattedTags[index] = " Bath And Body";
@@ -107,7 +110,11 @@ export default function QuizResult(props) {
       formattedTags[index] = " " + tag.charAt(0).toUpperCase() + tag.slice(1);
     }
   });
-let formattedHobbies = quizData?.quizResults ?  [...quizData.quizResults.hobbies]: results?.hobbies ? [...results.hobbies]:[];
+  let formattedHobbies = quizData?.quizResults
+    ? [...quizData.quizResults.hobbies]
+    : results?.hobbies
+    ? [...results.hobbies]
+    : [];
   formattedHobbies.forEach((hobby, index) => {
     if (hobby === "artsAndCrafts") {
       formattedHobbies[index] = "Arts And Crafts";
@@ -122,20 +129,18 @@ let formattedHobbies = quizData?.quizResults ?  [...quizData.quizResults.hobbies
     }
   });
 
-  console.log("Clean hobbiets", formattedHobbies)
-
-
+  console.log("Clean hobbiets", formattedHobbies);
 
   return (
     <React.Fragment>
       <TopContainer>
         <Title>Results</Title>
-        {quizData && <ResultInfo>
+        {/* {quizData && <ResultInfo>
         {`Here are gift suggestions for ${(quizData.quizResults.gender=== 'male' || quizData.quizResults.gender=== 'female')  ? 'a ' + quizData.quizResults.gender:'someone' } aged ${quizData.quizResults.age} who enjoys ${formattedHobbies.join(',')}, and has interests in the following topics: ${formattedTags.join(',')}. Be sure to add items to your wishlist, and create a profile so you can visit again and again!`}
         </ResultInfo>}
         {results && !quizData && <ResultInfo>
         {`Here are gift suggestions for ${(results.gender=== 'male' || results.gender=== 'female')  ? 'a ' + results.gender:'someone' } aged ${results.age} who enjoys ${formattedHobbies.join(',')}, and has interests in the following topics: ${formattedTags.join(',')}. Be sure to add items to your wishlist, and create a profile so you can visit again and again!`}
-        </ResultInfo>}
+        </ResultInfo>}*/}
         <Disclosure>
           Affiliate Disclosure: We may receive a commission on purchases made
           through the links on this page.
