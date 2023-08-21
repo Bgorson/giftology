@@ -92,7 +92,7 @@ const calculateScoreForAll = async (filteredProducts, quizResults) => {
           // console.log('product name', product.productName);
           // console.log('matching hobby', product.productName);
 
-          score = score + 5;
+          score = score + 1;
         }
       });
     }
