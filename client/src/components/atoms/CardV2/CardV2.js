@@ -102,14 +102,17 @@ export default function ProductCard({
   const handleAddToFavorites = (product, quizId) => {
     if (isFavorite || filled) {
       ReactGA.event({
-        category: "Remove from Favorites",
+        category: "Favorites",
+        action: "Removed from Favorites",
         label: product?.productName,
       });
       removeFavorites(product, quizId, token);
       setFilled(false);
     } else {
+      console.log("adding to favorites")
       ReactGA.event({
-        category: "Add to Favorites",
+        category: "Favorites",
+        action: "Add to Favorites",
         label: product?.productName,
       });
       addFavorites(product, quizId, token);

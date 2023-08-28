@@ -6,7 +6,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import Main from "./components/environment/Main/Main";
 import { BrowserRouter } from "react-router-dom";
 import { UserProvider } from "./context/UserContext";
-ReactGA.initialize("UA-218196758-1");
+ReactGA.initialize("G-14VR6SM3L7");
 const queryClient = new QueryClient();
 
 function App() {

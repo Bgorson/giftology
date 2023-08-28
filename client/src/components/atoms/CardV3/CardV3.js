@@ -31,8 +31,9 @@ export default function ProductCard({ GPTResults, demo }) {
             if (response.status !== 429 && response.productName) {
               setAmazonProducts((prev) => [...prev, response]);
               ReactGA.event({
-                category: "AI item Loaded",
-                action: response.productName,
+                category: "AI",
+                action:"AI Item Loaded",
+                label:response.productName,
               });
             }
           } catch (error) {
@@ -65,13 +66,13 @@ export default function ProductCard({ GPTResults, demo }) {
             data-id={product?.score}
             onClick={() => {
               ReactGA.event({
-                category: "AI item Selected",
+                category: "AI",
                 action: product.productName,
               });
               ReactGA.event({
                 category: "Retailer Visited",
-                action: product.productName,
-                label: "Home",
+                action: 'Clicked to purchase AI Item',
+                label: product.productName
               });
             }}
           >
