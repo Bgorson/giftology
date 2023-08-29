@@ -4,7 +4,7 @@ import ReactGA from "react-ga4";
 
 import { BrowserRouter } from "react-router-dom";
 import Main from "../Main";
-ReactGA.initialize("UA-218196758-1");
+ReactGA.initialize("395865648");
 
 function Root() {
   return (
