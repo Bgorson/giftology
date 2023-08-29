@@ -34,7 +34,7 @@ export default function ProductCard({ GPTResults, demo }) {
                 category: "AI",
                 action: "AI Item Loaded",
                 label: response.productName,
-                value: product?.productName,
+                value: response?.productName,
               });
             }
           } catch (error) {
