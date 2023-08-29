@@ -157,6 +157,7 @@ export default function ProductPage() {
                   category: "Retailer Visited",
                   action: product.productName,
                   label: "Home",
+                  value: product.productName,
                 })
               }
             >

@@ -41,6 +41,7 @@ export default function ProductResult(props) {
       ReactGA.event({
         category: "Product Selected",
         action: product.productName,
+        value: product?.productName,
       });
     }
 

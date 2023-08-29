@@ -32,8 +32,9 @@ export default function ProductCard({ GPTResults, demo }) {
               setAmazonProducts((prev) => [...prev, response]);
               ReactGA.event({
                 category: "AI",
-                action:"AI Item Loaded",
-                label:response.productName,
+                action: "AI Item Loaded",
+                label: response.productName,
+                value: product?.productName,
               });
             }
           } catch (error) {
@@ -68,11 +69,13 @@ export default function ProductCard({ GPTResults, demo }) {
               ReactGA.event({
                 category: "AI",
                 action: product.productName,
+                value: product?.productName,
               });
               ReactGA.event({
                 category: "Retailer Visited",
-                action: 'Clicked to purchase AI Item',
-                label: product.productName
+                action: "Clicked to purchase AI Item",
+                label: product.productName,
+                value: product?.productName,
               });
             }}
           >

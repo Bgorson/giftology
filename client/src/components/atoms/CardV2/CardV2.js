@@ -96,24 +96,29 @@ export default function ProductCard({
       category: "Card Flip",
       action: isFlipped ? "Flipped Card to A side" : "Flipped Card to B Side",
       label: product?.productName,
+      value: product?.productName,
     });
     setIsFlipped(!isFlipped);
   };
   const handleAddToFavorites = (product, quizId) => {
     if (isFavorite || filled) {
+      console.log("on click", product?.productName);
+
       ReactGA.event({
         category: "Favorites",
         action: "Removed from Favorites",
         label: product?.productName,
+        value: product?.productName,
       });
       removeFavorites(product, quizId, token);
       setFilled(false);
     } else {
-      console.log("adding to favorites")
+      console.log("adding to favorites");
       ReactGA.event({
         category: "Favorites",
         action: "Add to Favorites",
         label: product?.productName,
+        value: product?.productName,
       });
       addFavorites(product, quizId, token);
       setFilled(true);

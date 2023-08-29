@@ -196,6 +196,7 @@ export default function ScrollDialog(props) {
                         category: "Retailer Visited",
                         action: product.productName,
                         label: "Home",
+                        value: product?.productName,
                       })
                     }
                   >
@@ -256,6 +257,7 @@ export default function ScrollDialog(props) {
                         category: "Retailer Visited",
                         action: product.productName,
                         label: "Home",
+                        value: product?.productName,
                       })
                     }
                   >

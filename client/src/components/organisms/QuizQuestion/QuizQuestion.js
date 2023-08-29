@@ -141,6 +141,7 @@ export default function QuizQuestion(props) {
               category: "Quiz",
               action: `Clicked ${answers.message}`,
               label: "QuizButton",
+              value: answers.message,
             });
             if (
               hasAdditionalField &&
@@ -198,6 +199,7 @@ export default function QuizQuestion(props) {
             category: "Quiz",
             action: `Clicked ${answers.message}`,
             label: "QuizButton",
+            value: answers.message,
           });
           handleOnChange(index, e);
         }}
@@ -238,6 +240,7 @@ export default function QuizQuestion(props) {
                 category: "Quiz",
                 action: `Clicked Multi Submit ${id}`,
                 label: "QuizButton",
+                value: answers.message,
               });
               handleMultiResponse(id, answers, checkedState);
               next();
@@ -278,6 +281,7 @@ export default function QuizQuestion(props) {
                     category: "Quiz",
                     action: `Clicked Multi Submit ${id}`,
                     label: "QuizButton",
+                    value: answers.message,
                   });
                   handleResponse(id, additionalMainAnswer);
                   handleResponse("date", date, true);
@@ -300,6 +304,7 @@ export default function QuizQuestion(props) {
                 category: "Quiz",
                 action: `Clicked Age ${age}`,
                 label: "QuizButton",
+                value: age,
               });
               handleSliderResponse(id, age);
               next();
@@ -318,6 +323,7 @@ export default function QuizQuestion(props) {
                 category: "Quiz",
                 action: `Entered Name`,
                 label: "QuizButton",
+                value: text,
               });
               handleNameResponse(id, text);
               next();
