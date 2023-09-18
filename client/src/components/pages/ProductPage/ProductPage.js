@@ -75,7 +75,7 @@ export default function ProductPage() {
       if (product) {
         setProduct(product);
 
-        let tags = [...product.tags_display];
+        let tags = product.tags_display.split(",");
         tags.forEach((tag, index) => {
           if (tag === null || tag === "null" || tag === "Null") {
             tags = tags.splice(index, 1);
@@ -105,15 +105,15 @@ export default function ProductPage() {
           }
         });
         setTags(tags);
-        if (product?.labResults) {
+        if (product?.lab_results) {
           // If there are links- parse them
-          let parse = linkCreator(product.labResults);
+          let parse = linkCreator(product.lab_results);
           if (parse.url) {
-            let parsedMatches = linkCreator(product.labResults);
+            let parsedMatches = linkCreator(product.lab_results);
             let aTagCreation = createATags(parsedMatches);
-            setParsedLabText(insertATags(product.labResults, aTagCreation));
+            setParsedLabText(insertATags(product.lab_results, aTagCreation));
           } else {
-            setParsedLabText(product.labResults);
+            setParsedLabText(product.lab_results);
           }
         }
       } else {
@@ -131,15 +131,15 @@ export default function ProductPage() {
           handleClose={handleClose}
         />
       )}
-      <Image src={product.directImageSrc} />
+      <Image src={product.direct_image_src} />
 
       <TextContainer>
-        <ProductTitle>{product.productName}</ProductTitle>
+        <ProductTitle>{product.product_name}</ProductTitle>
         <ProductDescriptionHeading>
           Who do we like this for?
         </ProductDescriptionHeading>
-        <ProductDescription>{product.flavorText}</ProductDescription>
-        {product.labResults ? (
+        <ProductDescription>{product.flavor_text}</ProductDescription>
+        {product.lab_results ? (
           <div dangerouslySetInnerHTML={{ __html: parsedLabText }} />
         ) : null}
         <ProductTags>
@@ -155,9 +155,9 @@ export default function ProductPage() {
               onClick={() =>
                 ReactGA.event({
                   category: "Retailer Visited",
-                  action: product.productName,
+                  action: product.product_name,
                   label: "Home",
-                  value: product.productName,
+                  value: product.product_name,
                 })
               }
             >
@@ -173,7 +173,7 @@ export default function ProductPage() {
               Add to Wishlist
             </FancyButton>
           )}
-          <ProductPrice>${product.productBasePrice}</ProductPrice>
+          <ProductPrice>${product.product_base_price}</ProductPrice>
         </ButtonContainer>
       </TextContainer>
     </ProductContainer>

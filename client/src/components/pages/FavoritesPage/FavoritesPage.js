@@ -34,14 +34,14 @@ export default function FavoritesPage() {
     if (isHighlighted) {
       ReactGA.event({
         category: "Highlighted Product Selected",
-        action: product.productName,
-        value: product.productName,
+        action: product.product_name,
+        value: product.product_name,
       });
     } else {
       ReactGA.event({
         category: "Product Selected",
-        action: product.productName,
-        value: product.productName,
+        action: product.product_name,
+        value: product.product_name,
       });
     }
 

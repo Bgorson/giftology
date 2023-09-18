@@ -35,13 +35,13 @@ export default function ProductResult(props) {
     if (isHighlighted) {
       ReactGA.event({
         category: "Highlighted Product Selected",
-        action: product.productName,
+        action: product.product_name,
       });
     } else {
       ReactGA.event({
         category: "Product Selected",
-        action: product.productName,
-        value: product?.productName,
+        action: product.product_name,
+        value: product?.product_name,
       });
     }
 
@@ -63,7 +63,7 @@ export default function ProductResult(props) {
           <GiftBox
             isFavorite={
               quizData?.wishlist
-                ? quizData.wishlist.includes(products[0].productId)
+                ? quizData.wishlist.includes(products[0].product_id)
                 : false
             }
             handleCardClick={handleClickOpen}
@@ -75,7 +75,7 @@ export default function ProductResult(props) {
           <GiftBox
             isFavorite={
               quizData?.wishlist
-                ? quizData.wishlist.includes(products[1].productId)
+                ? quizData.wishlist.includes(products[1].product_id)
                 : false
             }
             handleCardClick={handleClickOpen}
@@ -178,11 +178,11 @@ export default function ProductResult(props) {
                     quizId={quizData?.id || backupQuizId}
                     isFavorite={
                       quizData?.wishlist
-                        ? quizData.wishlist.includes(product.productId)
+                        ? quizData.wishlist.includes(product.product_id)
                         : false
                     }
                     showScore={location.search ? true : false}
-                    key={`${index}-${product.productId}`}
+                    key={`${index}-${product.product_id}`}
                     handleCardClick={handleClickOpen}
                     product={product}
                   />

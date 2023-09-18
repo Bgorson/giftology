@@ -73,14 +73,14 @@ export default function ProductCard({
   const [isFlipped, setIsFlipped] = useState(false);
   const [parsedLabText, setParsedLabText] = useState(null);
   useEffect(() => {
-    if (product?.labResults) {
+    if (product?.lab_results) {
       // If there are links- parse them
-      let parse = extractLinks(product.labResults);
+      let parse = extractLinks(product.lab_results);
       if (parse.length > 0) {
-        let aTagCreation = createATags(product.labResults, quizId);
-        setParsedLabText(insertATags(product.labResults, aTagCreation));
+        let aTagCreation = createATags(product.lab_results, quizId);
+        setParsedLabText(insertATags(product.lab_results, aTagCreation));
       } else {
-        setParsedLabText(product.labResults);
+        setParsedLabText(product.lab_results);
       }
     }
   }, []);
@@ -95,20 +95,20 @@ export default function ProductCard({
     ReactGA.event({
       category: "Card Flip",
       action: isFlipped ? "Flipped Card to A side" : "Flipped Card to B Side",
-      label: product?.productName,
-      value: product?.productName,
+      label: product?.product_name,
+      value: product?.product_name,
     });
     setIsFlipped(!isFlipped);
   };
   const handleAddToFavorites = (product, quizId) => {
     if (isFavorite || filled) {
-      console.log("on click", product?.productName);
+      console.log("on click", product?.product_name);
 
       ReactGA.event({
         category: "Favorites",
         action: "Removed from Favorites",
-        label: product?.productName,
-        value: product?.productName,
+        label: product?.product_name,
+        value: product?.product_name,
       });
       removeFavorites(product, quizId, token);
       setFilled(false);
@@ -117,15 +117,15 @@ export default function ProductCard({
       ReactGA.event({
         category: "Favorites",
         action: "Add to Favorites",
-        label: product?.productName,
-        value: product?.productName,
+        label: product?.product_name,
+        value: product?.product_name,
       });
       addFavorites(product, quizId, token);
       setFilled(true);
     }
   };
   const [filled, setFilled] = useState(isFavorite);
-  let tags = [...product.tags_display];
+  let tags = product.tags_display.split(",");
   tags.forEach((tag, index) => {
     if (tag === null || tag === "null" || tag === "Null") {
       tags = tags.splice(index, 1);
@@ -155,18 +155,18 @@ export default function ProductCard({
     }
   });
   let parsedImage =
-    product.htmlTag.split("src")[1]?.substring(2)?.slice(0, -12) || "";
+    product.html_tag.split("src")[1]?.substring(2)?.slice(0, -12) || "";
   if (!parsedImage.includes("//ws-na.amazon")) {
     parsedImage =
-      product.htmlTag.split("src")[2]?.substring(2)?.slice(0, -12) || "";
+      product.html_tag.split("src")[2]?.substring(2)?.slice(0, -12) || "";
   }
   if (!parsedImage.includes("//ws-na.amazon")) {
     parsedImage =
-      product.htmlTag.split("src")[3]?.substring(2)?.slice(0, -12) || "";
+      product.html_tag.split("src")[3]?.substring(2)?.slice(0, -12) || "";
   }
   let finalImage =
-    product.website === "Etsy" || product.directImageSrc !== ""
-      ? product.directImageSrc
+    product.website === "Etsy" || product.direct_image_src !== ""
+      ? product.direct_image_src
       : parsedImage;
 
   if (!finalImage) {
@@ -203,7 +203,7 @@ export default function ProductCard({
               </FavoriteContainer>
             }
             <ImageWrapper>
-              <Image alt={product.productName} src={finalImage} />
+              <Image alt={product.product_name} src={finalImage} />
             </ImageWrapper>
 
             <CardContentContainer>
@@ -213,11 +213,11 @@ export default function ProductCard({
                 variant="h6"
                 component="div"
               >
-                {product.productName}
+                {product.product_name}
               </Typography>
               <SubTextContainer>
                 <FlavorText variant="body2" color="text.secondary">
-                  ${product.productBasePrice}
+                  ${product.product_base_price}
                 </FlavorText>
                 {/* <FlavorText>Click To Learn More</FlavorText> */}
                 {showScore && <FlavorText>SCORE:{product.score}</FlavorText>}
@@ -261,7 +261,7 @@ export default function ProductCard({
                     onClick={() =>
                       ReactGA.event({
                         category: "Retailer Visited",
-                        action: product.productName,
+                        action: product.product_name,
                         label: "Home",
                       })
                     }
@@ -281,8 +281,8 @@ export default function ProductCard({
               <ProductDescriptionHeading>
                 Who do we like this for?
               </ProductDescriptionHeading>
-              <ProductDescription>{product.flavorText}</ProductDescription>
-              {product.labResults ? (
+              <ProductDescription>{product.flavor_text}</ProductDescription>
+              {product.lab_results ? (
                 <>
                   <ProductDescriptionHeading>
                     Lab Results
