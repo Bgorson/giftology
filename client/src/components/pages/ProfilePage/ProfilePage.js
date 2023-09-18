@@ -29,6 +29,7 @@ import {
 export default function ProfilePage() {
   const { token, loggedOut } = useContext(UserContext);
   const [profileData, setProfileData] = useState();
+  console.log("PROFILE", profileData);
   const arrayOfImages = [
     "https://res.cloudinary.com/deruncuzv/image/upload/v1679963321/Use_for_default_profile_image1_etrene.jpg",
     "https://res.cloudinary.com/deruncuzv/image/upload/v1679963313/Use_for_default_profile_image2_mhtngy.jpg",
@@ -59,6 +60,7 @@ export default function ProfilePage() {
       label: "ProfileButton",
     });
     updateProfilePicture(id, url, token).then((data) => {
+      data.user_data = JSON.stringify(data.user_data);
       setProfileData(data);
     });
     // let randomImage = arrayOfImages[Math.floor(Math.random() * 6)];
@@ -67,13 +69,15 @@ export default function ProfilePage() {
     // });
   };
   const fetchUser = async () => {
+    console.log("TOKEN", token);
     try {
       const res = await getUser(token || localStorage.getItem("token"));
+      console.log("RES", res);
       setProfileData(res);
     } catch (err) {
       console.log("ERROR", err);
       loggedOut();
-      window.location.href = "/";
+      // window.location.href = "/";
     }
   };
 
@@ -89,7 +93,7 @@ export default function ProfilePage() {
     });
 
     removeProfile(id, token).then((data) => {
-      setProfileData(data);
+      setProfileData(JSON.parse(data));
     });
   };
   return (
@@ -102,8 +106,9 @@ export default function ProfilePage() {
         {/* {JSON.stringify(profileData)} */}
         <ProfileGrid>
           {profileData &&
-            profileData.userData.length > 0 &&
-            profileData.userData.map((data, index) => (
+            profileData.user_data &&
+            JSON.parse(profileData?.user_data).length > 0 &&
+            JSON.parse(profileData?.user_data).map((data, index) => (
               <ProfileTiles
                 key={index}
                 arrayOfImages={arrayOfImages}

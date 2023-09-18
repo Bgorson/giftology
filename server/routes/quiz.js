@@ -1,35 +1,59 @@
 const express = require("express");
-const { Product } = require("../database/schemas");
 const getImage = require("../api/getEtsy");
-const { User } = require("../database/schemas");
 const { v4 } = require("uuid");
 const router = express.Router();
 
-const updateUser = async (email, answers) => {
-  const foundUser = await User.findOne({ email });
-  const quizId = v4();
-  const newQuizData = {
-    id: quizId,
-    quizResults: answers,
-    wishlist: [],
-  };
-  let oldWishList = [];
-  if (foundUser) {
-    if (foundUser.userData) {
-      for (i = 0; i < foundUser.userData.length; i++) {
-        if (foundUser.userData[i]?.quizResults?.name == answers?.name) {
-          oldWishList = foundUser.userData[i].wishlist;
-          foundUser.userData.splice(i, 1);
-        }
-      }
-    }
-    newQuizData.wishlist = oldWishList;
+const pool = require("../dataBaseSQL/db");
 
-    foundUser.userData.push(newQuizData);
-    await foundUser.save();
+const updateUser = async (email, answers) => {
+  const client = await pool.connect();
+  try {
+    const foundUserQuery = "SELECT * FROM users WHERE email = $1";
+    const foundUserResult = await client.query(foundUserQuery, [email]);
+    const foundUser = foundUserResult.rows[0];
+    if (foundUser) {
+      const quizId = v4();
+      const newQuizData = {
+        id: quizId,
+        quizResults: answers,
+        wishlist: [],
+      };
+      if (foundUser.user_data) {
+        let userData = JSON.parse(foundUser.user_data);
+        let oldWishList = [];
+
+        for (let i = 0; i < userData.length; i++) {
+          if (userData[i].quizResults.name === answers.name) {
+            oldWishList = userData[i].wishlist;
+            userData.splice(i, 1);
+          }
+        }
+
+        newQuizData.wishlist = oldWishList;
+        userData.push(newQuizData);
+
+        const updateUserQuery =
+          "UPDATE users SET user_data = $1 WHERE email = $2";
+        await client.query(updateUserQuery, [JSON.stringify(userData), email]);
+      } else {
+        const updateUserQuery =
+          "UPDATE users SET user_data = $1 WHERE email = $2";
+        await client.query(updateUserQuery, [
+          JSON.stringify([newQuizData]),
+          email,
+        ]);
+      }
+      return newQuizData;
+    } else {
+      console.log("User not found.");
+    }
+  } catch (error) {
+    console.error("Error updating user:", error);
+  } finally {
+    client.release();
   }
-  return newQuizData;
 };
+
 // Score Calculation Helpers
 const decimalAdjust = (type, value, exp) => {
   // If the exp is undefined or zero...
@@ -52,9 +76,17 @@ const decimalAdjust = (type, value, exp) => {
 const round10 = (value, exp) => decimalAdjust("round", value, exp);
 
 const retriveProducts = async () => {
-  const allProducts = await Product.find({});
-
-  return await allProducts;
+  const client = await pool.connect();
+  try {
+    const query = "SELECT * FROM products";
+    const result = await client.query(query);
+    return result.rows;
+  } catch (error) {
+    console.error("Error retrieving products:", error);
+    return [];
+  } finally {
+    client.release();
+  }
 };
 const calculateScoreForAll = async (filteredProducts, quizResults) => {
   // let minPrice = 0;
@@ -66,20 +98,20 @@ const calculateScoreForAll = async (filteredProducts, quizResults) => {
     // filteredArray.forEach(async function (product) {
     // FETCH ETSY IMAGE IF NEEDED
     if (product.website == "Etsy") {
-      const imageURL = await getImage(product.listingId);
-      product.directImageSrc = imageURL;
+      const imageURL = await getImage(product.listing_id);
+      product.direct_image_src = imageURL;
     }
-    let hArray = product.hobbiesInterests;
+    let hArray = product.hobbies_interests;
     if (hArray == null) {
-      hArray = [];
+      hArray = "";
     }
     let oArray = product.occasion;
 
     if (oArray == null) {
       oArray = [];
     }
-    const tagArray = product.tags_sort;
-    const lowerCase = hArray.map((array) => array.toLowerCase());
+    const tagArray = product.tags_sort.split(",");
+    const lowerCase = hArray.split(",").map((array) => array.toLowerCase());
     const lowerCaseTagArray = tagArray.map((array) => array.toLowerCase());
     const lowerCaseOc = Array.isArray(oArray)
       ? oArray.map((array) => array.toLowerCase())
@@ -135,8 +167,8 @@ const calculateScoreForAll = async (filteredProducts, quizResults) => {
       let maxPrice = parseInt(quizResults.price.split("-")[1]);
 
       if (
-        product.productBasePrice >= minPrice &&
-        product.productBasePrice <= maxPrice &&
+        product.product_base_price >= minPrice &&
+        product.product_base_price <= maxPrice &&
         score > 0
       ) {
         // console.log('matching price', product.productName);
@@ -167,6 +199,7 @@ router.post("/allProducts", async (req, res) => {
   if (req.body.email) {
     quizData = await updateUser(req.body.email, req.body.answers);
   }
+
   const test = {
     age: "30-30",
     hobbies: ["gardening", "healthAndWellness", "reading"],
@@ -178,48 +211,47 @@ router.post("/allProducts", async (req, res) => {
   };
 
   const { answers: quizResults } = req.body;
+
   try {
     //Split products if coworkers
     if (quizResults.who === "coworker" && quizResults.howMany != "1") {
-      const minPrice = parseInt(quizResults.price.split("-")[0]);
-      const maxPrice = parseInt(quizResults.price.split("-")[1]);
+      // const minPrice = parseInt(quizResults.price.split("-")[0]);
+      // const maxPrice = parseInt(quizResults.price.split("-")[1]);
+      const allProducts = await retriveProducts();
+      let priceandTypeFiltered = [];
 
-      retriveProducts().then((allProducts) => {
-        let priceandTypeFiltered = [];
+      // FILTER OUT AGES
+      // const minPriceFilter = allProducts.filter(
+      //   (product) => parseInt(product.productBasePrice) <= maxPrice
+      // );
+      // const priceFiltered = minPriceFilter.filter(
+      //   (product) => parseInt(product.productBasePrice) >= minPrice
+      // );
+      const minAge = parseInt(quizResults.age.split("-")[0]);
+      const maxAge = parseInt(quizResults.age.split("-")[1]);
+      // This is the types we want to show
+      // FILTER OUT AGES
+      const minAgeFilter = allProducts.filter(
+        (product) => parseInt(product.age_min) <= maxAge
+      );
+      const ageFiltered = minAgeFilter.filter(
+        (product) => parseInt(product.age_max) >= minAge
+      );
 
-        // FILTER OUT AGES
-        // const minPriceFilter = allProducts.filter(
-        //   (product) => parseInt(product.productBasePrice) <= maxPrice
-        // );
-        // const priceFiltered = minPriceFilter.filter(
-        //   (product) => parseInt(product.productBasePrice) >= minPrice
-        // );
-        const minAge = parseInt(quizResults.age.split("-")[0]);
-        const maxAge = parseInt(quizResults.age.split("-")[1]);
-        // This is the types we want to show
-        // FILTER OUT AGES
-        const minAgeFilter = allProducts.filter(
-          (product) => parseInt(product.ageMin) <= maxAge
-        );
-        const ageFiltered = minAgeFilter.filter(
-          (product) => parseInt(product.ageMax) >= minAge
-        );
+      // priceandTypeFiltered = ageFiltered;
 
-        // priceandTypeFiltered = ageFiltered;
+      calculateScoreForAll(ageFiltered, quizResults).then((result) => {
+        // Organize results by high to low score
+        result.sort(function (a, b) {
+          let n = b.score - a.score;
+          if (n !== 0) {
+            return n;
+          }
 
-        calculateScoreForAll(ageFiltered, quizResults).then((result) => {
-          // Organize results by high to low score
-          result.sort(function (a, b) {
-            let n = b.score - a.score;
-            if (n !== 0) {
-              return n;
-            }
-
-            return parseInt(a.productBasePrice) - parseInt(b.productBasePrice);
-          });
-
-          res.send({ products: result, quizData: quizData });
+          return parseInt(a.productBasePrice) - parseInt(b.productBasePrice);
         });
+
+        res.send({ products: result, quizData: quizData });
       });
     } else {
       const minAge = parseInt(quizResults.age.split("-")[0]);
@@ -231,15 +263,15 @@ router.post("/allProducts", async (req, res) => {
         // console.log('everything', allProducts);
         // FILTER OUT AGES
         const minAgeFilter = allProducts.filter(
-          (product) => parseInt(product.ageMin) <= maxAge
+          (product) => parseInt(product.age_min) <= maxAge
         );
         const ageFiltered = minAgeFilter.filter(
-          (product) => parseInt(product.ageMax) >= minAge
+          (product) => parseInt(product.age_max) >= minAge
         );
         // FILTER OUT GIFT TYPES
         if (giftTypeArray.length > 0) {
           typeAndAgeFiltered = ageFiltered.filter((product) => {
-            const productTypes = product.giftType.toString().split(",");
+            const productTypes = product.gift_type.toString().split(",");
             return giftTypeArray.some((r) => productTypes.includes(r));
           });
         } else {
@@ -254,7 +286,9 @@ router.post("/allProducts", async (req, res) => {
               return n;
             }
 
-            return parseInt(a.productBasePrice) - parseInt(b.productBasePrice);
+            return (
+              parseInt(a.product_base_price) - parseInt(b.product_base_price)
+            );
           });
 
           res.send({ products: result, quizData: quizData });
@@ -262,6 +296,7 @@ router.post("/allProducts", async (req, res) => {
       });
     }
   } catch (err) {
+    console.log("ERROR", err);
     res.send(err);
   }
 });
@@ -290,10 +325,9 @@ router.post("/", async (req, res) => {
       const giftTypeArray = quizResults.type;
       let typeAndAgeFiltered = [];
       retriveProducts().then((allProducts) => {
-        // console.log('everything', allProducts);
         // FILTER OUT AGES
         const minAgeFilter = allProducts.filter(
-          (product) => parseInt(product.ageMin) <= maxAge
+          (product) => parseInt(product.age_min) <= maxAge
         );
         const ageFiltered = minAgeFilter.filter(
           (product) => parseInt(product.ageMax) >= minAge
@@ -333,7 +367,6 @@ router.post("/", async (req, res) => {
     }
     //Split products if coworkers
     if (quizResults.who === "coworker" && quizResults.howMany != "1") {
-      console.log("going down coworker path");
       const minPrice = parseInt(quizResults.price.split("-")[0]);
       const maxPrice = parseInt(quizResults.price.split("-")[1]);
 

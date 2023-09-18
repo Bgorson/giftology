@@ -113,27 +113,27 @@ export default function ScrollDialog(props) {
   };
 
   useEffect(() => {
-    if (product?.labResults) {
+    if (product?.lab_results) {
       // If there are links- parse them
-      let parse = extractLinks(product.labResults);
+      let parse = extractLinks(product.lab_results);
       if (parse.length > 0) {
-        let aTagCreation = createATags(product.labResults, quizId);
-        setParsedLabText(insertATags(product.labResults, aTagCreation));
+        let aTagCreation = createATags(product.lab_results, quizId);
+        setParsedLabText(insertATags(product.lab_results, aTagCreation));
       } else {
-        setParsedLabText(product.labResults);
+        setParsedLabText(product.lab_results);
       }
     }
   }, []);
 
   let parsedImage =
-    product.htmlTag.split("src")[1]?.substring(2)?.slice(0, -12) || "";
+    product.html_tag.split("src")[1]?.substring(2)?.slice(0, -12) || "";
   if (!parsedImage.includes("//ws-na.amazon")) {
     parsedImage =
-      product.htmlTag.split("src")[2]?.substring(2)?.slice(0, -12) || "";
+      product.html_tag.split("src")[2]?.substring(2)?.slice(0, -12) || "";
   }
   if (!parsedImage.includes("//ws-na.amazon")) {
     parsedImage =
-      product.htmlTag.split("src")[3]?.substring(2)?.slice(0, -12) || "";
+      product.html_tag.split("src")[3]?.substring(2)?.slice(0, -12) || "";
   }
   return (
     product && (
@@ -158,26 +158,26 @@ export default function ScrollDialog(props) {
         {/* <DialogTitle id="scroll-dialog-title">{product.productName}</DialogTitle> */}
         <MobileWrapper>
           <DialogContent>
-            {product.directImageSrc !== "" ? (
-              <Image src={product.directImageSrc} />
+            {product.direct_image_src !== "" ? (
+              <Image src={product.direct_image_src} />
             ) : (
               <ProductImage
                 dangerouslySetInnerHTML={{
-                  __html: product.htmlTag,
+                  __html: product.html_tag,
                 }}
               />
             )}
 
             <TextContainer>
               <ModalHeading>
-                <ProductTitle>{product.productName}</ProductTitle>
+                <ProductTitle>{product.product_name}</ProductTitle>
                 {/* <ModalClose onClick={() => handleClose()} src={CloseIcon} /> */}
               </ModalHeading>
               <ProductDescriptionHeading>
                 Who do we like this for?
               </ProductDescriptionHeading>
-              <ProductDescription>{product.flavorText}</ProductDescription>
-              {product.labResults ? (
+              <ProductDescription>{product.flavor_text}</ProductDescription>
+              {product.lab_results ? (
                 <div dangerouslySetInnerHTML={{ __html: parsedLabText }} />
               ) : null}
 
@@ -194,9 +194,9 @@ export default function ScrollDialog(props) {
                     onClick={() =>
                       ReactGA.event({
                         category: "Retailer Visited",
-                        action: product.productName,
+                        action: product.product_name,
                         label: "Home",
-                        value: product?.productName,
+                        value: product?.product_name,
                       })
                     }
                   >
@@ -212,7 +212,7 @@ export default function ScrollDialog(props) {
                 >
                   Add to Wishlist
                 </FancyButton>
-                <ProductPrice>${product.productBasePrice}</ProductPrice>
+                <ProductPrice>${product.product_base_price}</ProductPrice>
               </ButtonContainer>
             </TextContainer>
           </DialogContent>
@@ -220,25 +220,25 @@ export default function ScrollDialog(props) {
 
         <DesktopWrapper>
           <DialogContent style={{ display: "flex" }}>
-            {product.directImageSrc !== "" ? (
-              <Image src={product.directImageSrc} />
+            {product.direct_image_src !== "" ? (
+              <Image src={product.direct_image_src} />
             ) : (
               <ProductImage
                 dangerouslySetInnerHTML={{
-                  __html: product.htmlTag,
+                  __html: product.html_tag,
                 }}
               />
             )}
 
             <TextContainer>
               <ModalHeading>
-                <ProductTitle>{product.productName}</ProductTitle>
+                <ProductTitle>{product.product_name}</ProductTitle>
               </ModalHeading>
               <ProductDescriptionHeading>
                 Who do we like this for?
               </ProductDescriptionHeading>
-              <ProductDescription>{product.flavorText}</ProductDescription>
-              {product.labResults ? (
+              <ProductDescription>{product.flavor_text}</ProductDescription>
+              {product.lab_results ? (
                 <div dangerouslySetInnerHTML={{ __html: parsedLabText }} />
               ) : null}
 
@@ -255,9 +255,9 @@ export default function ScrollDialog(props) {
                     onClick={() =>
                       ReactGA.event({
                         category: "Retailer Visited",
-                        action: product.productName,
+                        action: product.product_name,
                         label: "Home",
-                        value: product?.productName,
+                        value: product?.product_name,
                       })
                     }
                   >
@@ -273,7 +273,7 @@ export default function ScrollDialog(props) {
                 >
                   Add to Wishlist
                 </FancyButton>
-                <ProductPrice>${product.productBasePrice}</ProductPrice>
+                <ProductPrice>${product.product_base_price}</ProductPrice>
               </ButtonContainer>
             </TextContainer>
           </DialogContent>

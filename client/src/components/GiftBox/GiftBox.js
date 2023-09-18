@@ -96,8 +96,8 @@ export default function ({ product, handleCardClick, isFavorite, quizId }) {
       if (visible) {
         ReactGA.event({
           category: "Gift Box Selected",
-          action: product.productName,
-          value: product?.productName,
+          action: product.product_name,
+          value: product?.product_name,
         });
       }
     } else {

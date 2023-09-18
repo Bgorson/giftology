@@ -1,5 +1,4 @@
 const express = require("express");
-const { User } = require("../database/schemas");
 
 const router = express.Router();
 

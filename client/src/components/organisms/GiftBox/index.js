@@ -11,8 +11,8 @@ import {
   SparkFour,
   SparkFive,
   SparkSix,
-} from './styled';
-import { useState } from 'react';
+} from "./styled";
+import { useState } from "react";
 
 const GiftBox = (props) => {
   const { product } = props;
@@ -26,7 +26,7 @@ const GiftBox = (props) => {
           type="checkbox"
         />
         <ClickLabel class="click" for="click"></ClickLabel>
-        <Wishes>{product.productName}</Wishes>
+        <Wishes>{product.product_name}</Wishes>
         <Sparkles>
           <SparkOne></SparkOne>
           <SparkTwo></SparkTwo>
