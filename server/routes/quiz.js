@@ -5,48 +5,59 @@ const router = express.Router();
 
 const pool = require("../dataBaseSQL/db");
 
-const updateUser = async (email, answers) => {
+const updateUser = async (email, answers, quizId) => {
   const client = await pool.connect();
   try {
+    let generatedId = quizId||v4();
     const foundUserQuery = "SELECT * FROM users WHERE email = $1";
     const foundUserResult = await client.query(foundUserQuery, [email]);
-    const foundUser = foundUserResult.rows[0];
-    if (foundUser) {
-      const quizId = v4();
-      const newQuizData = {
-        id: quizId,
-        quizResults: answers,
-        wishlist: [],
-      };
-      if (foundUser.user_data) {
-        let userData = JSON.parse(foundUser.user_data);
-        let oldWishList = [];
+    const foundUser = foundUserResult.rows[0]||{};
+    const {who, name, age, occasion, hobbies, tags,gender} = answers
+    const foundQuizQuery = "SELECT * FROM quizs WHERE quiz_id = $1";
+    const foundQuiz = await client.query(foundQuizQuery, [generatedId]);
+if (!foundQuiz.rows[0]) {
+    const insertQuizQuery =
+      "INSERT INTO quizs (quiz_id, user_id, who, gender, name, age, occasion, hobbies, tags) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)";
+    await client.query(insertQuizQuery, [generatedId, foundUser.id||null, who, gender, name, age, occasion, hobbies, tags]);
+    console.log(generatedId, foundUser.id, who, gender, name, age, occasion, hobbies, tags)
+}
+    return {...answers, id: generatedId};
+    // if (foundUser) {
+    //   const quizId = v4();
+    //   const newQuizData = {
+    //     id: quizId,
+    //     quizResults: answers,
+    //     wishlist: [],
+    //   };
+    //   if (foundUser.user_data) {
+    //     let userData = JSON.parse(foundUser.user_data);
+    //     let oldWishList = [];
 
-        for (let i = 0; i < userData.length; i++) {
-          if (userData[i].quizResults.name === answers.name) {
-            oldWishList = userData[i].wishlist;
-            userData.splice(i, 1);
-          }
-        }
+    //     for (let i = 0; i < userData.length; i++) {
+    //       if (userData[i].quizResults.name === answers.name) {
+    //         oldWishList = userData[i].wishlist;
+    //         userData.splice(i, 1);
+    //       }
+    //     }
 
-        newQuizData.wishlist = oldWishList;
-        userData.push(newQuizData);
+    //     newQuizData.wishlist = oldWishList;
+    //     userData.push(newQuizData);
 
-        const updateUserQuery =
-          "UPDATE users SET user_data = $1 WHERE email = $2";
-        await client.query(updateUserQuery, [JSON.stringify(userData), email]);
-      } else {
-        const updateUserQuery =
-          "UPDATE users SET user_data = $1 WHERE email = $2";
-        await client.query(updateUserQuery, [
-          JSON.stringify([newQuizData]),
-          email,
-        ]);
-      }
-      return newQuizData;
-    } else {
-      console.log("User not found.");
-    }
+    //     const updateUserQuery =
+    //       "UPDATE users SET user_data = $1 WHERE email = $2";
+    //     await client.query(updateUserQuery, [JSON.stringify(userData), email]);
+    //   } else {
+    //     const updateUserQuery =
+    //       "UPDATE users SET user_data = $1 WHERE email = $2";
+    //     await client.query(updateUserQuery, [
+    //       JSON.stringify([newQuizData]),
+    //       email,
+    //     ]);
+    //   }
+    //   return newQuizData;
+    // } else {
+    //   console.log("User not found.");
+    // }
   } catch (error) {
     console.error("Error updating user:", error);
   } finally {
@@ -196,9 +207,7 @@ const groupBy = (arr, property) => {
 
 router.post("/allProducts", async (req, res) => {
   let quizData;
-  if (req.body.email) {
-    quizData = await updateUser(req.body.email, req.body.answers);
-  }
+    quizData = await updateUser(req.body.email, req.body.answers, req.body.quizId);
 
   const test = {
     age: "30-30",

@@ -30,6 +30,7 @@ import { addFavorites } from "../../../api/addFavorites.js";
 import { removeFavorites } from "../../../api/removeFavorites.js";
 
 import Badge from "./Badge";
+import { postUserBehavior } from "../../../api/postUserBehavior";
 export default function ProductCard({
   product,
   showScore,
@@ -68,7 +69,7 @@ export default function ProductCard({
     });
     return newText;
   };
-  const { token } = useContext(UserContext);
+  const { token,email } = useContext(UserContext);
   const [isOpen, setIsOpen] = useState(false);
   const [isFlipped, setIsFlipped] = useState(false);
   const [parsedLabText, setParsedLabText] = useState(null);
@@ -92,6 +93,8 @@ export default function ProductCard({
   };
   const handleClick = (e) => {
     // e.preventDefault();
+    if ( e.target.textContent !== "Visit Retailer"&&  e.target.textContent !== "Add to Favorites" ) {
+    postUserBehavior(product.product_id, quizId, email, token, {clicked_info:true});
     ReactGA.event({
       category: "Card Flip",
       action: isFlipped ? "Flipped Card to A side" : "Flipped Card to B Side",
@@ -99,10 +102,11 @@ export default function ProductCard({
       value: product?.product_name,
     });
     setIsFlipped(!isFlipped);
+  }
   };
   const handleAddToFavorites = (product, quizId) => {
+
     if (isFavorite || filled) {
-      console.log("on click", product?.product_name);
 
       ReactGA.event({
         category: "Favorites",
@@ -113,7 +117,7 @@ export default function ProductCard({
       removeFavorites(product, quizId, token);
       setFilled(false);
     } else {
-      console.log("adding to favorites");
+    postUserBehavior(product.product_id, quizId, email, token, {clicked_favorite:true});
       ReactGA.event({
         category: "Favorites",
         action: "Add to Favorites",
@@ -259,12 +263,14 @@ export default function ProductCard({
                   <FancyButton
                     isPurchase={true}
                     onClick={() =>
+                      {
                       ReactGA.event({
                         category: "Retailer Visited",
                         action: product.product_name,
                         label: "Home",
-                      })
-                    }
+                      });
+                      postUserBehavior(product.product_id, quizId, email, token, {clicked_retailer:true});
+                    }}
                   >
                     Visit Retailer
                   </FancyButton>

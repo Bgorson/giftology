@@ -262,23 +262,25 @@ router.patch("/profile", verifyToken, async (req, res) => {
 router.post("/mailingList", (req, res) => {
   const { userName, email } = req.body;
 
-  User.findOne({ email }).exec((err, user) => {
+  // Check if the user already exists in the database
+  const checkUserQuery = `SELECT * FROM users WHERE email = ?`;
+
+  // Insert a new user into the database
+  const insertUserQuery = `INSERT INTO users (name, email, mailingList) VALUES (?, ?, true)`;
+
+  // Execute the queries
+  client.query(checkUserQuery, [email], (err, rows) => {
     if (err) {
       return res.status(400).json({
         error: "Something went wrong",
       });
     } else {
-      //Login
-      if (user) {
+      // If the user already exists, return a message
+      if (rows.length > 0) {
         res.json({ message: "User already exists" });
       } else {
-        //Signup
-        const newUser = new User({
-          name: userName,
-          email: email,
-          mailingList: true,
-        });
-        newUser.save((err, data) => {
+        // If the user doesn't exist, insert them into the database
+        db.query(insertUserQuery, [userName, email], (err, result) => {
           if (err) {
             return res.status(400).json({
               error: "Something went wrong",
@@ -292,7 +294,66 @@ router.post("/mailingList", (req, res) => {
   });
 
   // Receive Full name and Email.
-  // add to User database
-  // if user already exists, don't do anything
-  // if user doesn't exist, add to database
+  // Check if user already exists in the database.
+  // If user already exists, return a message.
+  // If user doesn't exist, insert them into the database.
 });
+
+router.post("/behavior", verifyToken, async (req, res) => {
+
+      const _id = req.body.userId;
+      const client = await pool.connect();
+      try {
+        const userQuery = "SELECT * FROM users WHERE email = $1";
+        const userResult = await client.query(userQuery, [_id]);
+        let user = userResult.rows[0]||{};
+        const {behavior, product, quizId} = req.body;
+        const userId = user.id||null;
+        // check if record exists:
+        const checkBehaviorQuery = `SELECT * FROM user_behaviors WHERE product_id = $1 AND quiz_id = $2`;
+        const checkBehaviorResult = await client.query(checkBehaviorQuery, [product, quizId]);
+
+        if (checkBehaviorResult.rows.length > 0) {
+
+           let preExistingbehavior = checkBehaviorResult.rows[0];
+           const updateBehaviorQuery = `UPDATE user_behaviors SET clicked_favorite = $1, clicked_info = $2, clicked_retailer = $3 WHERE product_id = $4 AND quiz_id = $5 AND user_id = $6`;
+           await client.query(updateBehaviorQuery, [preExistingbehavior.clicked_favorite|| behavior.clicked_favorite, preExistingbehavior.clicked_info || behavior.clicked_info, preExistingbehavior.clicked_retailer||behavior.clicked_retailer, product, quizId, userId]);
+        } else {
+          const insertBehaviorQuery = `INSERT INTO user_behaviors (clicked_favorite,clicked_info,clicked_retailer, product_id, quiz_id, user_id) VALUES ($1, $2, $3, $4, $5, $6)`;
+          await client.query(insertBehaviorQuery, [behavior.clicked_favorite, behavior.clicked_info, behavior.clicked_retailer, product, quizId, userId]);
+        }
+        res.sendStatus(200);
+
+      } catch (error) {
+        console.error("Error updating profile:", error);
+        res.sendStatus(500);
+      } finally {
+        client.release();
+      }
+  });
+
+    //     const { id, url } = req.body;
+    //     const profileIndex = JSON.parse(user.user_data).findIndex(
+    //       (item) => item.id === id
+    //     );
+    //     let newValue = JSON.parse(user.user_data)[profileIndex].quizResults;
+    //     newValue.createAccount = url;
+    //     user.user_data = JSON.parse(user.user_data).map((item) =>
+    //       item.id === id ? { ...item, quizResults: newValue } : item
+    //     );
+    //     const updateUserQuery =
+    //       "UPDATE users SET user_data = $1 WHERE email = $2";
+    //     await client.query(updateUserQuery, [
+    //       JSON.stringify(user.user_data),
+    //       _id,
+    //     ]);
+
+    //     res.send(user);
+    //   } catch (error) {
+    //     console.error("Error updating profile:", error);
+    //     res.sendStatus(500);
+    //   } finally {
+    //     client.release();
+    //   }
+    // }
+  

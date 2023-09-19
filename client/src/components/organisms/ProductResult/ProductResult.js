@@ -115,7 +115,9 @@ export default function ProductResult(props) {
       setIsLoading(false);
 
       setProductResults(productRes.products);
-      setQuizData(productRes.quizData);
+      setQuizData(productRes.quizData.answers);
+      setBackupQuizId(productRes.quizData?.id)
+      localStorage.setItem("quizId", productRes.quizData?.id);
     });
   };
   const handleClose = () => {
