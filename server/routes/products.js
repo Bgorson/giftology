@@ -2,6 +2,39 @@ const express = require("express");
 const getImage = require("../api/getEtsy");
 const router = express.Router();
 const pool = require("../dataBaseSQL/db");
+const joinProductQuery = `SELECT
+p.product_id,
+p.product_name,
+p.*,
+ARRAY_AGG(DISTINCT cl.category_name) AS category,
+ARRAY_AGG(DISTINCT gl.gift_type_name) AS gift_type,
+ARRAY_AGG(DISTINCT ol.occassion_name) AS occasion,
+ARRAY_AGG(DISTINCT tl.tag_name) AS tags,
+ARRAY_AGG(DISTINCT CASE WHEN t.display_on_card = true THEN tl.tag_name ELSE NULL END) AS tags_display,
+ARRAY_AGG(DISTINCT CASE WHEN t.use_in_calculating = true THEN tl.tag_name ELSE NULL END) AS tags_sort
+
+FROM
+products AS p
+LEFT JOIN
+categories AS c ON p.product_id = c.product_id
+LEFT JOIN
+categories_list AS cl ON c.category_id = cl.id
+LEFT JOIN
+gift_type AS gt ON p.product_id = gt.product_id
+LEFT JOIN
+gift_type_list AS gl ON gt.gift_type_id = gl.id
+LEFT JOIN
+occasion AS o ON p.product_id = o.product_id
+LEFT JOIN
+occasion_list AS ol ON o.occasion_id = ol.id
+LEFT JOIN
+tags AS t ON p.product_id = t.product_id
+LEFT JOIN
+tag_list AS tl ON t.tag_id  = tl.id  
+WHERE p.product_id = $1
+GROUP BY
+p.product_id, p.product_name;
+`
 
 // full path is api/products
 
@@ -14,7 +47,7 @@ router.get("/product/:product", async (req, res) => {
 
   try {
     const client = await pool.connect();
-    const query = "SELECT * FROM products WHERE product_id = $1";
+    const query = joinProductQuery
     const result = await client.query(query, [productID]);
     client.release();
 
