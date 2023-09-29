@@ -35,6 +35,10 @@ export default function QuizResult(props) {
       const storedResults = localStorage.getItem("quizResults");
       let storedEmail = localStorage.getItem("userEmail");
       let storedQuizID= localStorage.getItem("quizId");
+      if (storedQuizID ==='undefined'|| storedQuizID ==='null'){
+        localStorage.setItem("quizId", '');
+        storedQuizID = null;
+      }
       
       const productPromise = Promise.resolve(
         postAllQuizResults(JSON.parse(storedResults), email || storedEmail,storedQuizID)
@@ -63,8 +67,11 @@ export default function QuizResult(props) {
       );
       productPromise.then((productRes) => {
         setProductResults(productRes);
-        setQuizData(productRes.quizId);
-        localStorage.setItem("quizId", productRes.quizData?.id);
+        if (productRes.quizId){
+          setQuizData(productRes.quizId);
+          localStorage.setItem("quizId", productRes.quizData?.id);
+        }
+
 
         setIsLoading(false);
 

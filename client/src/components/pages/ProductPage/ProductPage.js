@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from "react";
+import ReactGA from "react-ga4";
+
 import { useParams, useLocation } from "react-router-dom";
 import { getProducts } from "../../../api/getSingleProduct";
 import { addFavorites } from "../../../api/addFavorites.js";
@@ -75,7 +77,7 @@ export default function ProductPage() {
       if (product) {
         setProduct(product);
 
-        let tags = product.tags_display.split(",");
+        let tags = product.tags_display
         tags.forEach((tag, index) => {
           if (tag === null || tag === "null" || tag === "Null") {
             tags = tags.splice(index, 1);

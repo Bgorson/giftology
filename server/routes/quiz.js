@@ -3,6 +3,39 @@ const getImage = require("../api/getEtsy");
 const { v4 } = require("uuid");
 const router = express.Router();
 
+const joinProductQuery = `SELECT
+p.product_id,
+p.product_name,
+p.*,
+ARRAY_AGG(DISTINCT cl.category_name) AS category,
+ARRAY_AGG(DISTINCT gl.gift_type_name) AS gift_type,
+ARRAY_AGG(DISTINCT ol.occassion_name) AS occasion,
+ARRAY_AGG(DISTINCT tl.tag_name) AS tags,
+ARRAY_AGG(DISTINCT CASE WHEN t.display_on_card = true THEN tl.tag_name ELSE NULL END) AS tags_display,
+ARRAY_AGG(DISTINCT CASE WHEN t.use_in_calculating = true THEN tl.tag_name ELSE NULL END) AS tags_sort
+
+FROM
+products AS p
+LEFT JOIN
+categories AS c ON p.product_id = c.product_id
+LEFT JOIN
+categories_list AS cl ON c.category_id = cl.id
+LEFT JOIN
+gift_type AS gt ON p.product_id = gt.product_id
+LEFT JOIN
+gift_type_list AS gl ON gt.gift_type_id = gl.id
+LEFT JOIN
+occasion AS o ON p.product_id = o.product_id
+LEFT JOIN
+occasion_list AS ol ON o.occasion_id = ol.id
+LEFT JOIN
+tags AS t ON p.product_id = t.product_id
+LEFT JOIN
+tag_list AS tl ON t.tag_id  = tl.id  
+GROUP BY
+p.product_id, p.product_name;
+`
+
 const pool = require("../dataBaseSQL/db");
 
 const updateUser = async (email, answers, quizId) => {
@@ -18,7 +51,7 @@ const updateUser = async (email, answers, quizId) => {
 if (!foundQuiz.rows[0]) {
     const insertQuizQuery =
       "INSERT INTO quizs (quiz_id, user_id, who, gender, name, age, occasion, hobbies, tags) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)";
-    await client.query(insertQuizQuery, [generatedId, foundUser.id||null, who, gender, name, age, occasion, hobbies, tags]);
+    await client.query(insertQuizQuery, [generatedId, foundUser?.id||null, who, gender, name, age, occasion, hobbies, tags]);
     console.log(generatedId, foundUser.id, who, gender, name, age, occasion, hobbies, tags)
 }
     return {...answers, id: generatedId};
@@ -89,7 +122,8 @@ const round10 = (value, exp) => decimalAdjust("round", value, exp);
 const retriveProducts = async () => {
   const client = await pool.connect();
   try {
-    const query = "SELECT * FROM products";
+    const query = joinProductQuery
+    // Need to update query with a join to get additional info
     const result = await client.query(query);
     return result.rows;
   } catch (error) {
@@ -121,11 +155,11 @@ const calculateScoreForAll = async (filteredProducts, quizResults) => {
     if (oArray == null) {
       oArray = [];
     }
-    const tagArray = product.tags_sort.split(",");
-    const lowerCase = hArray.split(",").map((array) => array.toLowerCase());
-    const lowerCaseTagArray = tagArray.map((array) => array.toLowerCase());
+    const tagArray = product.tags_sort;
+    const lowerCase = hArray
+    const lowerCaseTagArray = tagArray
     const lowerCaseOc = Array.isArray(oArray)
-      ? oArray.map((array) => array.toLowerCase())
+      ? oArray.map((array) => array? array.toLowerCase():'')
       : oArray.toLowerCase();
 
     // SCORING HOBBIES

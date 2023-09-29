@@ -15,8 +15,8 @@ if (process.env.NODE_ENV === "production") {
   pool = new Pool({
     user: "postgres",
     host: "localhost",
-    database: "postgres",
-    password: process.env.LOCAL_PASSWORD,
+    database: "gift",
+    password: 'fenrir',
     port: 5432,
   });
 }
