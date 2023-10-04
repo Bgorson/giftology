@@ -76,6 +76,48 @@ router.get("/", verifyToken, async (req, res) => {
   });
 });
 
+// router.get("/favorites", verifyToken, async (req, res) => {
+//   jwt.verify(req.token, process.env.JWT_ACC_ACTIVATE, async (err, authData) => {
+//     if (err) {
+//       console.log("ERROR", err);
+//       res.sendStatus(403);
+//     } else {
+//       const { _id } = authData;
+//       const client = await pool.connect();
+//       try {
+//         const userQuery = "SELECT * FROM users WHERE email = $1";
+//         const userResult = await client.query(userQuery, [_id]);
+//         const user = userResult.rows[0];
+
+//         const findProductArray = JSON.parse(user.user_data).filter(
+//           (wishlist) => wishlist.id === req.query.quizId
+//         );
+//         const productIds = findProductArray[0].wishlist;
+
+//         const productQuery = joinProductQuery
+//         const productResult = await client.query(productQuery, [productIds]);
+//         const matchingProducts = productResult.rows;
+
+//         const updatedProducts = await Promise.all(
+//           matchingProducts.map(async (product) => {
+//             if (product.website === "Etsy") {
+//               product.direct_image_src = await getImage(product.listing_id);
+//             }
+//             return product;
+//           })
+//         );
+
+//         res.send(updatedProducts);
+//       } catch (error) {
+//         console.error("Error fetching favorites:", error);
+//         res.sendStatus(500);
+//       } finally {
+//         client.release();
+//       }
+//     }
+//   });
+// });
+
 router.get("/favorites", verifyToken, async (req, res) => {
   jwt.verify(req.token, process.env.JWT_ACC_ACTIVATE, async (err, authData) => {
     if (err) {
@@ -85,19 +127,15 @@ router.get("/favorites", verifyToken, async (req, res) => {
       const { _id } = authData;
       const client = await pool.connect();
       try {
-        const userQuery = "SELECT * FROM users WHERE email = $1";
+        const userQuery = "SELECT id FROM users WHERE email = $1";
         const userResult = await client.query(userQuery, [_id]);
-        const user = userResult.rows[0];
-
-        const findProductArray = JSON.parse(user.user_data).filter(
-          (wishlist) => wishlist.id === req.query.quizId
-        );
-        const productIds = findProductArray[0].wishlist;
-
+        const user = userResult.rows[0].id;
+        const findAllFavorites = `SELECT product_id FROM favorites WHERE user_id = $1`;
+        const findAllFavoritesResult = await client.query(findAllFavorites, [user]);
+        const arrayOfProductIds = findAllFavoritesResult.rows.map((item) => item.product_id);
         const productQuery = joinProductQuery
-        const productResult = await client.query(productQuery, [productIds]);
+        const productResult = await client.query(productQuery, [arrayOfProductIds]);
         const matchingProducts = productResult.rows;
-
         const updatedProducts = await Promise.all(
           matchingProducts.map(async (product) => {
             if (product.website === "Etsy") {
@@ -118,7 +156,8 @@ router.get("/favorites", verifyToken, async (req, res) => {
   });
 });
 
-router.put("/favorites", verifyToken, async (req, res) => {
+
+router.post("/favorites", verifyToken, async (req, res) => {
   jwt.verify(req.token, process.env.JWT_ACC_ACTIVATE, async (err, authData) => {
     if (err) {
       console.log("ERROR", err);
@@ -127,32 +166,18 @@ router.put("/favorites", verifyToken, async (req, res) => {
       const { _id } = authData;
       const client = await pool.connect();
       try {
-        // Fetch and parse user_data as JSON
         const user = await client.query(
-          "SELECT user_data FROM users WHERE email = $1",
+          "SELECT id FROM users WHERE email = $1",
           [_id]
         );
-        let userData = user.rows[0].user_data || "[]"; // Default to empty array if null
-
-        // Find the index of the quizId in the userData array
+        let userData = user.rows[0].id || null; // Default to empty array if null
+if (!userData) return res.sendStatus(500)
         const quizId = req.body.quizId;
         const product = req.body.product.product_id;
-        const index = JSON.parse(userData).findIndex(
-          (entry) => entry.id === quizId
-        );
-        if (index > -1) {
-          let parsed = JSON.parse(userData);
-          // If quizId exists in userData, add product to its wishlist
-          parsed[index].wishlist.push(product);
-          userData = JSON.stringify(parsed);
-        }
-        // Convert userData back to a string
+          const postFavoriteQuery = `INSERT INTO favorites (user_id, product_id, quiz_id) VALUES ($1, $2, $3)`;
+          const postFavoriteValues = [parseInt(userData), product, quizId];
+          await client.query(postFavoriteQuery, postFavoriteValues);
 
-        // Update user_data with the new string representation
-        const updateQuery = "UPDATE users SET user_data = $1 WHERE email = $2";
-        const updateValues = [userData, _id];
-
-        await client.query(updateQuery, updateValues);
 
         res.status(200).json({ message: "Updated wishlist" });
       } catch (error) {
@@ -165,51 +190,34 @@ router.put("/favorites", verifyToken, async (req, res) => {
   });
 });
 
+
 router.delete("/favorites", verifyToken, async (req, res) => {
   jwt.verify(req.token, process.env.JWT_ACC_ACTIVATE, async (err, authData) => {
     if (err) {
       console.log("ERROR", err);
       res.sendStatus(403);
-    } else {
-      const { _id } = authData;
-      const client = await pool.connect();
-      try {
-        // Fetch and parse user_data as JSON
-        const user = await client.query(
-          "SELECT user_data FROM users WHERE email = $1",
-          [_id]
-        );
-        let userData = JSON.parse(user.rows[0].user_data || "[]"); // Default to empty array if null
+    }
+    const { _id } = authData;
+    const client = await pool.connect();
+    try {
+      const user = await client.query(
+        "SELECT id FROM users WHERE email = $1",
+        [_id]
+      );
+      let userData = user.rows[0].id || null; // Default to empty array if null
+      if (!userData) return res.sendStatus(500);
+      const quizId = req.body.quizId;
+      const product = req.body.product.product_id;
+      const deleteFavoriteQuery = `DELETE FROM favorites WHERE user_id = $1 AND product_id = $2 AND quiz_id = $3`;
+      const deleteFavoriteValues = [parseInt(userData), product, quizId];
+      await client.query(deleteFavoriteQuery, deleteFavoriteValues);
 
-        // Find the index of the quizId in the userData array
-        const quizId = req.body.quizId;
-        const product = req.body.product.product_id;
-
-        const index = userData.findIndex((entry) => entry.id === quizId);
-
-        if (index !== -1) {
-          // If quizId exists in userData, remove the product from its wishlist
-          userData[index].wishlist = userData[index].wishlist.filter(
-            (item) => item !== product
-          );
-        }
-
-        // Convert userData back to a string
-        const updatedUserData = JSON.stringify(userData);
-
-        // Update user_data with the new string representation
-        const updateQuery = "UPDATE users SET user_data = $1 WHERE email = $2";
-        const updateValues = [updatedUserData, _id];
-
-        await client.query(updateQuery, updateValues);
-
-        res.status(200).json({ message: "Removed from wishlist" });
-      } catch (error) {
-        console.error("Error deleting from favorites:", error);
-        res.sendStatus(500);
-      } finally {
-        client.release();
-      }
+      res.status(200).json({ message: "Updated wishlist" });
+    } catch (error) {
+      console.error("Error updating favorites:", error);
+      res.sendStatus(500);
+    } finally {
+      client.release();
     }
   });
 });

@@ -129,6 +129,9 @@ export default function ProductCard({
     }
   };
   const [filled, setFilled] = useState(isFavorite);
+  useEffect(() => {
+    setFilled(isFavorite);
+  }, [isFavorite]);
   let tags = product.tags_display
   tags.forEach((tag, index) => {
     if (tag === null || tag === "null" || tag === "Null") {

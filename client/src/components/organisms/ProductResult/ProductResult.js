@@ -4,6 +4,7 @@ import GiftBox from "../../../components/GiftBox/GiftBox";
 import ScrollDialog from "../../molecules/ProductModal";
 import ProductCardV2 from "../../atoms/CardV2/CardV2";
 import ChatGPTCard from "../../atoms/CardV3/CardV3";
+import {getFavorites} from "../../../api/getFavorites";
 
 import { postAllQuizResults } from "../../../api/allQuiz";
 import { Audio } from "react-loader-spinner";
@@ -20,7 +21,7 @@ import ReactGA from "react-ga4";
 
 export default function ProductResult(props) {
   const { data, results, chatGPTResponses } = props;
-  const { email } = useContext(UserContext);
+  const { email,token } = useContext(UserContext);
   const { products } = data;
   const [currentCardData, setCurrentCardData] = React.useState(null);
   const [open, setOpen] = React.useState(false);
@@ -28,7 +29,9 @@ export default function ProductResult(props) {
   const [productResults, setProductResults] = React.useState(products);
   const [quizData, setQuizData] = React.useState(data?.quizData);
   const [isLoading, setIsLoading] = React.useState(false);
+  const [favorites, setFavorites] = React.useState([]);
   const [backupQuizId, setBackupQuizId] = React.useState(null);
+  console.log("FAV", favorites)
   const location = useLocation();
   // TODO: Put a use effect to sort it all once
   const handleClickOpen = (product, isHighlighted) => {
@@ -56,15 +59,29 @@ export default function ProductResult(props) {
     }
   }, []);
 
+  useEffect(() => {
+    console.log("TOKEN", token)
+    if (quizData) {
+      const favoritesPromise = Promise.resolve(
+        getFavorites(quizData?.id || backupQuizId, token)
+      );
+      favoritesPromise.then((favoritesRes) => {
+        const turnIntoProductIds = favoritesRes.map(
+          (favorite) => favorite.product_id
+        );
+      
+        setFavorites(turnIntoProductIds);
+      });
+    }
+  }, [quizData]);
+
   const renderGiftBoxes = (products) => {
     return (
       <>
         {products[0] && (
           <GiftBox
             isFavorite={
-              quizData?.wishlist
-                ? quizData.wishlist.includes(products[0].product_id)
-                : false
+              favorites.includes(products[0].product_id)
             }
             handleCardClick={handleClickOpen}
             quizId={quizData?.id || backupQuizId}
@@ -74,9 +91,7 @@ export default function ProductResult(props) {
         {products[1] && (
           <GiftBox
             isFavorite={
-              quizData?.wishlist
-                ? quizData.wishlist.includes(products[1].product_id)
-                : false
+              favorites.includes(products[1].product_id)
             }
             handleCardClick={handleClickOpen}
             quizId={quizData?.id || backupQuizId}
@@ -86,9 +101,8 @@ export default function ProductResult(props) {
         {products[2] && (
           <GiftBox
             isFavorite={
-              quizData?.wishlist
-                ? quizData.wishlist.includes(products[2].productId)
-                : false
+              favorites.includes(products[3].product_id)
+
             }
             handleCardClick={handleClickOpen}
             quizId={quizData?.id || backupQuizId}
@@ -178,11 +192,7 @@ export default function ProductResult(props) {
                   // index > 3 ? (
                   <ProductCardV2
                     quizId={quizData?.id || backupQuizId}
-                    isFavorite={
-                      quizData?.wishlist
-                        ? quizData.wishlist.includes(product.product_id)
-                        : false
-                    }
+                    isFavorite={favorites.includes(product.product_id)}
                     showScore={location.search ? true : false}
                     key={`${index}-${product.product_id}`}
                     handleCardClick={handleClickOpen}
