@@ -67,8 +67,8 @@ export default function QuizResult(props) {
       );
       productPromise.then((productRes) => {
         setProductResults(productRes);
-        if (productRes.quizId){
-          setQuizData(productRes.quizId);
+        if (productRes.quizData){
+          setQuizData(productRes.quizData);
           localStorage.setItem("quizId", productRes.quizData?.id);
         }
 
