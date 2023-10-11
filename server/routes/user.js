@@ -355,8 +355,8 @@ router.post("/behavior", verifyToken, async (req, res) => {
         if (checkBehaviorResult.rows.length > 0) {
 
            let preExistingbehavior = checkBehaviorResult.rows[0];
-           const updateBehaviorQuery = `UPDATE user_behaviors SET clicked_favorite = $1, clicked_info = $2, clicked_retailer = $3 WHERE product_id = $4 AND quiz_id = $5 AND user_id = $6`;
-           await client.query(updateBehaviorQuery, [preExistingbehavior.clicked_favorite|| behavior.clicked_favorite, preExistingbehavior.clicked_info || behavior.clicked_info, preExistingbehavior.clicked_retailer||behavior.clicked_retailer, product, quizId, userId]);
+           const updateBehaviorQuery = `UPDATE user_behaviors SET clicked_favorite = $1, clicked_info = $2, clicked_retailer = $3 WHERE product_id = $4 AND quiz_id = $5`;
+           await client.query(updateBehaviorQuery, [preExistingbehavior.clicked_favorite|| behavior.clicked_favorite, preExistingbehavior.clicked_info || behavior.clicked_info, preExistingbehavior.clicked_retailer||behavior.clicked_retailer, product, quizId]);
         } else {
           const insertBehaviorQuery = `INSERT INTO user_behaviors (clicked_favorite,clicked_info,clicked_retailer, product_id, quiz_id, user_id) VALUES ($1, $2, $3, $4, $5, $6)`;
           await client.query(insertBehaviorQuery, [behavior.clicked_favorite, behavior.clicked_info, behavior.clicked_retailer, product, quizId, userId]);
