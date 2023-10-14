@@ -130,8 +130,8 @@ router.get("/favorites", verifyToken, async (req, res) => {
         const userQuery = "SELECT id FROM users WHERE email = $1";
         const userResult = await client.query(userQuery, [_id]);
         const user = userResult.rows[0].id;
-        const findAllFavorites = `SELECT product_id FROM favorites WHERE user_id = $1`;
-        const findAllFavoritesResult = await client.query(findAllFavorites, [user]);
+        const findAllFavorites = `SELECT product_id FROM favorites WHERE user_id = $1 AND quiz_id = $2`;
+        const findAllFavoritesResult = await client.query(findAllFavorites, [user, req.query.quizId]);
         const arrayOfProductIds = findAllFavoritesResult.rows.map((item) => item.product_id);
         const productQuery = joinProductQuery
         const productResult = await client.query(productQuery, [arrayOfProductIds]);
@@ -155,6 +155,36 @@ router.get("/favorites", verifyToken, async (req, res) => {
     }
   });
 });
+
+router.get('/quizes', verifyToken, async (req, res) => {
+  jwt.verify(req.token, process.env.JWT_ACC_ACTIVATE, async (err, authData) => {
+    if (err) {
+      console.log('ERROR', err);
+      res.sendStatus(403);
+    } else {
+      const { _id } = authData;
+      const client = await pool.connect();
+      try {
+        const userQuery = 'SELECT * FROM users WHERE email = $1';
+        const userResult = await client.query(userQuery, [_id]);
+        const userID = userResult.rows[0].id;
+        const quizQuery = 'SELECT * FROM quizs WHERE user_id = $1';
+        const quizResult = await client.query(quizQuery, [userID]);
+        const quizes = quizResult.rows;
+
+        // need to return wishlist
+        // Also the accountImage
+
+        res.send(quizes);
+      } catch (error) {
+        console.error('Error fetching quizes:', error);
+        res.sendStatus(500);
+      } finally {
+        client.release();
+      }
+    }
+  })
+})
 
 
 router.post("/favorites", verifyToken, async (req, res) => {

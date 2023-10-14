@@ -5,6 +5,7 @@ import ScrollDialog from "../../molecules/ProductModal";
 import ProductCardV2 from "../../atoms/CardV2/CardV2";
 import ChatGPTCard from "../../atoms/CardV3/CardV3";
 import {getFavorites} from "../../../api/getFavorites";
+// import UserCard from "../../atoms/UserCard";
 
 import { postAllQuizResults } from "../../../api/allQuiz";
 import { Audio } from "react-loader-spinner";
@@ -31,7 +32,6 @@ export default function ProductResult(props) {
   const [isLoading, setIsLoading] = React.useState(false);
   const [favorites, setFavorites] = React.useState([]);
   const [backupQuizId, setBackupQuizId] = React.useState(null);
-  console.log("FAV", favorites)
   const location = useLocation();
   // TODO: Put a use effect to sort it all once
   const handleClickOpen = (product, isHighlighted) => {
@@ -122,7 +122,8 @@ export default function ProductResult(props) {
     const productPromise = Promise.resolve(
       postAllQuizResults(
         updatedPriceResults,
-        email || localStorage.getItem("userEmail")
+        email || localStorage.getItem("userEmail"),
+        quizData?.id || backupQuizId
       )
     );
     productPromise.then((productRes) => {
@@ -183,6 +184,7 @@ export default function ProductResult(props) {
       {!isLoading && (
         <>
           <ProductGrid blurred={open}>
+            {/* <UserCard/> */}
             {/* {renderGiftBoxes(productResults)} */}
             <ChatGPTCard GPTResults={chatGPTResponses?.gptChoices} />
 

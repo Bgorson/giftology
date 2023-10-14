@@ -1,6 +1,5 @@
 const express = require("express");
 const getImage = require("../api/getEtsy");
-const { v4 } = require("uuid");
 const router = express.Router();
 
 const joinProductQuery = `SELECT
@@ -41,7 +40,7 @@ const pool = require("../dataBaseSQL/db");
 const updateUser = async (email, answers, quizId) => {
   const client = await pool.connect();
   try {
-    let generatedId = quizId||v4();
+    let generatedId = quizId;
     const foundUserQuery = "SELECT * FROM users WHERE email = $1";
     const foundUserResult = await client.query(foundUserQuery, [email]);
     const foundUser = foundUserResult.rows[0]||{};
