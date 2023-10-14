@@ -5,7 +5,7 @@ import ScrollDialog from "../../molecules/ProductModal";
 import ProductCardV2 from "../../atoms/CardV2/CardV2";
 import ChatGPTCard from "../../atoms/CardV3/CardV3";
 import {getFavorites} from "../../../api/getFavorites";
-// import UserCard from "../../atoms/UserCard";
+import UserCard from "../../atoms/UserCard";
 
 import { postAllQuizResults } from "../../../api/allQuiz";
 import { Audio } from "react-loader-spinner";
@@ -184,25 +184,32 @@ export default function ProductResult(props) {
       {!isLoading && (
         <>
           <ProductGrid blurred={open}>
-            {/* <UserCard/> */}
+
+
             {/* {renderGiftBoxes(productResults)} */}
             <ChatGPTCard GPTResults={chatGPTResponses?.gptChoices} />
 
             {productResults?.length > 1 &&
-              productResults.map(
-                (product, index) => (
-                  // index > 3 ? (
-                  <ProductCardV2
-                    quizId={quizData?.id || backupQuizId}
-                    isFavorite={favorites.includes(product.product_id)}
-                    showScore={location.search ? true : false}
-                    key={`${index}-${product.product_id}`}
-                    handleCardClick={handleClickOpen}
-                    product={product}
-                  />
-                )
-                // ) : null
-              )}
+  productResults.map((product, index) => {
+    if (index === 15) {
+      return <UserCard type="info" key={`userCard-15`} />;
+    } else if (index === 30) {
+      return <UserCard type="checkEffective" key={`userCard-30`} />;
+    } else {
+      return (
+        <ProductCardV2
+          index={index}
+          quizId={quizData?.id || backupQuizId}
+          isFavorite={favorites.includes(product.product_id)}
+          showScore={location.search ? true : false}
+          key={`${index}-${product.product_id}`}
+          handleCardClick={handleClickOpen}
+          product={product}
+        />
+      );
+    }
+  })}
+
           </ProductGrid>
         </>
       )}
