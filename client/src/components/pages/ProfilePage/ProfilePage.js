@@ -1,6 +1,7 @@
 import React, { useEffect, useContext, useState } from "react";
 import Logout from "../../molecules/LogoutButton";
 import { getUser } from "../../../api/user";
+import {getQuizes} from "../../../api/getQuizes";
 import { UserContext } from "../../../context/UserContext";
 import { hobbyMap } from "../../../utils/hobbyMap";
 import { coworkerTagMap } from "../../../utils/coworkerTagMap";
@@ -29,7 +30,6 @@ import {
 export default function ProfilePage() {
   const { token, loggedOut } = useContext(UserContext);
   const [profileData, setProfileData] = useState();
-  console.log("PROFILE", profileData);
   const arrayOfImages = [
     "https://res.cloudinary.com/deruncuzv/image/upload/v1679963321/Use_for_default_profile_image1_etrene.jpg",
     "https://res.cloudinary.com/deruncuzv/image/upload/v1679963313/Use_for_default_profile_image2_mhtngy.jpg",
@@ -54,14 +54,15 @@ export default function ProfilePage() {
   //   widget.open();
   // };
   const changeProfilePicture = (id, url) => {
+
     ReactGA.event({
       category: "Profile",
       action: `Clicked ${url}`,
       label: "ProfileButton",
     });
     updateProfilePicture(id, url, token).then((data) => {
-      data.user_data = JSON.stringify(data.user_data);
-      setProfileData(data);
+      // setProfileData({...profileData, createAccount: data});
+ 
     });
     // let randomImage = arrayOfImages[Math.floor(Math.random() * 6)];
     // updateProfilePicture(id, randomImage, token).then((data) => {
@@ -69,10 +70,8 @@ export default function ProfilePage() {
     // });
   };
   const fetchUser = async () => {
-    console.log("TOKEN", token);
     try {
-      const res = await getUser(token || localStorage.getItem("token"));
-      console.log("RES", res);
+      const res = await getQuizes(token || localStorage.getItem("token"));
       setProfileData(res);
     } catch (err) {
       console.log("ERROR", err);
@@ -106,9 +105,8 @@ export default function ProfilePage() {
         {/* {JSON.stringify(profileData)} */}
         <ProfileGrid>
           {profileData &&
-            profileData.user_data &&
-            JSON.parse(profileData?.user_data).length > 0 &&
-            JSON.parse(profileData?.user_data).map((data, index) => (
+            profileData.length >0 &&
+            profileData.map((data, index) => (
               <ProfileTiles
                 key={index}
                 arrayOfImages={arrayOfImages}

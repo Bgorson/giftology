@@ -168,7 +168,11 @@ router.get('/quizes', verifyToken, async (req, res) => {
         const userQuery = 'SELECT * FROM users WHERE email = $1';
         const userResult = await client.query(userQuery, [_id]);
         const userID = userResult.rows[0].id;
-        const quizQuery = 'SELECT * FROM quizs WHERE user_id = $1';
+        const quizQuery = `SELECT quizs.*,  ARRAY_AGG(favorites.product_id) AS favorite_products
+        FROM quizs
+        LEFT JOIN favorites ON favorites.quiz_id=quizs.quiz_id
+        WHERE quizs.user_id = $1
+        GROUP BY quizs.quiz_id;`
         const quizResult = await client.query(quizQuery, [userID]);
         const quizes = quizResult.rows;
 
@@ -294,30 +298,20 @@ router.patch("/profile", verifyToken, async (req, res) => {
       console.log("ERROR", err);
       res.sendStatus(403);
     } else {
-      const { _id } = authData;
       const client = await pool.connect();
       try {
-        const userQuery = "SELECT * FROM users WHERE email = $1";
-        const userResult = await client.query(userQuery, [_id]);
-        let user = userResult.rows[0];
-
+        const { _id } = authData;
+        const getUserID= `SELECT id FROM users WHERE email = $1`;
+        const getUserResult = await client.query(getUserID, [_id]);
+        const getUserIDResult = getUserResult.rows[0].id;
         const { id, url } = req.body;
-        const profileIndex = JSON.parse(user.user_data).findIndex(
-          (item) => item.id === id
-        );
-        let newValue = JSON.parse(user.user_data)[profileIndex].quizResults;
-        newValue.createAccount = url;
-        user.user_data = JSON.parse(user.user_data).map((item) =>
-          item.id === id ? { ...item, quizResults: newValue } : item
-        );
-        const updateUserQuery =
-          "UPDATE users SET user_data = $1 WHERE email = $2";
-        await client.query(updateUserQuery, [
-          JSON.stringify(user.user_data),
-          _id,
-        ]);
+        const updateQuizQuery = `UPDATE quizs SET createaccount = $1 WHERE quiz_id = $2`;
+        await client.query(updateQuizQuery, [url, id]);
+        const getQuizQuery = `SELECT * FROM quizs WHERE user_id = $1`;
+       let updated = await client.query(getQuizQuery, [getUserIDResult]);
+        updated = updated.rows;
 
-        res.send(user);
+        res.send(updated);
       } catch (error) {
         console.error("Error updating profile:", error);
         res.sendStatus(500);
