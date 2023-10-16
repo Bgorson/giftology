@@ -265,7 +265,7 @@ export default function ProductCard({
                 <a href={product.link} target="_blank">
                   <FancyButton
                     isPurchase={true}
-                    onClick={() =>
+                    onMouseDown={() =>
                       {
                       ReactGA.event({
                         category: "Retailer Visited",
