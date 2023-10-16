@@ -15,7 +15,7 @@ export default function LoginModal(props) {
 
   const modalAction = () => {
     //reload page
-    window.location.reload();
+    // window.location.reload();
     handleClose();
   };
   useEffect(() => {

@@ -207,6 +207,14 @@ router.post("/favorites", verifyToken, async (req, res) => {
         let userData = user.rows[0].id || null; // Default to empty array if null
 if (!userData) return res.sendStatus(500)
         const quizId = req.body.quizId;
+      // Check if quizID is associated with this ID- if its not update the row
+      const checkQuizQuery = `SELECT * FROM quizs WHERE quiz_id = $1`;
+      const checkQuizResult = await client.query(checkQuizQuery, [quizId]);
+      if (checkQuizResult.rows.length === 1) {
+        const updateQuizQuery = `UPDATE quizs SET user_id = $1 WHERE quiz_id = $2`;
+        await client.query(updateQuizQuery, [userData, quizId]);
+      }
+
         const product = req.body.product.product_id;
           const postFavoriteQuery = `INSERT INTO favorites (user_id, product_id, quiz_id) VALUES ($1, $2, $3)`;
           const postFavoriteValues = [parseInt(userData), product, quizId];
@@ -270,18 +278,12 @@ router.delete("/profile", verifyToken, async (req, res) => {
         const user = userResult.rows[0];
 
         const profileId = req.body.id;
-        user.user_data = JSON.parse(user.user_data).filter(
-          (item) => item.id !== profileId
-        );
-
-        const updateUserQuery =
-          "UPDATE users SET user_data = $1 WHERE email = $2";
-        await client.query(updateUserQuery, [
-          JSON.stringify(user.user_data),
-          _id,
-        ]);
-
-        res.send(user);
+   
+        const deleteQuiz = `DELETE FROM quizs WHERE quiz_id = $1`;
+        await client.query(deleteQuiz, [profileId]);
+        const getQuizQuery = `SELECT * FROM quizs WHERE user_id = $1`;
+        let updated = await client.query(getQuizQuery, [user.id]);
+        res.send(updated.rows);
       } catch (error) {
         console.error("Error deleting profile:", error);
         res.sendStatus(500);

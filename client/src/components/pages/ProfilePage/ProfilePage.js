@@ -92,7 +92,7 @@ export default function ProfilePage() {
     });
 
     removeProfile(id, token).then((data) => {
-      setProfileData(JSON.parse(data));
+      setProfileData(data);
     });
   };
   return (

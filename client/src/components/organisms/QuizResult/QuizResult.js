@@ -141,8 +141,6 @@ export default function QuizResult(props) {
     }
   });
 
-  console.log("Clean hobbiets", formattedHobbies);
-
   return (
     <React.Fragment>
       <TopContainer>

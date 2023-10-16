@@ -60,7 +60,6 @@ export default function ProductResult(props) {
   }, []);
 
   useEffect(() => {
-    console.log("TOKEN", token)
     if (quizData) {
       const favoritesPromise = Promise.resolve(
         getFavorites(quizData?.id || backupQuizId, token)
