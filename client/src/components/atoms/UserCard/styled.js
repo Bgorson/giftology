@@ -1,7 +1,9 @@
-import styled, { css } from "styled-components";
+import styled, { css,keyframes } from "styled-components";
 
 
 export const CardContainer = styled.div`
+ opacity: ${props => (props.isHidden ? 0 : 1)};
+  transition: opacity 0.5s;
 border-radius: 25px;
   align-items:center;
   color: black;
@@ -173,6 +175,7 @@ export const FancyButton = styled.button`
   }
 
   &:hover {
+
   }
 
   ${(props) =>
