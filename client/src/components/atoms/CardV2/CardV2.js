@@ -192,12 +192,12 @@ export default function ProductCard({
         <ReactCardFlip isFlipped={isFlipped} flipDirection="horizontal">
           <CardContainer
             data-id={product.score}
-            onClick={(e) => handleClick(e)}
+            onMouseDown={(e) => handleClick(e)}
             // onClick={() => handleCardClick(product, isHighlighted)}
           >
             {
               <FavoriteContainer
-                onClick={(e) => {
+                onMouseDown={(e) => {
                   e.stopPropagation();
                   if (token) {
                     handleAddToFavorites(product, quizId);
@@ -285,8 +285,8 @@ export default function ProductCard({
               {/* <ProductPrice>${product.productBasePrice}</ProductPrice> */}
             </ButtonContainer>
           </CardContainer>
-          <CardBackContainer onClick={(e) => handleClick(e)}>
-            <CardBackContentContainer onClick={(e) => handleClick(e)}>
+          <CardBackContainer onMouseDown={(e) => handleClick(e)}>
+            <CardBackContentContainer onMouseDown={(e) => handleClick(e)}>
               <ProductDescriptionHeading>
                 Who do we like this for?
               </ProductDescriptionHeading>
