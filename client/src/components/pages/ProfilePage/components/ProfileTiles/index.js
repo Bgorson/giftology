@@ -88,7 +88,7 @@ export default function ProfileTiles({
       tags: data.tags? stringToArray(data.tags):[],
     }
     localStorage.setItem("quizResults", JSON.stringify(quizDataToSet));
-    localStorage.setItem("quizId", JSON.stringify(profileData.quiz_id));
+    localStorage.setItem("quizId", profileData.quiz_id);
 
     history.push("quiz/results");
   };

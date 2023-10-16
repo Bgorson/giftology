@@ -48,10 +48,15 @@ const updateUser = async (email, answers, quizId) => {
     const foundQuizQuery = "SELECT * FROM quizs WHERE quiz_id = $1";
     const foundQuiz = await client.query(foundQuizQuery, [generatedId]);
 if (!foundQuiz.rows[0]) {
+  const detectDebounce = await client.query("SELECT * FROM quizs WHERE user_id = $1 AND created_at > NOW() - INTERVAL '1 minute'", [foundUser?.id||null]);
+  if (detectDebounce.rows[0]) {
+    return {...answers, id: generatedId};
+  }
+  else {
     const insertQuizQuery =
       "INSERT INTO quizs (quiz_id, user_id, who, gender, name, age, occasion, hobbies, tags) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)";
     await client.query(insertQuizQuery, [generatedId, foundUser?.id||null, who, gender, name, age, occasion, hobbies, tags]);
-    console.log(generatedId, foundUser.id, who, gender, name, age, occasion, hobbies, tags)
+}
 }
     return {...answers, id: generatedId};
     // if (foundUser) {
