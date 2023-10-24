@@ -2,6 +2,8 @@ const express = require("express");
 const getImage = require("../api/getEtsy");
 const router = express.Router();
 const pool = require("../dataBaseSQL/db");
+const jwt = require("jsonwebtoken");
+
 const joinProductQuery = `SELECT
 p.product_id,
 p.product_name,
@@ -35,7 +37,19 @@ WHERE p.product_id = $1
 GROUP BY
 p.product_id, p.product_name;
 `
+function verifyToken(req, res, next) {
+  const bearerHeader = req.headers["authorization"];
 
+  if (typeof bearerHeader !== "undefined") {
+    const bearerToken = bearerHeader.split(" ")[1];
+
+    req.token = bearerToken;
+
+    next();
+  } else {
+    res.sendStatus(403);
+  }
+}
 // full path is api/products
 
 router.get("/product/:product", async (req, res) => {
@@ -82,27 +96,58 @@ router.get("/category/:name", async (req, res) => {
   }
 });
 
-router.post("/add_product", async (req, res) => {
-  const newProduct = req.body;
-
-  try {
+router.post("/add_product",verifyToken, async (req, res) => {
+  jwt.verify(req.token, process.env.JWT_ACC_ACTIVATE, async (err, authData) => {
+    if (err|| authData===undefined) {
+    console.log("AUTH", authData)
+      res.sendStatus(403);
+    }
+    else {
+    try{
+    const {_id} = authData
     const client = await pool.connect();
-    const query =
-      "INSERT INTO products (productname, category) VALUES ($1, $2) RETURNING *";
-    const values = [newProduct.productName, newProduct.category];
-    const result = await client.query(query, values);
-    client.release();
-
-    const insertedProduct = result.rows[0];
-    res.send({
-      message: "Product added successfully",
-      newProduct: insertedProduct,
-    });
-  } catch (error) {
-    console.error("Error:", error);
-    res.status(500).send("Error adding product");
+      
+      const userQuery = "SELECT * FROM users WHERE email = $1";
+      const userResult = await client.query(userQuery, [_id]);
+      const isAdmin = userResult.rows[0].is_admin;
+if (isAdmin){
+  const product = req.body;
+  const productTemplate  = {
+    product_id:"New",
+    html_tag:"http://placekitten.com/g/200/300",
+    link: "www.amazon.com",
+    flavor_text:"I dunno",
+    lab_results:"Some stuff",
+    product_base_price: 69,
+    age_min:10,
+    age_max:20,
+    product_card_banner:"AI Generated",
+    direct_image_src:"http://placekitten.com/g/200/300",
+    website:'ChatGPT'
   }
-});
+  const categoryTemplate=
+  ['Camping', 'Dogs']
+  const giftTypeTemplate=
+  ['thoughtful']
+  const hobbiesTemplate=
+  ['dogs','gaming']
+  const tagsTemplate=
+  ['classy','cozy']
+
+}
+else {
+  res.sendStatus(403);
+
+}
+    }
+    catch (error) {
+      console.error("Error:", error);
+      res.status(500).send("Error retrieving user");
+    }
+  }
+  })
+})
+
 
 router.get("/etsy/:id", async (req, res) => {
   const listingId = req.params.id;
