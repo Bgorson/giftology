@@ -6,6 +6,7 @@ const defaultValue = {
   email: "",
   name: "",
   token: "",
+  is_admin: false,
 };
 
 const UserContext = createContext({ ...defaultValue });
@@ -37,6 +38,7 @@ const UserProvider = (props) => {
     if (localStorage.getItem("token")) {
       const token = localStorage.getItem("token");
       attempToLogin(token).then((data) => {
+        console.log("DATA", data);
         localStorage.setItem("userEmail", data?.email);
 
         setState({ ...data, token: token, isLoggedIn: true });
