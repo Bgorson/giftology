@@ -222,8 +222,6 @@ router.post("/amazon", async (req, res) => {
     // res.send(productMock);
   } catch (err) {
     client.release();
-
-    res.send("err");
   }
 });
 
