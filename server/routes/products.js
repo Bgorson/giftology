@@ -2,6 +2,9 @@ const express = require("express");
 const getImage = require("../api/getEtsy");
 const router = express.Router();
 const pool = require("../dataBaseSQL/db");
+const jwt = require("jsonwebtoken");
+const addProduct = require("../utils/addProduct");
+
 const joinProductQuery = `SELECT
 p.product_id,
 p.product_name,
@@ -34,8 +37,20 @@ tag_list AS tl ON t.tag_id  = tl.id
 WHERE p.product_id = $1
 GROUP BY
 p.product_id, p.product_name;
-`
+`;
+function verifyToken(req, res, next) {
+  const bearerHeader = req.headers["authorization"];
 
+  if (typeof bearerHeader !== "undefined") {
+    const bearerToken = bearerHeader.split(" ")[1];
+
+    req.token = bearerToken;
+
+    next();
+  } else {
+    res.sendStatus(403);
+  }
+}
 // full path is api/products
 
 router.get("/product/:product", async (req, res) => {
@@ -47,7 +62,7 @@ router.get("/product/:product", async (req, res) => {
 
   try {
     const client = await pool.connect();
-    const query = joinProductQuery
+    const query = joinProductQuery;
     const result = await client.query(query, [productID]);
     client.release();
 
@@ -82,26 +97,143 @@ router.get("/category/:name", async (req, res) => {
   }
 });
 
-router.post("/add_product", async (req, res) => {
-  const newProduct = req.body;
+router.post("/add_product", verifyToken, async (req, res) => {
+  jwt.verify(req.token, process.env.JWT_ACC_ACTIVATE, async (err, authData) => {
+    if (err || authData === undefined) {
+      res.sendStatus(403);
+    } else {
+      try {
+        const { _id } = authData;
+        const client = await pool.connect();
 
-  try {
-    const client = await pool.connect();
-    const query =
-      "INSERT INTO products (productname, category) VALUES ($1, $2) RETURNING *";
-    const values = [newProduct.productName, newProduct.category];
-    const result = await client.query(query, values);
-    client.release();
+        const userQuery = "SELECT * FROM users WHERE email = $1";
+        const userResult = await client.query(userQuery, [_id]);
+        const isAdmin = userResult.rows[0].is_admin;
+        const { product } = req.body;
+        if (isAdmin) {
+          let hobbyIDArray = [];
+          const tagIDArray = [];
+          if (product.hobbies_interests) {
+            const findHobbiesQuery =
+              "SELECT * FROM hobbies_interests_list WHERE hobbies_interests_name = $1";
 
-    const insertedProduct = result.rows[0];
-    res.send({
-      message: "Product added successfully",
-      newProduct: insertedProduct,
-    });
-  } catch (error) {
-    console.error("Error:", error);
-    res.status(500).send("Error adding product");
-  }
+            // Array to store promises for async operations
+            const promises = [];
+
+            // For each hobby name, create a promise for the asynchronous operation
+            product.hobbies_interests.forEach((hobby) => {
+              const promise = new Promise(async (resolve) => {
+                const findHobbiesResult = await client.query(findHobbiesQuery, [
+                  hobby.trim(),
+                ]);
+                if (findHobbiesResult.rows.length === 0) {
+                  const insertHobbiesQuery =
+                    "INSERT INTO hobbies_interests_list (hobbies_interests_name) VALUES ($1) RETURNING *";
+                  const insertHobbiesResult = await client.query(
+                    insertHobbiesQuery,
+                    [hobby.trim()]
+                  );
+                  resolve(insertHobbiesResult.rows[0].id);
+                } else {
+                  resolve(findHobbiesResult.rows[0].id);
+                }
+              });
+
+              // Add the promise to the promises array
+              promises.push(promise);
+            });
+
+            // Wait for all promises to resolve using Promise.all()
+            Promise.all(promises)
+              .then((hobbyIDs) => {
+                // Now all async operations have finished, and hobbyIDs contains the results
+                hobbyIDArray.push(...hobbyIDs);
+              })
+              .catch((error) => {
+                console.error("Error occurred:", error);
+              });
+          }
+          if (product.tags) {
+            const findTagsQuery = "SELECT * FROM tag_list WHERE tag_name = $1";
+            const tagPromises = [];
+
+            product.tags.forEach((tag) => {
+              const promise = new Promise(async (resolve) => {
+                const findTagsResult = await client.query(findTagsQuery, [
+                  tag.trim(),
+                ]);
+                if (findTagsResult.rows.length === 0) {
+                  const insertTagsQuery =
+                    "INSERT INTO tag_list (tag_name) VALUES ($1) RETURNING *";
+                  const insertTagsResult = await client.query(insertTagsQuery, [
+                    tag.trim(),
+                  ]);
+                  resolve(insertTagsResult.rows[0].id);
+                } else {
+                  resolve(findTagsResult.rows[0].id);
+                }
+              });
+
+              tagPromises.push(promise);
+            });
+
+            Promise.all(tagPromises)
+              .then((tagIDs) => {
+                tagIDArray.push(...tagIDs);
+              })
+              .catch((error) => {
+                console.error("Error occurred while processing tags:", error);
+              });
+          }
+          if (product.product_category) {
+            const findCategory =
+              "SELECT * FROM categories_list WHERE category_name = $1";
+            const findCategoryResult = await client.query(findCategory, [
+              product.product_category,
+            ]);
+            if (findCategoryResult.rows.length === 0) {
+              const insertCategoryQuery =
+                "INSERT INTO categories_list (category_name) VALUES ($1) RETURNING *";
+              const insertCategoryResult = await client.query(
+                insertCategoryQuery,
+                [product.product_category]
+              );
+              product.category_id = insertCategoryResult.rows[0].id;
+            } else {
+              product.category_id = findCategoryResult.rows[0].id;
+            }
+          } else {
+            const findCategory =
+              "SELECT * FROM categories_list WHERE category_name = 'Other'";
+
+            const findCategoryResultOther = await client.query(findCategory);
+            if (findCategoryResultOther.rows.length === 0) {
+              const insertCategoryQuery =
+                "INSERT INTO categories_list (category_name) VALUES ($1) RETURNING *";
+              const insertCategoryResult = await client.query(
+                insertCategoryQuery,
+                ["Other"]
+              );
+              product.category_id = insertCategoryResult.rows[0].id;
+            } else {
+              product.category_id = findCategoryResultOther.rows[0].id;
+            }
+          }
+
+          product.hobbies_id = hobbyIDArray;
+          product.tags_id = tagIDArray;
+
+          await addProduct({ product, userAdded: true });
+          res.sendStatus(200);
+        } else {
+          res.sendStatus(403);
+        }
+      } catch (error) {
+        console.error("Error:", error);
+        res.status(500).send("Error retrieving user");
+      }
+    }
+  });
 });
 
 router.get("/etsy/:id", async (req, res) => {

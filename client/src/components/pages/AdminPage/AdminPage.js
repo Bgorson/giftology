@@ -1,65 +1,215 @@
-import React, { useState } from 'react';
-import { useHistory } from 'react-router-dom';
+import React, { useState, useContext } from "react";
+import { UserContext } from "../../../context/UserContext";
+import { postProduct } from "../../../api/postProduct";
+import { MainForm, Input } from "./styles";
 
-import { loginUser } from '../../../api/login';
+const AdminPage = () => {
+  const { token } = useContext(UserContext);
 
-const AdminPage = ({ setToken }) => {
-  const history = useHistory();
+  const [product, setProduct] = useState({
+    product_name: "",
+    product_category: "",
+    product_base_price: "",
+    direct_image_src: "",
+    product_link: "",
+    flavor_text: "",
+    website: "",
+    product_card_banner: "",
+    lab_results: "",
+    gender: "",
+    who_ind: "",
+    age_min: "",
+    age_max: "",
+    occasion: "",
+    hobbies_interests: [],
+    tags: [],
+    is_added_directly: true,
+  });
 
-  const [username, setUserName] = useState('');
-  const [password, setPassword] = useState('');
-
-  const handleLogin = async (e) => {
-    e.preventDefault();
-    try {
-      const user = await loginUser({ username, password });
-      if (user.user.username === 'giftology') {
-        setToken(true);
-        // store the user in localStorage
-        localStorage.setItem('user', JSON.stringify(user.user));
-        history.push('/portal');
-      }
-    } catch (err) {
-      alert('Incorrect Login');
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    if (name === "hobbies_interests" || name === "tags") {
+      const splitValue = value.split(",");
+      setProduct({
+        ...product,
+        [name]: splitValue,
+      });
+    } else {
+      setProduct({
+        ...product,
+        [name]: value,
+      });
     }
   };
+
   return (
     <>
-      <h1>Admin Portal</h1>
-      <form>
-        <label htmlFor="UserName">UserName:</label>
-        <input
-          type="text"
-          id="UserName"
-          name="Userame"
-          value={username}
-          onChange={(e) => setUserName(e.target.value)}
-        />
-        <label htmlFor="Password">Password:</label>
-        <input
-          type="password"
-          id="Password"
-          name="Password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        />
-        <button onClick={(e) => handleLogin(e)}>Login</button>
-      </form>
+      <MainForm>
+        <label>
+          Product Name:
+          <Input
+            type="text"
+            name="product_name"
+            value={product.product_name}
+            onChange={handleInputChange}
+          />
+        </label>
+
+        <label>
+          Product Category:
+          <Input
+            type="text"
+            name="product_category"
+            value={product.product_category}
+            onChange={handleInputChange}
+          />
+        </label>
+
+        <label>
+          Product Price:
+          <Input
+            type="text"
+            name="product_price"
+            value={product.product_price}
+            onChange={handleInputChange}
+          />
+        </label>
+
+        <label>
+          Product Image URL:
+          <Input
+            type="text"
+            name="product_image"
+            value={product.product_image}
+            onChange={handleInputChange}
+          />
+        </label>
+
+        <label>
+          Product Link URL:
+          <Input
+            type="text"
+            name="product_link"
+            value={product.product_link}
+            onChange={handleInputChange}
+          />
+        </label>
+
+        <label>
+          Flavor Text:
+          <textarea
+            type="text"
+            name="flavor_text"
+            value={product.flavor_text}
+            onChange={handleInputChange}
+          />
+        </label>
+        <label>
+          Website:
+          <Input
+            type="text"
+            name="website"
+            value={product.website}
+            onChange={handleInputChange}
+          />
+        </label>
+        <label>
+          Product Card Banner:
+          <Input
+            type="text"
+            name="product_card_banner"
+            value={product.product_card_banner}
+            onChange={handleInputChange}
+          />
+        </label>
+        <label>
+          Lab Results:
+          <textarea
+            type="text"
+            name="lab_results"
+            value={product.lab_results}
+            onChange={handleInputChange}
+          />
+        </label>
+        <label>
+          Gender:
+          <input
+            type="text"
+            name="gender"
+            value={product.gender}
+            onChange={handleInputChange}
+          ></input>
+        </label>
+        <label>
+          Who is it for?:
+          <input
+            placeholder="Coworker or Blank"
+            type="text"
+            name="who_ind"
+            value={product.who_ind}
+            onChange={handleInputChange}
+          ></input>
+        </label>
+        <label>
+          Age Min:
+          <input
+            type="text"
+            name="age_min"
+            value={product.age_min}
+            onChange={handleInputChange}
+          ></input>
+        </label>
+        <label>
+          Age Max:
+          <input
+            type="text"
+            name="age_max"
+            value={product.age_max}
+            onChange={handleInputChange}
+          ></input>
+        </label>
+        <label>
+          Occasion:
+          <input
+            type="text"
+            name="occasion"
+            value={product.occasion}
+            onChange={handleInputChange}
+          ></input>
+        </label>
+
+        <label>
+          Hobbies:
+          <Input
+            placeholder="Separate by comma"
+            type="text"
+            name="hobbies_interests"
+            value={product.hobbies_interests}
+            onChange={handleInputChange}
+          ></Input>
+        </label>
+        <label>
+          Tags:
+          <Input
+            placeholder="Separate by comma"
+            type="text"
+            name="tags"
+            value={product.tags}
+            onChange={handleInputChange}
+          ></Input>
+        </label>
+      </MainForm>
+
+      <button
+        onClick={(e) => {
+          e.preventDefault();
+          postProduct(product, token);
+        }}
+      >
+        Submit
+      </button>
     </>
   );
 };
 
 export default AdminPage;
-
-/*
-Basic design:
-When a user logs in- set a flag that allows them to access the dataBase table
-Login logic-
-Enter Username/password- return confirmation token and set flag in Main
-As long as state is Main, allow user to view that page
-Have backend be the true checker for authentication
-
-In the backend- protect all routes related to posting and deleting products with "withAuth"
-If a user loses their authenticated privs, then 
-
-*/

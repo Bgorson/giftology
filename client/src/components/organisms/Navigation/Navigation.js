@@ -24,7 +24,7 @@ function trackEvent(category, action, label) {
 
 function Navigation({ pathname }) {
   const navigate = useHistory();
-  const { isLoggedIn } = useContext(UserContext);
+  const { isLoggedIn, is_admin } = useContext(UserContext);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const handleMobileMenuClick = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
@@ -93,6 +93,13 @@ function Navigation({ pathname }) {
               About Us
             </NavLink>
           </NavItem>
+          {is_admin && (
+            <NavItem>
+              <NavLink as={Link} to="/admin">
+                Admin
+              </NavLink>
+            </NavItem>
+          )}
           <NavItem>
             {isLoggedIn ? (
               <NavLink

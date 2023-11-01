@@ -28,6 +28,9 @@ export default function ProductCard({ GPTResults, demo }) {
           const productName = GPTResults[i].trim();
           try {
             const response = await postAmazonProductInfo(productName);
+            if (!response) {
+              setAmazonProducts((prev) => [...prev, {}]);
+            }
             if (response.status !== 429 && response.productName) {
               setAmazonProducts((prev) => [...prev, response]);
               ReactGA.event({
@@ -59,7 +62,8 @@ export default function ProductCard({ GPTResults, demo }) {
     amazonProducts.map(
       (product, index) =>
         // only display the first 3
-        (index < 3 || demo) && (
+        (index < 3 || demo) &&
+        product && (
           <CardContainer
             key={index + product.productName}
             href={product.link}

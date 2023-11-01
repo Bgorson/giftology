@@ -3,7 +3,22 @@ const postGPT = require("../api/postGPT");
 const getAffiliateInformation = require("../api/getAmazonAffiliateLink");
 const router = express.Router();
 const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+const addProduct = require("../utils/addProduct");
+const pool = require("../dataBaseSQL/db");
+function extractPrice(text) {
+  // Regular expression to match price patterns like $27.99 or 27.99 ($7.00 / Count)
+  var pricePattern = /\$?(\d+\.\d{2})/;
 
+  // Extract price using regular expression
+  var match = text.match(pricePattern);
+
+  // Check if a match is found
+  if (match && match[1]) {
+    return parseFloat(match[1]); // Convert the matched value to a float
+  } else {
+    return "unknown"; // Return "unknown" if no valid price is found
+  }
+}
 // const productMock = [
 //   {
 //     id: "B07XJ8C8F3",
@@ -51,16 +66,162 @@ router.post("/", async (req, res) => {
   }
 });
 router.post("/amazon", async (req, res) => {
+  const client = await pool.connect();
+
   const { productName } = req.body;
+  // check if the product already exists:
+  const checkProductQuery = "SELECT * FROM products WHERE product_name = $1";
+  const checkProductResult = await client.query(checkProductQuery, [
+    productName,
+  ]);
+  if (checkProductResult.rows.length !== 0) {
+    const product = checkProductResult.rows[0];
+    const productShape = {
+      productName: product.product_name,
+      directImageSrc: product.website,
+      link: product.link,
+      price: product.product_base_price,
+    };
+
+    res.send(productShape);
+    return;
+  }
   try {
     const amazonResponse = await getAffiliateInformation({
       productName,
     });
-
+    // Add to Database
     res.send(amazonResponse);
+
+    const productSpecific = await postGPT({
+      productSpecific: true,
+      product: amazonResponse.productName,
+    });
+
+    const product = {
+      product_name: amazonResponse.productName,
+      website: "amazon",
+      link: amazonResponse.link,
+      product_base_price: extractPrice(amazonResponse.price),
+      gift_type_id: [],
+      category_id: "",
+      direct_image_src: amazonResponse.directImageSrc,
+      age_min: 0,
+      age_max: 99,
+      flavor_text:
+        "This item was recommended by our AI engine, if you like it, be sure to click favorites.",
+    };
+    let hobbyIDArray = [];
+    const tagIDArray = [];
+    if (productSpecific.Hobbies) {
+      const findHobbiesQuery =
+        "SELECT * FROM hobbies_interests_list WHERE hobbies_interests_name = $1";
+
+      // Array to store promises for async operations
+      const promises = [];
+
+      // For each hobby name, create a promise for the asynchronous operation
+      productSpecific.Hobbies.forEach((hobby) => {
+        const promise = new Promise(async (resolve) => {
+          const findHobbiesResult = await client.query(findHobbiesQuery, [
+            hobby,
+          ]);
+          if (findHobbiesResult.rows.length === 0) {
+            const insertHobbiesQuery =
+              "INSERT INTO hobbies_interests_list (hobbies_interests_name) VALUES ($1) RETURNING *";
+            const insertHobbiesResult = await client.query(insertHobbiesQuery, [
+              hobby,
+            ]);
+            resolve(insertHobbiesResult.rows[0].id);
+          } else {
+            resolve(findHobbiesResult.rows[0].id);
+          }
+        });
+
+        // Add the promise to the promises array
+        promises.push(promise);
+      });
+
+      // Wait for all promises to resolve using Promise.all()
+      Promise.all(promises)
+        .then((hobbyIDs) => {
+          // Now all async operations have finished, and hobbyIDs contains the results
+          hobbyIDArray.push(...hobbyIDs);
+        })
+        .catch((error) => {
+          console.error("Error occurred:", error);
+        });
+    }
+    if (productSpecific.Tags) {
+      const findTagsQuery = "SELECT * FROM tag_list WHERE tag_name = $1";
+      const tagPromises = [];
+
+      productSpecific.Tags.forEach((tag) => {
+        const promise = new Promise(async (resolve) => {
+          const findTagsResult = await client.query(findTagsQuery, [tag]);
+          if (findTagsResult.rows.length === 0) {
+            const insertTagsQuery =
+              "INSERT INTO tag_list (tag_name) VALUES ($1) RETURNING *";
+            const insertTagsResult = await client.query(insertTagsQuery, [tag]);
+            resolve(insertTagsResult.rows[0].id);
+          } else {
+            resolve(findTagsResult.rows[0].id);
+          }
+        });
+
+        tagPromises.push(promise);
+      });
+
+      Promise.all(tagPromises)
+        .then((tagIDs) => {
+          tagIDArray.push(...tagIDs);
+        })
+        .catch((error) => {
+          console.error("Error occurred while processing tags:", error);
+        });
+    }
+    if (productSpecific.Category) {
+      const findCategory =
+        "SELECT * FROM categories_list WHERE category_name = $1";
+      const findCategoryResult = await client.query(findCategory, [
+        productSpecific.Category[0].replace(/[{},"]/g, ""),
+      ]);
+      if (findCategoryResult.rows.length === 0) {
+        const insertCategoryQuery =
+          "INSERT INTO categories_list (category_name) VALUES ($1) RETURNING *";
+        const insertCategoryResult = await client.query(insertCategoryQuery, [
+          productSpecific.Category[0].replace(/[{},"]/g, ""),
+        ]);
+        product.category_id = insertCategoryResult.rows[0].id;
+      } else {
+        product.category_id = findCategoryResult.rows[0].id;
+      }
+    } else {
+      const findCategory =
+        "SELECT * FROM categories_list WHERE category_name = 'Other'";
+
+      const findCategoryResultOther = await client.query(findCategory);
+      if (findCategoryResultOther.rows.length === 0) {
+        const insertCategoryQuery =
+          "INSERT INTO categories_list (category_name) VALUES ($1) RETURNING *";
+        const insertCategoryResult = await client.query(insertCategoryQuery, [
+          "Other",
+        ]);
+        product.category_id = insertCategoryResult.rows[0].id;
+      } else {
+        product.category_id = findCategoryResultOther.rows[0].id;
+      }
+    }
+
+    product.hobbies_id = hobbyIDArray;
+    product.tags_id = tagIDArray;
+
+    addProduct({ product, userAdded: false });
+    client.release();
+
     // res.send(productMock);
   } catch (err) {
-    res.send("err");
+    client.release();
   }
 });
 
