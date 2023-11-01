@@ -33,7 +33,7 @@ LEFT JOIN
 tag_list AS tl ON t.tag_id  = tl.id  
 GROUP BY
 p.product_id, p.product_name;
-`
+`;
 
 const pool = require("../dataBaseSQL/db");
 
@@ -43,22 +43,34 @@ const updateUser = async (email, answers, quizId) => {
     let generatedId = quizId;
     const foundUserQuery = "SELECT * FROM users WHERE email = $1";
     const foundUserResult = await client.query(foundUserQuery, [email]);
-    const foundUser = foundUserResult.rows[0]||{};
-    const {who, name, age, occasion, hobbies, tags,gender} = answers
+    const foundUser = foundUserResult.rows[0] || {};
+    const { who, name, age, occasion, hobbies, tags, gender } = answers;
     const foundQuizQuery = "SELECT * FROM quizs WHERE quiz_id = $1";
     const foundQuiz = await client.query(foundQuizQuery, [generatedId]);
-if (!foundQuiz.rows[0]) {
-  const detectDebounce = await client.query("SELECT * FROM quizs WHERE user_id = $1 AND created_at > NOW() - INTERVAL '1 minute'", [foundUser?.id||null]);
-  if (detectDebounce.rows[0]) {
-    return {...answers, id: generatedId};
-  }
-  else {
-    const insertQuizQuery =
-      "INSERT INTO quizs (quiz_id, user_id, who, gender, name, age, occasion, hobbies, tags) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)";
-    await client.query(insertQuizQuery, [generatedId, foundUser?.id||null, who, gender, name, age, occasion, hobbies, tags]);
-}
-}
-    return {...answers, id: generatedId};
+    if (!foundQuiz.rows[0]) {
+      const detectDebounce = await client.query(
+        "SELECT * FROM quizs WHERE user_id = $1 AND created_at > NOW() - INTERVAL '1 minute'",
+        [foundUser?.id || null]
+      );
+      if (detectDebounce.rows[0]) {
+        return { ...answers, id: generatedId };
+      } else {
+        const insertQuizQuery =
+          "INSERT INTO quizs (quiz_id, user_id, who, gender, name, age, occasion, hobbies, tags) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)";
+        await client.query(insertQuizQuery, [
+          generatedId,
+          foundUser?.id || null,
+          who,
+          gender,
+          name,
+          age,
+          occasion,
+          hobbies,
+          tags,
+        ]);
+      }
+    }
+    return { ...answers, id: generatedId };
     // if (foundUser) {
     //   const quizId = v4();
     //   const newQuizData = {
@@ -126,7 +138,7 @@ const round10 = (value, exp) => decimalAdjust("round", value, exp);
 const retriveProducts = async () => {
   const client = await pool.connect();
   try {
-    const query = joinProductQuery
+    const query = joinProductQuery;
     // Need to update query with a join to get additional info
     const result = await client.query(query);
     return result.rows;
@@ -160,10 +172,10 @@ const calculateScoreForAll = async (filteredProducts, quizResults) => {
       oArray = [];
     }
     const tagArray = product.tags_sort;
-    const lowerCase = hArray
-    const lowerCaseTagArray = tagArray
+    const lowerCase = hArray;
+    const lowerCaseTagArray = tagArray;
     const lowerCaseOc = Array.isArray(oArray)
-      ? oArray.map((array) => array? array.toLowerCase():'')
+      ? oArray.map((array) => (array ? array.toLowerCase() : ""))
       : oArray.toLowerCase();
 
     // SCORING HOBBIES
@@ -245,7 +257,11 @@ const groupBy = (arr, property) => {
 
 router.post("/allProducts", async (req, res) => {
   let quizData;
-    quizData = await updateUser(req.body.email, req.body.answers, req.body.quizId);
+  quizData = await updateUser(
+    req.body.email,
+    req.body.answers,
+    req.body.quizId
+  );
 
   const test = {
     age: "30-30",

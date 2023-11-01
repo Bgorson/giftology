@@ -3,6 +3,7 @@ const getImage = require("../api/getEtsy");
 const router = express.Router();
 const pool = require("../dataBaseSQL/db");
 const jwt = require("jsonwebtoken");
+const addProduct = require("../utils/addProduct");
 
 const joinProductQuery = `SELECT
 p.product_id,
@@ -36,7 +37,7 @@ tag_list AS tl ON t.tag_id  = tl.id
 WHERE p.product_id = $1
 GROUP BY
 p.product_id, p.product_name;
-`
+`;
 function verifyToken(req, res, next) {
   const bearerHeader = req.headers["authorization"];
 
@@ -61,7 +62,7 @@ router.get("/product/:product", async (req, res) => {
 
   try {
     const client = await pool.connect();
-    const query = joinProductQuery
+    const query = joinProductQuery;
     const result = await client.query(query, [productID]);
     client.release();
 
@@ -96,58 +97,32 @@ router.get("/category/:name", async (req, res) => {
   }
 });
 
-router.post("/add_product",verifyToken, async (req, res) => {
+router.post("/add_product", verifyToken, async (req, res) => {
   jwt.verify(req.token, process.env.JWT_ACC_ACTIVATE, async (err, authData) => {
-    if (err|| authData===undefined) {
-    console.log("AUTH", authData)
+    if (err || authData === undefined) {
       res.sendStatus(403);
-    }
-    else {
-    try{
-    const {_id} = authData
-    const client = await pool.connect();
-      
-      const userQuery = "SELECT * FROM users WHERE email = $1";
-      const userResult = await client.query(userQuery, [_id]);
-      const isAdmin = userResult.rows[0].is_admin;
-if (isAdmin){
-  const product = req.body;
-  const productTemplate  = {
-    product_id:"New",
-    html_tag:"http://placekitten.com/g/200/300",
-    link: "www.amazon.com",
-    flavor_text:"I dunno",
-    lab_results:"Some stuff",
-    product_base_price: 69,
-    age_min:10,
-    age_max:20,
-    product_card_banner:"AI Generated",
-    direct_image_src:"http://placekitten.com/g/200/300",
-    website:'ChatGPT'
-  }
-  const categoryTemplate=
-  ['Camping', 'Dogs']
-  const giftTypeTemplate=
-  ['thoughtful']
-  const hobbiesTemplate=
-  ['dogs','gaming']
-  const tagsTemplate=
-  ['classy','cozy']
+    } else {
+      try {
+        const { _id } = authData;
+        const client = await pool.connect();
 
-}
-else {
-  res.sendStatus(403);
-
-}
+        const userQuery = "SELECT * FROM users WHERE email = $1";
+        const userResult = await client.query(userQuery, [_id]);
+        const isAdmin = userResult.rows[0].is_admin;
+        const product = req.body;
+        if (isAdmin) {
+          await addProduct({ product, userAdded: true });
+          res.sendStatus(200);
+        } else {
+          res.sendStatus(403);
+        }
+      } catch (error) {
+        console.error("Error:", error);
+        res.status(500).send("Error retrieving user");
+      }
     }
-    catch (error) {
-      console.error("Error:", error);
-      res.status(500).send("Error retrieving user");
-    }
-  }
-  })
-})
-
+  });
+});
 
 router.get("/etsy/:id", async (req, res) => {
   const listingId = req.params.id;
