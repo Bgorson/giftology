@@ -64,7 +64,6 @@ router.get("/product/:product", async (req, res) => {
     const client = await pool.connect();
     const query = joinProductQuery;
     const result = await client.query(query, [productID]);
-    client.release();
 
     const product = result.rows[0];
     if (product) {
@@ -79,6 +78,8 @@ router.get("/product/:product", async (req, res) => {
   } catch (error) {
     console.error("Error:", error);
     res.status(500).send("Error retrieving product");
+  } finally {
+    client.release();
   }
 });
 
@@ -88,12 +89,13 @@ router.get("/category/:name", async (req, res) => {
     const client = await pool.connect();
     const query = "SELECT * FROM products WHERE category = $1";
     const result = await client.query(query, [category]);
-    client.release();
 
     res.send(result.rows);
   } catch (error) {
     console.error("Error:", error);
     res.status(500).send("Error retrieving products by category");
+  } finally {
+    client.release();
   }
 });
 
@@ -231,6 +233,8 @@ router.post("/add_product", verifyToken, async (req, res) => {
       } catch (error) {
         console.error("Error:", error);
         res.status(500).send("Error retrieving user");
+      } finally {
+        client.release();
       }
     }
   });

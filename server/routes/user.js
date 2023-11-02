@@ -38,7 +38,7 @@ tag_list AS tl ON t.tag_id  = tl.id
 WHERE p.product_id = ANY($1::int[])
 GROUP BY
 p.product_id, p.product_name;
-`
+`;
 function verifyToken(req, res, next) {
   const bearerHeader = req.headers["authorization"];
 
@@ -131,10 +131,17 @@ router.get("/favorites", verifyToken, async (req, res) => {
         const userResult = await client.query(userQuery, [_id]);
         const user = userResult.rows[0].id;
         const findAllFavorites = `SELECT product_id FROM favorites WHERE user_id = $1 AND quiz_id = $2`;
-        const findAllFavoritesResult = await client.query(findAllFavorites, [user, req.query.quizId]);
-        const arrayOfProductIds = findAllFavoritesResult.rows.map((item) => item.product_id);
-        const productQuery = joinProductQuery
-        const productResult = await client.query(productQuery, [arrayOfProductIds]);
+        const findAllFavoritesResult = await client.query(findAllFavorites, [
+          user,
+          req.query.quizId,
+        ]);
+        const arrayOfProductIds = findAllFavoritesResult.rows.map(
+          (item) => item.product_id
+        );
+        const productQuery = joinProductQuery;
+        const productResult = await client.query(productQuery, [
+          arrayOfProductIds,
+        ]);
         const matchingProducts = productResult.rows;
         const updatedProducts = await Promise.all(
           matchingProducts.map(async (product) => {
@@ -156,23 +163,22 @@ router.get("/favorites", verifyToken, async (req, res) => {
   });
 });
 
-router.get('/quizes', verifyToken, async (req, res) => {
+router.get("/quizes", verifyToken, async (req, res) => {
   jwt.verify(req.token, process.env.JWT_ACC_ACTIVATE, async (err, authData) => {
     if (err) {
-      console.log('ERROR', err);
       res.sendStatus(403);
     } else {
       const { _id } = authData;
       const client = await pool.connect();
       try {
-        const userQuery = 'SELECT * FROM users WHERE email = $1';
+        const userQuery = "SELECT * FROM users WHERE email = $1";
         const userResult = await client.query(userQuery, [_id]);
         const userID = userResult.rows[0].id;
         const quizQuery = `SELECT quizs.*,  ARRAY_AGG(favorites.product_id) AS favorite_products
         FROM quizs
         LEFT JOIN favorites ON favorites.quiz_id=quizs.quiz_id
         WHERE quizs.user_id = $1
-        GROUP BY quizs.quiz_id;`
+        GROUP BY quizs.quiz_id;`;
         const quizResult = await client.query(quizQuery, [userID]);
         const quizes = quizResult.rows;
 
@@ -181,15 +187,14 @@ router.get('/quizes', verifyToken, async (req, res) => {
 
         res.send(quizes);
       } catch (error) {
-        console.error('Error fetching quizes:', error);
+        console.error("Error fetching quizes:", error);
         res.sendStatus(500);
       } finally {
         client.release();
       }
     }
-  })
-})
-
+  });
+});
 
 router.post("/favorites", verifyToken, async (req, res) => {
   jwt.verify(req.token, process.env.JWT_ACC_ACTIVATE, async (err, authData) => {
@@ -205,21 +210,20 @@ router.post("/favorites", verifyToken, async (req, res) => {
           [_id]
         );
         let userData = user.rows[0].id || null; // Default to empty array if null
-if (!userData) return res.sendStatus(500)
+        if (!userData) return res.sendStatus(500);
         const quizId = req.body.quizId;
-      // Check if quizID is associated with this ID- if its not update the row
-      const checkQuizQuery = `SELECT * FROM quizs WHERE quiz_id = $1`;
-      const checkQuizResult = await client.query(checkQuizQuery, [quizId]);
-      if (checkQuizResult.rows.length === 1) {
-        const updateQuizQuery = `UPDATE quizs SET user_id = $1 WHERE quiz_id = $2`;
-        await client.query(updateQuizQuery, [userData, quizId]);
-      }
+        // Check if quizID is associated with this ID- if its not update the row
+        const checkQuizQuery = `SELECT * FROM quizs WHERE quiz_id = $1`;
+        const checkQuizResult = await client.query(checkQuizQuery, [quizId]);
+        if (checkQuizResult.rows.length === 1) {
+          const updateQuizQuery = `UPDATE quizs SET user_id = $1 WHERE quiz_id = $2`;
+          await client.query(updateQuizQuery, [userData, quizId]);
+        }
 
         const product = req.body.product.product_id;
-          const postFavoriteQuery = `INSERT INTO favorites (user_id, product_id, quiz_id) VALUES ($1, $2, $3)`;
-          const postFavoriteValues = [parseInt(userData), product, quizId];
-          await client.query(postFavoriteQuery, postFavoriteValues);
-
+        const postFavoriteQuery = `INSERT INTO favorites (user_id, product_id, quiz_id) VALUES ($1, $2, $3)`;
+        const postFavoriteValues = [parseInt(userData), product, quizId];
+        await client.query(postFavoriteQuery, postFavoriteValues);
 
         res.status(200).json({ message: "Updated wishlist" });
       } catch (error) {
@@ -232,7 +236,6 @@ if (!userData) return res.sendStatus(500)
   });
 });
 
-
 router.delete("/favorites", verifyToken, async (req, res) => {
   jwt.verify(req.token, process.env.JWT_ACC_ACTIVATE, async (err, authData) => {
     if (err) {
@@ -242,10 +245,9 @@ router.delete("/favorites", verifyToken, async (req, res) => {
     const { _id } = authData;
     const client = await pool.connect();
     try {
-      const user = await client.query(
-        "SELECT id FROM users WHERE email = $1",
-        [_id]
-      );
+      const user = await client.query("SELECT id FROM users WHERE email = $1", [
+        _id,
+      ]);
       let userData = user.rows[0].id || null; // Default to empty array if null
       if (!userData) return res.sendStatus(500);
       const quizId = req.body.quizId;
@@ -278,7 +280,7 @@ router.delete("/profile", verifyToken, async (req, res) => {
         const user = userResult.rows[0];
 
         const profileId = req.body.id;
-   
+
         const deleteQuiz = `DELETE FROM quizs WHERE quiz_id = $1`;
         await client.query(deleteQuiz, [profileId]);
         const getQuizQuery = `SELECT * FROM quizs WHERE user_id = $1`;
@@ -303,14 +305,14 @@ router.patch("/profile", verifyToken, async (req, res) => {
       const client = await pool.connect();
       try {
         const { _id } = authData;
-        const getUserID= `SELECT id FROM users WHERE email = $1`;
+        const getUserID = `SELECT id FROM users WHERE email = $1`;
         const getUserResult = await client.query(getUserID, [_id]);
         const getUserIDResult = getUserResult.rows[0].id;
         const { id, url } = req.body;
         const updateQuizQuery = `UPDATE quizs SET createaccount = $1 WHERE quiz_id = $2`;
         await client.query(updateQuizQuery, [url, id]);
         const getQuizQuery = `SELECT * FROM quizs WHERE user_id = $1`;
-       let updated = await client.query(getQuizQuery, [getUserIDResult]);
+        let updated = await client.query(getQuizQuery, [getUserIDResult]);
         updated = updated.rows;
 
         res.send(updated);
@@ -365,63 +367,82 @@ router.post("/mailingList", (req, res) => {
 });
 
 router.post("/behavior", verifyToken, async (req, res) => {
+  const _id = req.body.userId;
+  const client = await pool.connect();
+  try {
+    const userQuery = "SELECT * FROM users WHERE email = $1";
+    const userResult = await client.query(userQuery, [_id]);
+    let user = userResult.rows[0] || {};
+    const { behavior, product, quizId } = req.body;
+    const userId = user.id || null;
+    // check if record exists:
+    const checkBehaviorQuery = `SELECT * FROM user_behaviors WHERE product_id = $1 AND quiz_id = $2`;
+    const checkBehaviorResult = await client.query(checkBehaviorQuery, [
+      product,
+      quizId,
+    ]);
 
-      const _id = req.body.userId;
-      const client = await pool.connect();
-      try {
-        const userQuery = "SELECT * FROM users WHERE email = $1";
-        const userResult = await client.query(userQuery, [_id]);
-        let user = userResult.rows[0]||{};
-        const {behavior, product, quizId} = req.body;
-        const userId = user.id||null;
-        // check if record exists:
-        const checkBehaviorQuery = `SELECT * FROM user_behaviors WHERE product_id = $1 AND quiz_id = $2`;
-        const checkBehaviorResult = await client.query(checkBehaviorQuery, [product, quizId]);
+    if (checkBehaviorResult.rows.length > 0) {
+      let preExistingbehavior = checkBehaviorResult.rows[0];
+      const favorite =
+        preExistingbehavior.clicked_favorite ||
+        behavior.clicked_favorite ||
+        false;
+      const info =
+        preExistingbehavior.clicked_info || behavior.clicked_info || false;
+      const retailer =
+        preExistingbehavior.clicked_retailer ||
+        behavior.clicked_retailer ||
+        false;
+      const updateBehaviorQuery = `UPDATE user_behaviors SET clicked_favorite = $1, clicked_info = $2, clicked_retailer = $3 WHERE product_id = $4 AND quiz_id = $5`;
+      await client.query(updateBehaviorQuery, [
+        favorite,
+        info,
+        retailer,
+        product,
+        quizId,
+      ]);
+    } else {
+      const insertBehaviorQuery = `INSERT INTO user_behaviors (clicked_favorite,clicked_info,clicked_retailer, product_id, quiz_id, user_id) VALUES ($1, $2, $3, $4, $5, $6)`;
+      await client.query(insertBehaviorQuery, [
+        behavior.clicked_favorite || false,
+        behavior.clicked_info || false,
+        behavior.clicked_retailer || false,
+        product,
+        quizId,
+        userId,
+      ]);
+    }
+    res.sendStatus(200);
+  } catch (error) {
+    console.error("Error updating profile:", error);
+    res.sendStatus(500);
+  } finally {
+    client.release();
+  }
+});
 
-        if (checkBehaviorResult.rows.length > 0) {
+//     const { id, url } = req.body;
+//     const profileIndex = JSON.parse(user.user_data).findIndex(
+//       (item) => item.id === id
+//     );
+//     let newValue = JSON.parse(user.user_data)[profileIndex].quizResults;
+//     newValue.createAccount = url;
+//     user.user_data = JSON.parse(user.user_data).map((item) =>
+//       item.id === id ? { ...item, quizResults: newValue } : item
+//     );
+//     const updateUserQuery =
+//       "UPDATE users SET user_data = $1 WHERE email = $2";
+//     await client.query(updateUserQuery, [
+//       JSON.stringify(user.user_data),
+//       _id,
+//     ]);
 
-           let preExistingbehavior = checkBehaviorResult.rows[0];
-           const favorite = preExistingbehavior.clicked_favorite|| behavior.clicked_favorite || false;
-           const info = preExistingbehavior.clicked_info|| behavior.clicked_info || false;
-           const retailer = preExistingbehavior.clicked_retailer|| behavior.clicked_retailer || false;
-           const updateBehaviorQuery = `UPDATE user_behaviors SET clicked_favorite = $1, clicked_info = $2, clicked_retailer = $3 WHERE product_id = $4 AND quiz_id = $5`;
-           await client.query(updateBehaviorQuery, [favorite, info, retailer, product, quizId]);
-        } else {
-          const insertBehaviorQuery = `INSERT INTO user_behaviors (clicked_favorite,clicked_info,clicked_retailer, product_id, quiz_id, user_id) VALUES ($1, $2, $3, $4, $5, $6)`;
-          await client.query(insertBehaviorQuery, [behavior.clicked_favorite||false, behavior.clicked_info||false, behavior.clicked_retailer||false, product, quizId, userId]);
-        }
-        res.sendStatus(200);
-
-      } catch (error) {
-        console.error("Error updating profile:", error);
-        res.sendStatus(500);
-      } finally {
-        client.release();
-      }
-  });
-
-    //     const { id, url } = req.body;
-    //     const profileIndex = JSON.parse(user.user_data).findIndex(
-    //       (item) => item.id === id
-    //     );
-    //     let newValue = JSON.parse(user.user_data)[profileIndex].quizResults;
-    //     newValue.createAccount = url;
-    //     user.user_data = JSON.parse(user.user_data).map((item) =>
-    //       item.id === id ? { ...item, quizResults: newValue } : item
-    //     );
-    //     const updateUserQuery =
-    //       "UPDATE users SET user_data = $1 WHERE email = $2";
-    //     await client.query(updateUserQuery, [
-    //       JSON.stringify(user.user_data),
-    //       _id,
-    //     ]);
-
-    //     res.send(user);
-    //   } catch (error) {
-    //     console.error("Error updating profile:", error);
-    //     res.sendStatus(500);
-    //   } finally {
-    //     client.release();
-    //   }
-    // }
-  
+//     res.send(user);
+//   } catch (error) {
+//     console.error("Error updating profile:", error);
+//     res.sendStatus(500);
+//   } finally {
+//     client.release();
+//   }
+// }

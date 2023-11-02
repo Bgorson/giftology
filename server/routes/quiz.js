@@ -70,6 +70,7 @@ const updateUser = async (email, answers, quizId) => {
         ]);
       }
     }
+
     return { ...answers, id: generatedId };
     // if (foundUser) {
     //   const quizId = v4();
