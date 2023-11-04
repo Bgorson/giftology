@@ -58,31 +58,36 @@ const addProduct = async ({ product, userAdded }) => {
         "INSERT INTO hobbies_interests (product_id, hobbies_interests_id) VALUES ($1, $2)";
       const tagsInsert =
         "INSERT INTO tags (product_id, tag_id) VALUES ($1, $2)";
-
-      await client.query(categoryInsert, [
-        insertProduct.rows[0].product_id,
-        product.category_id,
-      ]);
-      product.gift_type_id.forEach(async (giftType) => {
-        await client.query(giftTypeInsert, [
+      if (product.category_id) {
+        await client.query(categoryInsert, [
           insertProduct.rows[0].product_id,
-          giftType,
+          product.category_id,
         ]);
-      });
-      product.hobbies_id.forEach(async (hobbies) => {
-        await client.query(hobbiesInsert, [
-          insertProduct.rows[0].product_id,
-          hobbies,
-        ]);
-      });
-
-      product.tags_id.forEach(async (tags) => {
-        await client.query(tagsInsert, [
-          insertProduct.rows[0].product_id,
-          tags,
-        ]);
-      });
-
+      }
+      if (product.gift_type_id) {
+        product.gift_type_id.forEach(async (giftType) => {
+          await client.query(giftTypeInsert, [
+            insertProduct.rows[0].product_id,
+            giftType,
+          ]);
+        });
+      }
+      if (product.hobbies_id) {
+        product.hobbies_id.forEach(async (hobbies) => {
+          await client.query(hobbiesInsert, [
+            insertProduct.rows[0].product_id,
+            hobbies,
+          ]);
+        });
+      }
+      if (product.tags_id) {
+        product.tags_id.forEach(async (tags) => {
+          await client.query(tagsInsert, [
+            insertProduct.rows[0].product_id,
+            tags,
+          ]);
+        });
+      }
       return insertProduct.rows[0].product_id;
     } else {
       return checkProductResult.rows[0].product_id;
