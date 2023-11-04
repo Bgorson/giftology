@@ -30,6 +30,7 @@ const postGPT = async ({
   product,
 }) => {
   if (productSpecific) {
+    return;
     prompt = `What category, tags and hobbies would you associate with ${product}? Format response as: 'Category: Category, Tags: [Tag, Tag, Tag]' and 'Hobbies: [Hobby, Hobby, Hobby]'`;
     try {
       const configuration = new Configuration({
