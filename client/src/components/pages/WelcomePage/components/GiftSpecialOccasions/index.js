@@ -75,7 +75,7 @@ export default function GiftSpecialOccasions() {
               Get notified when an event (birthday, anniversary..) is coming up
             </StepHeader>
             <StepDescription>
-              We'll make sure you never miss a special occasion
+              {`We'll make sure you never miss a special occasion`}
             </StepDescription>
           </StepContent>
         </StepMainContent>
@@ -97,7 +97,7 @@ export default function GiftSpecialOccasions() {
           <StepContent>
             <StepHeader>Receive updates when a new gift is added</StepHeader>
             <StepDescription>
-              We'll let you know when we have the perfect match for their
+              {`We'll let you know when we have the perfect match for their`}
               interests
             </StepDescription>
           </StepContent>

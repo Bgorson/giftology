@@ -7,5 +7,20 @@
     "test": {
       "plugins": ["ramda"]
     }
+  },
+  "module":{
+    "rules":[
+      {
+        "use": {
+          "loader": "babel-loader",
+          "options": {
+            "failOnError":false,
+            "failOnWarning":false,
+            "presets": ["@babel/preset-env"]
+          }
+        }
+      }
+    ]
   }
+  
 }

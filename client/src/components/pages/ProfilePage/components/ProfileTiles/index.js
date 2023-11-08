@@ -20,7 +20,6 @@ import {
 } from "./styles";
 import { useHistory } from "react-router";
 
-import profile_test from "../../../../../profile_test.webp";
 import { hobbyMap } from "../../../../../utils/hobbyMap";
 import { coworkerTagMap } from "../../../../../utils/coworkerTagMap";
 import viewPastQuiz from "../../../../../viewPastQuiz.png";
@@ -32,24 +31,30 @@ import ReactGA from "react-ga4";
 export default function ProfileTiles({
   profileData,
   handleProfileDelete,
-  uploadNewImage,
   changeProfilePicture,
   arrayOfImages,
 }) {
   const [imageHovered, setImageHovered] = useState(false);
   const history = useHistory();
-  const { createaccount, favorite_products,quiz_id, hobbies, name, tags, coworkerTags, who } =
-    profileData;
-  const [imageURL, setImageURL] = useState(createaccount||arrayOfImages[0]);
+  const {
+    createaccount,
+    favorite_products,
+    quiz_id,
+    hobbies,
+    name,
+    coworkerTags,
+    who,
+  } = profileData;
+  const [imageURL, setImageURL] = useState(createaccount || arrayOfImages[0]);
 
   const hobbyTransform = (hobbies) => {
     if (hobbies) {
       let string = "";
       const array_of_strings = hobbies
-  .replace('{', '')
-  .replace('}', '')
-  .replace(/"/g, '')
-  .split(',');
+        .replace("{", "")
+        .replace("}", "")
+        .replace(/"/g, "")
+        .split(",");
       array_of_strings.forEach((hobby) => {
         const val = hobbyMap.find((entry) => entry.value === hobby);
         string += `${val.message}, `;
@@ -73,20 +78,22 @@ export default function ProfileTiles({
     });
     function stringToArray(inputString) {
       // Remove leading and trailing curly braces if present
-      if (inputString.startsWith('{') && inputString.endsWith('}')) {
+      if (inputString.startsWith("{") && inputString.endsWith("}")) {
         inputString = inputString.slice(1, -1);
       }
-    
+
       // Split the string using comma as the delimiter and remove surrounding double quotes
-      const stringArray = inputString.split(',').map(item => item.trim().replace(/"/g, ''));
-    
+      const stringArray = inputString
+        .split(",")
+        .map((item) => item.trim().replace(/"/g, ""));
+
       return stringArray;
     }
     let quizDataToSet = {
       ...data,
-      hobbies: data.hobbies? stringToArray(data.hobbies):[],
-      tags: data.tags? stringToArray(data.tags):[],
-    }
+      hobbies: data.hobbies ? stringToArray(data.hobbies) : [],
+      tags: data.tags ? stringToArray(data.tags) : [],
+    };
     localStorage.setItem("quizResults", JSON.stringify(quizDataToSet));
     localStorage.setItem("quizId", profileData.quiz_id);
 
@@ -94,22 +101,21 @@ export default function ProfileTiles({
   };
   const coWorkerTagTransform = (tags) => {
     let string = "";
-    if (tags){
+    if (tags) {
       const array_of_strings = tags
-  .replace('{', '')
-  .replace('}', '')
-  .replace(/"/g, '')
-  .split(',');
-  array_of_strings.forEach((tag) => {
-      const val = coworkerTagMap.find((entry) => entry.value === tag);
-      string += `${val.message}, `;
-    });
-    return string.substring(0, string.length - 2);
-  }
-  else{
-    return "";
+        .replace("{", "")
+        .replace("}", "")
+        .replace(/"/g, "")
+        .split(",");
+      array_of_strings.forEach((tag) => {
+        const val = coworkerTagMap.find((entry) => entry.value === tag);
+        string += `${val.message}, `;
+      });
+      return string.substring(0, string.length - 2);
+    } else {
+      return "";
+    }
   };
-}
 
   function capitalizeFirstLetter(string) {
     if (string) {
@@ -119,75 +125,69 @@ export default function ProfileTiles({
     }
   }
 
-
   const changeImage = (quiz_id, direction) => {
     ReactGA.event({
       category: "Profile",
       action: `Changed profile image, ${name}`,
       label: "ProfileButton",
-    })
-    if (direction==='next'){
+    });
+    if (direction === "next") {
       const index = arrayOfImages.indexOf(imageURL);
-      if (index === arrayOfImages.length-1){
+      if (index === arrayOfImages.length - 1) {
         changeProfilePicture(quiz_id, arrayOfImages[0]);
         setImageURL(arrayOfImages[0]);
+      } else {
+        changeProfilePicture(quiz_id, arrayOfImages[index + 1]);
+        setImageURL(arrayOfImages[index + 1]);
       }
-      else{
-        changeProfilePicture(quiz_id, arrayOfImages[index+1]);
-        setImageURL(arrayOfImages[index+1]);
-      }
-    }
-    else{
+    } else {
       const index = arrayOfImages.indexOf(imageURL);
-      if (index === 0){
-        changeProfilePicture(quiz_id, arrayOfImages[arrayOfImages.length-1]);
-        setImageURL(arrayOfImages[arrayOfImages.length-1]);
-      }
-      else{
-        changeProfilePicture(quiz_id, arrayOfImages[index-1]);
-        setImageURL(arrayOfImages[index-1]);
+      if (index === 0) {
+        changeProfilePicture(quiz_id, arrayOfImages[arrayOfImages.length - 1]);
+        setImageURL(arrayOfImages[arrayOfImages.length - 1]);
+      } else {
+        changeProfilePicture(quiz_id, arrayOfImages[index - 1]);
+        setImageURL(arrayOfImages[index - 1]);
       }
     }
-  }
-  
-    // const newIndex =
-    //   direction === "next"
-    //     ? (currentIndex + 1) % arrayOfImages.length
-    //     : direction === "previous"
-    //     ? (currentIndex - 1 + arrayOfImages.length) % arrayOfImages.length
-    //     : currentIndex;
-  
-    // const newURL = arrayOfImages[newIndex];
-    // changeProfilePicture(quiz_id, newURL);
-    // setImageURL(newURL);
-  
-    // currentIndex = newIndex;
-  
-  
-  
-  
-  
+  };
+
+  // const newIndex =
+  //   direction === "next"
+  //     ? (currentIndex + 1) % arrayOfImages.length
+  //     : direction === "previous"
+  //     ? (currentIndex - 1 + arrayOfImages.length) % arrayOfImages.length
+  //     : currentIndex;
+
+  // const newURL = arrayOfImages[newIndex];
+  // changeProfilePicture(quiz_id, newURL);
+  // setImageURL(newURL);
+
+  // currentIndex = newIndex;
+
   return (
     <Container>
       <ImageWrapper>
-        <NextArrow onClick={() => changeImage(profileData.quiz_id,"next")}>
+        <NextArrow onClick={() => changeImage(profileData.quiz_id, "next")}>
           <img src={Arrow} />
         </NextArrow>
-        <PreviousArrow onClick={() => changeImage(profileData.quiz_id,"previous")}>
+        <PreviousArrow
+          onClick={() => changeImage(profileData.quiz_id, "previous")}
+        >
           <img src={Arrow} />
         </PreviousArrow>
         <Image
           imageHovered={imageHovered}
           onMouseEnter={onHover}
           onMouseLeave={onLeave}
-          onClick={() => changeImage(profileData.quiz_id,"next")}
+          onClick={() => changeImage(profileData.quiz_id, "next")}
           src={
             imageURL ||
             "https://res.cloudinary.com/deruncuzv/image/upload/v1679963321/Use_for_default_profile_image1_etrene.jpg"
           }
         />
         <UpdateProfileContainer
-          onClick={() => changeImage(profileData.quiz_id,"next")}
+          onClick={() => changeImage(profileData.quiz_id, "next")}
           onMouseEnter={onHover}
           onMouseLeave={onLeave}
           imageHovered={imageHovered}
@@ -218,11 +218,7 @@ export default function ProfileTiles({
       </ImportantDateText>
 
       <ActionsContainer>
-        <TextLink
-          onClick={() =>
-            navigateToQuizPage(profileData)
-          }
-        >
+        <TextLink onClick={() => navigateToQuizPage(profileData)}>
           <Icon src={viewPastQuiz} />
           View Last Quiz
         </TextLink>
@@ -232,8 +228,12 @@ export default function ProfileTiles({
         </TextLink>
       </ActionsContainer>
       <ViewWishListButton
-        disabled={favorite_products?.length === 1 && favorite_products[0] === null}
-        onClick={() => favorite_products?.length > 0 && history.push(`favorites/${quiz_id}`)}
+        disabled={
+          favorite_products?.length === 1 && favorite_products[0] === null
+        }
+        onClick={() =>
+          favorite_products?.length > 0 && history.push(`favorites/${quiz_id}`)
+        }
       >
         View Wish List
       </ViewWishListButton>

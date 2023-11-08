@@ -7,7 +7,7 @@ export const FlavorText = styled.p`
 `;
 
 export const CardContainer = styled.div`
-border-radius: 25px;
+  border-radius: 25px;
 
   color: black;
   position: relative;
@@ -24,6 +24,9 @@ border-radius: 25px;
   box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.2);
 `;
 
+export const Card = styled.div`
+  width: 400px;
+`;
 export const CardContentContainer = styled.div`
   position: relative;
   text-align: left;
@@ -89,7 +92,6 @@ export const FavoriteContainer = styled.div`
 export const Image = styled.img`
   width: 100%;
   border-radius: 25px 25px 0 0;
-
 `;
 export const ProductDescriptionHeading = styled.h2`
   font-size: 16px;
@@ -167,7 +169,7 @@ export const ProductPrice = styled.div`
 `;
 
 export const CardBackContainer = styled.div`
-border-radius: 25px;
+  border-radius: 25px;
   color: black;
   position: relative;
   height: 510px;
@@ -181,4 +183,35 @@ border-radius: 25px;
     flex-basis: auto;
   }
   box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.2);
+`;
+export const MainSection = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  width: 80%;
+  margin: 2em auto;
+  align-items: center;
+  justify-content: center;
+  gap: 1em;
+  border: lightgray 1px solid;
+  @media (min-width: 768px) {
+    width: 100%;
+  }
+`;
+
+export const CategoryTitleCard = styled.h1`
+  position: sticky;
+  top: 0px;
+  width: 100%;
+  margin: auto;
+  z-index: 999;
+  border-radius: 25px;
+  text-align: center;
+  background: linear-gradient(90deg, #0b8afd 0%, #c576ff 100%);
+  @media (min-width: 768px) {
+    top: 75px;
+  }
+`;
+
+export const ViewButton = styled.button`
+  width: 400px;
 `;

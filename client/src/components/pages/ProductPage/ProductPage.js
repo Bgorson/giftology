@@ -5,6 +5,7 @@ import { useParams, useLocation } from "react-router-dom";
 import { getProducts } from "../../../api/getSingleProduct";
 import { addFavorites } from "../../../api/addFavorites.js";
 import { UserContext } from "../../../context/UserContext";
+import LoginModal from "../../molecules/LoginModal";
 import {
   Image,
   TextContainer,
@@ -55,7 +56,7 @@ export default function ProductPage() {
       let cleanUrl = url.replace(/['‘’"“”]/g, "");
       let cleanText = matches.text[index].replace(/['‘’"“”]/g, "");
       let newText1 = cleanText.replace(/text=/g, "");
-      let newText = newText1.replace(/\~~/g, "");
+      let newText = newText1.replace(/~~/g, "");
 
       aTags.push(
         `<a  target="_blank" href=.././product/${cleanUrl}> ${newText}</a>`
@@ -77,7 +78,7 @@ export default function ProductPage() {
       if (product) {
         setProduct(product);
 
-        let tags = product.tags_display
+        let tags = product.tags_display;
         tags.forEach((tag, index) => {
           if (tag === null || tag === "null" || tag === "Null") {
             tags = tags.splice(index, 1);
@@ -151,7 +152,7 @@ export default function ProductPage() {
             })}
         </ProductTags>
         <ButtonContainer>
-          <a href={product.link} target="_blank">
+          <a href={product.link} target="_blank" rel="noreferrer">
             <FancyButton
               isPurchase={true}
               onClick={() =>

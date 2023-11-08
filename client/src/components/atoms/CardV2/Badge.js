@@ -1,6 +1,5 @@
 import * as React from "react";
-import Typography from "@mui/material/Typography";
-import { BadgeContainer, BadgeText } from "./styled";
+import { BadgeText } from "./styled";
 export default function Badge({ text }) {
   return (
     // <BadgeContainer>

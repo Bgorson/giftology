@@ -1,39 +1,34 @@
-/* eslint-disable no-undef */
+/* eslint-disable no-unused-vars */
 import React, { useEffect, useContext } from "react";
 import { useLocation } from "react-router-dom";
 import ScrollDialog from "../../molecules/ProductModal";
-import ProductCardV2 from "../../atoms/CardV2/CardV2";
 import ChatGPTCard from "../../atoms/CardV3/CardV3";
 import { getFavorites } from "../../../api/getFavorites";
-import UserCard from "../../atoms/UserCard";
+import CategoryResult from "../../organisms/CategoryResult/CategoryResult";
 
-import { postAllQuizResults } from "../../../api/allQuiz";
 import { Audio } from "react-loader-spinner";
 import { UserContext } from "../../../context/UserContext";
 import {
   ProductGrid,
-  Filter,
-  FilterLabel,
-  FilterSelect,
-  FilterOption,
   LoaderContainer,
+  AIGenerated,
+  CategoryTitleCard,
 } from "./styled";
 import ReactGA from "react-ga4";
 
 export default function ProductResult(props) {
-  const { data, results, chatGPTResponses, categorySpecific } = props;
-  const { email, token } = useContext(UserContext);
-  const { products } = data;
-  console.log("PRO", data);
+  const { data, results, chatGPTResponses } = props;
+  console.log("as a prop", data);
+  const { token } = useContext(UserContext);
+  const { products, categoryScores } = data;
   const [currentCardData, setCurrentCardData] = React.useState(null);
   const [open, setOpen] = React.useState(false);
   const [quizResults, setQuizResults] = React.useState(results);
-  const [productResults, setProductResults] = React.useState(products);
+  const [categories, setCategories] = React.useState(categoryScores);
   const [quizData, setQuizData] = React.useState(data?.quizData);
   const [isLoading, setIsLoading] = React.useState(false);
   const [favorites, setFavorites] = React.useState([]);
   const [backupQuizId, setBackupQuizId] = React.useState(null);
-  const location = useLocation();
   // TODO: Put a use effect to sort it all once
   const handleClickOpen = (product, isHighlighted) => {
     if (isHighlighted) {
@@ -75,28 +70,6 @@ export default function ProductResult(props) {
     }
   }, [quizData]);
 
-  const handlePriceChange = (newPrice) => {
-    setIsLoading(true);
-    const updatedPriceResults = { ...quizResults, price: newPrice };
-    setQuizResults(updatedPriceResults);
-    localStorage.setItem("quizResults", JSON.stringify(updatedPriceResults));
-
-    const productPromise = Promise.resolve(
-      postAllQuizResults(
-        updatedPriceResults,
-        email || localStorage.getItem("userEmail"),
-        quizData?.id || backupQuizId
-      )
-    );
-    productPromise.then((productRes) => {
-      setIsLoading(false);
-
-      setProductResults(productRes.products);
-      setQuizData(productRes.quizData.answers);
-      setBackupQuizId(productRes.quizData?.id);
-      localStorage.setItem("quizId", productRes.quizData?.id);
-    });
-  };
   const handleClose = () => {
     setOpen(false);
   };
@@ -111,7 +84,7 @@ export default function ProductResult(props) {
   // and display products and names
   return (
     <React.Fragment>
-      {quizResults.price && (
+      {/* {quizResults.price && (
         <Filter>
           <FilterLabel for="prices">Preferred Price Range:</FilterLabel>
           <FilterSelect
@@ -135,7 +108,7 @@ export default function ProductResult(props) {
             </FilterOption>
           </FilterSelect>
         </Filter>
-      )}
+      )} */}
       {isLoading && (
         <LoaderContainer>
           Calculating the perfect gift...
@@ -146,29 +119,31 @@ export default function ProductResult(props) {
         <>
           <ProductGrid blurred={open}>
             {/* {renderGiftBoxes(productResults)} */}
-            {!categorySpecific && (
-              <ChatGPTCard GPTResults={chatGPTResponses?.gptChoices} />
-            )}
 
-            {productResults?.length > 1 &&
-              productResults.map((product, index) => {
-                if (index === 15) {
-                  return <UserCard type="info" key={`userCard-15`} />;
-                } else if (index === 30) {
-                  return <UserCard type="checkEffective" key={`userCard-30`} />;
-                } else {
-                  return (
-                    <ProductCardV2
-                      index={index}
-                      quizId={quizData?.id || backupQuizId}
-                      isFavorite={favorites.includes(product.product_id)}
-                      showScore={location.search ? true : false}
-                      key={`${index}-${product.product_id}`}
-                      handleCardClick={handleClickOpen}
-                      product={product}
+            <AIGenerated>
+              <ChatGPTCard
+                handleClickOpen={handleClickOpen}
+                quizData={quizData}
+                categoryName={"AI Generated Gift Ideas"}
+                GPTResults={chatGPTResponses?.gptChoices}
+              />
+            </AIGenerated>
+
+            {categories?.length > 1 &&
+              categories.map((category, index) => {
+                return (
+                  index <= 5 && (
+                    <CategoryResult
+                      key={index}
+                      favorites={favorites}
+                      categoryName={category.name}
+                      products={products[category.name]}
+                      quizData={quizData}
+                      backupQuizId={backupQuizId}
+                      handleClickOpen={handleClickOpen}
                     />
-                  );
-                }
+                  )
+                );
               })}
           </ProductGrid>
         </>

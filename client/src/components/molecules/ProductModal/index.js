@@ -1,7 +1,6 @@
 import { useState, useEffect, useContext } from "react";
 import Dialog from "@mui/material/Dialog";
 import LoginModal from "../LoginModal";
-import DialogActions from "@mui/material/DialogActions";
 import CloseIcon from "../../../close.svg";
 import DialogContent from "@mui/material/DialogContent";
 import { addFavorites } from "../../../api/addFavorites.js";
@@ -28,7 +27,6 @@ import ReactGA from "react-ga4";
 
 export default function ScrollDialog(props) {
   const { product, handleClose, quizId } = props;
-  const [scroll, setScroll] = useState("paper");
   const { token } = useContext(UserContext);
   const [isOpen, setIsOpen] = useState(false);
   const handleClickOpen = () => {
@@ -69,17 +67,6 @@ export default function ScrollDialog(props) {
   });
 
   //Creates the availle Links
-  const linkCreator = (link) => {
-    let urlMatches = link.match(/[ID=](?=[ID=]).*?(?=\s)/gm);
-    if (urlMatches) {
-      urlMatches = urlMatches.map((match) => {
-        return match.replace(/ID=/g, "");
-      });
-    }
-
-    const textMatches = link.match(/text=(.*)~~/gm);
-    return { url: urlMatches, text: textMatches };
-  };
 
   const extractLinks = (str) => {
     const regex = /~~ID=“(\d+)” text=“(.*?)”~~/g;
@@ -87,6 +74,7 @@ export default function ScrollDialog(props) {
     let links = [];
 
     while (match !== null) {
+      // eslint-disable-next-line no-unused-vars
       let [_, url, linkText] = match;
       links.push({ url: url, linkText: linkText });
       match = regex.exec(str);
@@ -142,7 +130,6 @@ export default function ScrollDialog(props) {
         maxWidth={"60%"}
         open={true}
         onClose={handleClose}
-        scroll={scroll}
         aria-labelledby="scroll-dialog-title"
         aria-describedby="scroll-dialog-description"
       >
@@ -188,7 +175,7 @@ export default function ScrollDialog(props) {
                   })}
               </ProductTags>
               <ButtonContainer>
-                <a href={product.link} target="_blank">
+                <a href={product.link} target="_blank" rel="noreferrer">
                   <FancyButton
                     isPurchase={true}
                     onClick={() =>
@@ -249,7 +236,7 @@ export default function ScrollDialog(props) {
                   })}
               </ProductTags>
               <ButtonContainer>
-                <a href={product.link} target="_blank">
+                <a href={product.link} target="_blank" rel="noreferrer">
                   <FancyButton
                     isPurchase={true}
                     onClick={() =>

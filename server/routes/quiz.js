@@ -31,8 +31,32 @@ LEFT JOIN
 tags AS t ON p.product_id = t.product_id
 LEFT JOIN
 tag_list AS tl ON t.tag_id  = tl.id  
+WHERE p.is_ai_generated <> true
 GROUP BY
 p.product_id, p.product_name;
+`;
+
+const joinProductCategoryQuery = `SELECT
+p.product_id,
+p.product_name,
+p.*,
+ARRAY_AGG(DISTINCT cl.category_name) AS category,
+ARRAY_AGG(DISTINCT gl.gift_type_name) AS gift_type,
+ARRAY_AGG(DISTINCT ol.occassion_name) AS occasion,
+ARRAY_AGG(DISTINCT tl.tag_name) AS tags,
+ARRAY_AGG(DISTINCT CASE WHEN t.display_on_card = true THEN tl.tag_name ELSE NULL END) AS tags_display,
+ARRAY_AGG(DISTINCT CASE WHEN t.use_in_calculating = true THEN tl.tag_name ELSE NULL END) AS tags_sort
+FROM products AS p
+LEFT JOIN categories AS c ON p.product_id = c.product_id
+LEFT JOIN categories_list AS cl ON c.category_id = cl.id
+LEFT JOIN gift_type AS gt ON p.product_id = gt.product_id
+LEFT JOIN gift_type_list AS gl ON gt.gift_type_id = gl.id
+LEFT JOIN occasion AS o ON p.product_id = o.product_id
+LEFT JOIN occasion_list AS ol ON o.occasion_id = ol.id
+LEFT JOIN tags AS t ON p.product_id = t.product_id
+LEFT JOIN tag_list AS tl ON t.tag_id  = tl.id  
+WHERE p.is_ai_generated <> true AND cl.category_name = $1
+GROUP BY p.product_id, p.product_name;
 `;
 
 const pool = require("../dataBaseSQL/db");
@@ -150,6 +174,22 @@ const retriveProducts = async () => {
     client.release();
   }
 };
+
+const retrieveCategoryProducts = async (category) => {
+  const client = await pool.connect();
+  try {
+    const query = joinProductCategoryQuery;
+    // Need to update query with a join to get additional info
+    const result = await client.query(query, [category]);
+    return result.rows;
+  } catch (error) {
+    console.error("Error retrieving products:", error);
+    return [];
+  } finally {
+    client.release();
+  }
+};
+
 const calculateScoreForAll = async (filteredProducts, quizResults) => {
   // let minPrice = 0;
   // let maxPrice = 5000;
@@ -242,6 +282,7 @@ const calculateScoreForAll = async (filteredProducts, quizResults) => {
   }
   return filteredProducts;
 };
+
 // Put all products in a group by category
 const groupBy = (arr, property) => {
   return arr.reduce((memo, x) => {
@@ -312,7 +353,7 @@ router.post("/allProducts", async (req, res) => {
             return n;
           }
 
-          return parseInt(a.productBasePrice) - parseInt(b.productBasePrice);
+          return parseInt(a.score) - parseInt(b.score);
         });
 
         res.send({ products: result, quizData: quizData });
@@ -350,9 +391,7 @@ router.post("/allProducts", async (req, res) => {
               return n;
             }
 
-            return (
-              parseInt(a.product_base_price) - parseInt(b.product_base_price)
-            );
+            return parseInt(a.score) - parseInt(b.score);
           });
 
           res.send({ products: result, quizData: quizData });
@@ -365,8 +404,67 @@ router.post("/allProducts", async (req, res) => {
   }
 });
 
-//!!!!DEPRECATED ROUTE!!!!!!
-router.post("/", async (req, res) => {
+router.post("/category", async (req, res) => {
+  //What to send:
+  // Array of Categories with products and the average score
+
+  const { category, answers } = req.body;
+  try {
+    if (answers.age) {
+      const minAge = parseInt(answers.age.split("-")[0]);
+      const maxAge = parseInt(answers.age.split("-")[1]);
+      // This is the types we want to show
+      retrieveCategoryProducts(category).then((allProducts) => {
+        // FILTER OUT AGES
+        const minAgeFilter = allProducts.filter(
+          (product) => parseInt(product.age_min) <= maxAge
+        );
+        const ageFiltered = minAgeFilter.filter(
+          (product) => parseInt(product.age_max) >= minAge
+        );
+
+        calculateScoreForAll(ageFiltered, answers).then((result) => {
+          result.sort(function (a, b) {
+            let n = b.score - a.score;
+            if (n !== 0) {
+              return n;
+            }
+
+            return parseInt(a.score) - parseInt(b.score);
+          });
+          res.send({ products: result });
+        });
+      });
+    }
+    //Split products if coworkers
+    if (answers.who === "coworker" && answers.howMany != "1") {
+      const minPrice = parseInt(answers.price.split("-")[0]);
+      const maxPrice = parseInt(answers.price.split("-")[1]);
+
+      let priceandTypeFiltered = [];
+      retrieveCategoryProducts(category).then((allProducts) => {
+        // FILTER OUT AGES
+        const minPriceFilter = allProducts.filter(
+          (product) => parseInt(product.productBasePrice) <= maxPrice
+        );
+        const priceFiltered = minPriceFilter.filter(
+          (product) => parseInt(product.productBasePrice) >= minPrice
+        );
+
+        priceandTypeFiltered = priceFiltered;
+
+        calculateScoreForAll(priceandTypeFiltered, answers).then((result) => {
+          res.send({ products: result });
+        });
+      });
+    }
+  } catch (err) {
+    res.send(err);
+  }
+});
+
+router.post("/allCategories", async (req, res) => {
+  console.log("hit");
   const test = {
     age: "30-30",
     hobbies: ["gardening", "healthAndWellness", "reading"],
@@ -376,61 +474,74 @@ router.post("/", async (req, res) => {
     type: ["thoughtful"],
     who: "myself",
   };
+  let quizData;
+  quizData = await updateUser(
+    req.body.email,
+    req.body.answers,
+    req.body.quizId
+  );
+
+  console.log("QUIZDATA", quizData);
 
   //What to send:
   // Array of Categories with products and the average score
 
-  const quizResults = req.body;
+  const quizResults = req.body.answers;
   try {
     if (quizResults.age) {
       const minAge = parseInt(quizResults.age.split("-")[0]);
       const maxAge = parseInt(quizResults.age.split("-")[1]);
       // This is the types we want to show
-      const giftTypeArray = quizResults.type;
-      let typeAndAgeFiltered = [];
       retriveProducts().then((allProducts) => {
         // FILTER OUT AGES
         const minAgeFilter = allProducts.filter(
           (product) => parseInt(product.age_min) <= maxAge
         );
         const ageFiltered = minAgeFilter.filter(
-          (product) => parseInt(product.ageMax) >= minAge
+          (product) => parseInt(product.age_max) >= minAge
         );
-        // FILTER OUT GIFT TYPES
-        if (giftTypeArray.length > 0) {
-          typeAndAgeFiltered = ageFiltered.filter((product) => {
-            const productTypes = product.giftType.toString().split(",");
-            return giftTypeArray.some((r) => productTypes.includes(r));
-          });
-        } else {
-          typeAndAgeFiltered = ageFiltered;
-        }
 
-        calculateScoreByCategory(typeAndAgeFiltered, quizResults).then(
-          (result) => {
-            const arrayOfCategories = groupBy(result, "category");
-            const categories = Object.keys(arrayOfCategories);
-            const scores = [];
-            categories.forEach((category) => {
-              let averageScore = 0;
-              arrayOfCategories[category].forEach((product) => {
-                averageScore += product.score;
-              });
-
-              averageScore = round10(
-                averageScore / arrayOfCategories[category].length,
-                -1
-              );
-
-              scores.push({ name: category, score: averageScore });
+        calculateScoreForAll(ageFiltered, quizResults).then((result) => {
+          const arrayOfCategories = groupBy(result, "category");
+          const categories = Object.keys(arrayOfCategories);
+          const scores = [];
+          categories.forEach((category) => {
+            let averageScore = 0;
+            arrayOfCategories[category].forEach((product) => {
+              averageScore += product.score;
             });
-            res.send({ categoryScores: scores, products: result });
+
+            averageScore = round10(
+              averageScore / arrayOfCategories[category].length,
+              -1
+            );
+
+            scores.push({ name: category, score: averageScore });
+          });
+          // Sort products in each category by score
+          for (let key in arrayOfCategories) {
+            if (arrayOfCategories.hasOwnProperty(key)) {
+              arrayOfCategories[key].sort(function (a, b) {
+                let n = b.score - a.score;
+                if (n !== 0) {
+                  return n;
+                }
+
+                return parseInt(a.score) - parseInt(b.score);
+              });
+            }
           }
-        );
+
+          res.send({
+            categoryScores: scores,
+            products: arrayOfCategories,
+            quizData,
+          });
+        });
       });
     }
     //Split products if coworkers
-    if (quizResults.who === "coworker" && quizResults.howMany != "1") {
+    else if (quizResults.who === "coworker" && quizResults.howMany != "1") {
       const minPrice = parseInt(quizResults.price.split("-")[0]);
       const maxPrice = parseInt(quizResults.price.split("-")[1]);
 
@@ -446,7 +557,7 @@ router.post("/", async (req, res) => {
 
         priceandTypeFiltered = priceFiltered;
 
-        calculateScoreByCategory(priceandTypeFiltered, quizResults).then(
+        calculateScoreForAll(priceandTypeFiltered, quizResults).then(
           (result) => {
             const arrayOfCategories = groupBy(result, "category");
             const categories = Object.keys(arrayOfCategories);
