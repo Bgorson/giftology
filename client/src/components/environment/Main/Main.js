@@ -10,10 +10,11 @@ import FavoritesPage from "../../pages/FavoritesPage";
 import FeedbackPage from "../../pages/Feedbackpage";
 import ProductPage from "../../pages/ProductPage";
 import AdminPage from "../../pages/AdminPage";
+import Portal from "../../pages/Portal";
+import Product from "../../pages/Portal/Product";
 import Navigation from "../../organisms/Navigation";
 import Footer from "../../organisms/Footer";
 import DemoPage from "../../pages/DemoPage";
-import CategoryPage from "../../pages/CategoryPage";
 
 import { Container, MainContainer } from "./styles";
 import "./index.css";
@@ -40,10 +41,6 @@ export default function Main() {
           <Route
             path="/favorites/:quizId"
             render={(props) => <FavoritesPage {...props} />}
-          />
-          <Route
-            path="/categories/:quizId/:category"
-            component={CategoryPage}
           />
 
           <Route path="/admin" component={AdminPage} />

@@ -65,29 +65,21 @@ router.post("/", async (req, res) => {
     res.send("err");
   }
 });
-
 router.post("/amazon", async (req, res) => {
   const client = await pool.connect();
   try {
     const { productName } = req.body;
-    const amazonResponse = await getAffiliateInformation({
-      productName,
-    });
     // check if the product already exists:
     const checkProductQuery = "SELECT * FROM products WHERE product_name = $1";
     const checkProductResult = await client.query(checkProductQuery, [
-      amazonResponse.productName,
+      productName,
     ]);
-
     if (checkProductResult.rows.length !== 0) {
       const product = checkProductResult.rows[0];
       const productShape = {
-        product_id: product.product_id,
         productName: product.product_name,
-        direct_image_src: product.direct_image_src,
+        directImageSrc: product.website,
         link: product.link,
-        flavor_text:
-          "This item was recommended by our AI engine, if you like it, be sure to click favorites.",
         price: product.product_base_price,
       };
 
@@ -95,12 +87,16 @@ router.post("/amazon", async (req, res) => {
       return;
     }
     try {
+      const amazonResponse = await getAffiliateInformation({
+        productName,
+      });
       // Add to Database
+      res.send(amazonResponse);
 
-      // const productSpecific = await postGPT({
-      //   productSpecific: true,
-      //   product: amazonResponse.productName,
-      // });
+      const productSpecific = await postGPT({
+        productSpecific: true,
+        product: amazonResponse.productName,
+      });
 
       const product = {
         product_name: amazonResponse.productName,
@@ -223,10 +219,9 @@ router.post("/amazon", async (req, res) => {
       product.hobbies_id = hobbyIDArray;
       product.tags_id = tagIDArray;
 
-      const addedID = await addProduct({ product, userAdded: false });
-      console.log("ADDED", addedID);
-      product.product_id = addedID;
-      res.send(product);
+      addProduct({ product, userAdded: false });
+
+      // res.send(productMock);
     } catch (err) {}
   } catch (err) {
   } finally {

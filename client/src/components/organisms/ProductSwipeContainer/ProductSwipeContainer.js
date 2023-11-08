@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 import React, { useState, useEffect } from "react";
 import { Audio } from "react-loader-spinner";
 import styled, { keyframes } from "styled-components";
@@ -58,11 +57,7 @@ function ProductSwipeContainer({ data: originalData, GPTResults }) {
                     {product.directImageSrc ? (
                       <>
                         <p>{product.productName}</p>
-                        <a
-                          target="_blank"
-                          href={product?.link}
-                          rel="noreferrer"
-                        >
+                        <a target="_blank" href={product?.link}>
                           <MainImage src={product.directImageSrc} />
                         </a>
                       </>

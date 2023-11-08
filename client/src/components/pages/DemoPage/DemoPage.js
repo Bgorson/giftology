@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useContext, useState } from "react";
 import { postGPT } from "../../../api/gpt";
 import { hobbyMap } from "../../../utils/hobbyMap";
 import { Audio } from "react-loader-spinner";
@@ -123,7 +123,7 @@ export default function DemoPage() {
       const { gptChoices } = await postGPT(
         {
           ...prompt,
-          demo: true,
+          demo:true
         },
         abortController.signal
       );

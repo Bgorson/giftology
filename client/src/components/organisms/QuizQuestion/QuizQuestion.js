@@ -34,6 +34,7 @@ export default function QuizQuestion(props) {
     isText,
     totalStepNumber,
     currentStepNumber,
+    quizData,
   } = props;
   let { answers } = props;
   const [checkedState, setCheckedState] = useState(
@@ -77,6 +78,7 @@ export default function QuizQuestion(props) {
   }, []);
   const [age, setAge] = useState(30);
   const [date, setDate] = useState("");
+  const [placeholder, setPlaceholder] = useState("MM/DD/YYYY");
   const [selectedAnswer, setSelectedAnswer] = useState("");
   const [additionalMainAnswer, setAdditionalMainAnswer] = useState("");
   const [showAdditionalField, setShowAdditionalField] = useState(false);

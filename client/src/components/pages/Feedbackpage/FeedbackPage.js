@@ -1,6 +1,6 @@
-import React from "react";
+import React from 'react';
 
-import { Container, TextDescription } from "./styles";
+import { Container, TextDescription } from './styles';
 
 export default function FeedbackPage() {
   return (
@@ -14,11 +14,7 @@ export default function FeedbackPage() {
           below.
         </TextDescription>
         <br />
-        <a
-          target={"_blank"}
-          href="https://forms.gle/TkdHjXkyR36pvpYW6"
-          rel="noreferrer"
-        >
+        <a target={'_blank'} href="https://forms.gle/TkdHjXkyR36pvpYW6">
           Feedback Form
         </a>
       </Container>

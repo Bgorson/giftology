@@ -1,18 +1,21 @@
 import React, { useState, useContext } from "react";
 import { Audio } from "react-loader-spinner";
 import { postGPT } from "../../../api/gpt";
-import { v4 } from "uuid";
+import {v4} from 'uuid';
 import { postAllQuizResults } from "../../../api/allQuiz";
-import { Disclosure, TopContainer, Title, LoaderContainer } from "./styles";
-import ProductResult from "../../organisms/ProductResultV2/ProductResult";
+import {
+  Disclosure,
+  TopContainer,
+  Title,
+  ResultInfo,
+  LoaderContainer,
+} from "./styles";
+import ProductResult from "../../organisms/ProductResult/ProductResult";
 import ReactGA from "react-ga4";
 import { UserContext } from "../../../context/UserContext";
 import { useEffect } from "react";
-import { useProducts } from "../../../context/ProductsContext";
 
 export default function QuizResult(props) {
-  const { updateProducts } = useProducts();
-
   const { results } = props;
   const [isLoading, setIsLoading] = useState(true);
   const { email } = useContext(UserContext);
@@ -29,23 +32,18 @@ export default function QuizResult(props) {
   const [chatGPTProducts, setChatGPTProducts] = React.useState(null);
   React.useEffect(() => {
     if (Object.keys(results).length === 0) {
-      const storedResults = localStorage.getItem("quizResults");
+      const storedResults = localStorage.getItem("quizResults");  
       let storedEmail = localStorage.getItem("userEmail");
-      let storedQuizID = localStorage.getItem("quizId");
-      if (storedQuizID === "undefined" || storedQuizID === "null") {
-        localStorage.setItem("quizId", "");
+      let storedQuizID= localStorage.getItem("quizId");
+      if (storedQuizID ==='undefined'|| storedQuizID ==='null'){
+        localStorage.setItem("quizId", '');
         storedQuizID = null;
       }
-
+      
       const productPromise = Promise.resolve(
-        postAllQuizResults(
-          JSON.parse(storedResults),
-          email || storedEmail,
-          localStorage.getItem("quizId") || v4()
-        )
+        postAllQuizResults(JSON.parse(storedResults), email || storedEmail,localStorage.getItem("quizId")||'')
       );
       productPromise.then((productRes) => {
-        updateProducts(productRes.products);
         setProductResults(productRes);
         setQuizData(productRes.quizData);
         localStorage.setItem("quizId", productRes.quizData?.id);
@@ -60,24 +58,20 @@ export default function QuizResult(props) {
         }
       });
     } else {
-      localStorage.setItem("quizId", "");
+      localStorage.setItem("quizId", '');
       localStorage.setItem("quizResults", JSON.stringify(results));
       let storedEmail = localStorage.getItem("userEmail");
 
       const productPromise = Promise.resolve(
-        postAllQuizResults(
-          results,
-          email || storedEmail,
-          localStorage.getItem("quizId") || v4()
-        )
+        postAllQuizResults(results, email || storedEmail,localStorage.getItem("quizId")||v4() )
       );
       productPromise.then((productRes) => {
-        updateProducts(productRes.products);
         setProductResults(productRes);
-        if (productRes.quizData) {
+        if (productRes.quizData){
           setQuizData(productRes.quizData);
           localStorage.setItem("quizId", productRes.quizData?.id);
         }
+
 
         setIsLoading(false);
 

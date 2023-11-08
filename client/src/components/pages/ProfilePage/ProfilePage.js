@@ -1,7 +1,10 @@
 import React, { useEffect, useContext, useState } from "react";
 import Logout from "../../molecules/LogoutButton";
-import { getQuizes } from "../../../api/getQuizes";
+import { getUser } from "../../../api/user";
+import {getQuizes} from "../../../api/getQuizes";
 import { UserContext } from "../../../context/UserContext";
+import { hobbyMap } from "../../../utils/hobbyMap";
+import { coworkerTagMap } from "../../../utils/coworkerTagMap";
 import ProfileTiles from "./components/ProfileTiles";
 import JoinCommunity from "../WelcomePage/components/JoinCommunity";
 import { removeProfile } from "../../../api/removeProfile";
@@ -10,6 +13,14 @@ import ReactGA from "react-ga4";
 
 import {
   Container,
+  TextContainer,
+  ProfileRow,
+  ProfileButton,
+  RelationshipText,
+  BirthDayText,
+  Title,
+  HobbiesText,
+  ButtonContainer,
   HeaderText,
   ProfileGrid,
   LogoutButtonContainer,
@@ -43,13 +54,15 @@ export default function ProfilePage() {
   //   widget.open();
   // };
   const changeProfilePicture = (id, url) => {
+
     ReactGA.event({
       category: "Profile",
       action: `Clicked ${url}`,
       label: "ProfileButton",
     });
-    updateProfilePicture(id, url, token).then(() => {
+    updateProfilePicture(id, url, token).then((data) => {
       // setProfileData({...profileData, createAccount: data});
+ 
     });
     // let randomImage = arrayOfImages[Math.floor(Math.random() * 6)];
     // updateProfilePicture(id, randomImage, token).then((data) => {
@@ -87,12 +100,12 @@ export default function ProfilePage() {
       <Container>
         <Header>All your Profiles in One Place</Header>
         <HeaderText>
-          {`Profiles are generated for all quizes you've taken`}
+          Profiles are generated for all quizes you've taken
         </HeaderText>
         {/* {JSON.stringify(profileData)} */}
         <ProfileGrid>
           {profileData &&
-            profileData.length > 0 &&
+            profileData.length >0 &&
             profileData.map((data, index) => (
               <ProfileTiles
                 key={index}

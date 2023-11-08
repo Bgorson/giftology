@@ -1,10 +1,11 @@
-import styled, { css } from "styled-components";
+import styled, { css,keyframes } from "styled-components";
+
 
 export const CardContainer = styled.div`
-  opacity: ${(props) => (props.isHidden ? 0 : 1)};
+ opacity: ${props => (props.isHidden ? 0 : 1)};
   transition: opacity 0.5s;
-  border-radius: 25px;
-  align-items: center;
+border-radius: 25px;
+  align-items:center;
   color: black;
   position: relative;
   height: 510px;
@@ -20,18 +21,21 @@ export const CardContainer = styled.div`
   box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.2);
 `;
 
-export const CardHeader = styled.p``;
-export const Arrow = styled.img`
-  width: 75%;
-`;
+export const CardHeader= styled.p`
+  `
+export const Arrow  = styled.img`
+width: 75%;
+`
 
-export const CardContainerEffective = styled.div`
+export const CardContainerEffective
+= styled.div`
   display: flex;
   padding: 8px;
-  height: 100%;
+  height:100%;
   justify-content: space-around;
   text-align: center;
   flex-direction: column;
+
 `;
 export const CardContentContainer = styled.div`
   position: relative;
@@ -98,6 +102,7 @@ export const FavoriteContainer = styled.div`
 export const Image = styled.img`
   width: 100%;
   border-radius: 25px 25px 0 0;
+
 `;
 export const ProductDescriptionHeading = styled.h2`
   font-size: 16px;
@@ -115,11 +120,11 @@ export const Tag = styled.p`
   margin-top: 0;
 `;
 export const ButtonContainer = styled.div`
-  display: flex;
+  display:flex;
   width: 100%;
   align-items: center;
-  flex-wrap: wrap;
-  gap: 1em;
+  flex-wrap:wrap;
+  gap:1em;
   justify-content: center;
 `;
 export const TopButtonContainer = styled.div`
@@ -128,25 +133,26 @@ export const TopButtonContainer = styled.div`
   gap: 5px;
 `;
 export const MassButtons = styled.button`
-  border-radius: 1.5em;
-  background-color: inherit;
-  white-space: nowrap;
-  color: black;
-  cursor: pointer;
-  font-size: 16px;
-  border: 1px solid black;
+border-radius: 1.5em;
+background-color: inherit;
+white-space: nowrap;
+color: black;
+cursor: pointer;
+font-size: 16px;
+border: 1px solid black;
 
-  &:focus {
-  }
 
-  &:after {
-  }
-  &:active {
-  }
+&:focus {
+}
 
-  &:hover {
-  }
-`;
+&:after {
+}
+&:active {
+}
+
+&:hover {
+}
+`
 export const FancyButton = styled.button`
   border-radius: 1.5em;
   width: 150px;
@@ -158,6 +164,7 @@ export const FancyButton = styled.button`
   padding: 6px 12px;
   font-size: 16px;
   border: 1px solid black;
+  
 
   &:focus {
   }
@@ -168,6 +175,7 @@ export const FancyButton = styled.button`
   }
 
   &:hover {
+
   }
 
   ${(props) =>
@@ -198,7 +206,7 @@ export const ProductPrice = styled.div`
 `;
 
 export const CardBackContainer = styled.div`
-  border-radius: 25px;
+border-radius: 25px;
   color: black;
   position: relative;
   height: 510px;

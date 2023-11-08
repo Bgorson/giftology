@@ -1,4 +1,5 @@
-import React, { useState, useContext, useCallback } from "react";
+import React, { useState, useEffect, useContext, useCallback } from "react";
+import PropTypes from "prop-types";
 import { Link, useHistory } from "react-router-dom";
 import ReactGA from "react-ga4";
 import Login from "../../molecules/LoginButton";
@@ -13,6 +14,7 @@ import {
   Logo,
   LogoText,
   HamburgerMenu,
+  HamburgerIcon,
   MobileMenu,
 } from "./styles.js";
 
@@ -20,7 +22,7 @@ function trackEvent(category, action, label) {
   ReactGA.event({ category, action, label });
 }
 
-function Navigation() {
+function Navigation({ pathname }) {
   const navigate = useHistory();
   const { isLoggedIn, is_admin } = useContext(UserContext);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);

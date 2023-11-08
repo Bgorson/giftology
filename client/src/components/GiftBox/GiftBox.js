@@ -2,11 +2,38 @@ import React, { useState, useContext } from "react";
 import styled, { css, keyframes } from "styled-components";
 import ReactGA from "react-ga4";
 
+import Badge from "../atoms/CardV2/Badge";
 import LoginModal from "../molecules/LoginModal";
 
 import gift from "../../gift.png";
 import ProductCard from "../atoms/CardV2";
 import { UserContext } from "../../context/UserContext";
+
+const testData = {
+  _id: "628ba23c7cef8ce8b60969e9",
+  productId: 100114,
+  productName: "Little Dove Ball Pit",
+  category: "Exercise",
+  website: "Amazon",
+  htmlTag:
+    '<a href="https://www.amazon.com/dp/B07X3BB29N?_encoding=UTF8&th=1&linkCode=li3&tag=giftology03-20&linkId=eaa66548b82d846179b520f21f8d3706&language=en_US&ref_=as_li_ss_il" target="_blank"><img border="0" src="//ws-na.amazon-adsystem.com/widgets/q?_encoding=UTF8&ASIN=B07X3BB29N&Format=_SL250_&ID=AsinImage&MarketPlace=US&ServiceVersion=20070822&WS=1&tag=giftology03-20&language=en_US" ></a><img src="https://ir-na.amazon-adsystem.com/e/ir?t=giftology03-20&language=en_US&l=li3&o=1&a=B07X3BB29N" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;" />',
+  link: "https://amzn.to/3vvR63q",
+  flavorText: "Kids. Love. Ball. Pits.",
+  productBasePrice: "109.99",
+  gender: null,
+  indoorOutdoor: null,
+  ageMin: "0",
+  ageMax: "5",
+  occasion: null,
+  giftType: ["essentials", "interestingAndFun"],
+  hobbiesInterests: null,
+  tags: ["fun"],
+  directImageSrc:
+    "https://m.media-amazon.com/images/I/71eEzStGgAL._AC_SL1500_.jpg",
+  listingId: null,
+  ocassion: null,
+  score: 1,
+};
 
 const shake = keyframes`
     0% { transform: translate(-8px, -14px); }
