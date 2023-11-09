@@ -11,6 +11,7 @@ import {
   ImageWrapper,
   SubTextContainer,
   Image,
+  FancyButton,
 } from "./styled";
 
 // import Badge from "./Badge";
@@ -100,7 +101,29 @@ export default function ProductCard({ GPTResults, demo }) {
                 <FlavorText variant="body2" color="text.secondary">
                   {product.price}
                 </FlavorText>
-                <FlavorText>Click To Purchase!</FlavorText>
+                <a href={product.link} target="_blank">
+                  <FancyButton
+                    isPurchase={true}
+                    onMouseDown={() => {
+                      ReactGA.event({
+                        category: "Retailer Visited",
+                        action: product.product_name,
+                        label: "Home",
+                      });
+                      postUserBehavior(
+                        product.product_id,
+                        quizId,
+                        email,
+                        token,
+                        {
+                          clicked_retailer: true,
+                        }
+                      );
+                    }}
+                  >
+                    Visit Retailer
+                  </FancyButton>
+                </a>
               </SubTextContainer>
             </CardContentContainer>
           </CardContainer>
@@ -125,6 +148,7 @@ export default function ProductCard({ GPTResults, demo }) {
           <FlavorText variant="body2" color="text.secondary">
             {error ? error : "Our AI is calculating a gift for you"}
           </FlavorText>
+
           {/* <FlavorText>Click here to Purchase</FlavorText> */}
         </SubTextContainer>
       </CardContentContainer>

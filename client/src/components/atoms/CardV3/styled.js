@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 
 export const FlavorText = styled.p`
   padding-top: 0.5em;
@@ -6,8 +6,51 @@ export const FlavorText = styled.p`
   font-size: 1em;
   color: rgba(0, 0, 0, 0.8);
 `;
+export const FancyButton = styled.button`
+  border-radius: 1.5em;
+  width: 150px;
+  background-color: inherit;
+  white-space: nowrap;
+  margin: 10px 0 0 0;
+  color: black;
+  cursor: pointer;
+  padding: 6px 12px;
+  font-size: 16px;
+  border: 1px solid black;
 
-export const CardContainer = styled.a`
+  &:focus {
+  }
+
+  &:after {
+  }
+  &:active {
+  }
+
+  &:hover {
+  }
+
+  ${(props) =>
+    props.disabled &&
+    css`
+      cursor: not-allowed;
+      background-color: grey;
+      &:hover {
+        background-color: grey;
+        color: black;
+      }
+    `}
+  ${(props) =>
+    props.isPurchase &&
+    css`
+      background: linear-gradient(90deg, #0b8afd 0%, #c576ff 100%);
+      border: 1px solid rgba(0, 0, 0, 0.15);
+      &:hover {
+        background-color: grey;
+        color: black;
+      }
+    `}
+`;
+export const CardContainer = styled.div`
   color: black;
   position: relative;
   height: 510px;
@@ -24,7 +67,7 @@ export const CardContainer = styled.a`
 `;
 
 export const CardContentContainer = styled.div`
-  text-align: left;
+  text-align: center;
   width: 300px;
 
   display: flex;

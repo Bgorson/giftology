@@ -7,7 +7,7 @@ export const FlavorText = styled.p`
 `;
 
 export const CardContainer = styled.div`
-border-radius: 25px;
+  border-radius: 25px;
 
   color: black;
   position: relative;
@@ -26,7 +26,6 @@ border-radius: 25px;
 
 export const CardContentContainer = styled.div`
   position: relative;
-  text-align: left;
   display: flex;
   padding: 8px;
   text-align: center;
@@ -89,7 +88,6 @@ export const FavoriteContainer = styled.div`
 export const Image = styled.img`
   width: 100%;
   border-radius: 25px 25px 0 0;
-
 `;
 export const ProductDescriptionHeading = styled.h2`
   font-size: 16px;
@@ -167,7 +165,7 @@ export const ProductPrice = styled.div`
 `;
 
 export const CardBackContainer = styled.div`
-border-radius: 25px;
+  border-radius: 25px;
   color: black;
   position: relative;
   height: 510px;
