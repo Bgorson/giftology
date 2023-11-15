@@ -92,7 +92,8 @@ router.post("/amazon", async (req, res) => {
       });
       // Add to Database
       res.send(amazonResponse);
-
+      // remove to enable GPT items to be added
+      return;
       const productSpecific = await postGPT({
         productSpecific: true,
         product: amazonResponse.productName,
