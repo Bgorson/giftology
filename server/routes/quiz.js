@@ -255,114 +255,184 @@ const groupBy = (arr, property) => {
 
 // full path is api/quiz
 // CURRENT MAIN QUIZ ROUTE
+// router.post("/testPython", async (req, res) => {
+//   const path = require("path");
+//   const jsonObject = JSON.stringify(req.body.answers);
+//   const pythonScriptPath = path.join(__dirname, "../../main.py");
+//   console.log(pythonScriptPath);
+//   const spawn = require("child_process").spawn;
+//   const pythonProcess = spawn("python", [pythonScriptPath, jsonObject], {
+//     stdio: ["pipe", "pipe", "pipe"],
+//   });
 
+//   let result = [];
+
+//   pythonProcess.stdout.on("data", (data) => {
+//     result += data.toString();
+//     console.log("stdout", result);
+//   });
+//   pythonProcess.stderr.on("data", (data) => {
+//     console.log(data.toString());
+//   });
+//   pythonProcess.on("exit", (code) => {
+//     console.log("RESULT IN NODE", result);
+
+//     res.send(result);
+//   });
+//   pythonProcess.stdin.write(JSON.stringify(req.body));
+//   pythonProcess.stdin.end();
+// });
 router.post("/allProducts", async (req, res) => {
   let quizData;
+  const path = require("path");
+  const jsonObject = JSON.stringify(req.body.answers);
+  const pythonScriptPath = path.join(__dirname, "../../main.py");
+  const spawn = require("child_process").spawn;
+  const pythonProcess = spawn("python", [pythonScriptPath, jsonObject], {
+    stdio: ["pipe", "pipe", "pipe"],
+  });
+
+  let result = [];
   quizData = await updateUser(
     req.body.email,
     req.body.answers,
     req.body.quizId
   );
 
-  const test = {
-    age: "30-30",
-    hobbies: ["gardening", "healthAndWellness", "reading"],
-    occasion: "holiday",
-    prefer: "outdoor",
-    tags: [],
-    type: ["thoughtful"],
-    who: "myself",
-  };
+  pythonProcess.stdout.on("data", (data) => {
+    result.push(data.toString());
+    // console.log("stdout", result);
+  });
+  pythonProcess.stderr.on("data", (data) => {
+    // console.log(data.toString());
+  });
+  pythonProcess.on("exit", (code) => {
+    const { answers: quizResults } = req.body;
 
-  const { answers: quizResults } = req.body;
+    let stringWithoutSlashes = result[0].replace(/[\/\\]/g, "");
 
-  try {
-    //Split products if coworkers
-    if (quizResults.who === "coworker" && quizResults.howMany != "1") {
-      // const minPrice = parseInt(quizResults.price.split("-")[0]);
-      // const maxPrice = parseInt(quizResults.price.split("-")[1]);
-      const allProducts = await retriveProducts();
-      let priceandTypeFiltered = [];
+    let withoutTags = result[0].replace(
+      /"html_tag":.*?"flavor_text":/g,
+      '"flavor_text":'
+    );
+    let withoutNaN = JSON.parse(withoutTags.replace(/NaN/g, "0"));
+    console.log("RESULT IN NODE", JSON.parse(JSON.stringify(result)));
+    const minAge = parseInt(quizResults.age.split("-")[0]);
+    const maxAge = parseInt(quizResults.age.split("-")[1]);
+    const minAgeFilter = withoutNaN.filter(
+      (product) => parseInt(product.age_min) <= maxAge
+    );
+    const ageFiltered = minAgeFilter.filter(
+      (product) => parseInt(product.age_max) >= minAge
+    );
+    res.send({
+      products: ageFiltered,
+      quizData: quizData,
+    });
+  });
+  pythonProcess.stdin.write(JSON.stringify(req.body));
+  // pythonProcess.stdin.end(console.log("end", result));
+  return;
 
-      // FILTER OUT AGES
-      // const minPriceFilter = allProducts.filter(
-      //   (product) => parseInt(product.productBasePrice) <= maxPrice
-      // );
-      // const priceFiltered = minPriceFilter.filter(
-      //   (product) => parseInt(product.productBasePrice) >= minPrice
-      // );
-      const minAge = parseInt(quizResults.age.split("-")[0]);
-      const maxAge = parseInt(quizResults.age.split("-")[1]);
-      // This is the types we want to show
-      // FILTER OUT AGES
-      const minAgeFilter = allProducts.filter(
-        (product) => parseInt(product.age_min) <= maxAge
-      );
-      const ageFiltered = minAgeFilter.filter(
-        (product) => parseInt(product.age_max) >= minAge
-      );
+  // const test = {
+  //   age: "30-30",
+  //   hobbies: ["gardening", "healthAndWellness", "reading"],
+  //   occasion: "holiday",
+  //   prefer: "outdoor",
+  //   tags: [],
+  //   type: ["thoughtful"],
+  //   who: "myself",
+  // };
 
-      // priceandTypeFiltered = ageFiltered;
+  // const { answers: quizResults } = req.body;
 
-      calculateScoreForAll(ageFiltered, quizResults).then((result) => {
-        // Organize results by high to low score
-        result.sort(function (a, b) {
-          let n = b.score - a.score;
-          if (n !== 0) {
-            return n;
-          }
+  // try {
+  //   //Split products if coworkers
+  //   if (quizResults.who === "coworker" && quizResults.howMany != "1") {
+  //     // const minPrice = parseInt(quizResults.price.split("-")[0]);
+  //     // const maxPrice = parseInt(quizResults.price.split("-")[1]);
+  //     const allProducts = await retriveProducts();
+  //     let priceandTypeFiltered = [];
 
-          return parseInt(a.productBasePrice) - parseInt(b.productBasePrice);
-        });
+  //     // FILTER OUT AGES
+  //     // const minPriceFilter = allProducts.filter(
+  //     //   (product) => parseInt(product.productBasePrice) <= maxPrice
+  //     // );
+  //     // const priceFiltered = minPriceFilter.filter(
+  //     //   (product) => parseInt(product.productBasePrice) >= minPrice
+  //     // );
+  // const minAge = parseInt(quizResults.age.split("-")[0]);
+  // const maxAge = parseInt(quizResults.age.split("-")[1]);
+  //     // This is the types we want to show
+  // // FILTER OUT AGES
+  // const minAgeFilter = allProducts.filter(
+  //   (product) => parseInt(product.age_min) <= maxAge
+  // );
+  // const ageFiltered = minAgeFilter.filter(
+  //   (product) => parseInt(product.age_max) >= minAge
+  // );
 
-        res.send({ products: result, quizData: quizData });
-      });
-    } else {
-      const minAge = parseInt(quizResults.age.split("-")[0]);
-      const maxAge = parseInt(quizResults.age.split("-")[1]);
-      // This is the types we want to show
-      const giftTypeArray = quizResults?.type || [];
-      let typeAndAgeFiltered = [];
-      retriveProducts().then((allProducts) => {
-        // console.log('everything', allProducts);
-        // FILTER OUT AGES
-        const minAgeFilter = allProducts.filter(
-          (product) => parseInt(product.age_min) <= maxAge
-        );
-        const ageFiltered = minAgeFilter.filter(
-          (product) => parseInt(product.age_max) >= minAge
-        );
-        // FILTER OUT GIFT TYPES
-        if (giftTypeArray.length > 0) {
-          typeAndAgeFiltered = ageFiltered.filter((product) => {
-            const productTypes = product.gift_type.toString().split(",");
-            return giftTypeArray.some((r) => productTypes.includes(r));
-          });
-        } else {
-          typeAndAgeFiltered = ageFiltered;
-        }
+  //     // priceandTypeFiltered = ageFiltered;
 
-        // calculate score for each product and return all in a collection
-        calculateScoreForAll(typeAndAgeFiltered, quizResults).then((result) => {
-          result.sort(function (a, b) {
-            let n = b.score - a.score;
-            if (n !== 0) {
-              return n;
-            }
+  //     calculateScoreForAll(ageFiltered, quizResults).then((result) => {
+  //       // Organize results by high to low score
+  //       result.sort(function (a, b) {
+  //         let n = b.score - a.score;
+  //         if (n !== 0) {
+  //           return n;
+  //         }
 
-            return (
-              parseInt(a.product_base_price) - parseInt(b.product_base_price)
-            );
-          });
+  //         return parseInt(a.productBasePrice) - parseInt(b.productBasePrice);
+  //       });
 
-          res.send({ products: result, quizData: quizData });
-        });
-      });
-    }
-  } catch (err) {
-    console.log("ERROR", err);
-    res.send(err);
-  }
+  //       res.send({ products: result, quizData: quizData });
+  //     });
+  //   } else {
+  //     const minAge = parseInt(quizResults.age.split("-")[0]);
+  //     const maxAge = parseInt(quizResults.age.split("-")[1]);
+  //     // This is the types we want to show
+  //     const giftTypeArray = quizResults?.type || [];
+  //     let typeAndAgeFiltered = [];
+  //     retriveProducts().then((allProducts) => {
+  //       // console.log('everything', allProducts);
+  //       // FILTER OUT AGES
+  //       const minAgeFilter = allProducts.filter(
+  //         (product) => parseInt(product.age_min) <= maxAge
+  //       );
+  //       const ageFiltered = minAgeFilter.filter(
+  //         (product) => parseInt(product.age_max) >= minAge
+  //       );
+  //       // FILTER OUT GIFT TYPES
+  //       if (giftTypeArray.length > 0) {
+  //         typeAndAgeFiltered = ageFiltered.filter((product) => {
+  //           const productTypes = product.gift_type.toString().split(",");
+  //           return giftTypeArray.some((r) => productTypes.includes(r));
+  //         });
+  //       } else {
+  //         typeAndAgeFiltered = ageFiltered;
+  //       }
+
+  //       // calculate score for each product and return all in a collection
+  //       calculateScoreForAll(typeAndAgeFiltered, quizResults).then((result) => {
+  //         result.sort(function (a, b) {
+  //           let n = b.score - a.score;
+  //           if (n !== 0) {
+  //             return n;
+  //           }
+
+  //           return (
+  //             parseInt(a.product_base_price) - parseInt(b.product_base_price)
+  //           );
+  //         });
+
+  //         res.send({ products: result, quizData: quizData });
+  //       });
+  //     });
+  //   }
+  // } catch (err) {
+  //   console.log("ERROR", err);
+  //   res.send(err);
+  // }
 });
 
 //!!!!DEPRECATED ROUTE!!!!!!

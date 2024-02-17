@@ -4,7 +4,7 @@ import GiftBox from "../../../components/GiftBox/GiftBox";
 import ScrollDialog from "../../molecules/ProductModal";
 import ProductCardV2 from "../../atoms/CardV2/CardV2";
 import ChatGPTCard from "../../atoms/CardV3/CardV3";
-import {getFavorites} from "../../../api/getFavorites";
+import { getFavorites } from "../../../api/getFavorites";
 import UserCard from "../../atoms/UserCard";
 
 import { postAllQuizResults } from "../../../api/allQuiz";
@@ -22,7 +22,7 @@ import ReactGA from "react-ga4";
 
 export default function ProductResult(props) {
   const { data, results, chatGPTResponses } = props;
-  const { email,token } = useContext(UserContext);
+  const { email, token } = useContext(UserContext);
   const { products } = data;
   const [currentCardData, setCurrentCardData] = React.useState(null);
   const [open, setOpen] = React.useState(false);
@@ -68,7 +68,7 @@ export default function ProductResult(props) {
         const turnIntoProductIds = favoritesRes.map(
           (favorite) => favorite.product_id
         );
-      
+
         setFavorites(turnIntoProductIds);
       });
     }
@@ -79,9 +79,7 @@ export default function ProductResult(props) {
       <>
         {products[0] && (
           <GiftBox
-            isFavorite={
-              favorites.includes(products[0].product_id)
-            }
+            isFavorite={favorites.includes(products[0].product_id)}
             handleCardClick={handleClickOpen}
             quizId={quizData?.id || backupQuizId}
             product={products[0]}
@@ -89,9 +87,7 @@ export default function ProductResult(props) {
         )}
         {products[1] && (
           <GiftBox
-            isFavorite={
-              favorites.includes(products[1].product_id)
-            }
+            isFavorite={favorites.includes(products[1].product_id)}
             handleCardClick={handleClickOpen}
             quizId={quizData?.id || backupQuizId}
             product={products[1]}
@@ -99,10 +95,7 @@ export default function ProductResult(props) {
         )}
         {products[2] && (
           <GiftBox
-            isFavorite={
-              favorites.includes(products[3].product_id)
-
-            }
+            isFavorite={favorites.includes(products[3].product_id)}
             handleCardClick={handleClickOpen}
             quizId={quizData?.id || backupQuizId}
             product={products[2]}
@@ -130,7 +123,7 @@ export default function ProductResult(props) {
 
       setProductResults(productRes.products);
       setQuizData(productRes.quizData.answers);
-      setBackupQuizId(productRes.quizData?.id)
+      setBackupQuizId(productRes.quizData?.id);
       localStorage.setItem("quizId", productRes.quizData?.id);
     });
   };
@@ -183,32 +176,29 @@ export default function ProductResult(props) {
       {!isLoading && (
         <>
           <ProductGrid blurred={open}>
-
-
             {/* {renderGiftBoxes(productResults)} */}
-            <ChatGPTCard GPTResults={chatGPTResponses?.gptChoices} />
+            {/* <ChatGPTCard GPTResults={chatGPTResponses?.gptChoices} /> */}
 
             {productResults?.length > 1 &&
-  productResults.map((product, index) => {
-    if (index === 15) {
-      return <UserCard type="info" key={`userCard-15`} />;
-    } else if (index === 30) {
-      return <UserCard type="checkEffective" key={`userCard-30`} />;
-    } else {
-      return (
-        <ProductCardV2
-          index={index}
-          quizId={quizData?.id || backupQuizId}
-          isFavorite={favorites.includes(product.product_id)}
-          showScore={location.search ? true : false}
-          key={`${index}-${product.product_id}`}
-          handleCardClick={handleClickOpen}
-          product={product}
-        />
-      );
-    }
-  })}
-
+              productResults.map((product, index) => {
+                if (index === 15) {
+                  return <UserCard type="info" key={`userCard-15`} />;
+                } else if (index === 30) {
+                  return <UserCard type="checkEffective" key={`userCard-30`} />;
+                } else {
+                  return (
+                    <ProductCardV2
+                      index={index}
+                      quizId={quizData?.id || backupQuizId}
+                      isFavorite={favorites.includes(product.product_id)}
+                      showScore={location.search ? true : false}
+                      key={`${index}-${product.product_id}`}
+                      handleCardClick={handleClickOpen}
+                      product={product}
+                    />
+                  );
+                }
+              })}
           </ProductGrid>
         </>
       )}

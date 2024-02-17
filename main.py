@@ -1,6 +1,8 @@
 import os
 import datetime
 import json
+import sys
+import ast
 import pandas as pd
 import pickle as pkl
 from json_to_pandas import json_to_pandas
@@ -9,17 +11,21 @@ from map_product_info import map_product_info
 from map_product_categorical_variables import map_product_categorical_variables
 from make_predictions import make_predictions
 
-working_directory = os.getcwd()
+# Get the absolute path of the current script's directory
+script_directory = os.path.dirname(os.path.abspath(__file__))
 
-def main(json_object):
+def main():
+    # Use absolute paths for loading pickled dictionaries
+    hobby_dict_path = os.path.join(script_directory, 'hobby_dict.pkl')
+    tag_dict_path = os.path.join(script_directory, 'tag_dict.pkl')
 
-    with open(working_directory + '/hobby_dict.pkl', 'rb') as file:
+    json_object = ast.literal_eval(sys.argv[1])
+    with open(hobby_dict_path, 'rb') as file:
         hobby_dict = pkl.load(file)
 
-    with open(working_directory + '/tag_dict.pkl', 'rb') as file:
+    with open(tag_dict_path, 'rb') as file:
         tag_dict = pkl.load(file)
-
-    data_dictionary = json.loads(json_object)
+    # data_dictionary = json.loads(json_object)
     
     quizs = pd.DataFrame.from_dict(json_object, 'index').T
     quizs['merge'] = 1
@@ -52,7 +58,7 @@ def main(json_object):
 
     modeling_df = modeling_df.rename(columns = {'product_base_price' : 'base_price'})
     modeling_df = map_product_categorical_variables(products, modeling_df)
-    #modeling_df['created_at'] = datetime.datetime.utcnow()
+    modeling_df['created_at'] = datetime.datetime.utcnow()
     modeling_df['hour_of_day'] = pd.to_datetime(modeling_df.created_at).dt.hour
     modeling_df = make_predictions(modeling_df)
     modeling_df = modeling_df.sort_values(by = ['relevance_predictions'], ascending = (False)).reset_index(drop = True)
@@ -62,5 +68,12 @@ def main(json_object):
                                                     'product_tags_sort' : 'tags_sort'})[product_deploy_columns],
                                                     on = 'product_id',
                                                     how = 'inner')
-    
-    return return_df.to_dict('records')
+    try:
+        # ... (your main logic)
+        print(json.dumps(return_df.to_dict('records')))
+    except Exception as e:
+        print(json.dumps({"error": str(e)}))
+
+if __name__ == "__main__":
+    result = main()
+

@@ -1,16 +1,28 @@
+import os
 import pickle as pkl
 import numpy as np
 
-with open('product_categorical_dictionary.pkl', 'rb') as file:
+# Get the absolute path of the current script's directory
+script_directory = os.path.dirname(os.path.abspath(__file__))
+
+# Use absolute paths for loading pickle files
+dictionary_path = os.path.join(script_directory, 'product_categorical_dictionary.pkl')
+split_dictionary_path = os.path.join(script_directory, 'product_categorical_split_dictionary.pkl')
+variable_dict_path = os.path.join(script_directory, 'categorical_variable_dict.pkl')
+
+with open(dictionary_path, 'rb') as file:
     product_categorical_dictionary = pkl.load(file)
 
-with open('product_categorical_split_dictionary.pkl', 'rb') as file:
+with open(split_dictionary_path, 'rb') as file:
     product_categorical_split_dictionary = pkl.load(file)
 
-with open('categorical_variable_dict.pkl', 'rb') as file:
+with open(variable_dict_path, 'rb') as file:
     categorical_variable_dict = pkl.load(file)
 
 def map_product_categorical_variables(product_df, full_df):
+    # Rest of your code remains unchanged
+    # Just make sure to use the variables loaded with absolute paths
+
     product_category_vars = ['category', 'gender', 'who_ind', 'occasion']
     product_category_split_vars = ['gift_type', 'product_hobbies_interests', 'product_tags_sort']
 

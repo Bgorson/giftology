@@ -137,35 +137,40 @@ export default function ProductCard({
   useEffect(() => {
     setFilled(isFavorite);
   }, [isFavorite]);
-  let tags = product.tags;
-  tags.forEach((tag, index) => {
-    if (tag === null || tag === "null" || tag === "Null") {
-      tags = tags.splice(index, 1);
-      if (tags.length === 1) {
-        tags = [];
+  let tags = [];
+  if (product?.tags) {
+    tags = product.tags.split(",");
+
+    tags.forEach((tag, index) => {
+      if (tag === null || tag === "null" || tag === "Null") {
+        tags = tags.splice(index, 1);
+        if (tags.length === 1) {
+          tags = [];
+        }
+      } else if (tag === "healthNut") {
+        tags[index] = " Health Nut";
+      } else if (tag === "mustOwn") {
+        tags[index] = " Must Own";
+      } else if (tag === "MustOwn") {
+        tags[index] = " Must Own";
+      } else if (tag === "WhiteElephant") {
+        tags[index] = " White Elephant";
+      } else if (tag === "whiteElephant") {
+        tags[index] = " White Elephant";
+      } else if (tag === "bathAndBody") {
+        tags[index] = " Bath And Body";
+      } else if (tag === "justForFun") {
+        tags[index] = " Just For Fun";
+      } else if (tag === "artsAndCrafts") {
+        tags[index] = " Arts And Crafts";
+      } else if (tag === "samplerkits") {
+        tags[index] = " Sampler Kits";
+      } else {
+        tags[index] = " " + tag.charAt(0).toUpperCase() + tag.slice(1);
       }
-    } else if (tag === "healthNut") {
-      tags[index] = " Health Nut";
-    } else if (tag === "mustOwn") {
-      tags[index] = " Must Own";
-    } else if (tag === "MustOwn") {
-      tags[index] = " Must Own";
-    } else if (tag === "WhiteElephant") {
-      tags[index] = " White Elephant";
-    } else if (tag === "whiteElephant") {
-      tags[index] = " White Elephant";
-    } else if (tag === "bathAndBody") {
-      tags[index] = " Bath And Body";
-    } else if (tag === "justForFun") {
-      tags[index] = " Just For Fun";
-    } else if (tag === "artsAndCrafts") {
-      tags[index] = " Arts And Crafts";
-    } else if (tag === "samplerkits") {
-      tags[index] = " Sampler Kits";
-    } else {
-      tags[index] = " " + tag.charAt(0).toUpperCase() + tag.slice(1);
-    }
-  });
+    });
+  }
+
   let parsedImage = product?.html_tag
     ? product?.html_tag.split("src")[1]?.substring(2)?.slice(0, -12) || ""
     : "";
@@ -199,7 +204,7 @@ export default function ProductCard({
         )}
         <ReactCardFlip isFlipped={isFlipped} flipDirection="horizontal">
           <CardContainer
-            data-id={product.score}
+            data-id={product?.relevance_score}
             onMouseDown={(e) => handleClick(e)}
             // onClick={() => handleCardClick(product, isHighlighted)}
           >
@@ -235,7 +240,9 @@ export default function ProductCard({
                   ${product.product_base_price}
                 </FlavorText>
                 {/* <FlavorText>Click To Learn More</FlavorText> */}
-                {showScore && <FlavorText>SCORE:{product.score}</FlavorText>}
+                {showScore && (
+                  <FlavorText>SCORE:{product.relevance_score}</FlavorText>
+                )}
                 {/* <FlavorText variant="body2" color="text.secondary">
                 {`Tags: ${tags}`}
               </FlavorText> */}
