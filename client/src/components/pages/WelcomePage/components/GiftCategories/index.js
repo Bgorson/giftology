@@ -14,10 +14,8 @@ import personalized_tile from "../../../../../personalized_tile.webp";
 import romantic_tile from "../../../../../romantic_tile.webp";
 import date_night_tile from "../../../../../date_night_tile.webp";
 import experience_tile from "../../../../../experience_tile.webp";
-import jewelry_tile from "../../../../../jewelry_tile.png";
 import self_care_tile from "../../../../../self_care_tile.png";
 import Gifts_for_Adventurers from "../../../../../Gifts_for_Adventurers.webp";
-import Gifts_for_Entertainers from "../../../../../Gifts_for_Entertainers.webp";
 import Gifts_for_the_Day_Dreamer from "../../../../../Gifts_for_the_Day_Dreamer.webp";
 import ReactGA from "react-ga4";
 
