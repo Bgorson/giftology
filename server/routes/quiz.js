@@ -318,6 +318,7 @@ router.post("/allProducts", async (req, res) => {
     // } finally {
     //   client.release();
     // }
+    console.log("what is result", typeof result);
     let noNaN = result.replace(/NaN/g, "0");
     const minAge = parseInt(quizResults.age.split("-")[0]);
     const maxAge = parseInt(quizResults.age.split("-")[1]);
