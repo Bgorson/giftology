@@ -306,14 +306,18 @@ router.post("/allProducts", async (req, res) => {
   pythonProcess.stderr.on("data", (data) => {
     // console.log(data.toString());
   });
-  pythonProcess.on("exit", (code) => {
+  pythonProcess.on("exit", async (code) => {
     const { answers: quizResults } = req.body;
-    const fs = require("fs");
-    fs.writeFile("error.json", JSON.stringify(result), function (err) {
-      if (err) {
-        console.log(err);
-      }
-    });
+    const client = await pool.connect();
+    try {
+      const insertResultQuery =
+        "INSERT INTO result_table (textresult) VALUES ($1)";
+      await client.query(insertResultQuery, [JSON.stringify(result)]);
+    } catch (error) {
+      console.error("Error inserting result into database:", error);
+    } finally {
+      client.release();
+    }
     if (!result || result.length === 0) {
       res.send({ products: [], quizData: quizData });
     } else {
