@@ -309,14 +309,11 @@ router.post("/allProducts", async (req, res) => {
   pythonProcess.on("exit", (code) => {
     const { answers: quizResults } = req.body;
 
-    let stringWithoutSlashes = result[0].replace(/[\/\\]/g, "");
-
     let withoutTags = result[0].replace(
       /"html_tag":.*?"flavor_text":/g,
       '"flavor_text":'
     );
     let withoutNaN = JSON.parse(withoutTags.replace(/NaN/g, "0"));
-    console.log("RESULT IN NODE", JSON.parse(JSON.stringify(result)));
     const minAge = parseInt(quizResults.age.split("-")[0]);
     const maxAge = parseInt(quizResults.age.split("-")[1]);
     const minAgeFilter = withoutNaN.filter(
