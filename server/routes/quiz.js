@@ -308,24 +308,33 @@ router.post("/allProducts", async (req, res) => {
   });
   pythonProcess.on("exit", (code) => {
     const { answers: quizResults } = req.body;
+    if (result[0].length === 0) {
+      res.send({ products: [], quizData: quizData });
+    } else {
+      let withoutTags = result[0].replace(
+        /"html_tag":.*?"flavor_text":/g,
+        '"flavor_text":'
+      );
+      try {
+        let withoutNaN = JSON.parse(withoutTags.replace(/NaN/g, "0"));
+        // Continue processing withoutNaN
 
-    let withoutTags = result[0].replace(
-      /"html_tag":.*?"flavor_text":/g,
-      '"flavor_text":'
-    );
-    let withoutNaN = JSON.parse(withoutTags.replace(/NaN/g, "0"));
-    const minAge = parseInt(quizResults.age.split("-")[0]);
-    const maxAge = parseInt(quizResults.age.split("-")[1]);
-    const minAgeFilter = withoutNaN.filter(
-      (product) => parseInt(product.age_min) <= maxAge
-    );
-    const ageFiltered = minAgeFilter.filter(
-      (product) => parseInt(product.age_max) >= minAge
-    );
-    res.send({
-      products: ageFiltered,
-      quizData: quizData,
-    });
+        const minAge = parseInt(quizResults.age.split("-")[0]);
+        const maxAge = parseInt(quizResults.age.split("-")[1]);
+        const minAgeFilter = withoutNaN.filter(
+          (product) => parseInt(product.age_min) <= maxAge
+        );
+        const ageFiltered = minAgeFilter.filter(
+          (product) => parseInt(product.age_max) >= minAge
+        );
+        res.send({
+          products: ageFiltered,
+          quizData: quizData,
+        });
+      } catch (error) {
+        console.error("Error parsing JSON:", error);
+      }
+    }
   });
   pythonProcess.stdin.write(JSON.stringify(req.body));
   // pythonProcess.stdin.end(console.log("end", result));
