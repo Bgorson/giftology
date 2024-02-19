@@ -312,7 +312,7 @@ router.post("/allProducts", async (req, res) => {
     try {
       const insertResultQuery =
         "INSERT INTO result_table (textresult) VALUES ($1)";
-      await client.query(insertResultQuery, [JSON.stringify(result)]);
+      await client.query(insertResultQuery, [result]);
     } catch (error) {
       console.error("Error inserting result into database:", error);
     } finally {
