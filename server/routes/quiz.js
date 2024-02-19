@@ -318,8 +318,14 @@ router.post("/allProducts", async (req, res) => {
     } finally {
       client.release();
     }
-    res.send(result);
+    result.forEach((entry) => {
+      if (isNaN(entry.listing_id)) {
+        entry.listing_id = 0;
+      }
+    });
+    res.send({ products: result, quizData: quizData });
     return;
+
     if (!result || result.length === 0) {
       res.send({ products: [], quizData: quizData });
     } else {
