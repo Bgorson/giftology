@@ -318,6 +318,8 @@ router.post("/allProducts", async (req, res) => {
     } finally {
       client.release();
     }
+    res.send(result);
+    return;
     if (!result || result.length === 0) {
       res.send({ products: [], quizData: quizData });
     } else {
