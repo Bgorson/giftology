@@ -308,17 +308,16 @@ router.post("/allProducts", async (req, res) => {
   });
   pythonProcess.on("exit", async (code) => {
     const { answers: quizResults } = req.body;
-    const client = await pool.connect();
-    try {
-      const insertResultQuery =
-        "INSERT INTO result_table (textresult) VALUES ($1)";
-      await client.query(insertResultQuery, [result]);
-    } catch (error) {
-      console.error("Error inserting result into database:", error);
-    } finally {
-      client.release();
-    }
-
+    // const client = await pool.connect();
+    // try {
+    //   const insertResultQuery =
+    //     "INSERT INTO result_table (textresult) VALUES ($1)";
+    //   await client.query(insertResultQuery, [result]);
+    // } catch (error) {
+    //   console.error("Error inserting result into database:", error);
+    // } finally {
+    //   client.release();
+    // }
     res.send({ products: result, quizData: quizData });
     return;
 

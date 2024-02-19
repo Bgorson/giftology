@@ -23,7 +23,7 @@ import ReactGA from "react-ga4";
 export default function ProductResult(props) {
   const { data, results, chatGPTResponses } = props;
   const { email, token } = useContext(UserContext);
-  const { products } = data;
+  const products = data;
   const [currentCardData, setCurrentCardData] = React.useState(null);
   const [open, setOpen] = React.useState(false);
   const [quizResults, setQuizResults] = React.useState(results);
@@ -34,6 +34,7 @@ export default function ProductResult(props) {
   const [backupQuizId, setBackupQuizId] = React.useState(null);
   const location = useLocation();
   // TODO: Put a use effect to sort it all once
+
   const handleClickOpen = (product, isHighlighted) => {
     if (isHighlighted) {
       ReactGA.event({
@@ -121,7 +122,8 @@ export default function ProductResult(props) {
     productPromise.then((productRes) => {
       setIsLoading(false);
 
-      setProductResults(productRes.products);
+      let noNaN = productRes.products.replace(/NaN/g, "0");
+      setProductResults(JSON.parse(noNaN));
       setQuizData(productRes.quizData.answers);
       setBackupQuizId(productRes.quizData?.id);
       localStorage.setItem("quizId", productRes.quizData?.id);
