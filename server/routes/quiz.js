@@ -300,7 +300,7 @@ router.post("/allProducts", async (req, res) => {
   );
 
   pythonProcess.stdout.on("data", (data) => {
-    result.push(data.toString());
+    result += data.toString();
     // console.log("stdout", result);
   });
   pythonProcess.stderr.on("data", (data) => {
