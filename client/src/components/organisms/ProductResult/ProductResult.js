@@ -34,7 +34,6 @@ export default function ProductResult(props) {
   const [backupQuizId, setBackupQuizId] = React.useState(null);
   const location = useLocation();
   // TODO: Put a use effect to sort it all once
-
   const handleClickOpen = (product, isHighlighted) => {
     if (isHighlighted) {
       ReactGA.event({
@@ -122,8 +121,7 @@ export default function ProductResult(props) {
     productPromise.then((productRes) => {
       setIsLoading(false);
 
-      let noNaN = productRes.products.replace(/NaN/g, "0");
-      setProductResults(JSON.parse(noNaN));
+      setProductResults(productRes.products);
       setQuizData(productRes.quizData.answers);
       setBackupQuizId(productRes.quizData?.id);
       localStorage.setItem("quizId", productRes.quizData?.id);
@@ -137,7 +135,7 @@ export default function ProductResult(props) {
     setQuizResults(JSON.parse(localStorage.getItem("quizResults")));
   }, []);
 
-  const { categoryScores = [] } = data;
+  // const { categoryScores = [] } = data;
   // if (products.length > 0 && categoryScores.length > 0) {
 
   // Should just be able to go through available categories

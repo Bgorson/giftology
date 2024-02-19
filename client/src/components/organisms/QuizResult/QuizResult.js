@@ -48,8 +48,7 @@ export default function QuizResult(props) {
         )
       );
       productPromise.then((productRes) => {
-        let noNaN = productRes.products.replace(/NaN/g, "0");
-        setProductResults(JSON.parse(noNaN));
+        setProductResults(productRes.products);
         setQuizData(productRes.quizData);
         localStorage.setItem("quizId", productRes.quizData?.id);
 
@@ -75,9 +74,7 @@ export default function QuizResult(props) {
         )
       );
       productPromise.then((productRes) => {
-        let noNaN = productRes.products.replace(/NaN/g, "0");
-
-        setProductResults(JSON.parse(noNaN));
+        setProductResults(productRes.products);
         if (productRes.quizData) {
           setQuizData(productRes.quizData);
           localStorage.setItem("quizId", productRes.quizData?.id);

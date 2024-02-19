@@ -318,36 +318,53 @@ router.post("/allProducts", async (req, res) => {
     // } finally {
     //   client.release();
     // }
-    res.send({ products: result, quizData: quizData });
-    return;
-
-    if (!result || result.length === 0) {
-      res.send({ products: [], quizData: quizData });
-    } else {
-      let withoutTags = result[0].replace(
-        /"html_tag":.*?"flavor_text":/g,
-        '"flavor_text":'
-      );
-      try {
-        let withoutNaN = JSON.parse(withoutTags.replace(/NaN/g, "0"));
-        // Continue processing withoutNaN
-
-        const minAge = parseInt(quizResults.age.split("-")[0]);
-        const maxAge = parseInt(quizResults.age.split("-")[1]);
-        const minAgeFilter = withoutNaN.filter(
-          (product) => parseInt(product.age_min) <= maxAge
-        );
-        const ageFiltered = minAgeFilter.filter(
-          (product) => parseInt(product.age_max) >= minAge
-        );
-        res.send({
-          products: ageFiltered,
-          quizData: quizData,
-        });
-      } catch (error) {
-        console.error("Error parsing JSON:", error);
+    let noNaN = result.replace(/NaN/g, "0");
+    const minAge = parseInt(quizResults.age.split("-")[0]);
+    const maxAge = parseInt(quizResults.age.split("-")[1]);
+    const minAgeFilter = JSON.parse(noNaN).filter(
+      (product) => parseInt(product.age_min) <= maxAge
+    );
+    const ageFiltered = minAgeFilter.filter(
+      (product) => parseInt(product.age_max) >= minAge
+    );
+    for (const product of ageFiltered) {
+      if (product.website === "Etsy") {
+        const imageURL = await getImage(product.listing_id);
+        if (imageURL !== null) {
+          product.direct_image_src = imageURL;
+        }
       }
     }
+
+    res.send({ products: ageFiltered, quizData: quizData });
+
+    // if (!result || result.length === 0) {
+    //   res.send({ products: [], quizData: quizData });
+    // } else {
+    //   let withoutTags = result[0].replace(
+    //     /"html_tag":.*?"flavor_text":/g,
+    //     '"flavor_text":'
+    //   );
+    //   try {
+    //     let withoutNaN = JSON.parse(withoutTags.replace(/NaN/g, "0"));
+    //     // Continue processing withoutNaN
+
+    //     const minAge = parseInt(quizResults.age.split("-")[0]);
+    //     const maxAge = parseInt(quizResults.age.split("-")[1]);
+    //     const minAgeFilter = withoutNaN.filter(
+    //       (product) => parseInt(product.age_min) <= maxAge
+    //     );
+    //     const ageFiltered = minAgeFilter.filter(
+    //       (product) => parseInt(product.age_max) >= minAge
+    //     );
+    //     res.send({
+    //       products: ageFiltered,
+    //       quizData: quizData,
+    //     });
+    //   } catch (error) {
+    //     console.error("Error parsing JSON:", error);
+    //   }
+    // }
   });
   pythonProcess.stdin.write(JSON.stringify(req.body));
   // pythonProcess.stdin.end(console.log("end", result));
