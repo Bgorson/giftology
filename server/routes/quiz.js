@@ -308,6 +308,12 @@ router.post("/allProducts", async (req, res) => {
   });
   pythonProcess.on("exit", (code) => {
     const { answers: quizResults } = req.body;
+    const fs = require("fs");
+    fs.writeFile("error.json", result[0], function (err) {
+      if (err) {
+        console.log(err);
+      }
+    });
     if (result[0].length === 0) {
       res.send({ products: [], quizData: quizData });
     } else {
