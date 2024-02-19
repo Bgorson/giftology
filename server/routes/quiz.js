@@ -308,16 +308,15 @@ router.post("/allProducts", async (req, res) => {
   });
   pythonProcess.on("exit", (code) => {
     const { answers: quizResults } = req.body;
-
+    const fs = require("fs");
+    fs.writeFile("error.json", JSON.stringify(result), function (err) {
+      if (err) {
+        console.log(err);
+      }
+    });
     if (!result || result.length === 0) {
       res.send({ products: [], quizData: quizData });
     } else {
-      // const fs = require("fs");
-      // fs.writeFile("error.json", JSON.stringify(result), function (err) {
-      //   if (err) {
-      //     console.log(err);
-      //   }
-      // });
       let withoutTags = result[0].replace(
         /"html_tag":.*?"flavor_text":/g,
         '"flavor_text":'
