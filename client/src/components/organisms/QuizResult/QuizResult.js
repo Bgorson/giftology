@@ -100,9 +100,9 @@ export default function QuizResult(props) {
       quizAnswers = JSON.parse(localStorage.getItem("quizResults")) || {};
     }
 
-    // postGPT(quizAnswers).then((res) => {
-    //   setChatGPTProducts(res);
-    // });
+    postGPT(quizAnswers).then((res) => {
+      setChatGPTProducts(res);
+    });
   }, []);
 
   let formattedTags = quizData?.quizResults

@@ -137,39 +137,39 @@ export default function ProductCard({
   useEffect(() => {
     setFilled(isFavorite);
   }, [isFavorite]);
-  let tags = [];
-  if (product?.tags) {
-    tags = product.tags.split(",");
-
-    tags.forEach((tag, index) => {
-      if (tag === null || tag === "null" || tag === "Null") {
-        tags = tags.splice(index, 1);
-        if (tags.length === 1) {
-          tags = [];
-        }
-      } else if (tag === "healthNut") {
-        tags[index] = " Health Nut";
-      } else if (tag === "mustOwn") {
-        tags[index] = " Must Own";
-      } else if (tag === "MustOwn") {
-        tags[index] = " Must Own";
-      } else if (tag === "WhiteElephant") {
-        tags[index] = " White Elephant";
-      } else if (tag === "whiteElephant") {
-        tags[index] = " White Elephant";
-      } else if (tag === "bathAndBody") {
-        tags[index] = " Bath And Body";
-      } else if (tag === "justForFun") {
-        tags[index] = " Just For Fun";
-      } else if (tag === "artsAndCrafts") {
-        tags[index] = " Arts And Crafts";
-      } else if (tag === "samplerkits") {
-        tags[index] = " Sampler Kits";
-      } else {
-        tags[index] = " " + tag.charAt(0).toUpperCase() + tag.slice(1);
+  // let tags = [];
+  // if (product?.tags) {
+  //   tags = product.tags.split(",");
+  let tags = product.tags;
+  tags.forEach((tag, index) => {
+    if (tag === null || tag === "null" || tag === "Null") {
+      tags = tags.splice(index, 1);
+      if (tags.length === 1) {
+        tags = [];
       }
-    });
-  }
+    } else if (tag === "healthNut") {
+      tags[index] = " Health Nut";
+    } else if (tag === "mustOwn") {
+      tags[index] = " Must Own";
+    } else if (tag === "MustOwn") {
+      tags[index] = " Must Own";
+    } else if (tag === "WhiteElephant") {
+      tags[index] = " White Elephant";
+    } else if (tag === "whiteElephant") {
+      tags[index] = " White Elephant";
+    } else if (tag === "bathAndBody") {
+      tags[index] = " Bath And Body";
+    } else if (tag === "justForFun") {
+      tags[index] = " Just For Fun";
+    } else if (tag === "artsAndCrafts") {
+      tags[index] = " Arts And Crafts";
+    } else if (tag === "samplerkits") {
+      tags[index] = " Sampler Kits";
+    } else {
+      tags[index] = " " + tag.charAt(0).toUpperCase() + tag.slice(1);
+    }
+  });
+  // }
 
   let parsedImage = product?.html_tag
     ? product?.html_tag.split("src")[1]?.substring(2)?.slice(0, -12) || ""
@@ -301,6 +301,17 @@ export default function ProductCard({
               </TopButtonContainer>
 
               <FancyButton>Info</FancyButton>
+              <FancyButton
+                onMouseDown={() => {
+                  ReactGA.event({
+                    category: "Watch Review",
+                    action: product.product_name,
+                    label: "Home",
+                  });
+                }}
+              >
+                Watch Review
+              </FancyButton>
 
               {/* <ProductPrice>${product.productBasePrice}</ProductPrice> */}
             </ButtonContainer>
