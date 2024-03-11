@@ -29,7 +29,7 @@ export default function QuizResult(props) {
 
   const [productResults, setProductResults] = React.useState(null);
   const [quizData, setQuizData] = React.useState(null);
-  const [chatGPTProducts, setChatGPTProducts] = React.useState(null);
+  // const [chatGPTProducts, setChatGPTProducts] = React.useState(null);
   React.useEffect(() => {
     if (Object.keys(results).length === 0) {
       const storedResults = localStorage.getItem("quizResults");
@@ -100,9 +100,9 @@ export default function QuizResult(props) {
       quizAnswers = JSON.parse(localStorage.getItem("quizResults")) || {};
     }
 
-    postGPT(quizAnswers).then((res) => {
-      setChatGPTProducts(res);
-    });
+    // postGPT(quizAnswers).then((res) => {
+    //   setChatGPTProducts(res);
+    // });
   }, []);
 
   let formattedTags = quizData?.quizResults
@@ -178,7 +178,7 @@ export default function QuizResult(props) {
           quizData={quizData}
           results={results}
           data={productResults}
-          chatGPTResponses={chatGPTProducts}
+          // chatGPTResponses={chatGPTProducts}
         />
       )}
     </React.Fragment>

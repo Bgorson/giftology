@@ -177,7 +177,7 @@ export default function ProductResult(props) {
         <>
           <ProductGrid blurred={open}>
             {/* {renderGiftBoxes(productResults)} */}
-           <ChatGPTCard GPTResults={chatGPTResponses?.gptChoices} /> 
+            {/* <ChatGPTCard GPTResults={chatGPTResponses?.gptChoices} />  */}
 
             {productResults?.length > 1 &&
               productResults.map((product, index) => {
