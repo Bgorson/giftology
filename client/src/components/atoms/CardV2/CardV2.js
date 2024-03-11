@@ -302,17 +302,6 @@ export default function ProductCard({
               </TopButtonContainer>
 
               <FancyButton>Info</FancyButton>
-              <FancyButton
-                onMouseDown={() => {
-                  ReactGA.event({
-                    category: "Watch Review",
-                    action: product.product_name,
-                    label: "Home",
-                  });
-                }}
-              >
-                Watch Review
-              </FancyButton>
 
               {/* <ProductPrice>${product.productBasePrice}</ProductPrice> */}
             </ButtonContainer>
