@@ -140,6 +140,7 @@ export default function ProductCard({
   let tags = [];
   if (product?.tags) {
     tags = product.tags.split(",");
+  }
   // let tags = product.tags;
   tags.forEach((tag, index) => {
     if (tag === null || tag === "null" || tag === "Null") {
