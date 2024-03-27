@@ -11,7 +11,7 @@ export const CardContainer = styled.div`
 
   color: black;
   position: relative;
-  height: 510px;
+  height: 550px;
 
   cursor: pointer;
   color: black;
@@ -168,7 +168,7 @@ export const CardBackContainer = styled.div`
   border-radius: 25px;
   color: black;
   position: relative;
-  height: 510px;
+  height: 550px;
 
   cursor: pointer;
   color: black;
@@ -179,4 +179,52 @@ export const CardBackContainer = styled.div`
     flex-basis: auto;
   }
   box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.2);
+`;
+
+export const ScoreTag = styled.p``;
+export const ExtraInfoContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  gap: 5px;
+`;
+export const FancyDisplayButton = styled.div`
+  border-radius: 1.5em;
+  width: 150px;
+  white-space: nowrap;
+  margin: 10px 0 0 0;
+  color: black;
+  padding: 6px 12px;
+  font-size: 16px;
+  border: 1px solid black;
+  cursor: pointer;
+  &:focus {
+  }
+
+  &:after {
+  }
+  &:active {
+  }
+
+  &:hover {
+  }
+
+  ${(props) =>
+    props.score > 0.9 &&
+    css`
+      background: lightgreen;
+      border: 1px solid rgba(0, 0, 0, 0.15);
+    `}
+  ${(props) =>
+    props.score > 0.5 &&
+    props.score < 0.9 &&
+    css`
+      background: yellow;
+      border: 1px solid rgba(0, 0, 0, 0.15);
+    `}
+    ${(props) =>
+    props.score < 0.5 &&
+    css`
+      background: lightblue;
+      border: 1px solid rgba(0, 0, 0, 0.15);
+    `}
 `;

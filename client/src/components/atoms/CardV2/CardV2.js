@@ -22,6 +22,8 @@ import {
   Tag,
   BadgeContainer,
   TopButtonContainer,
+  FancyDisplayButton,
+  ExtraInfoContainer,
 } from "./styled";
 import { UserContext } from "../../../context/UserContext";
 import placeHolder from "../../../placeholder.jpeg";
@@ -194,7 +196,8 @@ export default function ProductCard({
     finalImage = placeHolder;
   }
   return (
-    product && (
+    product &&
+    product.score > 0.02 && (
       <div>
         {isOpen && (
           <LoginModal
@@ -300,8 +303,12 @@ export default function ProductCard({
                   </FancyButton>
                 </a>
               </TopButtonContainer>
-
-              <FancyButton>Info</FancyButton>
+              <ExtraInfoContainer>
+                <FancyDisplayButton score={product.score}>
+                  {(product.score * 100).toFixed(0) - 2}% Match
+                </FancyDisplayButton>
+                <FancyButton>Info</FancyButton>
+              </ExtraInfoContainer>
 
               {/* <ProductPrice>${product.productBasePrice}</ProductPrice> */}
             </ButtonContainer>
