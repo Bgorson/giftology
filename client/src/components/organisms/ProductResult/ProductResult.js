@@ -60,7 +60,7 @@ export default function ProductResult(props) {
   }, []);
 
   useEffect(() => {
-    if (quizData) {
+    if (quizData || backupQuizId) {
       const favoritesPromise = Promise.resolve(
         getFavorites(quizData?.id || backupQuizId, token)
       );
