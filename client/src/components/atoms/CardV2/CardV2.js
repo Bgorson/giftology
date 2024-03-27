@@ -140,7 +140,7 @@ export default function ProductCard({
     setFilled(isFavorite);
   }, [isFavorite]);
   let tags = [];
-  if (product?.tags) {
+  if (product?.tags && typeof product.tags === "string") {
     tags = product.tags.split(",");
   }
   // let tags = product.tags;
@@ -196,8 +196,7 @@ export default function ProductCard({
     finalImage = placeHolder;
   }
   return (
-    product &&
-    product.score > 0.02 && (
+    product && (
       <div>
         {isOpen && (
           <LoginModal
@@ -304,9 +303,11 @@ export default function ProductCard({
                 </a>
               </TopButtonContainer>
               <ExtraInfoContainer>
-                <FancyDisplayButton score={product.score}>
-                  {(product.score * 100).toFixed(0) - 2}% Match
-                </FancyDisplayButton>
+                {product.score && (
+                  <FancyDisplayButton score={product.score}>
+                    {(product.score * 100).toFixed(0) - 2}% Match
+                  </FancyDisplayButton>
+                )}
                 <FancyButton>Info</FancyButton>
               </ExtraInfoContainer>
 
