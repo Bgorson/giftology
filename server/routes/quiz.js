@@ -290,8 +290,17 @@ router.post("/allProducts", async (req, res) => {
     req.body.answers,
     req.body.quizId
   );
+  const answerShape = {
+    "who": req.body.answers.who,
+    "gender": req.body.answers.gender,
+    "name": req.body.answers.name,
+    "age": req.body.answers.age,
+    "occasion": req.body.answers.occasion,
+    "hobbies": req.body.answers.hobbies,
+    "tags": req.body.answers.tags
+}
   const jsonObject = JSON.stringify({
-    ...req.body.answers,
+    ...answerShape,
     quiz_id: req.body.quizId,
     created_at: new Date(),
   });
