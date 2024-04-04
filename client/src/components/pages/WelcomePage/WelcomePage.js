@@ -7,6 +7,8 @@ import GiftIconBanner from "./components/GiftIconBanner";
 import GiftCategories from "./components/GiftCategories";
 import GiftSpecialOccasions from "./components/GiftSpecialOccasions";
 import JoinCommunity from "./components/JoinCommunity";
+import CookieConsent from "react-cookie-consent";
+
 import {
   Hero,
   HeroCallToAction,
@@ -52,6 +54,9 @@ export default function WelcomePage() {
       <GiftCategories />
       <GiftSpecialOccasions />
       <JoinCommunity />
+      <CookieConsent enableDeclineButton>
+        This website uses cookies to enhance the user experience.
+      </CookieConsent>
     </div>
   );
 }

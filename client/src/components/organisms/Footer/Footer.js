@@ -114,6 +114,9 @@ export default function FooterComponent() {
             <MenuLink as={Link} to="/about">
               Affiliate Program
             </MenuLink>
+            <MenuLink as={Link} to="/privacy">
+              Privacy Policy
+            </MenuLink>
           </MenuGrid>
         </MenuItem>
         <MenuItem style={{ maxWidth: "285px" }}>

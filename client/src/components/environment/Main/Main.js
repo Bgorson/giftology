@@ -18,6 +18,7 @@ import DemoPage from "../../pages/DemoPage";
 
 import { Container, MainContainer } from "./styles";
 import "./index.css";
+import Privacy from "../../pages/PrivacyPolicy/";
 
 export default function Main() {
   const location = useLocation();
@@ -38,6 +39,8 @@ export default function Main() {
           <Route path="/about" component={AboutPage} />
           <Route path="/profile" component={ProfilePage} />
           <Route path="/demopage" component={DemoPage} />
+          <Route path="/privacy" component={Privacy} />
+
           <Route
             path="/favorites/:quizId"
             render={(props) => <FavoritesPage {...props} />}
